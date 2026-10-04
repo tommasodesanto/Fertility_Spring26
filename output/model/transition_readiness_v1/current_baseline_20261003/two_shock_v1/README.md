@@ -1,6 +1,6 @@
 # Two unanticipated fertility-preference shocks
 
-**Status, October 4 at 13:10 New York:** attempt 2 ended with exit 1 at 12:44:40 after 186 native calls. Its negative derivative probe failed the strict 6/8 horizon comparison; its positive probe exhausted six path evaluations. The new 24/32-horizon validation is running separately under `attempt3/smoke_job`; empirical estimation has not launched. Both failed attempts remain preserved. The [one-shock experiment is retained separately](../retained_one_shock_v1/README.md).
+**Status, October 4 at 15:17 New York:** the author requires genuinely small, low-accuracy integration smokes. The oversized synthetic validation in `attempt3/smoke_job` was stopped cleanly through its manager (exit −15, no forced kill); all three owned PIDs are absent. Four completed candidates and all frozen sources/outputs are preserved in [the author-directed stop receipt](attempt3/author_directed_stop.json). This is a workflow replacement, not numerical failure. A bounded integration smoke and authenticated Torch deployment are being prepared. Empirical two-shock estimation has not launched. Original empirical acceptance gates are unchanged. The [one-shock experiment is retained separately](../retained_one_shock_v1/README.md).
 
 The author requested two fitted anchors: retain the final 2020–2023 fertility target and add a midpoint target. The working implementation uses the existing **2012–2015** midpoint block and shocks in **2007 and 2015**. In each period households believe the current preference level is permanent; the 2015 change is unanticipated in earlier decisions.
 
@@ -19,10 +19,10 @@ First fit the 2007 surprise to local fertility index 1. Replay only its accepted
 
 The numerical design reuses the scalar fitter and native mappings in a separate controller. Each stage has distinct state-bound numerical guesses and a fresh five-map, 12-date Jacobian. The second seed is measured at the actual inherited 2015 state; stationarity is tested at its stationary endpoint, not imposed on the inherited distribution. Both 24/32-date paths must pass the original root, accounting, replay and historical-horizon checks. Terminal failures remain explicit. This diagnostic does not certify 104/128-period production paths or close the provisional estate contract.
 
-Before a long fit: authenticate the isolated source package; review surprise timing, target indices and both queue transfers; pass focused tests and an exact-loop native smoke; verify checkpoint, latest/best summaries and stable diagnostic plots. Proposed local allocation is one core, 24 GiB, 21,480 internal seconds inside six hours, 20,000 actual native calls shared across both stages, 12 fit evaluations per stage, 12 path evaluations, and 48 stationary endpoint iterations within 1,800 seconds. Cost and the exact launch receipt must be recorded before launch. No old run is resumed or extended.
+Before a long fit: authenticate the isolated source package; review surprise timing, target indices and both queue transfers; pass focused scalar-loop tests and a genuinely small native execution smoke; verify checkpoint, latest/best summaries and stable diagnostic plots. A smoke pass certifies execution only. Empirical estimation is being prepared for Torch with unchanged 21,480 internal seconds inside six hours, 20,000 actual native calls shared across both stages, 12 fit evaluations per stage, 12 path evaluations, and 48 stationary endpoint iterations within 1,800 seconds. The observed-cost estimate remains 5–7 hours, so the six-hour cap may bind. No old run is resumed or extended.
 
 
-## Reviewed implementation and current run
+## Prior implementation and validation attempts
 
 The lead reviewed the concrete two-stage controller and adapter against the retained native mappings, scalar fitter, state timing and original numerical controls. Fourteen focused tests pass, including target lineage, boundary value/pension replay, both queue transfers, inherited-state and calendar binding, absolute numerical bounds, shared budgets and selected-candidate identity. The staged driver and runtime pass preflight, and their actual constructor reports **zero native calls**. See [lead preflight](lead_preflight.json).
 
@@ -45,7 +45,7 @@ The attempt 2 fit manifest is retained as evidence and must not be launched: its
 At 12:44 New York, the first derivative probe was rejected by the unchanged short-horizon comparison despite both roots converging with fresh replay: 6/8-date price and rent relative differences were 0.0014783 and 0.0035615; the largest fertility difference was 0.0012477, all against the original 0.001 limits. The process was still evaluating its other derivative probe; no final terminal receipt was claimed. See [the scoped horizon review](failure_review/attempt2_short_horizon.json). No gate, running source or budget was changed. Longer smoke horizons may be necessary before the two-stage test can pass; empirical estimation remains unreleased.
 
 
-## Separately budgeted full-horizon validation
+## Superseded full-horizon validation
 
 The [terminal review](failure_review/attempt2_terminal.json) supersedes the preliminary 12:44 observation: attempt 2 ended at 12:44:40 with exit 1, 186 native calls, and all owned PIDs absent. The negative probe converged at both horizons but failed the unchanged 0.001 stability gates. The positive probe exhausted six evaluations at horizon 6 with housing residual score 1.024 and a failed housing gate. This establishes two numerical validation failures; it does not establish economic infeasibility. Completed candidates and both frozen packages remain intact.
 
@@ -62,3 +62,8 @@ The smoke has **not passed**. Inspect actual native progress and preserve any fa
 
 
 At **14:14 New York**, attempt 3's negative derivative probe passed both 24/32 roots (7 and 8 evaluations), every original root/replay gate and the strict horizon comparison. Fresh replay discrepancy was zero; the largest relative macro gap was 2.734e-6 and largest fertility gap 1.429e-6, versus unchanged 0.001 limits. The lead verified the completed candidate's 20 evidence pins, root receipts and exact 2023 checkpoint. See [the probe review](attempt3/negative_probe_horizon_verified.json). This resolves the earlier negative-probe short-horizon rejection for this test point; the positive probe is active and the full two-stage smoke remains incomplete. No empirical fit has been released.
+
+
+## Author-directed smoke correction
+
+At 15:13 New York the author required small, low-accuracy smokes for local and cluster execution. The full synthetic fitting prerequisite above is superseded. Attempt 3 was healthy when deliberately stopped at 15:17; its terminal reason is `manager_termination`, not an economic or numerical rejection. No attempt 3 empirical job may be released from its incomplete validation receipt. The replacement will execute the native two-stage handoff, both queues, checkpoint and plot interfaces with fixed test preferences and a small declared budget; it will not fit synthetic shocks. Empirical 24/32 roots, fresh replay, accounting, strict horizon comparison and the 0.005 fitted-gap tolerances remain unchanged. Both estimated levels are still pending.

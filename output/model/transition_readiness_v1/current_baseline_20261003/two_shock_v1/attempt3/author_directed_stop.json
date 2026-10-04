@@ -1,0 +1,89 @@
+{
+  "classification": "author_directed_workflow_replacement",
+  "reason": "Author requires genuinely small low-accuracy integration smoke, separate from empirical scientific acceptance; oversized synthetic fitting prerequisite superseded. This is not numerical failure or memory failure.",
+  "requested_epoch": 1791141436.904351,
+  "manager_pid": 43647,
+  "worker_pid": 43649,
+  "caffeinate_pid": 43648,
+  "verified_manager_command": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/frozen/source/code/cluster/estate_birth_transition/launch_continuation.py --_manage --output /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/invocation.json --_nonce 0fa6e12e71234af9945066a38faf612d",
+  "signal": "SIGTERM to manager; existing manager owns child cleanup",
+  "before": {
+    "invocation.json": {
+      "sha256": "5c490479e96aa5abea5932efd07239092876f85fa840873dd1895b97cd4a501e",
+      "content": {
+        "nonce": "0fa6e12e71234af9945066a38faf612d",
+        "python": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python",
+        "driver": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/frozen/source/code/model/experiments/birth_count_choice/two_shock.py",
+        "manifest": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/inputs/smoke_manifest.json",
+        "driver_sha256": "dec3be9c51441832493935316028103f9fa9d1e5797e94bb921abb2c263d9573",
+        "manifest_sha256": "ce2726424c9a027178b3f46f68006f0bbc210d489439fa9a92330ad14c212551",
+        "mode": "smoke",
+        "wall_seconds": 21600,
+        "memory_gib": 24,
+        "cwd": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26",
+        "smoke_receipt_pin": null
+      }
+    },
+    "status.json": {
+      "sha256": "af981de160b3f050a8f3d903d3c8b891373800214549294639ebbec05b38fcd0",
+      "content": {
+        "manager_pid": 43647,
+        "worker_pid": 43649,
+        "updated_epoch": 1791141422.210635,
+        "elapsed_seconds": 7633.258037124993,
+        "deadline_epoch": 1791155388.9056,
+        "owned_pids": [
+          43649
+        ],
+        "owned_rss_bytes": 2581987328,
+        "memory_limit_bytes": 25769803776,
+        "status": "running",
+        "reason": "completed"
+      }
+    },
+    "run/heartbeat.json": {
+      "sha256": "44acdfcd1f589a9aedc7cd3550660a2752adba84847028e207ebe23ea99a4ae3",
+      "content": {
+        "actual_native_calls": 1571,
+        "candidate": 4,
+        "epoch": 1791141433.6643672,
+        "phase": "native_call",
+        "policy_calls": 1556
+      }
+    }
+  },
+  "verified_epoch": 1791141526.7836401,
+  "all_owned_pids_absent": true,
+  "terminal_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/manager_terminal.json",
+    "sha256": "c26bf61240205a8d1381d09c3fb9d43068ae9a0b13df5ab918c8d4ff788bfc30",
+    "content": {
+      "manager_pid": 43647,
+      "finished_epoch": 1791141438.243638,
+      "worker_pid": 43649,
+      "exit_code": -15,
+      "reason": "manager_termination",
+      "forced_kill_after_grace": false
+    }
+  },
+  "completed_candidates": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0001/complete.json",
+      "sha256": "fc24dbc1baf5b3b416e1d36aa28f72717304606457a781c4bfd8d3e924f07465"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0002/complete.json",
+      "sha256": "cb8f4a425b0bb70758c45351d82954af923877c5070d494d84f55102c913a43d"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0003/complete.json",
+      "sha256": "ce10e5de83b446533fc418a402a0dd15b319b4cb7c9c4efaa99cb2935422f7dd"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0004/complete.json",
+      "sha256": "6581ba934f35139976a6da22c3031903e26a85f5c96fc7bf15d0189b3c658469"
+    }
+  ],
+  "result": "stopped_cleanly_for_author_directed_workflow_change",
+  "empirical_fit_launched": false
+}

@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 14:14 New York:** the
+   **Current transition direction, verified October 4 at 15:17 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -865,16 +865,16 @@ manuscript wording or certify a new paper calibration.
    probe failed the unchanged 0.001 horizon comparison despite converged roots;
    its positive probe exhausted six path evaluations with a failed housing gate.
    These are numerical validation failures, not demonstrated infeasibility.
-   Both attempts are preserved. A separate validation began at 13:09:48 New York
-   under `two_shock_v1/attempt3/smoke_job`, manager **43647**, worker **43649**.
-   It uses empirical 24/32 horizons, 12 path evaluations, no forecast padding,
-   one core/24 GiB and an explicit new six-hour cap (deadline 19:09:48).
-   All 29 focused tests, both staged preflights and the zero-call native
-   constructor passed. Economics and acceptance tolerances are unchanged.
-   At 14:14, its negative derivative probe passed both original 24/32 roots
-   and strict horizon comparison (maximum fertility gap 1.429e-6 against 0.001).
-   The positive probe is active. This is synthetic validation progress;
-   empirical estimation remains gated on a complete smoke pass and artifact review.
+   Both attempts are preserved. The separate 24/32-horizon synthetic validation
+   launched at 13:09:48 was healthy when stopped deliberately at 15:17 after
+   the author required genuinely small, low-accuracy integration smokes.
+   Manager 43647 ended with `manager_termination` and exit −15 without forced
+   kill; worker 43649 and caffeinate 43648 are also absent. Four completed
+   candidates, frozen sources and all receipts are preserved. This is a workflow
+   replacement, not a numerical failure. A bounded execution smoke and an
+   authenticated Torch deployment are being prepared. No empirical two-shock
+   fit has launched. The original empirical 24/32 roots, accounting, replay,
+   horizon gates, 0.005 fitted-gap tolerance and six-hour budget remain unchanged.
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
 
    The one-shock scalar fit and fresh final replay **completed numerically** at
