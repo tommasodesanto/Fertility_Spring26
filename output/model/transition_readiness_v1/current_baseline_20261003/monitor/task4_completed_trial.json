@@ -1,0 +1,68 @@
+{
+  "certified": true,
+  "psi": 0.164607063007583,
+  "model": 1.999176537184332,
+  "gap": 0.3534265371843319,
+  "loss_contribution": 0.12491031718610796,
+  "payload": {
+    "candidate": 1,
+    "models": [
+      1.985390316812624,
+      1.9942309728640797,
+      1.996568821079829,
+      1.999176537184332
+    ],
+    "path": "/work/results/run/candidate_0001"
+  },
+  "mode": "diagnostic",
+  "production_ready": false,
+  "one_shock_measurement_certified": true,
+  "horizon_comparison": {
+    "passed": true,
+    "relative_gaps": {
+      "asset_price": 1.3022428243441547e-06,
+      "renter_price": 1.7614840974653447e-06,
+      "adult_population": 3.624594190589714e-08,
+      "birth_children": 3.36726604696937e-06,
+      "housing_demand": 1.3326650163620315e-06,
+      "pension_period_units": 5.152213423683322e-08
+    },
+    "fertility_absolute_gaps": [
+      2.4618176461821406e-06,
+      3.654815822873303e-06,
+      4.92044870892272e-06,
+      6.002164344209859e-06
+    ],
+    "early_macro_periods": 5,
+    "early_macro_years": [
+      2007,
+      2011,
+      2015,
+      2019,
+      2023
+    ],
+    "fertility_windows": 4,
+    "macro_tolerance": 0.001,
+    "fertility_tolerance": 0.001,
+    "terminal_passes": [
+      false,
+      false
+    ],
+    "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+  },
+  "diagnostic_relaxed_finite_horizon_match": false,
+  "checkpoint_2023": {
+    "path": "/work/results/run/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+    "sha256": "e3b79b987e4929bf30dc91a8e385cbee5a397c71343104250e562799e00f4cdb"
+  },
+  "shock_fit_complete": false,
+  "full_path_certified": false,
+  "state_experiment_ready": false,
+  "state_physical_horizon_stable": true,
+  "state_value_integrity": true,
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
+}
