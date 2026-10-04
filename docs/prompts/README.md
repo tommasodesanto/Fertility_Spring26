@@ -4,6 +4,14 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `purchase_constraint_annualization_review_20261002_pro_answer.md` and
+  `credit_ge_population_transition_review_20261001_pro_answer.md`: verbatim
+  ChatGPT Pro answers to the two prompts below. Tommaso pasted them into Codex
+  on Oct 1–2, and they were copied here from Codex attachments on Oct 4.
+  These are outside review material, not model state. Their assessment and
+  outcome are in `docs/weekly/2026-09-28_to_10-04/CHATGPT_INVENTORY.md`
+  (items 2 and 3).
+
 - `purchase_constraint_annualization_review_20261002.md`: self-contained
   ChatGPT Pro review prompt on four-year purchase financing, consumption,
   residual wealth, and the distinction between an ending debt floor and a
