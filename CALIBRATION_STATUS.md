@@ -765,10 +765,14 @@ manuscript wording or certify a new paper calibration.
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
    The author authorized current one-birth Estate-A fertility-shock estimation
-   with simultaneous guesses and at most 48 cluster nodes. **Verified 08:04
-   New York, October 4:** only v9 replacement 19147666_4 remains running on
-   one ordinary `cs` node, with eight CPUs/48 GiB and its original six-hour
-   limit. All v6/v7 workers and both original one-core local searches ended.
+   with simultaneous guesses and at most 48 cluster nodes. **Verified 10:31
+   New York, October 4:** all v6/v7/v9 cluster workers and both original local
+   searches have ended. V9 replacement 19147666_4 stopped at 10:26:22 during
+   candidate 5 after 5h59m01s: watchdog TimeoutError wrapped by Numba
+   SystemError, not an out-of-memory stop. Its four completed trials and
+   [exact failure evidence](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v9/failure_review/task_4.json)
+   are retained. Separate fingerprint-checked panel collections accepted no
+   completed search: v6 rejected 12, v7 rejected 11, and v9 rejected one.
    Never resubmit these arrays. V7 tasks 8/9/10 hit watchdog timeouts; task 6
    completed trial 5 and then failed its next stationary endpoint renewal/replay
    gate. Completed trials and [terminal evidence](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/failure_review/) are preserved.
@@ -791,7 +795,7 @@ manuscript wording or certify a new paper calibration.
    [Lead review and pinned smoke](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_review_gate.json)
    preserve the evidence.
 
-   The authorized new local scalar fit is **RUNNING**, verified 08:27 New York:
+   The authorized new local scalar fit is **RUNNING**, verified 10:31 New York:
    manager 91634, worker 91636, started 08:27:19, one core, six-hour external
    limit, 21,480-second internal budget and 24-GiB owned-RSS guard.
    [Launch receipt](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/launcher_start.json)
@@ -805,7 +809,8 @@ manuscript wording or certify a new paper calibration.
    psi_child 0.11999694638724082 gives final-window fertility 1.643134 versus
    1.645750, gap −0.002616 (tolerance ±0.005), loss 6.8433245884109135e-06.
    Both 24/32 roots converged and passed exact replay, accounting and horizon
-   checks. The unchanged estimator is completing its derivative probe and final
+   checks. Candidate 2 completed; candidate 3 is the positive derivative probe.
+   The unchanged estimator is completing its derivative checks and final
    reproduction/output steps; **no final fit is accepted yet**. The
    [full four-window table and parameter bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
    retain the sizeable earlier-window validation gaps. Both terminal checks
