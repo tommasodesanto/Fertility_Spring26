@@ -1,0 +1,214 @@
+{
+  "classification": "provisional saved-data-only one-shock finite-horizon diagnostic projection",
+  "production_ready": false,
+  "full_path_certified": false,
+  "terminal": false,
+  "horizon_years_plotted": [
+    2007,
+    2063
+  ],
+  "no_extrapolation": true,
+  "initial_steady_state_fertility": 2.1000000000175905,
+  "initial_fertility_source": "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/native_reference/repeat_0/phase_b_ge/selected_root/standard_diagnostics/summary.json",
+  "preference_decline_percent": 32.93289567339169,
+  "plot_bounds": {
+    "xlim": [
+      2003,
+      2065
+    ],
+    "ylim": [
+      1.55,
+      2.16
+    ],
+    "xticks": [
+      2007,
+      2023,
+      2043,
+      2063
+    ],
+    "figsize_inches": [
+      11.5,
+      6.5
+    ]
+  },
+  "psi": {
+    "value": 0.11999694638724082,
+    "original_value": 0.17892072066041628,
+    "lower_bound": 0.001789207206604163,
+    "upper_bound": 0.35784144132083257,
+    "decline_percent": 32.93289567339169
+  },
+  "horizon_root_checks": {
+    "horizon_024": {
+      "converged": true,
+      "gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "latest_gates": {
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true,
+        "dated_audits": true
+      }
+    },
+    "horizon_032": {
+      "converged": true,
+      "gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "latest_gates": {
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true,
+        "dated_audits": true
+      }
+    }
+  },
+  "horizon_032_matches_map_009": true,
+  "candidate_first_four_match_completion_payload": true,
+  "first_four_horizon_comparison": [
+    {
+      "calendar_year": 2007,
+      "horizon_024": 1.6266380244229137,
+      "horizon_032": 1.6266185669112152,
+      "absolute_difference": 1.9457511698517393e-05
+    },
+    {
+      "calendar_year": 2011,
+      "horizon_024": 1.6413330059875058,
+      "horizon_032": 1.6413074510640842,
+      "absolute_difference": 2.555492342160015e-05
+    },
+    {
+      "calendar_year": 2015,
+      "horizon_024": 1.6417324541428413,
+      "horizon_032": 1.6416996993988433,
+      "absolute_difference": 3.275474399799805e-05
+    },
+    {
+      "calendar_year": 2019,
+      "horizon_024": 1.6431749988939064,
+      "horizon_032": 1.6431340251170146,
+      "absolute_difference": 4.097377689182835e-05
+    }
+  ],
+  "first_four_horizon_comparison_max_abs": 4.097377689182835e-05,
+  "first_four_horizon_comparison_within_0_001": true,
+  "historical_horizon_comparison_passed": true,
+  "final_target_comparison": {
+    "decision_year": 2019,
+    "target": 1.64575,
+    "model": 1.6431340251170146,
+    "gap": -0.0026159748829854834,
+    "original_tolerance": 0.005,
+    "within_original_tolerance": true,
+    "loss_contribution": 6.8433245884109135e-06
+  },
+  "final_fit_accepted": false,
+  "projection_max_24_32_difference_through_2063": 0.0032008019742308935,
+  "projection_stability_check_0_001_passed": false,
+  "projection_interpretation": "Projection beyond 2023 remains diagnostic; the historical acceptance gate passed.",
+  "artist_coordinates_match_inputs": true,
+  "source_hashes_sha256": {
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001/horizon_032/latest_completed.json": "ad14bec1842c3ea6bf2a66ab80ee80ac00b8ea6c7ca998519f97cf7a1b57d8bb",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001/complete.json": "dc8aad810fff2719366cc35e0282e759fb8069753b1f649e5b77895ed8de39cf",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/effective_plan.json": "5b99d2a5c15e1d0eddecb9f6ac93cb4f470093f40f3172c92d734faf04989736",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/native_reference/repeat_0/phase_b_ge/selected_root/standard_diagnostics/summary.json": "960b09576e489786730e45f43b53f799495538693003f1291fd1ea504a0135be",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/native_reference/repeat_0/stationary.json": "6cdb2990becc178cce8c5367daad5aaed17ce420e1d5afbfbc7fbf7f577e9eda",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001/horizon_024/latest_completed.json": "5b4cb2dc5e3de648aa4378b74ddee271ab928d2becef25add314f08b2612e31e",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001/horizon_024/root.json": "b877b2cf0464113b9e6ad25805d6f551ef73722c6d7d70a9c0a7b7b8c2a12cdd",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001/horizon_032/root.json": "5ea3c9bd90c82516dcf3811c91762cda9b2f7133f212a0a479f784453b880221",
+    "output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001/horizon_032/map_009/mapping.json": "bf4f17e26ed32c689c60b52eb064d1d4245fbf89b708fe9e53982a32aaec7027",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/fertility_data/annual_fertility_2007_2023.csv": "6028e5fb95fb84900457d5389b6c931aa0d154f93689c51f0afeac055583bc7c",
+    "output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/fertility_fit_2007_2063.png": "a1e75ad60d25e500685afa09184523a2efc7a0f45a3ec192f02f476246d65f9a"
+  },
+  "plotted_model": [
+    {
+      "calendar_year": 2007,
+      "period_fertility": 1.6266185669112152
+    },
+    {
+      "calendar_year": 2011,
+      "period_fertility": 1.6413074510640842
+    },
+    {
+      "calendar_year": 2015,
+      "period_fertility": 1.6416996993988433
+    },
+    {
+      "calendar_year": 2019,
+      "period_fertility": 1.6431340251170146
+    },
+    {
+      "calendar_year": 2023,
+      "period_fertility": 1.6521927421645195
+    },
+    {
+      "calendar_year": 2027,
+      "period_fertility": 1.6672566771765038
+    },
+    {
+      "calendar_year": 2031,
+      "period_fertility": 1.683837768070319
+    },
+    {
+      "calendar_year": 2035,
+      "period_fertility": 1.7003981381900606
+    },
+    {
+      "calendar_year": 2039,
+      "period_fertility": 1.718657933276587
+    },
+    {
+      "calendar_year": 2043,
+      "period_fertility": 1.7383754241993399
+    },
+    {
+      "calendar_year": 2047,
+      "period_fertility": 1.7593434339505007
+    },
+    {
+      "calendar_year": 2051,
+      "period_fertility": 1.7812686570112573
+    },
+    {
+      "calendar_year": 2055,
+      "period_fertility": 1.8044256574049742
+    },
+    {
+      "calendar_year": 2059,
+      "period_fertility": 1.8293016966795634
+    },
+    {
+      "calendar_year": 2063,
+      "period_fertility": 1.8553560159321942
+    }
+  ],
+  "plotted_data": [
+    {
+      "decision_year": 2007,
+      "period_fertility": 1.974875
+    },
+    {
+      "decision_year": 2011,
+      "period_fertility": 1.861
+    },
+    {
+      "decision_year": 2015,
+      "period_fertility": 1.755375
+    },
+    {
+      "decision_year": 2019,
+      "period_fertility": 1.64575
+    }
+  ],
+  "reproduction_command": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_current_estate_fertility_plot.py"
+}
