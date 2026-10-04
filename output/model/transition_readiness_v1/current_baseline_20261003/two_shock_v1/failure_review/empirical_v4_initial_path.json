@@ -1,0 +1,198 @@
+{
+  "schema": "two_shock_empirical_failure_review_v1",
+  "verified_at": "2026-10-04T22:35:22.845913+00:00",
+  "job_id": "19180137",
+  "scheduler_raw": "19180137|FAILED|1:0|2026-10-04T18:03:32|2026-10-04T18:31:03|00:27:31|\n19180137.batch|FAILED|1:0|2026-10-04T18:03:32|2026-10-04T18:31:03|00:27:31|12472860K\n19180137.extern|COMPLETED|0:0|2026-10-04T18:03:32|2026-10-04T18:31:04|00:27:32|\n",
+  "classification": "initial_trial_path_inherited_distribution_infeasibility",
+  "status": "failed",
+  "exit_code": 1,
+  "elapsed": "00:27:31",
+  "finished_new_york": "2026-10-04T18:31:03-04:00",
+  "maximum_rss_kib": 12472860,
+  "out_of_memory": false,
+  "budget_exhausted": false,
+  "actual_native_calls": 69,
+  "controller_accounted_calls": 31,
+  "controller_count_caveat": "Controller accounts only completed returned operations; failed in-flight candidate calls remain in native counter.",
+  "stage": 1,
+  "candidate": 1,
+  "psi": 0.14736308634876963,
+  "horizon": 24,
+  "root_phase": "initial",
+  "mapping": 1,
+  "failed_period": 1,
+  "failed_year": 2011,
+  "failed_period_basis": "Only period 0 audit is saved, forward heartbeat is period 0; rejection price exactly equals period 1 of the documented linear initial path.",
+  "initial_price": 0.776101253093739,
+  "endpoint_price": 0.6482672107267026,
+  "failed_price": 0.770543251251694,
+  "rejection": {
+    "affected_cells": 3,
+    "asset_prices": [
+      0.770543251251694
+    ],
+    "census": [
+      {
+        "age": 30.0,
+        "age_index": 3,
+        "child_state_index": 1,
+        "children_ever_born_index": 1,
+        "income_index": 0,
+        "location": 0,
+        "mass": 3.269034693056256e-10,
+        "tenure": 0,
+        "value": -9999999999.72225,
+        "wealth": 0.0,
+        "wealth_index": 46
+      },
+      {
+        "age": 30.0,
+        "age_index": 3,
+        "child_state_index": 1,
+        "children_ever_born_index": 2,
+        "income_index": 0,
+        "location": 0,
+        "mass": 1.3736362375781846e-12,
+        "tenure": 0,
+        "value": -9999999999.72225,
+        "wealth": 0.0,
+        "wealth_index": 46
+      },
+      {
+        "age": 30.0,
+        "age_index": 3,
+        "child_state_index": 2,
+        "children_ever_born_index": 2,
+        "income_index": 0,
+        "location": 0,
+        "mass": 8.067143568382268e-13,
+        "tenure": 0,
+        "value": -9999999999.72225,
+        "wealth": 0.0,
+        "wealth_index": 46
+      }
+    ],
+    "classification": "inherited_distribution_infeasible",
+    "dead_mass": 3.29083819900042e-10,
+    "distribution_modified": false,
+    "evidence_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/map_001/inherited_state_evidence/inherited_infeasible_1791153058437047478.json",
+    "feasibility_mass_tolerance": 1e-12,
+    "origin_mass": 1.0009489339264275,
+    "origin_sha256": "62d15a8999ab9501bce7db29d42389c9debd0dba8a96b771491f51ae4673c027",
+    "origin_shape": [
+      120,
+      6,
+      1,
+      17,
+      9,
+      4,
+      4
+    ],
+    "projection_mass": 0.0,
+    "stage": "exact_inherited_pre_fertility",
+    "status": "rejected",
+    "value_cutoff": -1000000000.0
+  },
+  "fresh_reference_passed": true,
+  "seed": {
+    "horizon": 12,
+    "perturbed_date": 5,
+    "maps": 5,
+    "policy_calls": 29,
+    "accounting_valid": true
+  },
+  "endpoint": {
+    "converged": true,
+    "fresh_replay_max_abs": 0.0,
+    "stationary_one_step_gates": {
+      "mass": true,
+      "policy_reproduction": true,
+      "projection": true,
+      "dated_audits": true
+    }
+  },
+  "completed_candidates": 0,
+  "accepted_parameters": [],
+  "second_stage_reached": false,
+  "interpretation": "Rejects the initial numerical price/pension path; does not establish equilibrium infeasibility or identify current rental-budget versus continuation/interpolation cause.",
+  "next_step": "Endpoint-flat cold initialization is implemented and lead-reviewed, with 27 focused tests and staged preflights passed. Immutable v5 is transferring for a fresh 30-minute execution smoke. No model constructor, native solve or empirical restart has been repeated locally; native feasibility at the empirical point remains unverified.",
+  "evidence_pins": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_scheduler.txt",
+      "sha256": "0c7eaba0c7de0f6efe1ca86f8d8a0943caed4b3de2491a3d17b51ed11ae40ced"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/driver.log",
+      "sha256": "685001382f491692a4a9ee75174a20cfc2dfab2288259a7a75a1a3e4281be91c"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/launcher_start.json",
+      "sha256": "a7200a18c9bdbd6e4926ee1f57787197b183e2c373ecc69e7bf8af937384fa3c"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/launcher_terminal.json",
+      "sha256": "5eafd8eacd28351a67ef5dd77f31860eacb3a7cbbed60b2d69cfed83d2998ef0"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/failure.json",
+      "sha256": "93a34f7cbc0fd1a607b664cd6dd4e7b499ef09bcf56be121db5918d2b10ce368"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/heartbeat.json",
+      "sha256": "035552f1b0a683ae34ed4948e92f98eceb9474bb04b6f5047a1d57c9311ea353"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/reference/reference_reconstruction.json",
+      "sha256": "fdea35e580f048a9b380d017771e0882c74f2f90d59ffb9e9c1c2ef74c0d0e98"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/seed_receipt.json",
+      "sha256": "01fd2df2a82bd18fdd0652dd2a59b1166c92c08adde1593a7303563cfcae22f9"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/warm_start.json",
+      "sha256": "228498e67e2d7e67b78269fd07aba4af8217a68823346915de92aaa58142f6f2"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/heartbeat.json",
+      "sha256": "e925a34215cca8cdcc010fc92f230db585d34cf7b75f0655ab8764a4bd366c0e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/endpoint/root.json",
+      "sha256": "42635ce2c186f41a239048d83c3b5eddbec0ce101a3e24457db2480d95485490"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/endpoint/latest_completed.json",
+      "sha256": "8a6e0ffc799529760ba16820a1f6335417575062bdb0e56acb8df72685f298fa"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/endpoint/one_step/mapping.json",
+      "sha256": "9d10b276de786be53c3db152095268f549fa508c4363cc84dd60caffdac90aa9"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/map_001/dated_audits.json",
+      "sha256": "12680c5c81f2267d0d984d03e65b2ea86b437ec42684a0d74a2e40db393b953c"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/map_001/inherited_state_evidence/inherited_infeasible_1791153058437047478.json",
+      "sha256": "698b148a2fc49ab8a44e77715b72d758740c6cbed1f1fbe5647f1080ca14c06b"
+    }
+  ],
+  "three_cell_budget_audit": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_three_cell_budget.json",
+    "sha256": "4e4dc4deffb8bfc9de20e2d624cae4b44685a6cd36005cb95315d22ecb18dc8e"
+  },
+  "current_budget_finding": "The three flagged renter states have resources 0.3586692893369143 versus minimum rental outlay 0.37472321690941063 at the period-1 trial rent. This is current rental-budget infeasibility under this initial path, not merely a nonfinite value; incoming tiny-mass origin and existence of a feasible equilibrium remain unresolved.",
+  "worker_review": {
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_initial_path_diagnosis.md",
+    "date_correction": "Worker incorrectly called the failure date 0. Actual completed period-0 audit and exact affine price comparison identify period 1 (2011). Job is a singleton, not an array. Its root exception/initializer code findings were independently confirmed."
+  },
+  "planned_initializer": {
+    "kind": "stationary_endpoint_flat_initialization",
+    "cold_only": true,
+    "price": 0.6482672107267026,
+    "pension": 0.917784047463731,
+    "implied_rent": 0.1168692198277622,
+    "interpretation": "Numerical root guess only; never replace the actual inherited state with a stationary distribution."
+  }
+}

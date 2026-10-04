@@ -474,7 +474,9 @@ class NativeSeamTests(unittest.TestCase):
         import e5f_four_shock_acceleration as acceleration
         observed={}
         def solve(**kw):
-            observed.update(q=kw['project_prices'](np.array([0.,100.])),b=kw['fiscal_bounds'],initial_q=kw['initial_prices'][0],initial_b=kw['initial_fiscal_values'][0])
+            observed.update(q=kw['project_prices'](np.array([0.,100.])),b=kw['fiscal_bounds'],prices=kw['initial_prices'].copy(),
+                pensions=kw['initial_fiscal_values'].copy(),jacobian=kw['initial_jacobian'].copy(),closure=kw['closure'],
+                max_evaluations=kw['max_evaluations'],deadline=kw['deadline_monotonic'])
             final=kw['evaluate'](kw['initial_prices'],kw['initial_fiscal_values'])
             self.assertTrue(final['mapping_valid'])
             return dict(converged=True,gates=dict(market_replay=True,fiscal_replay=True),final=dict(prices=kw['initial_prices'],fiscal_values=kw['initial_fiscal_values']),
@@ -485,9 +487,36 @@ class NativeSeamTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d,patch.object(acceleration,'extend_measured_jacobian',return_value=np.eye(48)),patch.object(acceleration,'solve_joint_with_acceleration',side_effect=solve):
             reply=adapter.evaluate(psi=.12,start_year=2015,horizon=24,seed=np.eye(24),gates=m.GATES,budget=adapter.plan['budget'],
                 endpoint_controls=adapter.plan['endpoint'],path_controls=adapter.plan['path'],deadline=m.time.monotonic()+30,folder=Path(d))
+            self.assertEqual(json.loads((Path(d)/'warm_start.json').read_text())['kind'],'stationary_endpoint_flat_initialization')
         np.testing.assert_array_equal(observed['q'],[.1,40.]);np.testing.assert_allclose(observed['b'],[.015,6.])
-        self.assertEqual((observed['initial_q'],observed['initial_b']),(5.,.7));self.assertEqual(reply['policy_calls'],1)
+        np.testing.assert_array_equal(observed['prices'],np.full(24,2.));np.testing.assert_array_equal(observed['pensions'],np.full(24,.3))
+        np.testing.assert_array_equal(observed['jacobian'],np.eye(48));self.assertEqual(observed['closure'],'fixed_tax')
+        self.assertEqual(observed['max_evaluations'],adapter.plan['path']['max_evaluations']);self.assertGreater(observed['deadline'],m.time.monotonic())
+        self.assertIs(rt.seen[-1][0],adapter.inherited_state);self.assertEqual(rt.seen[-1][1],2015)
+        self.assertEqual(reply['policy_calls'],1)
         self.assertTrue(reply['root_pass']);self.assertTrue(reply['replay_pass']);self.assertFalse(reply['terminal_pass'])
+    def test_warm_root_keeps_warm_paths_and_jacobian(self):
+        adapter,rt,native=self.adapter()
+        warm_prices=np.linspace(1.,1.5,24);warm_pensions=np.linspace(.2,.4,24);warm_jacobian=np.eye(48)*7.
+        adapter.warm[24]=dict(identity=adapter.identity(),horizon=24,psi_hex=float(.12).hex(),fresh_root_replay_passed=True,
+            source_folder='prior',prices=warm_prices.copy(),fiscal_values=warm_pensions.copy(),final_jacobian=warm_jacobian.copy())
+        adapter._endpoint=lambda *a:(dict(parameters=NS(pension=.3)),dict(price=2.,stationary_pass=True,stationary_renewal_gap=0.))
+        import e5f_four_shock_acceleration as acceleration
+        observed={}
+        def solve(**kw):
+            observed.update(prices=kw['initial_prices'].copy(),pensions=kw['initial_fiscal_values'].copy(),
+                jacobian=kw['initial_jacobian'].copy(),closure=kw['closure'],max_evaluations=kw['max_evaluations'])
+            final=kw['evaluate'](kw['initial_prices'],kw['initial_fiscal_values'])
+            return dict(converged=True,gates=dict(market_replay=True,fiscal_replay=True),final=dict(prices=kw['initial_prices'],fiscal_values=kw['initial_fiscal_values']),
+                final_jacobian=np.eye(48),final_reproduction_max_abs=0.)
+        with tempfile.TemporaryDirectory() as d,patch.object(acceleration,'extend_measured_jacobian',return_value=np.eye(48)),patch.object(acceleration,'solve_joint_with_acceleration',side_effect=solve):
+            adapter.evaluate(psi=.12,start_year=2015,horizon=24,seed=np.eye(24),gates=m.GATES,budget=adapter.plan['budget'],
+                endpoint_controls=adapter.plan['endpoint'],path_controls=adapter.plan['path'],deadline=m.time.monotonic()+30,folder=Path(d))
+            self.assertEqual(json.loads((Path(d)/'warm_start.json').read_text())['kind'],'latest_other_psi_initialization')
+        np.testing.assert_array_equal(observed['prices'],warm_prices);np.testing.assert_array_equal(observed['pensions'],warm_pensions)
+        np.testing.assert_array_equal(observed['jacobian'],warm_jacobian);self.assertEqual(observed['closure'],'fixed_tax')
+        self.assertEqual(observed['max_evaluations'],adapter.plan['path']['max_evaluations'])
+        self.assertIs(rt.seen[-1][0],adapter.inherited_state);self.assertEqual(rt.seen[-1][1],2015)
     def test_short_initializer_padding_exclusively_smoke(self):
         import two_shock_runtime as native
         accepted=dict(prices=np.arange(6.)+1.,pensions=np.full(6,.2),psi=m.BASELINE_PSI,

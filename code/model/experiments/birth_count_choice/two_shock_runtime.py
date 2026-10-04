@@ -92,19 +92,19 @@ class StageAdapter(retained.NativeAdapter):
         terminal, endpoint = self._endpoint(psi, folder/'endpoint', min(deadline,time.monotonic()+budget['endpoint_seconds']))
         p = path_controls
         psi_path = np.full(horizon,psi)
-        q0,b0 = self.initial_q,self.initial_b
         qT,bT = endpoint['price'],terminal['parameters'].pension
         J = extend_measured_jacobian(seed,horizon)
         # Native own-lag slopes are used for the root's emergency reset too.
         slopes = [float(np.median(np.abs(np.diag(J)[i*horizon:(i+1)*horizon]))) for i in range(2)]
         require(all(math.isfinite(s) and s > 0 for s in slopes), 'Native measured own slopes absent; no default fallback')
         warm,warm_kind = self.select_warm(horizon,psi)
-        write(folder/'warm_start.json',dict(kind=warm_kind,target_psi_hex=float(psi).hex(),horizon=horizon,
+        initialization_kind = 'stationary_endpoint_flat_initialization' if warm is None else warm_kind
+        write(folder/'warm_start.json',dict(kind=initialization_kind,target_psi_hex=float(psi).hex(),horizon=horizon,
             source_psi_hex=None if warm is None else warm['psi_hex'],identity=self.identity(),
             source_folder=None if warm is None else warm['source_folder'],
             fresh_native_mapping_required=True,residuals_or_fertility_reused=False))
-        q = np.linspace(q0,qT,horizon) if warm is None else warm['prices'].copy()
-        b = np.linspace(b0,bT,horizon) if warm is None else warm['fiscal_values'].copy()
+        q = np.full(horizon,qT) if warm is None else warm['prices'].copy()
+        b = np.full(horizon,bT) if warm is None else warm['fiscal_values'].copy()
         latest = {}
         count = 0
         path_deadline = min(deadline,time.monotonic()+budget['path_seconds'])

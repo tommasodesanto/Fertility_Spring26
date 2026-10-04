@@ -1,0 +1,56 @@
+{
+  "status": "lead_scientific_diff_passed_native_smoke_pending",
+  "method": "Exact allowed-text transformation of the entire old frozen runtime reproduces new runtime; only remove unused q0/b0, endpoint-flat cold prices/pensions and truthful receipt kind. All remaining runtime bytes, including actual state/queue routing, warm behavior, root/fitter arguments, budgets and gates are unchanged.",
+  "protected_native_hashes_unchanged": 709,
+  "native_driver_unchanged": true,
+  "runtime_sha256": "852c96dd16899ce02b3004ce2f42e02a7c9f9b884c4c4b94bed209275a1fca4d",
+  "inventory_sha256": "e83bee63d9b6b8cf85e4bdd3e60a2209b9bbfa1ecc8d9483773762e5bab60c45",
+  "plans": [
+    {
+      "mode": "fit",
+      "unchanged_economic_target_and_numeric_fields": 21,
+      "manifest_sha256": "14c54b9d4fbb4a80ca8c71121268ac0fff8cf79868316cd348c01528782a0f46"
+    },
+    {
+      "mode": "smoke",
+      "unchanged_economic_target_and_numeric_fields": 21,
+      "manifest_sha256": "609981b342fb4e84c2046b0f073e3576c8efa7c758586d17f0460257e5698737"
+    }
+  ],
+  "focused_tests": {
+    "count": 27,
+    "status": "passed",
+    "worker_report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_initializer_fix_worker.md"
+  },
+  "constructor_repeated": false,
+  "constructor_unchanged": true,
+  "native_calls": 0,
+  "smoke_budget": {
+    "cpus": 1,
+    "memory_gib": 24,
+    "external_seconds": 1800,
+    "internal_seconds": 1680,
+    "actual_calls": 400,
+    "path_evaluations": 3,
+    "endpoint_evaluations": 8,
+    "seed_seconds": 360,
+    "candidate_seconds": 360,
+    "path_seconds": 240,
+    "mapping_seconds": 180
+  },
+  "scientific_validation": false,
+  "empirical_fitted": false,
+  "limitations": "Baseline six-date integration smoke will not certify the failed empirical 24-date point; empirical first-candidate feasibility and all root/replay/horizon gates must freshly pass. No guarantee of success from the changed initializer.",
+  "failure_reference": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_initial_path.json",
+  "staged_preflights": {
+    "fit": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/local_preflight_fit/preflight.json",
+      "sha256": "5e0bfe5472a82a2d7e37974dedbb05ed6389e4d3a00e73bb40c0b2a97dd482f7"
+    },
+    "smoke": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/local_preflight_smoke/preflight.json",
+      "sha256": "0adaaaf4958d0ed0e98b900c646bd22c87aa3ef47c19b79c9ccc331d650c6109"
+    }
+  },
+  "verified_at": "2026-10-04T22:49:43.725370+00:00"
+}

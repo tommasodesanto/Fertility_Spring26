@@ -1,0 +1,96 @@
+{
+  "schema": "three_cell_current_budget_audit_v1",
+  "method": "Read-only extraction from the saved date-0 diagnostic packet. Project dataclasses were decoded as inert attribute containers; no model import, constructor, solve or state advance. Dated price path is reconstructed from the recorded affine initializer; pensions are constant along this initializer.",
+  "packet_pin": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/fit_fit_v1/run/stage1/candidate_0001/horizon_024/map_001/date_000/diagnostic_packet.pkl.gz",
+    "sha256": "6d5efb98f94d827aa9e6503c769613968e4546c6d8b1a713be067a9708f058f8"
+  },
+  "substituted_class_names": [
+    [
+      "run_dynamic_population_transition",
+      "PeriodEvaluation"
+    ],
+    [
+      "run_dynamic_population_transition",
+      "PolicyBundle"
+    ],
+    [
+      "run_dynamic_population_transition",
+      "TransitionMaps"
+    ]
+  ],
+  "source_pins": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/frozen/source/code/model/experiments/birth_count_choice/model/engine/shared.py",
+      "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/frozen/source/code/model/experiments/birth_count_choice/model/engine/kernels.py",
+      "sha256": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/frozen/source/code/model/experiments/birth_count_choice/model/engine/household.py",
+      "sha256": "95ecba8a5aa0d6eb28418d64b8f5a81e951ab483deed69c28cc1974d88dba95e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/frozen/source/code/model/tools/run_e5f_perfect_foresight_transition.py",
+      "sha256": "fc5519e89ef8c31906aa76fdad6a08d703ab427b7d7ada775d04bc0e240c8898"
+    }
+  ],
+  "period": 1,
+  "year": 2011,
+  "rows": [
+    {
+      "children_ever_born_index": 1,
+      "child_state_index": 1,
+      "income": 0.3586692893369143,
+      "subsistence_consumption": 0.0,
+      "subsistence_housing": 2.593759507364224,
+      "income_floor": 0.0,
+      "resources_after_floor": 0.3586692893369143,
+      "wealth": 0.0,
+      "saving_lower_bound": 0.0,
+      "date1_rent": 0.14447107214276933,
+      "date1_minimum_rental_outlay": 0.37472321690941063,
+      "date1_surplus_at_saving_floor": -0.01605392757249635,
+      "maximum_feasible_rent": 0.1382816287780642
+    },
+    {
+      "children_ever_born_index": 2,
+      "child_state_index": 1,
+      "income": 0.3586692893369143,
+      "subsistence_consumption": 0.0,
+      "subsistence_housing": 2.593759507364224,
+      "income_floor": 0.0,
+      "resources_after_floor": 0.3586692893369143,
+      "wealth": 0.0,
+      "saving_lower_bound": 0.0,
+      "date1_rent": 0.14447107214276933,
+      "date1_minimum_rental_outlay": 0.37472321690941063,
+      "date1_surplus_at_saving_floor": -0.01605392757249635,
+      "maximum_feasible_rent": 0.1382816287780642
+    },
+    {
+      "children_ever_born_index": 2,
+      "child_state_index": 2,
+      "income": 0.3586692893369143,
+      "subsistence_consumption": 0.0,
+      "subsistence_housing": 2.593759507364224,
+      "income_floor": 0.0,
+      "resources_after_floor": 0.3586692893369143,
+      "wealth": 0.0,
+      "saving_lower_bound": 0.0,
+      "date1_rent": 0.14447107214276933,
+      "date1_minimum_rental_outlay": 0.37472321690941063,
+      "date1_surplus_at_saving_floor": -0.01605392757249635,
+      "maximum_feasible_rent": 0.1382816287780642
+    }
+  ],
+  "initial_rent_reproduction_gap": 0.0,
+  "interpretation": "Current rental resources at zero wealth and the unchanged zero borrowing floor fall below minimum rental housing costs for all three flagged states. This is sufficient for current renter infeasibility under this trial path; no continuation assumption is needed for this sufficient condition. It does not establish equilibrium infeasibility. The origin of the tiny incoming mass remains untraced, and no tolerance or economic change is justified.",
+  "scope_limitations": [
+    "No incoming-mass propagation or interpolation audit",
+    "No date-1 continuation array was saved",
+    "No alternative initializer was run"
+  ]
+}
