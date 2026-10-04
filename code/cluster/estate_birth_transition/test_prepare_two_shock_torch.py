@@ -4,6 +4,9 @@ import hashlib
 import importlib.util
 import importlib.machinery
 import json
+import os
+import sys
+import time
 from pathlib import Path
 import subprocess
 import tempfile
@@ -221,5 +224,138 @@ class PackagingTests(unittest.TestCase):
         p.dump(stage/'inventory.json',dict(schema=p.SCHEMA,files={control:digest}))
         self.put(stage/control,b'{"tampered":true}')
         with self.assertRaisesRegex(ValueError,'Authenticated file mismatch'):p.verify(stage)
+
+class ConstructorCompletionTests(unittest.TestCase):
+    setUp=PackagingTests.setUp
+    tearDown=PackagingTests.tearDown
+    put=PackagingTests.put
+    def fixture(self):
+        stage=self.root/'stage';stage.mkdir();(stage/'jobs').mkdir();(stage/'results').mkdir()
+        self.stage=stage;self.dest=self.root/'completion';proof='results/preflight_preflight_v1'
+        plan=dict(smoke=True,schema='fixture',kind='two_unanticipated_permanent',identity={'unchanged':'identity'},
+            baseline_psi=.1,psi_bound_ratios=[.01,2.],stages=[1,2],rows=[1,2,3,4],weights=[0,1,0,1],
+            target_contract={'unchanged':'targets'},legacy_source_overlay={'unchanged':'overlay'},
+            gates={},seed={},fit={},endpoint={},path={},budget={'total_seconds':1680,'maximum_policy_calls':400},
+            horizons=[6],smoke_seed_endpoint_padding=True,empirical_controls={'total_seconds':21480},
+            smoke_protocol='native_two_stage_execution_only_v2')
+        pins={}
+        for rel in ('prepare_two_shock_torch.py','inputs/fit_manifest.json','inputs/base_fit_plan.json',
+            'frozen/source/'+p.DRIVER_REL,'frozen/source/'+p.RUNTIME_REL,'frozen/source/'+p.HELPER_REL,
+            'frozen/source_overlay/overlay.json'):
+            pins[rel]=self.put(stage/rel,b'authenticated immutable fixture bytes')
+        pins['launch_torch.sh']=self.put(stage/'launch_torch.sh',p.launcher_text(stage,stage,self.root/'repo').encode())
+        plan['source_pins']={name:dict(path=str(stage/'frozen/source'/rel),sha256=pins['frozen/source/'+rel])
+            for name,rel in [('two_shock_driver',p.DRIVER_REL),('two_shock_runtime',p.RUNTIME_REL)]}
+        p.dump(stage/'inputs/smoke_manifest.json',plan);pins['inputs/smoke_manifest.json']=p.sha(stage/'inputs/smoke_manifest.json')
+        pins.update({f'unscanned/{i}':'not accessed' for i in range(4599-len(pins))})
+        inv=dict(schema=p.SCHEMA,local_root=str(stage),remote_root=str(stage),canonical_root=str(self.root/'repo'),files=pins,identity=plan['identity'])
+        p.dump(stage/'inventory.json',inv);digest=p.sha(stage/'inventory.json')
+        self.patches=[patch.object(p,'COMPLETION_INVENTORY',digest),patch.object(p,'COMPLETION_REMOTE',str(stage))]
+        for mock in self.patches:mock.start();self.addCleanup(mock.stop)
+        start=dict(mode='preflight',wall_seconds=600,inventory_sha256=digest,cpus=1,memory_gib=24,
+            numba_threads=1,blas_threads=1,no_auto_retry=True,start_epoch=1000,deadline_epoch=1600,
+            output=str(stage/proof),slurm_job_id=None)
+        terminal=dict(mode='preflight',exit_code=124,no_auto_retry=True,start_epoch=1000,deadline_epoch=1600,finished_epoch=1588,slurm_job_id=None)
+        package=dict(status='PASS_ZERO_SOLVES_PACKAGE',files=4599,native_calls=0,model_solves=0,scientific_validation=False)
+        driver=dict(status='PASS',native_calls=0,scientific_validation=False,production_ready=False,schema=plan['schema'],
+            fingerprints=p.completion_fingerprints(plan),horizons=[6],total_seconds=1680,policy_call_stop_cap=400)
+        for name,value in zip(p.COMPLETION_PROOFS,(start,terminal,package,package,driver)):p.dump(stage/proof/name,value)
+        self.args=argparse.Namespace(stage=stage,destination=self.dest,remote_packet=self.dest,
+            proof_relative=proof,name='constructor_completion_v1')
+        return plan
+
+    def prepare(self):
+        self.fixture();return p.prepare_constructor_completion(self.args)
+
+    def test_completion_packet_exact_body_small_and_immutable(self):
+        result=self.prepare();original=p.sha(self.stage/'inventory.json')
+        m=p.verify_constructor_completion(self.dest,result['inventory_sha256'])
+        self.assertEqual((self.dest/'constructor.py').read_text(),p.constructor_body((self.stage/'launch_torch.sh').read_text()))
+        self.assertEqual(m['original_overall_preflight'],'FAILED_EXIT_124')
+        self.assertEqual(p.sha(self.stage/'inventory.json'),original)
+        self.assertLess(sum(x.stat().st_size for x in self.dest.rglob('*') if x.is_file()),100000)
+        subprocess.run(['bash','-n',str(self.dest/'launch_constructor.sh')],check=True)
+        with self.assertRaisesRegex(ValueError,'Fresh destination'):p.prepare_constructor_completion(self.args)
+
+    def test_completion_rejects_bad_proof_before_creation(self):
+        self.fixture()
+        for name,key,value in [('launcher_terminal.json','exit_code',0),('host_verification.json','native_calls',1),
+            ('container_verification.json','files',4598),('run/preflight.json','fingerprints',{})]:
+            path=self.stage/self.args.proof_relative/name;original=path.read_bytes();data=p.read(path);data[key]=value;p.dump(path,data)
+            with self.assertRaises(ValueError):p.prepare_constructor_completion(self.args)
+            self.assertFalse(self.dest.exists());path.write_bytes(original)
+        path=self.stage/self.args.proof_relative/'host_verification.json';path.unlink()
+        with self.assertRaises(FileNotFoundError):p.prepare_constructor_completion(self.args)
+        self.assertFalse(self.dest.exists())
+
+    def test_completion_rejects_source_and_receipt_mutation(self):
+        result=self.prepare()
+        for path in (self.stage/'frozen/source'/p.DRIVER_REL,self.stage/self.args.proof_relative/'host_verification.json',self.dest/'manifest.json'):
+            original=path.read_bytes();path.chmod(0o644);path.write_bytes(b'mutated')
+            with self.assertRaises(ValueError):p.verify_constructor_completion(self.dest,result['inventory_sha256'])
+            path.write_bytes(original)
+        with self.assertRaises(ValueError):p.verify_constructor_completion(self.dest,'wrong')
+
+    def test_constructor_unique_markers_and_strict_checks(self):
+        text=p.launcher_text(self.root/'local',self.root/'remote',self.root/'repo')
+        for changed in (text+"\nPYNATIVE\n",text.replace('assert runtime.rt.total_native_calls==0','pass'),text.replace("<<'PYNATIVE'","<<'OTHER'")):
+            with self.assertRaises(ValueError):p.constructor_body(changed)
+
+    def test_completion_harmless_process_cleanup_and_bound(self):
+        marker=self.root/'leaked'
+        program='import os,time,pathlib,sys\nchild=os.fork()\nif child==0:\n time.sleep(.5)\n pathlib.Path(sys.argv[1]).write_text("leaked")\nelse:\n time.sleep(10)\n'
+        with open(os.devnull,'rb') as source,open(os.devnull,'wb') as output:
+            status=p.bounded_completion_process([sys.executable,'-c',program,str(marker)],environment=os.environ.copy(),stdin=source,stdout=output,seconds=.1)
+            self.assertEqual(status,124)
+            with self.assertRaises(ValueError):p.bounded_completion_process([],environment={},stdin=source,stdout=output,seconds=586)
+        time.sleep(.6);self.assertFalse(marker.exists())
+
+    def runtime(self,native_calls=0,write_native=True,status=0):
+        import resource
+        result=self.prepare()
+        def fake(command,**kwargs):
+            self.assertEqual(command[-3],str(self.stage/'frozen/source'/p.DRIVER_REL))
+            self.assertLessEqual(kwargs['seconds'],585)
+            self.assertEqual(kwargs['environment']['NUMBA_NUM_THREADS'],'1')
+            if write_native:p.dump(self.stage/'results/constructor_completion_v1/native_constructor/native_status.json',
+                dict(status='PASS_ZERO_SOLVES_NATIVE_CONSTRUCTOR',native_calls=native_calls,numba_threads=1,
+                identity={'unchanged':'identity'},scientific_validation=False))
+            return status
+        with patch.object(p,'bounded_completion_process',side_effect=fake),patch.object(resource,'setrlimit'):
+            args=argparse.Namespace(packet=self.dest,inventory_sha256=result['inventory_sha256'])
+            if native_calls or not write_native or status:
+                with self.assertRaises((ValueError,FileNotFoundError)):p.run_constructor_completion(args)
+            else:p.run_constructor_completion(args)
+        return args
+
+    def test_runtime_actual_status_duplicate_guard_and_receipts(self):
+        args=self.runtime();out=self.stage/'results/constructor_completion_v1'
+        terminal=p.read(out/'launcher_terminal.json')
+        self.assertTrue(terminal['composite_ready']);self.assertEqual(terminal['exit_code'],0)
+        self.assertEqual(terminal['original_overall_preflight'],'FAILED_EXIT_124')
+        with self.assertRaises(FileExistsError):p.run_constructor_completion(args)
+
+    def test_runtime_rejects_native_calls(self):
+        self.runtime(native_calls=1)
+        terminal=p.read(self.stage/'results/constructor_completion_v1/launcher_terminal.json')
+        self.assertFalse(terminal['composite_ready']);self.assertEqual(terminal['exit_code'],1)
+
+    def test_runtime_missing_native_status_fails(self):
+        self.runtime(write_native=False)
+        self.assertFalse(p.read(self.stage/'results/constructor_completion_v1/launcher_terminal.json')['composite_ready'])
+
+    def test_runtime_timeout_preserves_failed_terminal_and_claim(self):
+        self.runtime(write_native=False,status=124)
+        terminal=p.read(self.stage/'results/constructor_completion_v1/launcher_terminal.json')
+        self.assertEqual(terminal['exit_code'],124);self.assertFalse(terminal['composite_ready'])
+        self.assertIsNone(terminal['native_status_pin'])
+        self.assertTrue((self.stage/'jobs/constructor_completion.claim').exists())
+        self.assertEqual(p.read(self.stage/self.args.proof_relative/'launcher_terminal.json')['exit_code'],124)
+
+    def test_runtime_existing_output_never_overwritten(self):
+        result=self.prepare();out=self.stage/'results/constructor_completion_v1';out.mkdir();(out/'keep').write_text('keep')
+        with self.assertRaises(FileExistsError):p.run_constructor_completion(argparse.Namespace(packet=self.dest,inventory_sha256=result['inventory_sha256']))
+        self.assertEqual((out/'keep').read_text(),'keep');self.assertTrue((self.stage/'jobs/constructor_completion.claim').exists())
+
 
 if __name__=='__main__':unittest.main()

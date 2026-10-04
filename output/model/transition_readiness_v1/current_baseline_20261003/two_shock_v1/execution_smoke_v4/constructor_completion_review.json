@@ -1,0 +1,37 @@
+{
+  "builder": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/estate_birth_transition/prepare_two_shock_torch.py",
+    "sha256": "c2aceb5967b126fb468fa6a5d051f74fd6815096514b899344c2c7b9163c8812"
+  },
+  "constructor": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/constructor_completion_v1/constructor.py",
+    "sha256": "8a3ab3124df4894b816a71b84b68d37c183d9be7de9bd34eb1b25a44edc0fccc"
+  },
+  "control_pin_count": 9,
+  "inventory": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/constructor_completion_v1/inventory.json",
+    "sha256": "fe7d5ea89436901a36c233f821931ec4ce75f56b4dcd26ae69e74345d05aba1a"
+  },
+  "launcher": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/constructor_completion_v1/launch_constructor.sh",
+    "sha256": "ed873253a85ec1c590be1c36d87ffd3ef49e6ad166e372ae9e5cd08cb6ffaf1c"
+  },
+  "original_inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
+  "original_preflight_status": "FAILED_EXIT_124_PRESERVED",
+  "proof_pin_count": 5,
+  "required_next_evidence": "Actual exit zero and zero-call, one-thread native_status with exact saved-case identity, then composite lead review before one v4 smoke.",
+  "scope": "Only unfinished zero-native-call constructor; completed host/container/driver proofs authenticated, not rerun. New separate 600-second Slurm allocation, one CPU, 24 GiB. No old job budget extended. No smoke or empirical launch by this helper.",
+  "source_review": "Reviewed bounded proof/control checks, exact original PYNATIVE extraction, resources, separate persistent claim, output collision guards and process-group cleanup. Existing package builder and original launcher unchanged.",
+  "status": "LEAD_PACKET_REVIEW_PASSED_NATIVE_COMPLETION_PENDING",
+  "test_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/estate_birth_transition/test_prepare_two_shock_torch.py",
+    "sha256": "426421815eb8384c50e4797a247bf515c88afe2c692e61517232c76f2393ac3f"
+  },
+  "tests": {
+    "harmless_timeout_cleanup": true,
+    "native_calls": 0,
+    "passed": 29,
+    "seconds": 1.569
+  },
+  "verified_at": "2026-10-04T21:34:08.489708+00:00"
+}
