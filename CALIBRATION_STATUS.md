@@ -231,6 +231,8 @@ See [experiment specification](code/model/experiments/ces_normalized_shares/READ
 [deployment workflow](code/cluster/ces_normalized_shares_calibration/README.md), and
 [complete proposed targets, bounds and starts](output/model/experiments/ces_normalized_shares/overnight_v1/start_plan.json).
 
+Historical-vector diagnostic: September 27 de_0093 supplies all eleven transferable coordinates. The current numerical price caps rejected the point. A separate wider-cap diagnostic found root 7.670590398 with exact repeat and identical economic-input fingerprint, but derived housing supply coefficient 0.198580 is below the retained 0.2 lower bound. Diagnostic loss 4417.699 is not an accepted calibration candidate. Fertility fits closely while housing collapses; [full 14-row fit, 31 parameters and plots](output/model/experiments/ces_normalized_shares/overnight_v1/historical_start_diagnostic/README.md). No production bound, utility, target or running search was changed.
+
 **Earnings and entry.** Earnings use a deterministic age profile and a single
 persistent four-year process: \(\rho=0.7345934906\), innovation standard deviation
 \(0.4838308245\). There is no separately adopted permanent-type plus transitory
@@ -739,9 +741,12 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   Verify the transition solver's timing and acceptance tests before any dated
-   run; no transition launch is authorized yet. The hard-versus-soft economic
-   choice remains distinct.
+   The author authorized resuming the current one-birth Estate-A fertility-shock
+   estimation on October 3. Local fresh-reference and dated-accounting checks
+   passed; Torch exact-loop smoke and fit release are tracked in
+   [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
+   This authorization does not certify a transition result. The hard-versus-soft
+   economic choice remains distinct.
 2. **Identification and weights:** count is ten moments for ten free parameters.
    Check informative rank/substitution and the two near-bound fertility/continuation
    noise parameters. National ACS uncertainty and the early-fertility weight remain

@@ -1,0 +1,110 @@
+{
+  "attempts": [
+    {
+      "label": "price_start",
+      "price": 0.7760569760205563,
+      "reason": "fresh initial price evaluation",
+      "renewal_residual": 0.4693081913704864,
+      "status": "observed"
+    },
+    {
+      "label": "expand_01",
+      "price": 1.2416911616328903,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.4465784832351565,
+      "status": "observed"
+    },
+    {
+      "label": "expand_02",
+      "price": 1.9867058586126245,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.407190734846298,
+      "status": "observed"
+    },
+    {
+      "label": "expand_03",
+      "price": 3.1787293737801994,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.3361004003297474,
+      "status": "observed"
+    },
+    {
+      "label": "expand_04",
+      "price": 5.0859669980483195,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.19796053752578469,
+      "status": "observed"
+    },
+    {
+      "label": "expand_05",
+      "price": 6.318956013969669,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.1025104211342307,
+      "status": "observed"
+    },
+    {
+      "label": "expand_06",
+      "price": 0.4850356100128477,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.4819534018868583,
+      "status": "observed"
+    },
+    {
+      "label": "expand_07",
+      "price": 0.3031472562580298,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.48747552220082624,
+      "status": "observed"
+    },
+    {
+      "label": "expand_08",
+      "price": 0.18946703516126862,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.4890906510321176,
+      "status": "observed"
+    },
+    {
+      "label": "expand_09",
+      "price": 0.11841689697579288,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.4888590578699472,
+      "status": "observed"
+    },
+    {
+      "label": "expand_10",
+      "price": 0.09873368771827608,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=1; resumed=True",
+      "renewal_residual": 0.4886116441594892,
+      "status": "observed"
+    }
+  ],
+  "bounds_origin_qref": 0.7898695017462086,
+  "bounds_role": "external numerical search caps; not economic restrictions",
+  "events": [
+    {
+      "direction": 1,
+      "price": 6.318956013969669,
+      "reason": "diagnostic_price_cap"
+    },
+    {
+      "direction": -1,
+      "price": 0.11841689697579288,
+      "reason": "unexpected_nonnegative_slope_try_other_direction",
+      "slope": 0.003259573705061499
+    },
+    {
+      "direction": -1,
+      "price": 0.09873368771827608,
+      "reason": "diagnostic_price_cap"
+    }
+  ],
+  "expansion_factor": 1.6,
+  "lower": 0.09873368771827608,
+  "maximum_expansion_attempts": 20,
+  "maximum_new_lifecycle": 32,
+  "method": "adaptive_multiplicative_then_safeguarded_secant",
+  "requested_start": "0.7760569760205563",
+  "start": 0.7760569760205563,
+  "termination_reason": "both_diagnostic_price_caps",
+  "upper": 6.318956013969669
+}
