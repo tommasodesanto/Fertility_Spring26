@@ -1,0 +1,54 @@
+{
+  "attempted_at": "2026-10-04T22:54:42.385557+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--time=00:30:00",
+    "/scratch/td2248/projects/current_estate_two_shock_20261004_v5/launch_torch.sh",
+    "smoke",
+    "smoke_v1"
+  ],
+  "cpus": 1,
+  "empirical_fitted": false,
+  "fixed_candidate_horizon": 6,
+  "host_authentication": "PASS_ZERO_SOLVES_PACKAGE",
+  "internal_seconds": 1680,
+  "inventory_sha256": "e83bee63d9b6b8cf85e4bdd3e60a2209b9bbfa1ecc8d9483773762e5bab60c45",
+  "job_id": "19182568",
+  "launcher_start": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/results/smoke_smoke_v1/launcher_start.json",
+    "sha256": "64eaa204582cc61185f5715b8ae636884afa5c645703d7eb0b9b5f72d62a89d5"
+  },
+  "lead_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/lead_initializer_review.json",
+    "sha256": "1d600dfa6a365cca170d07919eb14ba717f79a10b34ee62546ed8a33ebd1b4c5"
+  },
+  "local_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5",
+  "memory_gib": 24,
+  "native_call_cap": 400,
+  "native_progress_verified": false,
+  "no_auto_retry": true,
+  "no_duplicate_claim_or_output": true,
+  "remote_claim_job_id": "19182568",
+  "remote_root": "/scratch/td2248/projects/current_estate_two_shock_20261004_v5",
+  "response_at": "2026-10-04T22:54:43.893144+00:00",
+  "returncode": 0,
+  "scheduler_deadline": "2026-10-04T19:24:46-04:00",
+  "scheduler_node": "cl017",
+  "scheduler_start": "2026-10-04T18:54:46-04:00",
+  "scheduler_state": "RUNNING",
+  "scheduler_verified_at": "2026-10-04T22:55:31.953124+00:00",
+  "scientific_validation": false,
+  "seed": {
+    "horizon": 4,
+    "maps_per_stage": 5,
+    "perturbed_date": 1
+  },
+  "status": "SUBMITTED",
+  "stderr": "",
+  "stdout": "19182568",
+  "unrelated_scheduler_jobs_preserved": [
+    "19182491_0"
+  ],
+  "wall_seconds": 1800
+}
