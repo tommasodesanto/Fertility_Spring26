@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-04T07:47:28.801322+00:00",
+  "inventory_sha256": "335ee15a617b0d1c20c483ad231e8ce0d3f4d09977aaceb97cefff3239ee44e2",
+  "patched_source_sha256": "379a3f31f183cdf01ddb0a7a9f7127662c41f43f7654cc26e7154e49b781d0bb",
+  "only_four_line_diagnostic_source_delta": true,
+  "complete_plans_equal_except_identity_and_handoff": true,
+  "parent_and_active_source_unchanged": true,
+  "negative_checks": [
+    {
+      "case": "inventory_identity",
+      "rejected": true,
+      "reason": "Inventory identity missing patched hash"
+    },
+    {
+      "case": "handoff_pin",
+      "rejected": true,
+      "reason": "Handoff pin differs"
+    }
+  ],
+  "native_calls": 0,
+  "fresh_native_smoke_still_required": true
+}

@@ -797,8 +797,12 @@ manuscript wording or certify a new paper calibration.
    path during its second candidate endpoint, after completing its initial
    24/32-date trial. Tasks 6, 8, 9 and 10 remain active. Rejected initial
    trials do not establish equilibrium infeasibility. The four-line routing
-   fix is being packaged as a separate v8 continuation; no new job is yet
-   submitted and no running source is changed. Both local searches have
+   fix was staged separately as v8, whose zero-solve preflight caught a stale
+   handoff-reference hash. V9 corrects only that metadata and passed actual container/native-constructor
+   preflight with zero solves and eight threads. Its one-hour smoke 19146797
+   was submitted in `cs` and was pending at 04:00 New York. Only index 4 may
+   restart after fresh smoke review; no replacement search is submitted and
+   no running source is changed. Both local searches have
    completed two 24/32-date trial measurements and are evaluating candidate 3. Local index 7 has now completed both horizons at its initial
    trial: fertility 2.075417 versus target 1.645750, gap +0.429667. This
    is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)

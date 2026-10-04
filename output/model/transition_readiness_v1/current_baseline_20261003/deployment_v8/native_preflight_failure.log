@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/transition.py", line 209, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/transition.py", line 201, in main
+    receipt = preflight(plan)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/transition.py", line 133, in preflight
+    return controller.preflight(plan)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 95, in preflight
+    require(plan['identity']['reference_sha256']==plan['handoff']['sha256'], 'Native reference identity must equal selected handoff pin')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 38, in require
+    raise ValueError(message)
+ValueError: Native reference identity must equal selected handoff pin
