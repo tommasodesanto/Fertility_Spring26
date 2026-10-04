@@ -768,8 +768,9 @@ manuscript wording or certify a new paper calibration.
    estimation on October 3 and clarified on October 4 that different shock
    guesses must run simultaneously, with at most 48 nodes. The current design
    uses twelve independently refining scalar-fit starts, each with the same
-   saved baseline, target contract and numerical gates. Local checks passed;
-   Torch smoke 19139732 is running and array release is tracked in
+   saved baseline, target contract and numerical gates. Torch smoke 19139732
+   passed; twelve six-hour searches are submitted as array 19140535 and were
+   queued as of October 4 at 01:03 New York. Live receipts and fit outcomes are in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
    economic choice remains distinct.
