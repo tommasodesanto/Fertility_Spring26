@@ -197,23 +197,34 @@ revised-timing old-wealth anchor, preserving different estate/target definitions
 and providing arithmetic rescoring under both target systems. Neither result
 changes the working baseline or certifies optimizer/grid convergence.
 
-**October 4 financing diagnostic at the lower-wealth one-birth winner:** two
-sequential fixed-price lifecycle solves compare financed shares 0.8 and 1.0 at
-price 0.7811670615311468, holding the winner's preferences, Estate-A valuation,
-H0, one-birth cap, entry and other economic inputs fixed. The 0.8 baseline
-reproduces all 14 verified target moments (maximum scored-residual difference
-8.4e-14). The 1.0 solve is **unaccepted**: its native report stopped on the
-unchanged negative-estate gate, with net-negative death estates 1.1913e-8 versus
-the 1e-10 limit; affected death mass is 1.2709e-7 out of 0.061733 total deaths.
-The shortfall is concentrated in two-room owners. No gate was relaxed or case
-rerun. Saved-distribution diagnostics, explicitly provisional for 1.0, show
-ownership 69.617% to 81.897%, explicit births -2.164%, and completed-interview-
-age-25 children ever born 0.549585 to 0.538026. Age-25 motherhood falls from
-44.607% to 43.540%, while children conditional on motherhood rise from 1.232071
-to 1.235715. Both arms retain 17 standard plots; full relaxed target reporting
-is unavailable after the acceptance failure. See the [diagnostic packet](output/model/experiments/birth_count_choice/credit_at_binary_winner_v1/README.md)
-for source pins, baseline fit, raw distributions, estate ledger and CDF. This
-is neither an accepted policy counterfactual nor a GE or recalibration result.
+**October 4 financing diagnostic at the lower-wealth one-birth winner:** the
+author requested that negative death estates be infeasible. The isolated
+birth-count experimental solver now enforces
+\(b'\ge -(1-\psi)Ph'\) whenever death is possible, including terminal age,
+for buyers and stayers; renters face \(b'\ge0\). The floor is maximized with
+existing credit restrictions before saving optimization, without changing
+utility, accounting, mass, or acceptance tolerances. The omitted ordinary
+buyer branch caused the earlier tiny negative-estate tail; it was not mere
+roundoff. Historical gross-estate variants and other solver copies are unchanged.
+
+Two fresh one-core fixed-price solves at price 0.7811670615311468 hold all
+winner parameters, H0, entry, fiscal inputs and the one-birth menu fixed,
+comparing nominal financed shares 0.8 and 1.0. At death-risk ages the latter
+is additionally limited by net sale proceeds (94% of gross house value).
+Both pass the unchanged native partial-equilibrium checks, with exactly zero
+negative-estate amounts and death mass and zero feasibility-projection mass.
+The baseline reproduces the verified 14-row fit and 31 parameters (maximum
+scored-residual difference 8.4e-14; loss 21.2754133610716). Ownership rises
+from 69.617% to 81.897%; explicit births fall about 2.164%. Thus correcting
+solvency does not materially change the prior descriptive response.
+
+The [corrected diagnostic packet](output/model/experiments/birth_count_choice/credit_at_binary_winner_v2/README.md)
+retains source pins, branch tests, baseline fit/parameters, PE receipts, saved
+distributions and 17 standard plots per arm. The relaxed fixed-price case has
+renewal residual -0.0216386 and is **not a general equilibrium or recalibration**;
+no relaxed 14-row GE report is claimed. The [earlier rejected packet](output/model/experiments/birth_count_choice/credit_at_binary_winner_v1/README.md)
+is preserved. This correction is confined to the birth-count experiment;
+no cluster searches, canonical defaults or manuscript were changed.
 
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain
