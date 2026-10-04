@@ -1,0 +1,47 @@
+{
+  "schema": "two_shock_seed_interface_native_verification_v1",
+  "reviewed_epoch": 1791131683.827165,
+  "status": "repair_verified_at_actual_path_stage",
+  "completed_candidate": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0001/complete.json",
+    "sha256": "f5d62ecb69fc14bdb49c43cad13983ada0cf5714121e83301ef77d529b3c2b7f"
+  },
+  "roots": [
+    {
+      "horizon": 6,
+      "pin": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0001/horizon_006/root.json",
+        "sha256": "845a20480bb5d69e4de4e09c1b5d7d0b582d3f79dfd712fd4b8e8367444b42e2"
+      },
+      "evaluations": 2,
+      "gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_gap": 0.0
+    },
+    {
+      "horizon": 8,
+      "pin": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0001/horizon_008/root.json",
+        "sha256": "9896a0d10cf83894c05d840e44095c5ca20e3bafc087b0cbffa544c5515f4846"
+      },
+      "evaluations": 2,
+      "gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_gap": 0.0
+    }
+  ],
+  "all_candidate_evidence_pins_verified": true,
+  "smoke_complete": false,
+  "empirical_fit_released": false,
+  "disclosure": "Synthetic baseline candidate only. Both scalar fits, accepted prefix and second-stage inherited-state loop are still pending."
+}
