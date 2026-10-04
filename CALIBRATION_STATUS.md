@@ -817,6 +817,13 @@ manuscript wording or certify a new paper calibration.
    and both local searches remain active. All existing searches and their
    sources remain unchanged. At 07:04 New York both local searches had
    completed five 24/32-date trial measurements and were evaluating candidate 6.
+   Both local workers subsequently stopped at their internal 21,480-second
+   deadline during candidate 6, verified 07:34 New York. The traceback shows
+   watchdog TimeoutError wrapped by Numba SystemError, not a memory stop;
+   [failure evidence](output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/budget_failure_review.json)
+   preserves both receipts. Seven cluster searches remain active. A separate
+   numerical-initialization loader is under implementation review; no new
+   fit is launched and no existing budget or gate is extended.
    The best completed local trial, index 5 at psi_child=0.12839959665634437,
    reports fertility 1.714388 versus target 1.645750, gap +0.068638. This
    is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)

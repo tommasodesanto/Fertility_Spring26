@@ -1,0 +1,17 @@
+{
+  "started_utc": "2026-10-04T11:37:53.574255+00:00",
+  "pid": 87510,
+  "command": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "-T",
+    "torch",
+    "sleep 14400"
+  ],
+  "maximum_seconds": 14400,
+  "previous_keepalive_pid": 31864,
+  "purpose": "Retain authenticated session through existing v9 job deadline; no model work on login node"
+}

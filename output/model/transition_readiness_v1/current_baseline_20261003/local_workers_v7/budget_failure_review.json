@@ -1,0 +1,81 @@
+{
+  "verified_at": "2026-10-04T11:37:53.507835+00:00",
+  "cause": "Internal21480second deadline triggered watchdog; Numba reported SystemError wrapping TimeoutError. No memoryguard termination.",
+  "workers": [
+    {
+      "index": 5,
+      "status": "failed",
+      "elapsed_seconds": 21490.916125999996,
+      "error": {
+        "status": "FAILED",
+        "error_type": "SystemError",
+        "error": "CPUDispatcher(<function full_owner_block_kernel at 0x107f88d60>) returned a result with an exception set",
+        "scientific_validation": false,
+        "production_ready": false,
+        "actual_policy_calls": 4788,
+        "control_accounted_policy_calls": 4410,
+        "policy_call_count_mismatch": true,
+        "policy_call_count_source": "runtime_total_native_calls"
+      },
+      "receipt": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_receipt.json",
+        "sha256": "f6113b4bfae2f687ebc830d845df71e49a3ab12600aec066409cc7836d4a7ff7"
+      },
+      "traceback_excerpt": "Matplotlib is building the font cache; this may take a moment.\n/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py:164: RuntimeWarning: divide by zero encountered in matmul\n  J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)\n/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py:164: RuntimeWarning: overflow encountered in matmul\n  J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)\n/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py:164: RuntimeWarning: invalid value encountered in matmul\n  J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)\nTraceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/lib/python3.13/site-packages/numba/core/serialize.py\", line 30, in _numba_unpickle\n    def _numba_unpickle(address, bytedata, hashed):\n    \n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py\", line 623, in timeout\n    raise TimeoutError('Bounded native numerical call timed out')\nTimeoutError: Bounded native numerical call timed out\n\nThe above exception was the direct cause of the following exception:",
+      "best_completed": {
+        "psi": 0.12839959665634437,
+        "model": 1.7143879141286649,
+        "gap": 0.06863791412866482,
+        "payload": {
+          "candidate": 5,
+          "models": [
+            1.6933377914967078,
+            1.709496459512693,
+            1.7115053694197429,
+            1.7143879141286649
+          ],
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0005"
+        }
+      },
+      "acceptance": false
+    },
+    {
+      "index": 7,
+      "status": "failed",
+      "elapsed_seconds": 21490.906252040993,
+      "error": {
+        "status": "FAILED",
+        "error_type": "SystemError",
+        "error": "CPUDispatcher(<function full_owner_block_kernel at 0x10c4fcd60>) returned a result with an exception set",
+        "scientific_validation": false,
+        "production_ready": false,
+        "actual_policy_calls": 4787,
+        "control_accounted_policy_calls": 4692,
+        "policy_call_count_mismatch": true,
+        "policy_call_count_source": "runtime_total_native_calls"
+      },
+      "receipt": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_receipt.json",
+        "sha256": "87fe43c52811deadcbd8fb816a793e6b7e463b3638132777ff433cade1cba846"
+      },
+      "traceback_excerpt": "Matplotlib is building the font cache; this may take a moment.\n/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py:164: RuntimeWarning: divide by zero encountered in matmul\n  J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)\n/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py:164: RuntimeWarning: overflow encountered in matmul\n  J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)\n/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py:164: RuntimeWarning: invalid value encountered in matmul\n  J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)\nTraceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/lib/python3.13/site-packages/numba/core/serialize.py\", line 30, in _numba_unpickle\n    def _numba_unpickle(address, bytedata, hashed):\n    \n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py\", line 623, in timeout\n    raise TimeoutError('Bounded native numerical call timed out')\nTimeoutError: Bounded native numerical call timed out\n\nThe above exception was the direct cause of the following exception:",
+      "best_completed": {
+        "psi": 0.13028987456957009,
+        "model": 1.7301885487861541,
+        "gap": 0.08443854878615409,
+        "payload": {
+          "candidate": 5,
+          "models": [
+            1.7084518349639475,
+            1.724776366000481,
+            1.7270739153538903,
+            1.7301885487861541
+          ],
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0005"
+        }
+      },
+      "acceptance": false
+    }
+  ],
+  "continuation_scope": "Separate authenticated numerical warm-start loader under review. No optimizer-state resume, new fit launch, gate change, or budget extension yet."
+}
