@@ -223,7 +223,7 @@ benefit at \(m=0\); the first-birth cost and bequest motive are separate objects
 Historical lower-\(A(m)\), renter-borrowing and other utility probes are
 diagnostics, not silently adopted components of this reference.
 
-**Normalized CES-limit share test; four-chain array 19133352 running; verified October 3 at 22:32:52 New York.** The
+**Normalized CES-limit share test; four-chain array 19133352 completed; verified October 4, New York.** The
 experimental composite denominator applies in all family states:
 \(Q=c^{\alpha(m)}s^{1-\alpha(m)}/[\alpha(m)^{\alpha(m)}(1-\alpha(m))^{1-\alpha(m)}]\).
 There is no childless-share numerator or reference-rent correction. The
@@ -265,7 +265,7 @@ the immutable v5 package. All 17 final smoke plots match the inspected v4 packet
 Authenticated unbracketed candidates receive a numerical penalty; budget exhaustion
 stops search and verifies the best completed result. Other errors are terminal.
 Local checks are 11 passed/1 skipped; all four mock loops passed.
-No overnight calibration result or adoption is yet established.
+All four tasks completed (exit 0:0), with fresh native GE and exact-repeat verification. Completed objective evaluations: 82/94/79/68; verified losses: 2444.251/2336.447/2651.199/3637.065. All stopped at the minimum native-GE start reserve, not optimizer convergence. Best chain 1 fits aggregate housing reasonably but misses fertility composition, first-birth timing and recent-parent ownership response; [full 14-row fit, all 11 free parameters, 31 parameter records and standard plots](output/model/experiments/ces_normalized_shares/overnight_v1/final_results/README.md). No adoption or best-attainable-fit claim is established.
 The native postcheck requires 11 coordinates, full 14-row experimental target
 CSV, 31 parameter records, 17 plots, and exact repeat.
 See [experiment specification](code/model/experiments/ces_normalized_shares/README.md),
