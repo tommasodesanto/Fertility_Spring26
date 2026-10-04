@@ -140,7 +140,7 @@ This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
 **Estate-A recovery submitted October 4 at 01:15 New York; all 15 tasks in Slurm
-array 19141024 started by 01:20. At the October 4, 05:00 New York check, 14 tasks remain RUNNING; task 6 (count3 chain 1) failed at 04:56:47.** The failed candidate exhausted the per-GE lifecycle allowance: 31 price trials used, one solve retained for exact repeat, and renewal residuals still outside acceptance. About 16,393 seconds remained in its search window, so this was not the repaired wall-clock boundary bug. Its saved best remains provisional; no automatic retry or gate relaxation occurred. All other checkpoints were recent.
+array 19141024 started by 01:20. At the October 4, 07:00 New York check, 12 tasks remain RUNNING; count3 chains 0, 1 and 6 have failed.** Chain 1 stopped at 04:56:47, chain 6 at 06:01:50 and chain 0 at 06:57:22. Each failed candidate used 31 lifecycle solves, retaining one for exact repeat, without meeting the renewal tolerance. Chains 0 and 6 still had about 9,163 and 12,497 seconds in their search windows; these are numerical solve-cap failures, not the repaired wall-clock boundary bug. Their saved best points remain provisional; no automatic retry or gate relaxation occurred. All 12 other checkpoints were recent.
 
 The failed-parent-dependent
 controllers **19136605** and **19139361** were canceled; their proposed native
