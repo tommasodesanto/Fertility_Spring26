@@ -1,0 +1,56 @@
+{
+  "schema": "two_shock_full_horizon_validation_scope_v1",
+  "created_epoch": 1791133558.194883,
+  "prior_failure": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/attempt2_terminal.json",
+    "sha256": "44b3afda2c936a787baa6170b622da0d47e8b25598ee2d1038e8ef12c7cf8cad"
+  },
+  "purpose": "Validate exact two-stage scalar-fit, derivative, selected replay, nonanticipating prefix, both queues, inherited-state seed, checkpoint and standard-plot loop at intended numerical controls before empirical estimation.",
+  "economic_changes_relative_to_attempt2": "None; still synthetic baseline preference and targets. Two-surprise experiment itself remains author-requested, not adopted baseline.",
+  "horizons": [
+    24,
+    32
+  ],
+  "path_evaluations": 12,
+  "scalar_evaluations_per_stage": 12,
+  "stages": 2,
+  "maximum_candidate_evaluations": 24,
+  "endpoint_iterations": 48,
+  "endpoint_seconds": 1800,
+  "shared_internal_seconds": 21480,
+  "external_wall_seconds": 21600,
+  "maximum_actual_native_calls": 20000,
+  "cores": 1,
+  "owned_rss_limit_gib": 24,
+  "maximum_sleep_prevention_seconds": 21660,
+  "synthetic_targets": [
+    2.1000000000175905,
+    2.1000000000175905
+  ],
+  "initial_preferences": [
+    0.17892072066041628,
+    0.17892072066041628
+  ],
+  "forecast_padding": false,
+  "cost_estimate": {
+    "hours": [
+      3,
+      5
+    ],
+    "uncertainty": "Rough extrapolation, not guarantee; hard six-hour cap may bind.",
+    "basis": "Attempt2 derivative pair at h6/h8 took 484.39 s; approximate horizon factor (24+32)/(6+8)=4. Four derivative pairs across two stages suggest 2.15 h before reference, seeds, baseline candidates, final replays, endpoints and plots. Original one-shock full run took 3h8m.",
+    "observed_short_probe_root_seconds": [
+      199.92459779104684,
+      284.46656295796856
+    ]
+  },
+  "stop_criteria": [
+    "Any original source, economic, root, replay, accounting, horizon, handoff or export gate failure",
+    "Shared 21480 seconds or 20000 actual native calls",
+    "External 21600 seconds or owned RSS above24GiB",
+    "Investigate 30min without actual native progress"
+  ],
+  "acceptance": "Both scalar fits and selected fresh replays, strict horizon comparison, exact nonanticipating prefix/queues, exact2023 checkpoint,17standard plot names; inspected actual evidence and exit0 before any empirical fit.",
+  "no_old_budget_extended": true,
+  "empirical_fit_launched": false
+}

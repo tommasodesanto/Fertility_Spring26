@@ -149,7 +149,7 @@ def main(argv=None):
     if a.mode=='run':
         try: pin=validate_pin(a.smoke_receipt_pin)
         except (ValueError,TypeError,json.JSONDecodeError) as exc:p.error(str(exc))
-    maximum=3600 if a.mode=='smoke' else 21600
+    maximum=21600
     if not 1<=a.wall_seconds<=maximum:p.error(f'--wall-seconds must be 1..{maximum} for {a.mode}')
     if not 1<=a.memory_gib<=24:p.error('--memory-gib must be 1..24')
     driver,manifest=str(Path(a.driver).absolute()),str(Path(a.manifest).absolute())

@@ -1,0 +1,84 @@
+{
+  "actual_constructor": "PASS",
+  "changed_files": {
+    "code/cluster/estate_birth_transition/launch_continuation.py": "6b8b997254421e27a85ee8cf33041d89518df5a2f524164e59462387f9a5816f",
+    "code/cluster/estate_birth_transition/test_launch_continuation.py": "5a2e20d535cf1f8e484aae80a710567f10711759661df4e549acbee74716579d",
+    "code/model/experiments/birth_count_choice/test_two_shock.py": "8f2a8b1c28a62d7401f68877c18c3cacdc7a05271779f95346a46cac30a2ce2e",
+    "code/model/experiments/birth_count_choice/two_shock.py": "dec3be9c51441832493935316028103f9fa9d1e5797e94bb921abb2c263d9573"
+  },
+  "epoch": 1791133752.278334,
+  "failure": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/attempt2_terminal.json",
+    "sha256": "44b3afda2c936a787baa6170b622da0d47e8b25598ee2d1038e8ef12c7cf8cad"
+  },
+  "native_calls": 0,
+  "plans": {
+    "fit": {
+      "manifest": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/inputs/fit_manifest.json",
+        "sha256": "6f3d534c2512eda7cca3000f302938900a751cc3e1543305d7253954be0d7b1c"
+      },
+      "preflight": {
+        "fingerprints": {
+          "contract": "2b8252c037d40b1a2156348028107235388cc29e011e6332b4abfdca222cf38e",
+          "controls": "386d479e8da0c68fece9bfaa3f449c0a7832c757d9ae716f30e736afe7368e4e",
+          "smoke_controls": "8547faba9dedd3daa0ece9ede0f1fd22f0c56fcbc5d76430e9e341508061d059",
+          "source": "151f709ddb8791b7c49a50a28db1f53c5ac4b655cffaedc9d9dc64f99e715530"
+        },
+        "horizons": [
+          24,
+          32
+        ],
+        "native_calls": 0,
+        "policy_call_stop_cap": 20000,
+        "production_ready": false,
+        "schema": "estate_a_two_unanticipated_psi_v1",
+        "scientific_validation": false,
+        "status": "PASS",
+        "total_seconds": 21480
+      }
+    },
+    "smoke": {
+      "manifest": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/inputs/smoke_manifest.json",
+        "sha256": "ce2726424c9a027178b3f46f68006f0bbc210d489439fa9a92330ad14c212551"
+      },
+      "preflight": {
+        "fingerprints": {
+          "contract": "2b8252c037d40b1a2156348028107235388cc29e011e6332b4abfdca222cf38e",
+          "controls": "386d479e8da0c68fece9bfaa3f449c0a7832c757d9ae716f30e736afe7368e4e",
+          "smoke_controls": "8547faba9dedd3daa0ece9ede0f1fd22f0c56fcbc5d76430e9e341508061d059",
+          "source": "151f709ddb8791b7c49a50a28db1f53c5ac4b655cffaedc9d9dc64f99e715530"
+        },
+        "horizons": [
+          24,
+          32
+        ],
+        "native_calls": 0,
+        "policy_call_stop_cap": 20000,
+        "production_ready": false,
+        "schema": "estate_a_two_unanticipated_psi_v1",
+        "scientific_validation": false,
+        "status": "PASS",
+        "total_seconds": 21480
+      }
+    }
+  },
+  "production_ready": false,
+  "review": "Lead inspected numerical-control diff. Only smoke numerical size/budget and fingerprint matching changed; native equations, runtime, fitter, targets, bounds and gates unchanged. Endpoint padding disabled. Both prepared modes use identical full numerical controls.",
+  "schema": "two_shock_full_horizon_lead_preflight_v1",
+  "scientific_validation": false,
+  "scope": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/validation_scope.json",
+    "sha256": "553372d813d0f7ca9e8eb996d1baee76d766a13e602963ac8de1ce12ca58dc5c"
+  },
+  "source_identity_matches": true,
+  "status": "PASS",
+  "tests": {
+    "actual_children_during_tests": 0,
+    "launcher": 8,
+    "two_shock": 21
+  },
+  "unchanged_runtime_sha256": "06b1d9e1d7592457d5af0e6f700b95e7168c2b28b6a3f1ee4724b9c0cf9e9b26",
+  "unchanged_v9_files": 709
+}

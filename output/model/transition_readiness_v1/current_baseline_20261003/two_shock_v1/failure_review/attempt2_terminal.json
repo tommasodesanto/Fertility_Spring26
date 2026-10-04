@@ -1,0 +1,111 @@
+{
+  "schema": "two_shock_attempt2_terminal_review_v1",
+  "reviewed_epoch": 1791133558.194144,
+  "status": "failed",
+  "terminal": {
+    "manager_pid": 38761,
+    "finished_epoch": 1791132280.6199958,
+    "worker_pid": 38763,
+    "exit_code": 1,
+    "reason": "worker_exit_nonzero",
+    "forced_kill_after_grace": false
+  },
+  "terminal_pin": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/manager_terminal.json",
+    "sha256": "d7df6cefbb4b388d6abccdf88122afe1c3e6511b05bfaeada017d34f1e519703"
+  },
+  "failure": {
+    "completed_cases_retained": true,
+    "exception": "RuntimeError",
+    "native_calls": 186,
+    "policy_calls": 186,
+    "production_ready": false,
+    "reason": "Uncertified derivative proposal; stop without scoring its fertility",
+    "schema": "estate_a_two_unanticipated_psi_v1",
+    "status": "failed"
+  },
+  "failure_pin": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/failure.json",
+    "sha256": "3614c3630b0a8f2d207078869b07c95f396bb33015839afdaff51518c45d5984"
+  },
+  "pids_checked_absent": [
+    38761,
+    38762,
+    38763
+  ],
+  "classification": "Uncertified derivative proposals: negative probe failed strict short-horizon stability; positive probe exhausted six evaluations with housing gate false. Not memory failure or demonstrated economic infeasibility.",
+  "negative_probe": {
+    "comparison": {
+      "classification": "Strict finite diagnostic horizon comparison; terminal gates remain separate",
+      "early_macro_periods": 5,
+      "early_macro_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023
+      ],
+      "fertility_absolute_gaps": [
+        0.0002273798825784823,
+        0.00023367657854089785,
+        0.0008479551068942826,
+        0.0012477350026047773
+      ],
+      "fertility_tolerance": 0.001,
+      "fertility_windows": 4,
+      "macro_tolerance": 0.001,
+      "passed": false,
+      "relative_gaps": {
+        "adult_population": 3.3428793050076153e-06,
+        "asset_price": 0.001478254233716878,
+        "birth_children": 0.000720131488180057,
+        "housing_demand": 0.0009476325470490456,
+        "pension_period_units": 3.4769153878210495e-06,
+        "renter_price": 0.0035614976323396245
+      },
+      "terminal_passes": [
+        false,
+        false
+      ]
+    },
+    "comparison_pin": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/horizon_comparison.json",
+      "sha256": "e0b9698ef31f92582c8b045f9a257f2324040310de04ecc5600300b3a3bfa4b3"
+    },
+    "root_pins": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/horizon_006/root.json",
+        "sha256": "c8d64141b1a71efbdf638925d85fc85cfe43f544187d503b14314749f8b8c2ac"
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/horizon_008/root.json",
+        "sha256": "5500b0420c11f76a50e2d7169b5251ad10057eadfa3f2cda4abb84ce802ff758"
+      }
+    ],
+    "both_roots_converged": true
+  },
+  "positive_probe": {
+    "status": "evaluation_budget",
+    "converged": false,
+    "evaluations": 6,
+    "gates": {
+      "fiscal_replay": true,
+      "housing": false,
+      "mapping": true,
+      "market_replay": true,
+      "social_security": true
+    },
+    "score": 1.0238941152218781,
+    "root_pin": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0003/horizon_006/root.json",
+      "sha256": "70c3da026db6686e389c5acd43b80df39885d037056dd192301ec3885f3780e5"
+    }
+  },
+  "preceding_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/attempt2_short_horizon.json",
+    "sha256": "bfdd319a8ee09f7312094b2ec0464a9d434e7e8a8b6611831644295a0835b448"
+  },
+  "completed_evidence_preserved": true,
+  "empirical_fit_released": false,
+  "next_validation": "New separately budgeted exact-loop smoke with original empirical 24/32 horizons, 12 path evaluations and unchanged tolerances. No old run extended or repeated unchanged."
+}

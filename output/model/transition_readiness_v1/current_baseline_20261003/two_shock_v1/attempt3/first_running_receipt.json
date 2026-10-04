@@ -1,0 +1,27 @@
+{
+  "verified_epoch": 1791133851.818989,
+  "pids": {
+    "manager": 43647,
+    "worker": 43649,
+    "caffeinate": 43648
+  },
+  "ps_stdout": "  PID  PPID STAT ELAPSED  %CPU    RSS COMMAND\n43647     1 Ss     01:03   0.0  23744 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/frozen/source/code/cluster/estate_birth_transition/launch_continuation.py --_manage --output /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/invocation.json --_nonce 0fa6e12e71234af9945066a38faf612d\n43648     1 Ss     01:03   0.0   3184 caffeinate -i -w 43647 -t 21660\n43649 43647 Rs     01:03  98.8 5905824 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/frozen/source/code/model/experiments/birth_count_choice/two_shock.py --manifest /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/inputs/smoke_manifest.json --smoke --output /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run\n",
+  "ps_exit": 0,
+  "manager_terminal_exists": false,
+  "worker_failure_exists": false,
+  "deadline_new_york": "19:09:48",
+  "status": {
+    "manager_pid": 43647,
+    "worker_pid": 43649,
+    "updated_epoch": 1791133849.0342221,
+    "elapsed_seconds": 60.105377583007794,
+    "deadline_epoch": 1791155388.9056,
+    "owned_pids": [
+      43649
+    ],
+    "owned_rss_bytes": 5524144128,
+    "memory_limit_bytes": 25769803776,
+    "status": "running",
+    "reason": "completed"
+  }
+}

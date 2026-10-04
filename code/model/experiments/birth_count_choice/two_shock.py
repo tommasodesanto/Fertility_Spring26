@@ -100,26 +100,24 @@ def prepare_manifest(base_plan_pin,source_pins=None,*,smoke=False,starts=(.14736
         base_plan=base_plan_pin,source_pins=sources,identity=copy.deepcopy(base['identity']),
         gates=copy.deepcopy(GATES),seed=dict(horizon=12,perturbed_date=5,log_step=1e-5),
         fit=copy.deepcopy(base['fit']),path=copy.deepcopy(base['path']),endpoint=copy.deepcopy(base['endpoint']),
-        budget=copy.deepcopy(base['budget']),horizons=[6,8] if smoke else [24,32],
+        budget=copy.deepcopy(base['budget']),horizons=[24,32],
         standard_plot_names=base['standard_plot_names'],execution_enabled=True,reviewed=True,
-        smoke_seed_endpoint_padding=bool(smoke),smoke_targets=[2.1000000000175905]*2 if smoke else None,
+        smoke_seed_endpoint_padding=False,smoke_targets=[2.1000000000175905]*2 if smoke else None,
         disclosure='Experimental two surprises; unchanged one-birth Estate-A economics. Provisional estate closure; no production certification.')
     if legacy_source_overlay is not None: plan['legacy_source_overlay']=copy.deepcopy(legacy_source_overlay)
     plan['stage_starts']=[dict(initial=BASELINE_PSI if smoke else float(v),bounds=[BASELINE_PSI*.01,BASELINE_PSI*2]) for v in starts]
     plan['fit']['max_evaluations']=12;plan['endpoint']['max_evaluations']=48
-    plan['path']['max_evaluations']=6 if smoke else 12
-    plan['budget'].update(total_seconds=3480 if smoke else 21480,maximum_policy_calls=2000 if smoke else 20000,endpoint_seconds=1800)
+    plan['path']['max_evaluations']=12
+    plan['budget'].update(total_seconds=21480,maximum_policy_calls=20000,endpoint_seconds=1800)
     return plan
 
 
 def fingerprints(plan):
-    controls={k:plan[k] for k in ('gates','seed','fit','endpoint')}
-    controls['path']={k:v for k,v in plan['path'].items() if k!='max_evaluations'}
+    controls={k:plan[k] for k in ('gates','seed','fit','endpoint','path','budget','horizons','smoke_seed_endpoint_padding')}
     return dict(source=digest(plan['source_pins']),contract=digest(dict({k:plan[k] for k in
         ('schema','kind','identity','baseline_psi','psi_bound_ratios','stages','rows','weights','target_contract')},legacy_source_overlay=plan.get('legacy_source_overlay'))),
-        controls=digest(controls),smoke_controls=digest(dict(horizons=[6,8],path_max_evaluations=6,
-          total_seconds=3480,maximum_policy_calls=2000,synthetic_targets=[2.1000000000175905]*2,
-          starts=[BASELINE_PSI]*2,endpoint_seed_padding=True)))
+        controls=digest(controls),smoke_controls=digest(dict(numerical_controls=controls,
+          synthetic_targets=[2.1000000000175905]*2,starts=[BASELINE_PSI]*2)))
 
 
 def preflight(plan):
@@ -128,12 +126,13 @@ def preflight(plan):
     require(plan.get('baseline_psi')==BASELINE_PSI and plan.get('psi_bound_ratios')==[.01,2.],'Original absolute preference bounds required')
     require(plan.get('weights')==[0,1,0,1] and [r['target'] for r in plan['rows']]==TARGETS,'Full four targets and weights required')
     require(plan.get('stages')==STAGES,'Both local target indices must be one; only stage1 advances')
-    require(plan['horizons']==([6,8] if plan['smoke'] else [24,32]),'Exact mode horizons required')
+    require(plan['horizons']==[24,32],'Exact shared horizons required')
+    require(plan.get('smoke_seed_endpoint_padding') is False,'Endpoint seed padding must be disabled in both modes')
     require(plan['gates']==GATES and plan['seed']==dict(horizon=12,perturbed_date=5,log_step=1e-5),'Original gates/seed required')
-    b=plan['budget'];require(b['total_seconds']==(3480 if plan['smoke'] else 21480) and b['maximum_policy_calls']==(2000 if plan['smoke'] else 20000),'Explicit shared mode budget required')
+    b=plan['budget'];require(b['total_seconds']==21480 and b['maximum_policy_calls']==20000,'Explicit shared mode budget required')
     require(plan['fit']['max_evaluations']==12 and plan['fit']['fertility_tolerance']==.005 and
         plan['endpoint']['max_evaluations']==48 and b['endpoint_seconds']==1800 and
-        plan['path']['max_evaluations']==(6 if plan['smoke'] else 12),'Original bounded iteration controls required')
+        plan['path']['max_evaluations']==12,'Original bounded iteration controls required')
     require(all(s['bounds']==[BASELINE_PSI*.01,BASELINE_PSI*2] and s['bounds'][0]<s['initial']<s['bounds'][1] for s in plan['stage_starts']),'Same absolute bounds and interior starts required')
     require(plan.get('reviewed') is True and plan.get('execution_enabled') is True,'Reviewed execution-enabled package required')
     if plan.get('legacy_source_overlay') is not None:
@@ -165,7 +164,9 @@ def preflight(plan):
         ('total_seconds','maximum_policy_calls','endpoint_seconds')),'Unmodified original per-stage budgets required')
     require(all(type(v) in (int,float) and math.isfinite(v) and v>0 for v in b.values()),'Every budget positive and finite')
     if plan['smoke']:
-        require(plan['smoke_targets']==[2.1000000000175905]*2 and all(x['initial']==BASELINE_PSI for x in plan['stage_starts']) and plan['smoke_seed_endpoint_padding'] is True,'Smoke synthetic zero-surprise contract required')
+        require(plan['smoke_targets']==[2.1000000000175905]*2 and all(x['initial']==BASELINE_PSI for x in plan['stage_starts']),'Smoke synthetic zero-surprise contract required')
+    else:
+        require(plan.get('smoke_targets') is None,'Empirical fit must use unchanged contract targets')
     original,_=lightweight_original(base)
     contract=original.target_contract(pinned(base['target_contract']['blocks']),pinned(base['target_contract']['annual']))
     require(contract==plan['target_contract'] and contract['rows']==plan['rows'],'Pinned annual-builder provenance differs')

@@ -25,7 +25,7 @@ def plan():
     return dict(schema=m.SCHEMA,kind='two_unanticipated_permanent',mode='diagnostic',smoke=False,
       baseline_psi=m.BASELINE_PSI,psi_bound_ratios=[.01,2.],stages=copy.deepcopy(m.STAGES),
       source_pins={},target_contract={},rows=[dict(decision_year=2007+4*i,target=t) for i,t in enumerate(m.TARGETS)],weights=[0,1,0,1],
-      horizons=[24,32],gates=m.GATES,seed=dict(horizon=12,perturbed_date=5,log_step=1e-5),
+      horizons=[24,32],smoke_seed_endpoint_padding=False,gates=m.GATES,seed=dict(horizon=12,perturbed_date=5,log_step=1e-5),
       identity=dict(source_pins={'source':'hash'},reference_sha256='r'),
       stage_starts=[dict(initial=x,bounds=[m.BASELINE_PSI*.01,m.BASELINE_PSI*2]) for x in (.15,.12)],
       budget=dict(total_seconds=21480,maximum_policy_calls=20000,candidate_seconds=100,path_seconds=100,seed_seconds=100,mapping_seconds=100,render_seconds=100,endpoint_seconds=1800),
@@ -156,6 +156,91 @@ class Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'local target'):m.preflight(p)
         p=plan();p['stage_starts'][1]['bounds'][0]*=2
         with self.assertRaisesRegex(ValueError,'absolute bounds'):m.preflight(p)
+
+class ManifestControlTests(unittest.TestCase):
+    def prepared_pair(self, directory):
+        base=plan()
+        base['identity']=copy.deepcopy(base['identity'])
+        base['target_contract']={'rows':base['rows']}
+        path=Path(directory)/'base.json';path.write_text(json.dumps(base))
+        return [m.prepare_manifest(m.pin(path),smoke=smoke) for smoke in (True,False)]
+
+    def test_smoke_and_fit_share_complete_numerical_controls(self):
+        with tempfile.TemporaryDirectory() as d:
+            smoke,fit=self.prepared_pair(d)
+        for key in ('horizons','gates','seed','fit','path','endpoint','budget','smoke_seed_endpoint_padding'):
+            self.assertEqual(smoke[key],fit[key],key)
+        self.assertEqual(smoke['horizons'],[24,32])
+        self.assertEqual(smoke['path']['max_evaluations'],12)
+        self.assertEqual(smoke['fit']['max_evaluations'],12)
+        self.assertEqual(smoke['endpoint']['max_evaluations'],48)
+        self.assertEqual(smoke['budget']['endpoint_seconds'],1800)
+        self.assertEqual(smoke['budget']['total_seconds'],21480)
+        self.assertEqual(smoke['budget']['maximum_policy_calls'],20000)
+        self.assertIs(smoke['smoke_seed_endpoint_padding'],False)
+        self.assertEqual(smoke['smoke_targets'],[2.1000000000175905]*2)
+        self.assertIsNone(fit['smoke_targets'])
+        self.assertEqual([s['initial'] for s in smoke['stage_starts']],[m.BASELINE_PSI]*2)
+        self.assertNotEqual(smoke['stage_starts'],fit['stage_starts'])
+        self.assertEqual(m.fingerprints(smoke),m.fingerprints(fit))
+
+    def test_both_modes_reject_short_controls_and_padding_before_source_load(self):
+        mutations=[('horizons',[6,8],'horizons'),
+            ('smoke_seed_endpoint_padding',True,'padding'),
+            ('smoke_seed_endpoint_padding',None,'padding')]
+        for mode in (True,False):
+            for key,value,message in mutations:
+                with self.subTest(smoke=mode,key=key,value=value):
+                    p=plan();p['smoke']=mode;p[key]=value
+                    with self.assertRaisesRegex(ValueError,message):m.preflight(p)
+            for key,value in (('total_seconds',3480),('maximum_policy_calls',2000)):
+                with self.subTest(smoke=mode,budget=key):
+                    p=plan();p['smoke']=mode;p['budget'][key]=value
+                    with self.assertRaisesRegex(ValueError,'budget'):m.preflight(p)
+            for block,value in (('path',6),('fit',6),('endpoint',24)):
+                with self.subTest(smoke=mode,block=block):
+                    p=plan();p['smoke']=mode;p[block]['max_evaluations']=value
+                    with self.assertRaisesRegex(ValueError,'iteration'):m.preflight(p)
+            p=plan();p['smoke']=mode;p['budget']['endpoint_seconds']=900
+            with self.assertRaisesRegex(ValueError,'iteration'):m.preflight(p)
+
+    def test_every_shared_numerical_block_is_fingerprinted(self):
+        p=plan();original=m.fingerprints(p)
+        for key in ('gates','seed','fit','path','endpoint','budget','horizons','smoke_seed_endpoint_padding'):
+            with self.subTest(key=key):
+                changed=copy.deepcopy(p)
+                if isinstance(changed[key],dict):
+                    entry=next(iter(changed[key]));changed[key][entry]+=1
+                elif key=='horizons':changed[key]=[6,8]
+                else:changed[key]=True
+                observed=m.fingerprints(changed)
+                self.assertNotEqual(observed['controls'],original['controls'])
+                self.assertNotEqual(observed['smoke_controls'],original['smoke_controls'])
+
+    def test_changed_source_or_controls_cannot_use_passed_receipt(self):
+        p=plan()
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'receipt.json'
+            path.write_text(json.dumps(dict(status='matched',schema=m.SCHEMA,smoke=True,fingerprints=m.fingerprints(p))))
+            receipt_pin=m.pin(path)
+            for kind in ('source','horizons','path','budget','padding'):
+                with self.subTest(kind=kind):
+                    changed=copy.deepcopy(p)
+                    if kind=='source':changed['source_pins']={'changed':'hash'}
+                    elif kind=='horizons':changed['horizons']=[6,8]
+                    elif kind=='path':changed['path']['max_evaluations']=6
+                    elif kind=='budget':changed['budget']['total_seconds']=3480
+                    else:changed['smoke_seed_endpoint_padding']=True
+                    with self.assertRaisesRegex(ValueError,'fingerprints differ'):
+                        m.validate_smoke_pin(changed,receipt_pin)
+
+    def test_unpassed_smoke_cannot_authorize_fit(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'receipt.json'
+            path.write_text(json.dumps(dict(status='failed',schema=m.SCHEMA,smoke=True)))
+            with self.assertRaisesRegex(ValueError,'Passed actual'):
+                m.validate_smoke_pin(plan(),m.pin(path))
+
 
 class NativeSeamTests(unittest.TestCase):
     @staticmethod

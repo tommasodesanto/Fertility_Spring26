@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 12:20 New York:** the
+   **Current transition direction, verified October 4 at 13:10 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -860,10 +860,18 @@ manuscript wording or certify a new paper calibration.
    Its first smoke stopped after 34 native calls on a seed-receipt interface
    error, after passing fresh reference, seed and endpoint preparation. The
    one-line repair preserves the full measured receipt; 16 focused tests and
-   the new staged zero-call constructor pass. A separate smoke launched at
-   12:19:53 New York, manager **38761**, worker **38763**, one core/24 GiB/one
-   hour, under `two_shock_v1/attempt2/smoke_job`. Empirical estimation is not
-   released until it actually passes. The first attempt remains preserved.
+   the staged zero-call constructor pass. The repaired second smoke ended at
+   12:44:40 New York with exit 1 and 186 native calls: its negative derivative
+   probe failed the unchanged 0.001 horizon comparison despite converged roots;
+   its positive probe exhausted six path evaluations with a failed housing gate.
+   These are numerical validation failures, not demonstrated infeasibility.
+   Both attempts are preserved. A separate validation began at 13:09:48 New York
+   under `two_shock_v1/attempt3/smoke_job`, manager **43647**, worker **43649**.
+   It uses empirical 24/32 horizons, 12 path evaluations, no forecast padding,
+   one core/24 GiB and an explicit new six-hour cap (deadline 19:09:48).
+   All 29 focused tests, both staged preflights and the zero-call native
+   constructor passed. Economics and acceptance tolerances are unchanged.
+   Empirical estimation remains gated on a complete smoke pass and artifact review.
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
 
    The one-shock scalar fit and fresh final replay **completed numerically** at
