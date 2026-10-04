@@ -6,6 +6,8 @@
 
 **Code handoff is a separate completed task:** the tested review ZIP is `output/model/review_bundle_20261003/Fertility_Model_Review_20261003.zip`. Cluster resource requests do not describe the ZIP's requirements or size.
 
+**Completed trial (02:39 New York):** local index 7 passed both 24/32-date convergence, replay and horizon checks at `psi_child=0.17534230624720795` (0.98 times baseline). Its 2020–2023 fertility is 2.075417 against 1.645750, gap +0.429667; it is **not matched**. The search continues. [Complete four-window table, trial bounds and baseline parameters](monitor/fit_progress.md).
+
 ## Verified facts and source identity
 
 - **Question:** estimate one permanent 2007 change in `psi_child` to match the retained **2020–2023 average fertility target 1.64575**. Earlier windows 2008–2011, 2012–2015 and 2016–2019 validate the path. One fitted moment identifies one shock parameter.

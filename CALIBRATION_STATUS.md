@@ -797,7 +797,11 @@ manuscript wording or certify a new paper calibration.
    trials do not establish equilibrium infeasibility. A four-line output-routing patch is prepared and mock-tested,
    but has not changed any running source. Both local 24-date roots
    converged with exact replay (zero reproduction gap); the 32-date checks
-   are running. No fertility fit is accepted yet. Live receipts and fit outcomes are in
+   are running. Local index 7 has now completed both horizons at its initial
+   trial: fertility 2.075417 versus target 1.645750, gap +0.429667. This
+   is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
+   retain the four target rows and all fixed parameter links. The search continues.
+   No fertility fit is accepted yet. Live receipts and fit outcomes are in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
    economic choice remains distinct.

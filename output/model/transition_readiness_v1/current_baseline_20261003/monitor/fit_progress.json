@@ -1,0 +1,169 @@
+{
+  "status": "completed_trial_not_matched",
+  "recorded_utc": "2026-10-04T06:43:04.526442+00:00",
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0001/complete.json",
+  "fit_rows": [
+    {
+      "moment": "period_tfr_2008_2011",
+      "decision_year": 2007,
+      "period": 0,
+      "birth_year_start": 2008,
+      "birth_year_end": 2011,
+      "target": 1.974875,
+      "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+      "sample": "US annual birth-registration rates; published female exposure",
+      "fixed_effects": "not applicable",
+      "clustering": "not applicable",
+      "uncertainty": null,
+      "sources": [
+        "https://www.cdc.gov/nchs/data/nvsr/nvsr66/NVSR66_01.pdf",
+        "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+      ],
+      "model": 2.0714675373875555,
+      "gap": 0.09659253738755558,
+      "weight": 0.0,
+      "loss_contribution": 0.0,
+      "role": "validation"
+    },
+    {
+      "moment": "period_tfr_2012_2015",
+      "decision_year": 2011,
+      "period": 1,
+      "birth_year_start": 2012,
+      "birth_year_end": 2015,
+      "target": 1.861,
+      "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+      "sample": "US annual birth-registration rates; published female exposure",
+      "fixed_effects": "not applicable",
+      "clustering": "not applicable",
+      "uncertainty": null,
+      "sources": [
+        "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+      ],
+      "model": 2.073977924195933,
+      "gap": 0.21297792419593287,
+      "weight": 0.0,
+      "loss_contribution": 0.0,
+      "role": "validation"
+    },
+    {
+      "moment": "period_tfr_2016_2019",
+      "decision_year": 2015,
+      "period": 2,
+      "birth_year_start": 2016,
+      "birth_year_end": 2019,
+      "target": 1.755375,
+      "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+      "sample": "US annual birth-registration rates; published female exposure",
+      "fixed_effects": "not applicable",
+      "clustering": "not applicable",
+      "uncertainty": null,
+      "sources": [
+        "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+      ],
+      "model": 2.0746541726357055,
+      "gap": 0.3192791726357056,
+      "weight": 0.0,
+      "loss_contribution": 0.0,
+      "role": "validation"
+    },
+    {
+      "moment": "period_tfr_2020_2023",
+      "decision_year": 2019,
+      "period": 3,
+      "birth_year_start": 2020,
+      "birth_year_end": 2023,
+      "target": 1.64575,
+      "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+      "sample": "US annual birth-registration rates; published female exposure",
+      "fixed_effects": "not applicable",
+      "clustering": "not applicable",
+      "uncertainty": null,
+      "sources": [
+        "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+      ],
+      "model": 2.075416638388689,
+      "gap": 0.4296666383886891,
+      "weight": 1.0,
+      "loss_contribution": 0.18461342014423654,
+      "role": "fitted"
+    }
+  ],
+  "parameter": {
+    "name": "psi_child",
+    "trial_value": 0.17534230624720795,
+    "lower": 0.001789207206604163,
+    "upper": 0.35784144132083257,
+    "near_bound": false,
+    "estimate_accepted": false
+  },
+  "fertility_tolerance": 0.005,
+  "source_receipt": {
+    "certified": true,
+    "psi": 0.17534230624720795,
+    "model": 2.075416638388689,
+    "gap": 0.4296666383886891,
+    "loss_contribution": 0.18461342014423654,
+    "payload": {
+      "candidate": 1,
+      "models": [
+        2.0714675373875555,
+        2.073977924195933,
+        2.0746541726357055,
+        2.075416638388689
+      ],
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0001"
+    },
+    "mode": "diagnostic",
+    "production_ready": false,
+    "one_shock_measurement_certified": true,
+    "horizon_comparison": {
+      "passed": true,
+      "relative_gaps": {
+        "asset_price": 5.858251650701091e-07,
+        "renter_price": 1.055191859703772e-06,
+        "adult_population": 1.694056777916718e-08,
+        "birth_children": 2.259252022362708e-06,
+        "housing_demand": 8.030050214166349e-07,
+        "pension_period_units": 3.2234533011114333e-08
+      },
+      "fertility_absolute_gaps": [
+        1.1520584002333578e-06,
+        1.9335462004832493e-06,
+        2.7546324186111804e-06,
+        3.617679502632143e-06
+      ],
+      "early_macro_periods": 5,
+      "early_macro_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023
+      ],
+      "fertility_windows": 4,
+      "macro_tolerance": 0.001,
+      "fertility_tolerance": 0.001,
+      "terminal_passes": [
+        false,
+        false
+      ],
+      "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+    },
+    "diagnostic_relaxed_finite_horizon_match": false,
+    "checkpoint_2023": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "4866f2fef54e2624f28e78a4e82d03fdd63f57e0b1c918fadbae2989aa274e12"
+    },
+    "shock_fit_complete": false,
+    "full_path_certified": false,
+    "state_experiment_ready": false,
+    "state_physical_horizon_stable": true,
+    "state_value_integrity": true,
+    "terminal_passes": [
+      false,
+      false
+    ],
+    "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
+  }
+}
