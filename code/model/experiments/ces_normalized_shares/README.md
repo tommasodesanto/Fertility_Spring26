@@ -52,6 +52,8 @@ coordinates do not establish informative rank.
 
 ## Verification status
 
+V4 and V5 smoke jobs passed the full native numerical gates and collectors, then Slurm reported failure in the EXIT-receipt bookkeeping. Production uses the separately verified launcher repair.
+
 The local adapter suite reports 11 passed and 1 skipped; all four mock-chain
 checks pass. V1 and v2 zero-solve preflights failed while packaging historical
 dependencies. V3 established the three-context preflight. V4 smoke job 19132298
@@ -61,14 +63,14 @@ function lacked an `os` import. V5 smoke job 19132940 passed the full native
 gate and collector; its 17 diagnostic plot hashes match v4. The final reviewed
 launcher fixes the EXIT receipt function's import, quoting, and valid-JSON
 newline only; model, search, target, and budget source stayed unchanged. Four
-local EXIT fixtures passed, preserving valid JSON and the original exit code.
+local and Torch EXIT fixtures passed, preserving valid JSON and the original exit code.
 The four-chain production array 19133352 (`0-3%4`) was submitted October 3 at
 22:31:16 EDT; all four tasks were verified `RUNNING` at 22:32:52 EDT. No
 calibrated result or adoption is established. Evidence is linked in the
 [experiment packet](../../../../output/model/experiments/ces_normalized_shares/overnight_v1/README.md).
 
 V5 retains `first_birth_fixed_cost=1.9` as a free coordinate in `[0,8]`; its
-original seed is unbracketed. A native GE may start only with at least 2,700
+original seed is unbracketed. A native GE may start only with more than 2,700
 seconds left: a 900-second minimum search-GE window plus the 1,800-second
 final-verification reserve. An authenticated numerical candidate that cannot
 be bracketed receives a `1e12` penalty; at a bounded-budget stop, the best

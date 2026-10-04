@@ -13,19 +13,20 @@ verified `RUNNING` on cs604/cs606/cs633 ([launch health](../../../output/model/e
 
 V4 smoke **19132298** passed its two-GE native gate and collector, then Slurm
 reported `FAILED 1:0` because its EXIT receipt function lacked an `os` import.
+V5 smoke likewise passed its numerical gate and collector, then failed in the same terminal bookkeeping.
 V5 leaves model, search and budget source unchanged; a separate reviewed
 launcher repairs only EXIT-receipt import, quoting and valid-JSON newline. Four
-local fixtures passed and preserved JSON validity and exit codes. V5 derives
+local and Torch fixtures passed and preserved JSON validity and exit codes. V5 derives
 from the v3 parent by hardlink, preserving the six path differences; its three
 reference files are in the derived source, so no dependency overlay is needed.
 The [experiment packet](../../../output/model/experiments/ces_normalized_shares/overnight_v1/README.md)
 links the smoke, launcher, source and submission receipts.
 
 Per chain: 1 CPU, 24 GiB, six hours, at most 500 objective calls and 32
-lifecycle solves per GE. A native GE may start only with at least 2,700 seconds
+lifecycle solves per GE. A native GE may start only with more than 2,700 seconds
 left: a 900-second search-GE window plus the 1,800-second final-verification
 reserve. Warm native GEs took 177 seconds; cold GEs took 267–270 seconds. The
-two-GE smoke took about 12.5 minutes; observed speed implies roughly 70–105 GEs
+two-candidate smoke plus fresh postcheck took about 12.5 minutes; observed speed implies roughly 70–105 GEs
 per chain, so wall time is expected to bind before the 500-call cap. An
 authenticated numerical candidate that cannot be bracketed receives a
 `1e12` penalty; a bounded-budget stop postchecks the best candidate. Other
