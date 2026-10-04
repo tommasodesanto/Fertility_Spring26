@@ -1,0 +1,148 @@
+{
+  "schema": "two_shock_execution_failure_review_v1",
+  "verified_at": "2026-10-04T16:40:51.404649-04:00",
+  "job_id": "19173749",
+  "classification": "seed_stage_wall_deadline_timeout_wrapped_by_numba_systemerror",
+  "scheduler_evidence": "JobID|State|ExitCode|Elapsed|MaxRSS|Timelimit|Start|End\n19173749|FAILED|1:0|00:11:41||00:30:00|2026-10-04T16:22:25|2026-10-04T16:34:06\n19173749.batch|FAILED|1:0|00:11:41|11519212K||2026-10-04T16:22:25|2026-10-04T16:34:06\n19173749.extern|COMPLETED|0:0|00:11:41|||2026-10-04T16:22:25|2026-10-04T16:34:06\n",
+  "launcher_terminal": {
+    "deadline_epoch": 1791147147,
+    "exit_code": 1,
+    "finished_epoch": 1791146043.8673036,
+    "mode": "smoke",
+    "no_auto_retry": true,
+    "slurm_job_id": "19173749",
+    "start_epoch": 1791145347
+  },
+  "driver_failure": {
+    "completed_cases_retained": true,
+    "exception": "SystemError",
+    "native_calls": 19,
+    "policy_calls": 2,
+    "production_ready": false,
+    "reason": "CPUDispatcher(<function full_owner_block_kernel at 0x14867d241300>) returned a result with an exception set",
+    "schema": "estate_a_two_unanticipated_psi_v1",
+    "status": "failed"
+  },
+  "exception_chain": [
+    "TimeoutError: Bounded native numerical call timed out",
+    "Numba SystemError"
+  ],
+  "memory_limit_gib": 24,
+  "scheduler_peak_rss_kib": 11519212,
+  "oom_evidence": false,
+  "fresh_reference_status": "passed",
+  "completed_seed_maps": [
+    {
+      "pin": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/stage1/seed/map_001/native_record.json",
+        "sha256": "69c08fbda7e1038d5bf29d86c8f8df3a651293d3a146a60132ae0b335b7ad00e"
+      },
+      "seconds": 75.22601651097648,
+      "native_policy_calls": 1,
+      "total_native_calls": 3,
+      "accounting_valid": true,
+      "gates": {
+        "dated_audits": true,
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true
+      }
+    },
+    {
+      "pin": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/stage1/seed/map_002/native_record.json",
+        "sha256": "a3ec390c13d3d2a2457d133c477295d45bddbc670852263abe24d968b40edafa"
+      },
+      "seconds": 134.42853891616687,
+      "native_policy_calls": 7,
+      "total_native_calls": 10,
+      "accounting_valid": true,
+      "gates": {
+        "dated_audits": true,
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true
+      }
+    },
+    {
+      "pin": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/stage1/seed/map_003/native_record.json",
+        "sha256": "aaa53db4940b97046e3767b7d69417c4b51bf4c7c38b3bd37e8cac186cfc0853"
+      },
+      "seconds": 133.35189383593388,
+      "native_policy_calls": 7,
+      "total_native_calls": 17,
+      "accounting_valid": true,
+      "gates": {
+        "dated_audits": true,
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true
+      }
+    }
+  ],
+  "completed_candidates": 0,
+  "empirical_fit_launched": false,
+  "empirical_release_allowed": false,
+  "frozen_package_preserved": true,
+  "unchanged_retry_forbidden": true,
+  "evidence_pins": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/launcher_start.json",
+      "sha256": "ded99710a2f2ad8fd2bb7333615bdde2e42edca9a20ac5f69a8e8bb3d3c2ebcd"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/launcher_terminal.json",
+      "sha256": "046b8a2c9704a5c273e1f4da3ef7efcedde6d745ca5198e9111f605ae0016287"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/driver.log",
+      "sha256": "447a724a0159ad9f2a2be3df15846d85a27cf8aea286dd2163824f3c2c111018"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/failure.json",
+      "sha256": "ed8efe3066f777c7f7b6f3d6e7218ae7428bc87526fec5b86e97950d29708fa1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/heartbeat.json",
+      "sha256": "5f236725660e6adcc6eb90cec1998a689f63ac690ed2fd8c00f3774f2f3ecb75"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/reference/reference_reconstruction.json",
+      "sha256": "ada139d804cad3944448dcf652e712e50bb059f370de8e7309715d4553317206"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/results/smoke_smoke_v1/run/reference/selected_native_packet.pkl.gz",
+      "sha256": "f230c22213228bca20f4c177cd487a73a50a2e79b759ee6e8c2c54cfcca14474"
+    }
+  ],
+  "seed_time_budget_seconds": 360,
+  "completed_seed_mapping_seconds_sum": 343.00644926307723,
+  "causal_evidence": "The first three maps took 75.2260+134.4285+133.3519=343.0064 seconds. The fourth was interrupted about17s later. Controller passes now+360s seed deadline and each map uses min(seed deadline,now+180s), establishing the shared seed deadline bound.",
+  "selected_changed_method": {
+    "smoke_seed": {
+      "horizon": 4,
+      "perturbed_date": 1,
+      "log_step": 1e-05
+    },
+    "fixed_candidate_horizon": 6,
+    "mapping_count_per_seed": 5,
+    "empirical_seed_unchanged": {
+      "horizon": 12,
+      "perturbed_date": 5,
+      "log_step": 1e-05
+    },
+    "total_smoke_seconds_unchanged": 1680,
+    "external_seconds_unchanged": 1800,
+    "binding_seed_budget_unchanged": 360,
+    "reason": "Reduce both forecast length and perturbation backward reach for the execution-only initializer; empirical Jacobian measurement remains required during fitting. Existing helper supports measured lag support [-1,0,1,2] and no unmeasured-lag extrapolation.",
+    "untested_empirical_objects": [
+      "12-date Jacobian measurement",
+      "12-to-24/32 numerical-seed extension",
+      "24/32 horizon comparison",
+      "full scalar fits",
+      "stage2 forecast slice [2:14]"
+    ],
+    "status": "implementation_and_focused_checks_pending"
+  }
+}

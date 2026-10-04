@@ -1,0 +1,109 @@
+Traceback (most recent call last):
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/site-packages/numba/core/serialize.py", line 30, in _numba_unpickle
+    def _numba_unpickle(address, bytedata, hashed):
+    
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/one_shock_floor.py", line 623, in timeout
+    raise TimeoutError('Bounded native numerical call timed out')
+TimeoutError: Bounded native numerical call timed out
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function _numba_unpickle at 0x14867d7fe520> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function _numba_unpickle at 0x14867d7fe520> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/two_shock.py", line 653, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/two_shock.py", line 646, in main
+    controller=Controller(plan,runtime,out);result=controller.run();write(out/('smoke_receipt.json' if args.smoke else 'run_receipt.json'),result);return result
+                                                   ~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/two_shock.py", line 501, in run
+    with self.runtime.budget_context():return self._smoke_run() if self.plan['smoke'] else self._run()
+                                              ~~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/two_shock.py", line 512, in _smoke_run
+    seed=self.runtime.measure_seed(stage=stage,start_year=settings['start_year'],inherited_state=self.current_state,
+        folder=folder/'seed',deadline=min(self.deadline,time.monotonic()+self.plan['budget']['seed_seconds']))
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/two_shock_runtime.py", line 214, in measure_seed
+    receipt=adapter.measure_seed(horizon=12,perturbed_date=5,log_step=1e-5,gates=self.plan['gates'],
+        budget=self.plan['budget'],deadline=deadline,folder=folder)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/one_shock_floor.py", line 737, in measure_seed
+    matrix = original.inner.measure_jacobian(evaluate, np.full(horizon,self.q),
+        np.full(horizon,self.pension), perturbed_date, log_step, folder/'measured',
+        dict(identity=self.identity(), native_measured=True))
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_transition.py", line 453, in measure_jacobian
+    values.append(residual(p,b))
+                  ~~~~~~~~^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_transition.py", line 443, in residual
+    reply=evaluate(p,b)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/one_shock_floor.py", line 728, in evaluate
+    native, record = self._mapping(self.reference, endpoint, q, b,
+                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        np.full(horizon, self.psi), folder/f'map_{count:03d}', deadline)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/two_shock_runtime.py", line 51, in _mapping
+    reply,record=self.rt.mapping(terminal,endpoint,q,b,psi,folder,
+                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        initial_state=state,start_year=self.start_year)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/floor_runtime.py", line 613, in mapping
+    native,record=self.scaffold.mapping(self.packet,self.ctx['prepared'],terminal,endpoint,prices,pensions,psi_path,'elastic_reference',folder,self.exact_policy_cache_bytes,capture=True,measure_fertility=True,initial_state=state,start_year=start_year)
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_transition.py", line 360, in mapping
+    result=pf.evaluate_path_at_prices(prices=prices,psi_path=psi_path,
+        terminal_price=endpoint['price'],terminal_V=terminal['evaluation'].policy.V,
+        base_parameters=P,b_grid=grid,initial_state=state,supply_rule=supply_rule(packet,pf,housing),
+        birth_to_entry_conversion=1/2.1,transfer_path=np.zeros(len(prices)),
+        pension_path=pensions,payroll_tax_path=np.full(len(prices),P.tau_pay),dated_observer=observer)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_perfect_foresight_transition.py", line 663, in evaluate_path_at_prices
+    values, backward_solves = backward_value_path(
+                              ~~~~~~~~~~~~~~~~~~~^
+        prices=price_path,
+        ^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        payroll_tax_path=payroll_taxes,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_perfect_foresight_transition.py", line 602, in backward_value_path
+    policy = solve_date_policy(
+        price=float(prices[period]),
+    ...<4 lines>...
+        continuation_V=np.asarray(values[period + 1], dtype=float),
+    )
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/pinned_tools/e5f_exact_policy_cache.py", line 154, in wrapped
+    result = original(*args, **kwargs)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_perfect_foresight_transition.py", line 556, in solve_date_policy
+    objects = calendar.model.solve_bellman_full_markov_income(
+        np.array([float(rent)]),
+    ...<4 lines>...
+        continuation_V=continuation_V,
+    )
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/transition_readiness/floor_runtime.py", line 599, in counted
+    calls+=1;return original_solve(*args,**kwargs)
+                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/model/engine/household.py", line 879, in solve_bellman_full_markov_income
+    Vd, cd, hd, bd = _savings_stage(
+                     ~~~~~~~~~~~~~~^
+        Vc, P, b_grid, SD, ctx, r_hat, j, float(z_value),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        s_next, D_next, renter_floor,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v3/frozen/source/code/model/experiments/birth_count_choice/model/engine/household.py", line 431, in _savings_stage
+    Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
+                          ~~~~~~~~~~~~~~~~~~~~~~~^
+        Rv1d_full, Rvt1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+        native_due_death_floor(P, j, ctx.current_prices[i], P.H_own[ten - 1]) if due_stay else -np.inf,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+SystemError: CPUDispatcher(<function full_owner_block_kernel at 0x14867d241300>) returned a result with an exception set
