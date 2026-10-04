@@ -139,38 +139,45 @@ and [release review](output/model/experiments/birth_count_choice/estate_a_calibr
 This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
-**Estate-A recovery submitted October 4 at 01:15 New York; all 15 tasks in Slurm
-array 19141024 started by 01:20. At the October 4, 07:00 New York check, 12 tasks remain RUNNING; count3 chains 0, 1 and 6 have failed.** Chain 1 stopped at 04:56:47, chain 6 at 06:01:50 and chain 0 at 06:57:22. Each failed candidate used 31 lifecycle solves, retaining one for exact repeat, without meeting the renewal tolerance. Chains 0 and 6 still had about 9,163 and 12,497 seconds in their search windows; these are numerical solve-cap failures, not the repaired wall-clock boundary bug. Their saved best points remain provisional; no automatic retry or gate relaxation occurred. All 12 other checkpoints were recent.
+**Estate-A recovery complete and reviewed October 4, 2026, 10:00 New York.**
+Array **19141024** is terminal: all five one-birth chains and six of ten
+three-birth chains passed fresh native selected-point verification; four
+three-birth chains (0, 1, 4, 6) stopped on the unchanged numerical GE solve cap.
+Their provisional checkpoints are retained and not promoted. No jobs were
+restarted or acceptance gates relaxed. Superseded controllers **19136605** and
+**19139361** remain canceled.
 
-The failed-parent-dependent
-controllers **19136605** and **19139361** were canceled; their proposed native
-continuations never ran. The isolated [recovery stage](code/cluster/estate_birth_calibration/recovery/README.md)
-starts five binary and ten count-three chains from the ten *provisional* saved
-parent best cases and five bounded count-three perturbations. It authenticates
-each failed parent's source, start contract, launcher and saved cases. These
-seeds have not passed the parent's final native verification; the new searches
-must independently pass their own fresh selected-point check. The five extra
-starts use the best provisional binary seed, its midpoint with the best
-provisional count-three seed, and three predeclared perturbations. This changes
-search design only: all ten free parameters, β bounds \([0.93,0.99]\),
-economic inputs, 14 targets, weights and native numerical gates are unchanged.
-The driver adds a pre-evaluation 800-second search-budget guard and narrowly
-classifies three exact native time-exhaustion errors as a search stop only when
-at most 700 seconds remain; other numerical errors and final native check
-failures stay fatal. Each task uses one CPU, 24 GiB, at most 500 calls, a
-1,800-second final verification reserve, and the absolute October 4 **10:00
-New York** stop (epoch `1791122400`); at most 15 run concurrently. Both arms
-passed actual zero-solve reporting-context preflights. [Submission and stage
-receipts](output/model/experiments/birth_count_choice/estate_a_recovery_20261004_v1/deployment/)
-pin inventory SHA `974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22`.
-No recovered result, fresh native repeat, adopted calibration or optimizer-state
-resume is yet claimed.
+| Intended births per four-year period | Best verified chain | Same-contract loss | Early fertility (target 0.809528) | Wealth/earnings (target 4.458387) | Mean first-birth age (target 25.976264) |
+|---|---:|---:|---:|---:|---:|
+| At most one | 1 | 21.275413361071312 | 0.5495848361 | 5.0291100966 | 25.9736359685 |
+| At most three | 3 | 78.85993302055905 | 0.5032113851 | 6.8866059229 | 26.0321717900 |
 
-The hourly heartbeat **Monitor matched estate and birth calibrations**
-(automation `finish-and-monitor-soft-timing-calibration`) in chat
-**Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`)
-is ACTIVE after the reviewed release. No automatic retry
-is authorized.
+Both arms retain experimental Estate A, the revised interest timing, soft
+financing with phi=0.8, the experimental wealth target and its unchanged
+numerical weight, and all other approved inputs, targets and bounds. The
+three-birth arm's first-birth-age miss is now small; wealth contributes 44.783,
+childlessness 15.822 and early fertility 9.383 to its loss. These are separately
+recalibrated points, not a fixed-parameter causal menu experiment. Neither
+optimization convergence, identification rank nor grid convergence is certified;
+no point is automatically adopted as a paper baseline.
+
+[Complete collection and source receipts](output/model/experiments/birth_count_choice/estate_a_recovery_20261004_v1/collection/)
+contain all outcomes and both selected packets. Lead review checked all 11
+verified candidates' 14 fit rows, 31 parameter records, ten free estimates and
+bounds, weighted-loss arithmetic, target/weight fingerprints and search/native
+residual agreement. For both winners, actual selected and repeat CSVs match,
+and the 17 actual PNG hashes per selected packet match the repeat and receipt.
+The standard fertility-by-age figures were viewed. Reported search bounds use
+the Estate-A parameter table; the native table retains reference metadata.
+
+The recovery source inventory is
+`974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22`.
+The [recovery driver and readme](code/cluster/estate_birth_calibration/recovery/README.md)
+record the parent-checkpoint provenance, five additional three-birth starts and
+narrow deadline fix. Both selected searches stopped via the 800-second search
+launch guard (137 and 126 objective attempts), then passed fresh final checks.
+The hourly monitor is PAUSED after the final collection and review; no automatic
+extension, transition or additional calibration is authorized.
 
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain
