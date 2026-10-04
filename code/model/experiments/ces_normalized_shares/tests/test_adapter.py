@@ -106,6 +106,44 @@ def test_installation_patches_actual_equilibrium_lookup_and_restores(monkeypatch
     assert equilibrium.build_context is original
 
 
+@pytest.mark.parametrize("failure, expected_status, expected_reason", [
+    ("native GE acceptance failed: uncomputed_price_unbracketed", "inadmissible_numerical",
+     "no stationary renewal root within declared numerical price caps"),
+    ("native GE acceptance failed: uncomputed_bounded_budget", "budget_exhausted",
+     "native GE bounded budget exhausted"),
+    ("unexpected solver failure", None, None),
+])
+def test_expected_native_ge_failures_are_classified_only_after_receipt_validation(
+        monkeypatch, tmp_path, failure, expected_status, expected_reason):
+    from production import equilibrium
+    P, grid = adapter.load_inputs(_point())
+    original = equilibrium.build_context
+    monkeypatch.setattr(adapter, "build_reporting_context", lambda *a, **k: {"context": "hooked"})
+
+    def fake_solver(Q, b, *, out, **kwargs):
+        assert equilibrium.build_context is not original
+        out.mkdir(parents=True)
+        (out / "latest.json").write_text('{"lifecycle_used": 7}\n')
+        phase = out / "phase_b_ge"; phase.mkdir()
+        (phase / "price_search.json").write_text('{"termination_reason":"both_diagnostic_price_caps"}\n')
+        raise RuntimeError(failure)
+
+    evaluate = adapter.make_evaluator(tmp_path, "unit", P, grid, deadline=10**12, solver=fake_solver)
+    if expected_status:
+        result = evaluate("native_failure", _point(), 10**12)
+        assert result["status"] == expected_status
+        assert result["reason"] == expected_reason
+        assert result["lifecycle_solves"] == 7
+        assert result["effective_input_fingerprint"]
+        assert result["price_search"]["status"] == "both_diagnostic_price_caps"
+        assert result["price_search"]["termination_reason"] == "both_diagnostic_price_caps"
+        assert result["price_search"]["path"] == str(tmp_path / "native_failure" / "phase_b_ge" / "price_search.json")
+    else:
+        with pytest.raises(RuntimeError, match="unexpected solver failure"):
+            evaluate("unknown", _point(), 10**12)
+    assert equilibrium.build_context is original
+
+
 @pytest.mark.actual_context
 def test_actual_context_preflight_is_staged_only(tmp_path):
     if os.environ.get("CES_NORMALIZED_SHARES_STAGED_CONTEXT") != "1":

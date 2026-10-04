@@ -166,7 +166,7 @@ benefit at \(m=0\); the first-birth cost and bequest motive are separate objects
 Historical lower-\(A(m)\), renter-borrowing and other utility probes are
 diagnostics, not silently adopted components of this reference.
 
-**Normalized CES-limit share test, prepared; Torch reauthentication required, not launched.** The
+**Normalized CES-limit share test; four-chain array 19133352 running; verified October 3 at 22:32:52 New York.** The
 experimental composite denominator applies in all family states:
 \(Q=c^{\alpha(m)}s^{1-\alpha(m)}/[\alpha(m)^{\alpha(m)}(1-\alpha(m))^{1-\alpha(m)}]\).
 There is no childless-share numerator or reference-rent correction. The
@@ -182,15 +182,35 @@ remains a proxy.
 The post-interest chain-13 starting reference retains old wealth target
 6.92658379107299, timing, earnings, birth architecture and other economic
 inputs. There is no `rstar` or `alpha0` numerator, added birth shock, or utility
-cost rescaling. V1 and v2 zero-solve preflights failed because of historical
-dependency-packaging failures. V3 was built (archive SHA-256
-`9552a5038ebe7224572a5cf0294619df28e5ddc002ae696f5c8768994a7562bd`), but
-the SSH session expired during transfer at 21:04 New York on October 3;
-NYU/Duo reauthentication is required to resume. No Slurm job was submitted. Local checks
-report 8 passed/1 skipped and all four mock-chain checks passing. No numerical
-calibration or adoption is established. A launch must pass the v3 preflight and
-smoke; native postcheck requirements are 11 coordinates, full 14-row
-experimental target CSV, 31 parameter records, 17 plots, and exact repeat.
+cost rescaling. The original starting guess did not bracket a stationary root.
+The four starts now use `first_birth_fixed_cost=1.9`, still estimated on
+\([0,8]\); this changes a starting guess, not a restriction or utility formula.
+V5 includes the missing native reference artifacts directly in its immutable
+3,008-file source. Inventory SHA-256 is
+`39fe1c3316919fb3d8672030afda6fb5fcc29aef0969181d206c9fc0757ca127`.
+Three actual contexts passed with zero lifecycle solves
+([receipt](output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/preflight/completed.json)).
+V4 smoke **19132298** passed two distinct numerical cases, fresh selected
+native postcheck and exact repeat. Its [full starting-fit tables](output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt4/smoke/RESULTS.md)
+are a feasibility check, not a calibrated result. Final V5 smoke **19132940**
+passed its exact-loop gate and full native collector
+([complete tables and parameters](output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/smoke/RESULTS.md)).
+The search requires 900 seconds of GE time after reserving 1,800 seconds for
+final verification. Array **19133352**, `0-3%4`, runs four six-hour chains on
+one CPU and 24 GiB each, up to 500 objective calls and 32 lifecycle solves per GE
+([submission receipt](output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/submission_receipt.json), [four active first-GE heartbeats](output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/launch_health.json)).
+The reviewed launcher SHA is
+`e092a10197e3269dce0acfee125a7dc408b74b68026738f1cbe9abfc530ec05f`;
+it repairs only EXIT-receipt bookkeeping, which caused the earlier Slurm
+failure after successful numerical verification. Its four success/failure
+receipt fixtures passed locally and on Torch. Model and search source remain
+the immutable v5 package. All 17 final smoke plots match the inspected v4 packet.
+Authenticated unbracketed candidates receive a numerical penalty; budget exhaustion
+stops search and verifies the best completed result. Other errors are terminal.
+Local checks are 11 passed/1 skipped; all four mock loops passed.
+No overnight calibration result or adoption is yet established.
+The native postcheck requires 11 coordinates, full 14-row experimental target
+CSV, 31 parameter records, 17 plots, and exact repeat.
 See [experiment specification](code/model/experiments/ces_normalized_shares/README.md),
 [deployment workflow](code/cluster/ces_normalized_shares_calibration/README.md), and
 [complete proposed targets, bounds and starts](output/model/experiments/ces_normalized_shares/overnight_v1/start_plan.json).

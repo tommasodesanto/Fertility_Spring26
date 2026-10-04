@@ -6,9 +6,9 @@
 #SBATCH --time=06:00:00
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v3/logs/%x-%A_%a.out
+#SBATCH --output=/scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v5/logs/%x-%A_%a.out
 set -euo pipefail
-remote=/scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v3
+remote=/scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v5
 repo=/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26
 python=/share/apps/anaconda3/2025.06/bin/python
 image=/share/apps/images/ubuntu-24.04.4.sif

@@ -7,7 +7,7 @@ from scipy.optimize import minimize
 
 ROOT=Path(__file__).resolve().parents[4]
 PLAN=ROOT/'output/model/experiments/ces_normalized_shares/overnight_v1/start_plan.json'
-RESERVE=1800; MAX_CALLS=500; MAX_LIFECYCLE=32; PENALTY=1e12
+RESERVE=1800; MIN_GE_START_SECONDS=900; MAX_CALLS=500; MAX_LIFECYCLE=32; PENALTY=1e12
 RAW_STEPS={'beta_annual':.0005,'chi':.02,'first_birth_fixed_cost':.015,
  'kappa_fert':.01,'kappa_fert_continuation':.01,'delta_alpha_jump':.01,
  'delta_alpha':.005,'tenure_choice_kappa':.001,'theta0':.005,'psi_child':.004,'child_benefit_curvature':.01}
@@ -16,6 +16,9 @@ def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def atomic(path,value):
  path=Path(path); tmp=path.with_name(path.name+'.tmp')
  tmp.write_text(json.dumps(value,indent=2,sort_keys=True,allow_nan=False)+'\n'); os.replace(tmp,path)
+def native_ge_start_budget_available(deadline,now=None):
+ now=time.time() if now is None else float(now)
+ return now<float(deadline)-RESERVE-MIN_GE_START_SECONDS
 def norm_bounds(value): return {str(k):[float(v[0]),float(v[1])] for k,v in value.items()}
 def adapter():
  p=Path(__file__).with_name('adapter.py'); spec=importlib.util.spec_from_file_location('ces_adapter',p)
@@ -103,7 +106,7 @@ def main():
  a.starts_file_sha256=a.starts_file_sha256 or sha(a.starts_file); plan=checked_plan(a.starts_file,a.starts_file_sha256)
  if not 0<=a.chain<4: raise RuntimeError('chain outside 0--3')
  a.out.mkdir(parents=True); out=a.out.resolve(); deadline=min(float(a.deadline_epoch),time.time()+21600); coords=plan['coordinates']; bounds=norm_bounds(plan['bounds']); seed=plan['starts'][a.chain]
- contract=dict(chain=a.chain,seed=seed,free_coordinates=coords,bounds=bounds,starts_file_sha256=a.starts_file_sha256,starts_count=4,target_fingerprint=plan['target_fingerprint'],weight_fingerprint=plan['weight_fingerprint'],selected_source_sha256=plan['selected_source_sha256'],source_checkpoint_sha256=plan['source_checkpoint_sha256'],objective_calls_max=MAX_CALLS,lifecycle_solves_per_GE_max=MAX_LIFECYCLE,final_native_reserve_seconds=RESERVE,no_auto_retry=True)
+ contract=dict(chain=a.chain,seed=seed,free_coordinates=coords,bounds=bounds,starts_file_sha256=a.starts_file_sha256,starts_count=4,target_fingerprint=plan['target_fingerprint'],weight_fingerprint=plan['weight_fingerprint'],selected_source_sha256=plan['selected_source_sha256'],source_checkpoint_sha256=plan['source_checkpoint_sha256'],objective_calls_max=MAX_CALLS,lifecycle_solves_per_GE_max=MAX_LIFECYCLE,minimum_native_GE_start_seconds=MIN_GE_START_SECONDS,final_native_reserve_seconds=RESERVE,no_auto_retry=True)
  atomic(out/'start_contract.json',contract)
  ad=None
  if not a.mock_smoke:
@@ -126,7 +129,7 @@ def main():
  def objective(x):
   nonlocal calls,best
   if calls>=limit: raise BudgetStop('objective_call_limit')
-  if not a.mock_smoke and time.time()>=deadline-RESERVE: raise BudgetStop('final_native_reserve_reached')
+  if not a.mock_smoke and not native_ge_start_budget_available(deadline): raise BudgetStop('minimum_native_GE_start_reserve_reached')
   if not a.mock_smoke and os.statvfs(out).f_bavail*os.statvfs(out).f_frsize<350*1024**3: raise BudgetStop('shared_free_disk_below_350GiB')
   calls+=1; q=as_point(x,coords,bounds); key=tuple(q[k].hex() for k in coords)
   if key in cache: beat('cache_hit'); return cache[key]

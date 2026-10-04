@@ -1,9 +1,10 @@
 # Normalized CES-limit Cobb--Douglas shares (isolated experiment)
 
 This adapter is an experimental, runtime-only change.  It does not edit
-`code/model/production/`, does not change targets, finance, timing, entry,
-wealth, fertility architecture, gross-estate semantics, or the canonical
-renter/owner housing-service mapping through `chi`.
+`code/model/production/` or change finance, timing, entry, wealth, fertility
+architecture, gross-estate semantics, or the canonical renter/owner
+housing-service mapping through `chi`. Its separate experimental score adds
+`family_rooms` as a scored moment; it leaves the native target table intact.
 
 For every family state, including childless states, the normalized material
 composite denominator applies; it evaluates the composite as
@@ -51,10 +52,25 @@ coordinates do not establish informative rank.
 
 ## Verification status
 
-The local adapter suite reports 8 passed and 1 skipped; all four mock-chain
-checks pass. The v1 and v2 zero-solve preflights failed while packaging
-historical dependencies. Attempt 3's v3 package is being prepared, not launched,
-so no actual mounted reporting preflight, numerical smoke, calibration, or
-adoption is established. Once launched, the native selected-point postcheck
-must verify all 11 coordinates, the complete 14-row experimental target CSV,
-the 31-row parameter table, 17 diagnostic plots, and an exact repeat.
+The local adapter suite reports 11 passed and 1 skipped; all four mock-chain
+checks pass. V1 and v2 zero-solve preflights failed while packaging historical
+dependencies. V3 established the three-context preflight. V4 smoke job 19132298
+completed two GEs and passed its native postcheck and collector, including an
+exact repeat, but Slurm reported `FAILED 1:0` afterward because the EXIT receipt
+function lacked an `os` import. V5 smoke job 19132940 passed the full native
+gate and collector; its 17 diagnostic plot hashes match v4. The final reviewed
+launcher fixes the EXIT receipt function's import, quoting, and valid-JSON
+newline only; model, search, target, and budget source stayed unchanged. Four
+local EXIT fixtures passed, preserving valid JSON and the original exit code.
+The four-chain production array 19133352 (`0-3%4`) was submitted October 3 at
+22:31:16 EDT; all four tasks were verified `RUNNING` at 22:32:52 EDT. No
+calibrated result or adoption is established. Evidence is linked in the
+[experiment packet](../../../../output/model/experiments/ces_normalized_shares/overnight_v1/README.md).
+
+V5 retains `first_birth_fixed_cost=1.9` as a free coordinate in `[0,8]`; its
+original seed is unbracketed. A native GE may start only with at least 2,700
+seconds left: a 900-second minimum search-GE window plus the 1,800-second
+final-verification reserve. An authenticated numerical candidate that cannot
+be bracketed receives a `1e12` penalty; at a bounded-budget stop, the best
+candidate is postchecked. Other errors remain terminal without retries or
+fallback.

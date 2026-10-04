@@ -311,9 +311,39 @@ def make_evaluator(out, lane, P, grid, deadline, price_start=None, *, solver=Non
         Q = bind_parameters(base_P, base_grid.copy(), point)
         effective_input_fingerprint = canonical.effective_input_fingerprint(Q, base_grid)
         with install():
-            result = solver(Q, base_grid.copy(), out=destination / str(label), price_start=start,
-                            budget_seconds=effective_end-time.time(), max_lifecycle=32,
-                            closure="population_one")
+            try:
+                result = solver(Q, base_grid.copy(), out=destination / str(label), price_start=start,
+                                budget_seconds=effective_end-time.time(), max_lifecycle=32,
+                                closure="population_one")
+            except RuntimeError as exc:
+                failure = str(exc)
+                if failure not in {
+                    "native GE acceptance failed: uncomputed_price_unbracketed",
+                    "native GE acceptance failed: uncomputed_bounded_budget",
+                }:
+                    raise
+                case_out = destination / str(label)
+                latest_path = case_out / "latest.json"
+                latest = json.loads(latest_path.read_text())
+                lifecycle_solves = latest.get("lifecycle_used")
+                if (isinstance(lifecycle_solves, bool) or not isinstance(lifecycle_solves, int)
+                        or not math.isfinite(lifecycle_solves) or not 0 <= lifecycle_solves <= 32):
+                    raise RuntimeError("native GE rejection has invalid lifecycle receipt") from exc
+                price_path = case_out / "phase_b_ge" / "price_search.json"
+                price_search = json.loads(price_path.read_text()) if price_path.is_file() else {}
+                if failure == "native GE acceptance failed: uncomputed_bounded_budget":
+                    return dict(status="budget_exhausted",
+                                reason="native GE bounded budget exhausted",
+                                lifecycle_solves=lifecycle_solves,
+                                effective_input_fingerprint=effective_input_fingerprint,
+                                price_search=dict(path=str(price_path), status=price_search.get("status", price_search.get("termination_reason")),
+                                                  termination_reason=price_search.get("termination_reason")))
+                return dict(status="inadmissible_numerical",
+                            reason="no stationary renewal root within declared numerical price caps",
+                            lifecycle_solves=lifecycle_solves,
+                            effective_input_fingerprint=effective_input_fingerprint,
+                            price_search=dict(path=str(price_path), status=price_search.get("status", price_search.get("termination_reason")),
+                                              termination_reason=price_search.get("termination_reason")))
         if result.get("status", "passed") != "passed":
             return {**{k: result[k] for k in ("status", "reason", "lifecycle_solves", "price_search") if k in result},
                     "effective_input_fingerprint": effective_input_fingerprint}

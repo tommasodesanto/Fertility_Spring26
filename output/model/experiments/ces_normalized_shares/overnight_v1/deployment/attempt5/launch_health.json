@@ -1,0 +1,454 @@
+{
+  "status": "four_chains_running_first_GE",
+  "verified_epoch": 1791081172.0025802,
+  "verified_utc": "2026-10-04T02:32:52.002599+00:00",
+  "job_id": "19133352",
+  "queue": [
+    "19133352_3|RUNNING|0:59|cs633",
+    "19133352_2|RUNNING|0:59|cs633",
+    "19133352_1|RUNNING|0:59|cs606",
+    "19133352_0|RUNNING|0:59|cs604"
+  ],
+  "chains": [
+    {
+      "chain": 0,
+      "launcher": {
+        "mode": "production",
+        "chain": 0,
+        "start_epoch": 1791081132,
+        "deadline_epoch": 1791102732,
+        "wall_seconds": 21600,
+        "cpus": 1,
+        "memory_GiB": 24,
+        "maximum_objective_calls": 500,
+        "final_native_reserve_seconds": 1800,
+        "stage_inventory_sha256": "39fe1c3316919fb3d8672030afda6fb5fcc29aef0969181d206c9fc0757ca127",
+        "dependency_overlay_inventory_sha256": null,
+        "no_auto_retry": true
+      },
+      "contract": {
+        "bounds": {
+          "beta_annual": [
+            0.94,
+            0.99
+          ],
+          "chi": [
+            0.1,
+            5.0
+          ],
+          "child_benefit_curvature": [
+            0.0,
+            0.8
+          ],
+          "delta_alpha": [
+            0.0,
+            0.25
+          ],
+          "delta_alpha_jump": [
+            0.0,
+            0.25
+          ],
+          "first_birth_fixed_cost": [
+            0.0,
+            8.0
+          ],
+          "kappa_fert": [
+            0.02,
+            50.0
+          ],
+          "kappa_fert_continuation": [
+            0.02,
+            50.0
+          ],
+          "psi_child": [
+            0.01,
+            0.5
+          ],
+          "tenure_choice_kappa": [
+            0.001,
+            0.1
+          ],
+          "theta0": [
+            0.0,
+            8.0
+          ]
+        },
+        "chain": 0,
+        "final_native_reserve_seconds": 1800,
+        "free_coordinates": [
+          "beta_annual",
+          "chi",
+          "child_benefit_curvature",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "psi_child",
+          "tenure_choice_kappa",
+          "theta0",
+          "delta_alpha_jump",
+          "delta_alpha"
+        ],
+        "lifecycle_solves_per_GE_max": 32,
+        "minimum_native_GE_start_seconds": 900,
+        "no_auto_retry": true,
+        "objective_calls_max": 500,
+        "seed": {
+          "beta_annual": 0.9663191380998087,
+          "chi": 1.0500762402240174,
+          "child_benefit_curvature": 0.0629608477756522,
+          "delta_alpha": 0.03897536437154123,
+          "delta_alpha_jump": 0.07780442689806688,
+          "first_birth_fixed_cost": 1.9,
+          "kappa_fert": 0.11652185618155607,
+          "kappa_fert_continuation": 0.40070847699255835,
+          "psi_child": 0.17892072066041628,
+          "tenure_choice_kappa": 0.014123854930856623,
+          "theta0": 0.10097400014250629
+        },
+        "selected_source_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "source_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "starts_count": 4,
+        "starts_file_sha256": "631123f37b2f27b0b7a6dc4de8fe2ff2ec89618e5fdf9718923d93e55ba1c784",
+        "target_fingerprint": "34d4a88aad196d54fa37d7f7ea7a7c77dc46ebc8e1bb67994c16447033dc6d5f",
+        "weight_fingerprint": "50238b73f2f95f1c73165e3a6359c9a37847c34f1ba89dd0b32a00ff738b5a82"
+      },
+      "heartbeat": {
+        "completed_full_ge": 0,
+        "epoch": 1791081138.56239,
+        "label": "0000_nm",
+        "objective_calls": 1,
+        "status": "running_full_GE"
+      }
+    },
+    {
+      "chain": 1,
+      "launcher": {
+        "mode": "production",
+        "chain": 1,
+        "start_epoch": 1791081142,
+        "deadline_epoch": 1791102742,
+        "wall_seconds": 21600,
+        "cpus": 1,
+        "memory_GiB": 24,
+        "maximum_objective_calls": 500,
+        "final_native_reserve_seconds": 1800,
+        "stage_inventory_sha256": "39fe1c3316919fb3d8672030afda6fb5fcc29aef0969181d206c9fc0757ca127",
+        "dependency_overlay_inventory_sha256": null,
+        "no_auto_retry": true
+      },
+      "contract": {
+        "bounds": {
+          "beta_annual": [
+            0.94,
+            0.99
+          ],
+          "chi": [
+            0.1,
+            5.0
+          ],
+          "child_benefit_curvature": [
+            0.0,
+            0.8
+          ],
+          "delta_alpha": [
+            0.0,
+            0.25
+          ],
+          "delta_alpha_jump": [
+            0.0,
+            0.25
+          ],
+          "first_birth_fixed_cost": [
+            0.0,
+            8.0
+          ],
+          "kappa_fert": [
+            0.02,
+            50.0
+          ],
+          "kappa_fert_continuation": [
+            0.02,
+            50.0
+          ],
+          "psi_child": [
+            0.01,
+            0.5
+          ],
+          "tenure_choice_kappa": [
+            0.001,
+            0.1
+          ],
+          "theta0": [
+            0.0,
+            8.0
+          ]
+        },
+        "chain": 1,
+        "final_native_reserve_seconds": 1800,
+        "free_coordinates": [
+          "beta_annual",
+          "chi",
+          "child_benefit_curvature",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "psi_child",
+          "tenure_choice_kappa",
+          "theta0",
+          "delta_alpha_jump",
+          "delta_alpha"
+        ],
+        "lifecycle_solves_per_GE_max": 32,
+        "minimum_native_GE_start_seconds": 900,
+        "no_auto_retry": true,
+        "objective_calls_max": 500,
+        "seed": {
+          "beta_annual": 0.9663191380998087,
+          "chi": 1.0500762402240174,
+          "child_benefit_curvature": 0.0629608477756522,
+          "delta_alpha": 0.02,
+          "delta_alpha_jump": 0.04,
+          "first_birth_fixed_cost": 1.9,
+          "kappa_fert": 0.11652185618155607,
+          "kappa_fert_continuation": 0.40070847699255835,
+          "psi_child": 0.17892072066041628,
+          "tenure_choice_kappa": 0.014123854930856623,
+          "theta0": 0.10097400014250629
+        },
+        "selected_source_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "source_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "starts_count": 4,
+        "starts_file_sha256": "631123f37b2f27b0b7a6dc4de8fe2ff2ec89618e5fdf9718923d93e55ba1c784",
+        "target_fingerprint": "34d4a88aad196d54fa37d7f7ea7a7c77dc46ebc8e1bb67994c16447033dc6d5f",
+        "weight_fingerprint": "50238b73f2f95f1c73165e3a6359c9a37847c34f1ba89dd0b32a00ff738b5a82"
+      },
+      "heartbeat": {
+        "completed_full_ge": 0,
+        "epoch": 1791081148.7605364,
+        "label": "0000_nm",
+        "objective_calls": 1,
+        "status": "running_full_GE"
+      }
+    },
+    {
+      "chain": 2,
+      "launcher": {
+        "mode": "production",
+        "chain": 2,
+        "start_epoch": 1791081142,
+        "deadline_epoch": 1791102742,
+        "wall_seconds": 21600,
+        "cpus": 1,
+        "memory_GiB": 24,
+        "maximum_objective_calls": 500,
+        "final_native_reserve_seconds": 1800,
+        "stage_inventory_sha256": "39fe1c3316919fb3d8672030afda6fb5fcc29aef0969181d206c9fc0757ca127",
+        "dependency_overlay_inventory_sha256": null,
+        "no_auto_retry": true
+      },
+      "contract": {
+        "bounds": {
+          "beta_annual": [
+            0.94,
+            0.99
+          ],
+          "chi": [
+            0.1,
+            5.0
+          ],
+          "child_benefit_curvature": [
+            0.0,
+            0.8
+          ],
+          "delta_alpha": [
+            0.0,
+            0.25
+          ],
+          "delta_alpha_jump": [
+            0.0,
+            0.25
+          ],
+          "first_birth_fixed_cost": [
+            0.0,
+            8.0
+          ],
+          "kappa_fert": [
+            0.02,
+            50.0
+          ],
+          "kappa_fert_continuation": [
+            0.02,
+            50.0
+          ],
+          "psi_child": [
+            0.01,
+            0.5
+          ],
+          "tenure_choice_kappa": [
+            0.001,
+            0.1
+          ],
+          "theta0": [
+            0.0,
+            8.0
+          ]
+        },
+        "chain": 2,
+        "final_native_reserve_seconds": 1800,
+        "free_coordinates": [
+          "beta_annual",
+          "chi",
+          "child_benefit_curvature",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "psi_child",
+          "tenure_choice_kappa",
+          "theta0",
+          "delta_alpha_jump",
+          "delta_alpha"
+        ],
+        "lifecycle_solves_per_GE_max": 32,
+        "minimum_native_GE_start_seconds": 900,
+        "no_auto_retry": true,
+        "objective_calls_max": 500,
+        "seed": {
+          "beta_annual": 0.9663191380998087,
+          "chi": 1.0500762402240174,
+          "child_benefit_curvature": 0.0629608477756522,
+          "delta_alpha": 0.04,
+          "delta_alpha_jump": 0.12,
+          "first_birth_fixed_cost": 1.9,
+          "kappa_fert": 0.11652185618155607,
+          "kappa_fert_continuation": 0.40070847699255835,
+          "psi_child": 0.17892072066041628,
+          "tenure_choice_kappa": 0.014123854930856623,
+          "theta0": 0.10097400014250629
+        },
+        "selected_source_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "source_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "starts_count": 4,
+        "starts_file_sha256": "631123f37b2f27b0b7a6dc4de8fe2ff2ec89618e5fdf9718923d93e55ba1c784",
+        "target_fingerprint": "34d4a88aad196d54fa37d7f7ea7a7c77dc46ebc8e1bb67994c16447033dc6d5f",
+        "weight_fingerprint": "50238b73f2f95f1c73165e3a6359c9a37847c34f1ba89dd0b32a00ff738b5a82"
+      },
+      "heartbeat": {
+        "completed_full_ge": 0,
+        "epoch": 1791081149.9460948,
+        "label": "0000_nm",
+        "objective_calls": 1,
+        "status": "running_full_GE"
+      }
+    },
+    {
+      "chain": 3,
+      "launcher": {
+        "mode": "production",
+        "chain": 3,
+        "start_epoch": 1791081143,
+        "deadline_epoch": 1791102743,
+        "wall_seconds": 21600,
+        "cpus": 1,
+        "memory_GiB": 24,
+        "maximum_objective_calls": 500,
+        "final_native_reserve_seconds": 1800,
+        "stage_inventory_sha256": "39fe1c3316919fb3d8672030afda6fb5fcc29aef0969181d206c9fc0757ca127",
+        "dependency_overlay_inventory_sha256": null,
+        "no_auto_retry": true
+      },
+      "contract": {
+        "bounds": {
+          "beta_annual": [
+            0.94,
+            0.99
+          ],
+          "chi": [
+            0.1,
+            5.0
+          ],
+          "child_benefit_curvature": [
+            0.0,
+            0.8
+          ],
+          "delta_alpha": [
+            0.0,
+            0.25
+          ],
+          "delta_alpha_jump": [
+            0.0,
+            0.25
+          ],
+          "first_birth_fixed_cost": [
+            0.0,
+            8.0
+          ],
+          "kappa_fert": [
+            0.02,
+            50.0
+          ],
+          "kappa_fert_continuation": [
+            0.02,
+            50.0
+          ],
+          "psi_child": [
+            0.01,
+            0.5
+          ],
+          "tenure_choice_kappa": [
+            0.001,
+            0.1
+          ],
+          "theta0": [
+            0.0,
+            8.0
+          ]
+        },
+        "chain": 3,
+        "final_native_reserve_seconds": 1800,
+        "free_coordinates": [
+          "beta_annual",
+          "chi",
+          "child_benefit_curvature",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "psi_child",
+          "tenure_choice_kappa",
+          "theta0",
+          "delta_alpha_jump",
+          "delta_alpha"
+        ],
+        "lifecycle_solves_per_GE_max": 32,
+        "minimum_native_GE_start_seconds": 900,
+        "no_auto_retry": true,
+        "objective_calls_max": 500,
+        "seed": {
+          "beta_annual": 0.9663191380998087,
+          "chi": 1.0500762402240174,
+          "child_benefit_curvature": 0.0629608477756522,
+          "delta_alpha": 0.08,
+          "delta_alpha_jump": 0.18,
+          "first_birth_fixed_cost": 1.9,
+          "kappa_fert": 0.11652185618155607,
+          "kappa_fert_continuation": 0.40070847699255835,
+          "psi_child": 0.17892072066041628,
+          "tenure_choice_kappa": 0.014123854930856623,
+          "theta0": 0.10097400014250629
+        },
+        "selected_source_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "source_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+        "starts_count": 4,
+        "starts_file_sha256": "631123f37b2f27b0b7a6dc4de8fe2ff2ec89618e5fdf9718923d93e55ba1c784",
+        "target_fingerprint": "34d4a88aad196d54fa37d7f7ea7a7c77dc46ebc8e1bb67994c16447033dc6d5f",
+        "weight_fingerprint": "50238b73f2f95f1c73165e3a6359c9a37847c34f1ba89dd0b32a00ff738b5a82"
+      },
+      "heartbeat": {
+        "completed_full_ge": 0,
+        "epoch": 1791081149.4010887,
+        "label": "0000_nm",
+        "objective_calls": 1,
+        "status": "running_full_GE"
+      }
+    }
+  ]
+}

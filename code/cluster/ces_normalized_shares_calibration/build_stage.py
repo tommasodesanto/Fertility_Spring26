@@ -99,6 +99,22 @@ def pin_dependencies(manifest):
   old=source_maps.setdefault(manifest_rel,dict(source_root=root_rel,files=files))
   if old['source_root']!=root_rel or old['files']!=files: raise SystemExit('ambiguous source manifest placement: '+manifest_rel)
  return pins,source_maps
+def native_reference_case_pins(manifest):
+ """The three reference-case reads in native.setup, separate from export data."""
+ contract_rel=rel(manifest['contract']['path'])
+ contract_data,_=exact_bytes(contract_rel,manifest['contract']['sha256'])
+ case=rel(json.loads(contract_data)['reference_case'])
+ checkpoint_sha='090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e'
+ checkpoint=case+'/initial_state.pkl.gz'
+ data,_=exact_bytes(checkpoint,checkpoint_sha)
+ receipt=case+'/receipt.json'; parameters=case+'/parameters.csv'
+ for path in (receipt,parameters):
+  if not (ROOT/path).is_file(): raise SystemExit('native reference artifact absent: '+path)
+ if json.loads((ROOT/receipt).read_text())['case_checkpoint_sha256']!=checkpoint_sha:
+  raise SystemExit('native reference receipt/checkpoint mismatch')
+ # setup pins the checkpoint itself. The receipt and parameter table are
+ # required reads; pin their retained exact bytes before staging as well.
+ return {checkpoint:checkpoint_sha,receipt:sha(ROOT/receipt),parameters:sha(ROOT/parameters)}
 def preserve_attempt1():
  attempt1=DEPLOY/'attempt1'
  if attempt1.exists(): return
@@ -109,6 +125,7 @@ def preserve_attempt1():
  resume=ROOT/'tmp/ces_share_overnight/stage_resume.log'
  if resume.is_file(): shutil.copy2(resume,attempt1/'stage_resume.log')
 def main():
+ if (OUT/'stage.tar.gz').exists(): raise SystemExit('Retained immutable attempt exists; select a fresh attempt before building')
  if sha(PARENT)!=PARENT_SHA: raise SystemExit('authenticated parent archive drift')
  with tarfile.open(PARENT) as a:
   prior=json.load(a.extractfile('inventory.json')); source={n.removeprefix('source/'):a.extractfile(n).read() for n in a.getnames() if n.startswith('source/')}
@@ -137,6 +154,7 @@ def main():
  export=rel(manifest['local_export'])
  artifact_pins={f'{export}/{name}':digest for name,digest in manifest['artifact_hashes'].items()}
  artifact_pins[f'{export}/initial_state.pkl.gz']=manifest['checkpoint']['sha256']
+ artifact_pins.update(native_reference_case_pins(manifest))
  for relative,digest in sorted(artifact_pins.items()):
   data,origin=exact_bytes(relative,digest); source[relative]=data; origins[origin]=origins.get(origin,0)+1
  for relative,digest in pins.items():

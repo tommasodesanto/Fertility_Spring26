@@ -4,22 +4,31 @@ This is a prepared, non-adopted four-chain bounded Nelder--Mead search for the a
 
 The share rule is `alpha(m)=.733` when childless and `clip(.733-delta_alpha_jump-delta_alpha*m,.05,.95)` for parents. The normalized material denominator applies in all states and `h_P=0`. The existing birth menu, raw utility costs, no-estateA restriction, grids, fixed inputs, timing, and earnings remain unchanged. There is no `r*` correction or `alpha0` numerator, and no added birth shock or cost rescaling. The `family_rooms` weight is the inherited 42-metro bootstrap weight because national uncertainty is unavailable; the model-dependent-child observer remains a proxy.
 
-The v1 and v2 zero-solve preflights failed because historical packaging dependencies were missing. V3 attempt 3 was built, but Torch SSH authentication expired during transfer; it requires NYU/Duo reauthentication before staging can resume. No Slurm job was submitted. No calibration or adoption has occurred. Stage and submit only after the v3 zero-solve context preflight and exact-loop smoke are recorded as passed. The native selected-point postcheck is configured to require all 11 coordinates, the full 14-row experimental target CSV, 31 parameter records, 17 plot hashes, and an exact repeat. The prior v1/v2 packages and receipts remain historical evidence.
+V5 source inventory SHA-256 is
+`39fe1c3316919fb3d8672030afda6fb5fcc29aef0969181d206c9fc0757ca127` (3,008
+files). Its three-context preflight, smoke **19132940**, full native gate, and
+collector passed. Four-chain production array **19133352** (`0-3%4`) was
+submitted October 3 at 22:31:16 EDT. At 22:32:52 EDT all four tasks were
+verified `RUNNING` on cs604/cs606/cs633 ([launch health](../../../output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/launch_health.json)). This is a search in progress, not an adopted calibration.
 
-Per chain: CPU 1, 24 GiB, six hours, no more than 500 objective calls and 32 lifecycle solves per GE, with 1,800 seconds reserved for a fresh-child selected native postcheck. The nominal maximum is 2,000 GE / 64,000 lifecycle solves, although wall time will bind earlier. Chain-0 smoke runs exactly two distinct objective points followed by the fresh native selected postcheck and exact repeat; it is capped at 1.5 hours. Production is guarded by `verify_smoke_gate.py`, then submits `0-3%4`. Errors are terminal: no retry, fallback, adoption, or overwrite.
+V4 smoke **19132298** passed its two-GE native gate and collector, then Slurm
+reported `FAILED 1:0` because its EXIT receipt function lacked an `os` import.
+V5 leaves model, search and budget source unchanged; a separate reviewed
+launcher repairs only EXIT-receipt import, quoting and valid-JSON newline. Four
+local fixtures passed and preserved JSON validity and exit codes. V5 derives
+from the v3 parent by hardlink, preserving the six path differences; its three
+reference files are in the derived source, so no dependency overlay is needed.
+The [experiment packet](../../../output/model/experiments/ces_normalized_shares/overnight_v1/README.md)
+links the smoke, launcher, source and submission receipts.
 
-Lead commands, only after the adapter is generated and reviewed:
-
-```bash
-python3 code/cluster/ces_normalized_shares_calibration/prepare_plan.py
-PYTHON=output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python
-for chain in 0 1 2 3; do "$PYTHON" code/model/experiments/ces_normalized_shares/calibrate.py --chain "$chain" --out "/private/tmp/ces_mock_${chain}" --deadline-epoch $(( $(date +%s)+60 )) --mock-smoke; done
-bash code/cluster/ces_normalized_shares_calibration/stage_torch.sh
-ssh torch 'cd /scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v3 && sbatch --parsable --array=0 --time=01:30:00 --export=ALL,CES_RUN_MODE=smoke launch_torch.sh'
-ssh torch 'cd /scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v3 && /share/apps/anaconda3/2025.06/bin/python verify_smoke_gate.py'
-ssh torch 'cd /scratch/td2248/projects/ces_normalized_shares_overnight_20261003_v3 && ./submit_torch.sh'
-```
-
-Each selected native postcheck runs one fresh GE in a child process. The native solver itself performs the exact selected repeat, including arrays; the child independently requires the root and internal-repeat 14-row target CSVs and 31-row parameter CSVs to match exactly, all 17 diagnostic PNG hashes to match, normalized-utility contract pins to match, and the eleven selected coordinates to equal the root parameter table within their approved bounds. The smoke gate and collector reject any mismatch in target, weight, start-plan, selected-source, source-checkpoint, or stage-inventory identity. `collect_torch.py` exits nonzero for every incomplete or mismatched chain and writes `RESULTS.md` only as a readable non-adoption receipt.
-
-The immutable v3 stage retains its bundled collector. Use the separately hashed `followup_tools/collect_torch.py` overlay for host-side collection: it maps container result paths to the chain launch folder and checks all 17 diagnostic hashes. This tool-only correction changes no solver, utility, target or launch contract.
+Per chain: 1 CPU, 24 GiB, six hours, at most 500 objective calls and 32
+lifecycle solves per GE. A native GE may start only with at least 2,700 seconds
+left: a 900-second search-GE window plus the 1,800-second final-verification
+reserve. Warm native GEs took 177 seconds; cold GEs took 267–270 seconds. The
+two-GE smoke took about 12.5 minutes; observed speed implies roughly 70–105 GEs
+per chain, so wall time is expected to bind before the 500-call cap. An
+authenticated numerical candidate that cannot be bracketed receives a
+`1e12` penalty; a bounded-budget stop postchecks the best candidate. Other
+errors are terminal without retry or fallback. Native verification compares
+11 coordinates, full target and parameter tables, all 17 diagnostic plot
+hashes, and an exact repeat.
