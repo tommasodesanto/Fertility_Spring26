@@ -203,22 +203,39 @@ def profiles(result, empirical_ages, empirical_weights, pre, post, starts):
     return out
 
 
-def prepare_assessment(result, run_directory, *, output=None):
+def prepare_assessment(result, run_directory, *, output=None, data_year=None, psid_path=None, acs_path=None):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.backends.backend_pdf import PdfPages
     from production.engine.shared import annual_gross_income_at_state
 
+    PSID = Path(psid_path) if psid_path else globals()["PSID"]
+    ACS = Path(acs_path) if acs_path else globals()["ACS"]
+    contemporary = data_year is not None
     case = Path(run_directory)
     out = Path(output) if output else case / 'aggregate_plots/model_data_assessment'
     out.mkdir(parents=True, exist_ok=True)
     psid_meta = json.loads(PSID.with_name('metadata.json').read_text())
     require_sha256(PSID, psid_meta['selected_cache_sha256'], 'PSID cache')
+    psid_label = str(psid_meta.get('year', '2005/07'))
     cps_manifest = json.loads((ROOT / 'code/data/cps_fertility/source_manifest.json').read_text())
     require_sha256(CPS24, cps_manifest['sha256'], 'CPS 2024')
-    baseline, baseline_pins = baseline_cps()
-    post, pre, starts, first_flow = model_arrays(result)
+    if contemporary:
+        baseline = np.array([(number(r['PRTAGE']), min(number(r['PTSF1']), 3), number(r['PWSSWGT']))
+                             for r in rows(CPS24) if r['PESEX'] == '2'
+                             and 18 <= number(r['PRTAGE']) <= 49 and 0 <= number(r['PTSF1']) <= 5
+                             and number(r['PWSSWGT']) > 0])
+        baseline_pins = {'2024': sha256(CPS24)}
+    else:
+        baseline, baseline_pins = baseline_cps()
+    if hasattr(result.solution, 'assessment_prebirth'):
+        post = np.asarray(result.solution.g_beginning_distribution)
+        pre = np.asarray(result.solution.assessment_prebirth)
+        starts = result.P.age_start + np.arange(result.P.J) * result.P.period_years
+        first_flow = np.asarray(result.solution.assessment_first_births)
+    else:
+        post, pre, starts, first_flow = model_arrays(result)
     P, s = result.P, result.solution
     g = np.asarray(s.g, float)
     b = np.asarray(s.b_grid, float)
@@ -275,7 +292,7 @@ def prepare_assessment(result, run_directory, *, output=None):
         else:
             fig, axs = plt.subplots(3, 2, figsize=(8.5, 11))
             axs = axs.ravel()
-        fig.suptitle(title, fontsize=15, y=.987)
+        fig.suptitle(title + (' (2023 transition)' if contemporary else ''), fontsize=15, y=.987)
         fig.text(.045, .012, footnote, ha='left', va='bottom', fontsize=8, wrap=True)
         return fig, axs
 
@@ -295,8 +312,8 @@ def prepare_assessment(result, run_directory, *, output=None):
     # Fertility: same-cell pre/post stocks, weighted by the survey's exact age exposure.
     page = 1
     fig, axs = newpage('Fertility: model versus data',
-        'CPS June 2004/06 women (orange); saved model reproductive-member proxy (blue). Counts cap at 3+. '
-        'First births: NCHS 2003–06 counts. Income: CPS June 2024 family money income versus model current labor earnings ranks; external validation.', pooled=True)
+        ('CPS June 2024 women (orange);' if contemporary else 'CPS June 2004/06 women (orange);') + ' saved model reproductive-member proxy (blue). Counts cap at 3+. ' +
+        ('First births: NCHS 2023 counts. Income:' if contemporary else 'First births: NCHS 2003–06 counts. Income:') + ' CPS June 2024 family money income versus model current labor earnings ranks; external validation.', pooled=True)
     cx = np.arange(18, 46)
     data_mean, model_mean = [], []
     for age in cx:
@@ -316,7 +333,7 @@ def prepare_assessment(result, run_directory, *, output=None):
             nm = q.sum(axis=(0, 1, 2, 3, 5)); m += w * nm / nm.sum()
         m /= m.sum()
         bars(ax, panel, f'Children ever born, ages {lo}–{hi}', ['0', '1', '2', '3+'], m, d)
-    nr = [r for r in rows(NCHS) if 2003 <= int(r['year']) <= 2006]
+    nr = [r for r in rows(NCHS) if (int(r['year']) == data_year if contemporary else 2003 <= int(r['year']) <= 2006)]
     n_age = np.array([int(r['age']) for r in nr]); n_w = np.array([float(r['n_first_births']) for r in nr])
     n_bins = np.clip((n_age - 18) // 4, 0, 6)
     n_mass = np.bincount(n_bins, weights=n_w, minlength=7); n_mass /= n_mass.sum()
@@ -392,7 +409,7 @@ def prepare_assessment(result, run_directory, *, output=None):
     # Housing: realized tenure and renter policy; annual ACS cells are disjoint.
     page = 2
     fig, axs = newpage('Housing: model versus data',
-        'Room CDFs: PSID 2005/07; display to 99th percentile. Means: ACS 2005/06 national all structures. '
+        (f'Room CDFs: PSID {psid_label}; means: ACS 2023 national all structures. ' if contemporary else 'Room CDFs: PSID 2005/07; display to 99th percentile. Means: ACS 2005/06 national all structures. ') +
         'Family rooms use ages 30–55 and resident children (ACS) versus children at home (model). Ownership target has a distinct sample.')
     pr = rows(PSID)
     ps = np.array([[number(r[k]) for k in ('age', 'weight', 'total_net_wealth', 'annual_gross_labor_earnings',
@@ -457,7 +474,7 @@ def prepare_assessment(result, run_directory, *, output=None):
     # total net wealth adds the value of the home held at the same instant.
     page = 3
     fig, axs = newpage('Resources: model versus data',
-        'PSID 2005/07 reference persons. Each domain divides earnings and wealth by its own weighted mean gross working-age earnings. '
+        (f'PSID {psid_label} reference persons.' if contemporary else 'PSID 2005/07 reference persons.') + ' Each domain divides earnings and wealth by its own weighted mean gross working-age earnings. '
         'Model wealth: beginning net financial position plus old home value. CDF tails retained; display 1st–97.5th percentile range.')
     age_p, wt_p, total_p, earn_p, owner_p, home_p, room_p = ps.T
     valid_work = (age_p <= 65) & np.isfinite(earn_p) & (earn_p >= 0)
@@ -524,11 +541,12 @@ def prepare_assessment(result, run_directory, *, output=None):
         writer = csv.DictWriter(stream, fieldnames=['page', 'panel', 'series', 'x', 'value'])
         writer.writeheader(); writer.writerows(long)
     receipt = {
-        'status': 'complete', 'case': str(case.resolve()),
+        'status': 'complete', 'data_year': data_year, 'case': str(case.resolve()),
+        'saved_assessment_sha256': sha256(case / 'assessment_solution.pkl.gz') if contemporary else None,
         'case_files_sha256': {name: sha256(case / name) for name in
-                              ('native_result.npz', 'metadata.json', 'target_fit.csv', 'parameters.csv')},
+                              ('native_result.npz', 'metadata.json', 'target_fit.csv', 'parameters.csv') if (case / name).exists()},
         'sources_sha256': {'psid_cache': sha256(PSID), 'psid_metadata': sha256(PSID.with_name('metadata.json')),
-                           'cps_2024': sha256(CPS24), 'cps_2004_2006_partitions': baseline_pins,
+                           'cps_2024': sha256(CPS24), 'cps_fertility_partitions': baseline_pins,
                            'acs_profile': sha256(ACS), 'nchs_first_birth_counts': sha256(NCHS)},
         'normalizers': {'psid_annual_gross_labor_age18_65': float(denom_p),
                         'model_annual_gross_labor_before_retirement': float(denom_m)},
@@ -541,10 +559,10 @@ def prepare_assessment(result, run_directory, *, output=None):
                         'model_financial': 'beginning b including mortgage debt; total b + price times old owned rooms',
                         'psid_financial': 'NETWORTHR minus gross HOMEVALUER',
                         'housing': 'realized g, renter hR_pol, owner H_own; ACS annual disjoint cells; room means cap 9; family rooms ages 30–55, with 54–57 model cell weighted 2/4',
-                        'nchs': '2003–06 first-birth counts, boundary-collapsed four-year age bands; counts not hazards'},
-        'sources_limitations': ['CPS 2024 income comparison is external validation, not matched-vintage calibration.',
+                        'nchs': ('2023' if contemporary else '2003–06') + ' first-birth counts, boundary-collapsed four-year age bands; counts not hazards'},
+        'sources_limitations': [('2023 transition uses CPS June 2024 fertility, the nearest local supplement; PSID '+psid_label+'.' if contemporary else 'CPS 2024 income comparison is external validation, not matched-vintage calibration.'),
                                 'ACS ownership target DUE sample differs from national all-structures profiles.',
-                                'AHS 2007 has a room mean but no local room distribution; PSID provides CDF validation.',
+                                ('PSID '+psid_label+' provides room CDFs; ACS 2023 provides housing profiles.' if contemporary else 'AHS 2007 has a room mean but no local room distribution; PSID provides CDF validation.'),
                                 'PSID reference-person earnings are household earnings; model is reproductive-member proxy.'],
         'files': {'pdf': str(pdf), 'pages': [str(out / f'page_{i}.png') for i in (1, 2, 3)],
                   'plotted_long': str(out / 'plotted_long.csv')}

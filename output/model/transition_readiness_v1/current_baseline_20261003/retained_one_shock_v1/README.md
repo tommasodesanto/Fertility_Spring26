@@ -23,3 +23,7 @@ The retained fertility statistic is the household-rate analogue used in the orig
 **Scientific limitations:** both terminal checks are false. Historical four-window stability passes, but the maximum difference between the 24/32-date projections through 2063 is 0.003201; the long projection is diagnostic. Full 104/128-period certification and estate funding/recipient closure remain outstanding. Experiments must preserve these disclosures and validate their own continuation. The saved `state_experiment_ready` flag remains false.
 
 The author requested this reference remain available while the [separate two-shock experiment](../two_shock_v1/README.md) fits the midpoint and final fertility windows. Do not overwrite this package or silently promote its certification flags.
+
+## Quick model–data comparison
+
+The same standard 19-panel comparison for the saved 2023 state is in [model_data_assessment_2023](model_data_assessment_2023/README.md). Its full 2023 household solution and data are cached; one command regenerates the three pages without estimating a transition.
