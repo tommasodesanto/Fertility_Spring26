@@ -179,6 +179,38 @@ launch guard (137 and 126 objective attempts), then passed fresh final checks.
 The hourly monitor is PAUSED after the final collection and review; no automatic
 extension, transition or additional calibration is authorized.
 
+**One-birth Estate-A continuation running October 4, 2026, 12:39 New York.**
+Tommaso authorized a new experimental search for a **fresh-native-verified
+same-contract loss below 13**. Relative to the verified one-birth recovery
+chain 1, earnings, entry wealth and income, timing, transfers and floors,
+preferences, estate accounting, target values and weights, bounds, and numerical
+acceptance gates are unchanged. The five verified binary endpoints, five
+authenticated but provisional parent checkpoints, and ten bounded perturbations
+give 20 distinct starts. Stage inventory
+`f27c6c71b967d5850c00107f9f6f765950631739aec21b8668928efae6a40cbe`
+retains target fingerprint `c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70`
+and weight fingerprint `f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4`.
+The zero-solve actual-context preflight and exact two-call native smoke **19163407**
+passed the 14-target, 31-parameter and 17-plot exact-repeat gates. Array
+**19164416** (`0-19%20`) started with all 20 launch receipts and start
+contracts. At **12:44 New York**, two perturbation tasks (14 and 19) failed
+their first native GE on the unchanged $10^{-12}$ dead-node mass gate
+(observed $1.323\times10^{-12}$ and $1.250\times10^{-12}$); their failure
+receipts are retained, and the other 18 tasks remain running. No gate was
+relaxed and no task was restarted.
+Each task has one CPU, 24 GiB, 12 hours, at most 500 objective
+calls and a 1,800-second final native reserve; no automatic retry or adoption.
+Search stops early at a provisional sub-13 case only to invoke the unchanged
+fresh native selected-point check. The earlier held array **19164358** was
+canceled before any task started after Torch rejected its hold-release command;
+the retained receipts are in the [continuation deployment](output/model/experiments/birth_count_choice/estate_a_binary_continuation_20261004_v2/deployment/)
+and its [driver README](code/cluster/estate_birth_calibration/binary_continuation_v2/README.md).
+The hourly `monitor-one-birth-estate-a-calibration` heartbeat watches this
+array and reports only a meaningful change, failure, verified threshold or
+final collection; it has no authority to change the run or restart tasks.
+The old 13.771 loss uses a different wealth target, so the numerical threshold
+is a search goal under the new contract rather than a like-for-like comparison.
+
 **October 4 fixed-parameter two-birth diagnostic:** at the verified one-birth
 Estate-A chain-1 estimates, allowing at most two intended births per period
 passed the native stationary-GE and exact-repeat gates in nine lifecycle solves.

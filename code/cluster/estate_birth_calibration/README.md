@@ -1,5 +1,11 @@
 # Matched estate-A calibration deployment
 
+The October 4 20-chain, one-birth continuation is in
+[`binary_continuation_v2/`](binary_continuation_v2/README.md). Its pinned
+October 4 stage and job receipts are under
+`output/model/experiments/birth_count_choice/estate_a_binary_continuation_20261004_v2/deployment/`.
+The historical scripts below belong to the failed 19127370 array.
+
 **Current status, October 4:** all ten tasks in array **19127370** failed at
 the search time boundary before final native selected-point verification.
 The saved per-case and best-so-far checkpoints remain provisional. See the
