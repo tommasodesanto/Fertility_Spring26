@@ -197,6 +197,24 @@ revised-timing old-wealth anchor, preserving different estate/target definitions
 and providing arithmetic rescoring under both target systems. Neither result
 changes the working baseline or certifies optimizer/grid convergence.
 
+**October 4 financing diagnostic at the lower-wealth one-birth winner:** two
+sequential fixed-price lifecycle solves compare financed shares 0.8 and 1.0 at
+price 0.7811670615311468, holding the winner's preferences, Estate-A valuation,
+H0, one-birth cap, entry and other economic inputs fixed. The 0.8 baseline
+reproduces all 14 verified target moments (maximum scored-residual difference
+8.4e-14). The 1.0 solve is **unaccepted**: its native report stopped on the
+unchanged negative-estate gate, with net-negative death estates 1.1913e-8 versus
+the 1e-10 limit; affected death mass is 1.2709e-7 out of 0.061733 total deaths.
+The shortfall is concentrated in two-room owners. No gate was relaxed or case
+rerun. Saved-distribution diagnostics, explicitly provisional for 1.0, show
+ownership 69.617% to 81.897%, explicit births -2.164%, and completed-interview-
+age-25 children ever born 0.549585 to 0.538026. Age-25 motherhood falls from
+44.607% to 43.540%, while children conditional on motherhood rise from 1.232071
+to 1.235715. Both arms retain 17 standard plots; full relaxed target reporting
+is unavailable after the acceptance failure. See the [diagnostic packet](output/model/experiments/birth_count_choice/credit_at_binary_winner_v1/README.md)
+for source pins, baseline fit, raw distributions, estate ledger and CDF. This
+is neither an accepted policy counterfactual nor a GE or recalibration result.
+
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain
 historical; the working revised-timing anchor is chain 13. Neither resolves
