@@ -810,10 +810,15 @@ manuscript wording or certify a new paper calibration.
    its six-date terminal failure remains disclosed. After exact same-stage
    local/remote gate review, replacement 19147666, index 4 only, was submitted
    for six hours in `cs` at eight CPUs/48 GiB; it was **RUNNING** on `cs615`
-   at 04:27 New York.
-   All existing searches and their sources remain unchanged. Both local searches have
-   completed two 24/32-date trial measurements and are evaluating candidate 3. Local index 7 has now completed both horizons at its initial
-   trial: fertility 2.075417 versus target 1.645750, gap +0.429667. This
+   at 04:27 New York. At 06:14 New York, its second candidate's previously
+   failing endpoint converged with 13 verified candidate-owned diagnostic
+   paths; [the repair receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v9/endpoint_output_fix_verified.json)
+   preserves the evidence. Seven cluster searches on seven physical nodes
+   and both local searches remain active. All existing searches and their
+   sources remain unchanged. Both local searches have completed four
+   24/32-date trial measurements and are evaluating candidate 5. The retained
+   initial-trial readout for local index 7 reports fertility 2.075417
+   versus target 1.645750, gap +0.429667. This
    is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
    retain the four target rows and all fixed parameter links. The search continues.
    No fertility fit is accepted yet. Live receipts and fit outcomes are in
