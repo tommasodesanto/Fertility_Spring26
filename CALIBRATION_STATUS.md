@@ -775,19 +775,24 @@ manuscript wording or certify a new paper calibration.
    passed the previously failing output stage. Sources and panel identities
    stay separate; completed candidates and all failure evidence are retained.
 
-   Following the concrete local budget failure, a separately fingerprinted
-   numerical-initialization recovery passed nine focused tests and real-source
-   zero-solve preflight. Its native 24/32-date replay smoke is **RUNNING**:
-   manager 89244, worker 89246, started 07:58:57 New York, one core, one-hour
-   limit and 24-GiB owned-process memory guard. [Review and launch evidence](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/lead_preflight.json)
-   and [live status](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/smoke_job/status.json)
-   bind this run. It restores only authenticated converged price/pension paths
-   and Jacobians, preserving native source, `Controller.run`, economics,
-   targets, bounds and gates. Fresh reference and seed are still required.
-   The smoke has completed the fresh reference and five seed maps; candidate 1
-   is active. No new fit is launched yet: native replay and four-window agreement must
-   pass before one separate six-hour scalar restart at psi_child
-   0.11999694638724082. Existing budgets are not extended.
+   Following the concrete local budget failure, the separately fingerprinted
+   recovery passed nine focused tests, real-source preflight and the actual
+   native 24/32-date replay smoke. Both roots converged in two maps each,
+   replay discrepancy was zero, every required root/accounting gate passed,
+   and all four fertility values exactly reproduced the saved trial. The test
+   took about 22 minutes and 241 native calls; both terminal gates remain false.
+   [Lead review and pinned smoke](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_review_gate.json)
+   preserve the evidence.
+
+   The authorized new local scalar fit is **RUNNING**, verified 08:27 New York:
+   manager 91634, worker 91636, started 08:27:19, one core, six-hour external
+   limit, 21,480-second internal budget and 24-GiB owned-RSS guard.
+   [Launch receipt](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/launcher_start.json)
+   is authoritative; never duplicate it. Numerical start is psi_child
+   0.11999694638724082. It restores only authenticated converged price/pension
+   paths and Jacobians, preserving native source, `Controller.run`, economics,
+   targets, bounds and gates. The scalar optimizer restarts, and fresh reference
+   and seed are still required. Existing budgets are not extended.
 
    Best completed local trial: psi_child 0.12839959665634437 gives final-window
    fertility 1.714388 versus 1.645750, gap +0.068638. **No matched fit is

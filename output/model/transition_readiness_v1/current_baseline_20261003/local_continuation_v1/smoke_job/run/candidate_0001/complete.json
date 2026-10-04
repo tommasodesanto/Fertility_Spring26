@@ -1,0 +1,68 @@
+{
+  "certified": true,
+  "psi": 0.12839959665634437,
+  "model": 1.7143879141286649,
+  "gap": 0.06863791412866482,
+  "loss_contribution": 0.004711163255933966,
+  "payload": {
+    "candidate": 1,
+    "models": [
+      1.6933377914967078,
+      1.709496459512693,
+      1.7115053694197429,
+      1.7143879141286649
+    ],
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/smoke_job/run/candidate_0001"
+  },
+  "mode": "diagnostic",
+  "production_ready": false,
+  "one_shock_measurement_certified": true,
+  "horizon_comparison": {
+    "passed": true,
+    "relative_gaps": {
+      "asset_price": 1.4087563470578772e-05,
+      "renter_price": 1.2721999718760475e-05,
+      "adult_population": 2.432969592857586e-07,
+      "birth_children": 2.4481176776418975e-05,
+      "housing_demand": 8.868953750650483e-06,
+      "pension_period_units": 2.3704156014501207e-07
+    },
+    "fertility_absolute_gaps": [
+      1.645363228286456e-05,
+      2.129387379889991e-05,
+      2.7424671092290964e-05,
+      3.4281416656956054e-05
+    ],
+    "early_macro_periods": 5,
+    "early_macro_years": [
+      2007,
+      2011,
+      2015,
+      2019,
+      2023
+    ],
+    "fertility_windows": 4,
+    "macro_tolerance": 0.001,
+    "fertility_tolerance": 0.001,
+    "terminal_passes": [
+      false,
+      false
+    ],
+    "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+  },
+  "diagnostic_relaxed_finite_horizon_match": false,
+  "checkpoint_2023": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/smoke_job/run/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+    "sha256": "1d5fd74f3dce4c7bfc5ccbe189aa64ce0bf26b99bac4f071956fc83e91535f48"
+  },
+  "shock_fit_complete": false,
+  "full_path_certified": false,
+  "state_experiment_ready": false,
+  "state_physical_horizon_stable": true,
+  "state_value_integrity": true,
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
+}
