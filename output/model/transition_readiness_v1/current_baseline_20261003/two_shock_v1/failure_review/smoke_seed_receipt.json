@@ -1,0 +1,36 @@
+{
+  "schema": "two_shock_smoke_failure_review_v1",
+  "reviewed_epoch": 1791130524.115515,
+  "classification": "implementation seed receipt type mismatch",
+  "model_infeasibility_established": false,
+  "memory_failure": false,
+  "completed_stages": [
+    "fresh reference reconstruction",
+    "five-map twelve-date seed",
+    "first candidate stationary endpoint and one-step replay"
+  ],
+  "native_calls": 34,
+  "controller_accounted_calls_before_exception": 31,
+  "exception": "'numpy.ndarray' object has no attribute 'get'",
+  "failure": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/smoke_job/run/failure.json",
+    "sha256": "2f10b2de20ceea506c0d5a446cdc3cb165c493f97e4fc8c9cd22d06d0e4bddcb"
+  },
+  "manager_terminal": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/smoke_job/manager_terminal.json",
+    "sha256": "c99bfa43e6ae31a697582cdc1a9301a37a6134ccb9de3427c0c2a1df2d0da231"
+  },
+  "worker_log": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/smoke_job/worker.log",
+    "sha256": "d740746f42b222984ae34a6840e5b72e82da941fe9f630a96779f995340be194"
+  },
+  "endpoint_root": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/smoke_job/run/stage1/candidate_0001/horizon_006/endpoint/root.json",
+    "sha256": "eb7c3832df45e90e92fa3b2cba63ba244e26e4158d758fb85f7f9a4c6ff20a7d"
+  },
+  "seed_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/smoke_job/run/stage1/seed_receipt.json",
+    "sha256": "fcc1bccf140819e75c8f44c6298037abc5b5b113641ca02144e03a840c25ed4e"
+  },
+  "next_action": "Preserve complete seed receipt, including provenance metadata, when passing to unchanged measured-Jacobian extension. Add real-helper regression; new source pins and fresh separately bounded smoke only after lead verification. Preserve this failed run and frozen sources."
+}

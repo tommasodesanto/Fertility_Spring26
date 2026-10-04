@@ -158,6 +158,50 @@ class Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'absolute bounds'):m.preflight(p)
 
 class NativeSeamTests(unittest.TestCase):
+    @staticmethod
+    def measured_seed_receipt():
+        horizon=12; date=5
+        names=('housing_imbalance<-log_house_price','housing_imbalance<-log_period_pension',
+            'pension_imbalance<-log_house_price','pension_imbalance<-log_period_pension')
+        profiles={name:[(i+1)*.01*(j+1) for j in range(horizon)] for i,name in enumerate(names)}
+        return dict(matrix=np.eye(24),unknown_blocks=['log_house_price','log_period_pension'],
+            residual_blocks=['housing_imbalance','pension_imbalance'],residual_units='physical_unscaled',
+            coordinate_order=['log_house_price','log_period_pension'],horizon=horizon,perturbed_date=date,
+            measured_lags=list(range(-date,horizon-date)),lag_profiles=profiles)
+
+    def test_runtime_preserves_authenticated_receipt_through_real_extension(self):
+        import two_shock_runtime as native
+        adapter,rt,_=self.adapter(dict(prices=np.full(12,5.),pensions=np.full(12,.7)))
+        rt.packet={};rt.reference_price=2.;rt.identity=lambda:plan()['identity']
+        runtime=native.NativeRuntime.__new__(native.NativeRuntime)
+        runtime.plan=adapter.plan;runtime.rt=rt;runtime.adapters={};runtime.seeds={};runtime.initialization=None
+        runtime.queue_values=rt.pf.birth_queue_values
+        fixture=self.measured_seed_receipt()
+        with patch.object(native.StageAdapter,'measure_seed',return_value=copy.deepcopy(fixture)):
+            returned=runtime.measure_seed(stage=0,start_year=2015,inherited_state=state(2015),folder='unused',deadline=m.time.monotonic()+30)
+        self.assertIn('lag_profiles',runtime.seeds[0]);self.assertEqual(runtime.seeds[0]['measured_lags'],fixture['measured_lags'])
+        import e5f_four_shock_acceleration as acceleration
+        matrix=acceleration.extend_measured_jacobian(runtime.seeds[0],24)
+        self.assertEqual(matrix.shape,(48,48));self.assertGreater(np.count_nonzero(matrix),0)
+        # Adapter evaluation calls the same real extension using runtime-owned seed state.
+        runtime.adapters[0]._endpoint=lambda *a:(dict(parameters=NS(pension=.3)),dict(price=2.,stationary_pass=True,stationary_renewal_gap=0.))
+        class ReachedRoot(Exception): pass
+        observed={}
+        def stop_at_root(**kw):
+            observed['jacobian']=kw['initial_jacobian'].copy()
+            raise ReachedRoot()
+        with tempfile.TemporaryDirectory() as d,patch.object(acceleration,'solve_joint_with_acceleration',side_effect=stop_at_root):
+            with self.assertRaises(ReachedRoot):
+                runtime.evaluate_stage(stage=0,psi=.12,horizon=24,start_year=2015,inherited_state=state(2015),
+                    deadline=m.time.monotonic()+30,folder=Path(d))
+        np.testing.assert_allclose(observed['jacobian'],matrix)
+
+    def test_real_extension_rejects_missing_seed_provenance(self):
+        import e5f_four_shock_acceleration as acceleration
+        receipt=self.measured_seed_receipt();receipt.pop('coordinate_order')
+        with self.assertRaisesRegex(ValueError,'physical/log convention'):
+            acceleration.extend_measured_jacobian(receipt,24)
+
     def adapter(self,initialization=None):
         import two_shock_runtime as native
         p=plan();p['path'].update(price_bound_ratios=[.05,20.],pension_bound_ratios=[.05,20.],max_log_step=.15,damping=.7)

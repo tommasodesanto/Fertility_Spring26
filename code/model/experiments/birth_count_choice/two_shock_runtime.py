@@ -214,7 +214,7 @@ class NativeRuntime:
                 budget=self.plan['budget'],deadline=deadline,folder=folder)
             receipt.update(mapping_count=5,horizon=12,identity=adapter.identity())
         else: receipt=adapter.measure_inherited_seed(Path(folder),deadline)
-        self.seeds[stage]=np.asarray(receipt['matrix']);return receipt
+        self.seeds[stage]=copy.deepcopy(receipt);return receipt
 
     def evaluate_stage(self,*,stage,psi,horizon,start_year,inherited_state,deadline,folder,**unused):
         adapter=self.adapters[stage]

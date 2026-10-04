@@ -1,0 +1,71 @@
+{
+  "changed_files": {
+    "code/model/experiments/birth_count_choice/test_two_shock.py": "f795d85a36ba556ddd27df1599e4d5358acb4fd1e9210bbad48f421402b1fb8d",
+    "code/model/experiments/birth_count_choice/two_shock_runtime.py": "06b1d9e1d7592457d5af0e6f700b95e7168c2b28b6a3f1ee4724b9c0cf9e9b26"
+  },
+  "epoch": 1791130757.969167,
+  "native_calls": 0,
+  "parent_failure": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/smoke_seed_receipt.json",
+    "sha256": "bb25860cc4052f1512afc6df27a2b0c34188860377d28d047be103aa1f9b01b6"
+  },
+  "plans": {
+    "fit": {
+      "manifest": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/inputs/fit_manifest.json",
+        "sha256": "5f4c5ddb487b4e031befb4b9098f900e9898c981f24312046d61aa7d3a72d7cb"
+      },
+      "preflight": {
+        "fingerprints": {
+          "contract": "3440339739242e65e35aefc6ad0b1e7a958e4a6bdd9f6bb7da3a5f9772e4fa16",
+          "controls": "56a95c16a0fdbc88ea82194f4be996e06d0863518d23004f04c39e1d966959dc",
+          "smoke_controls": "6760d6be7aa0196adcec52daf6c6865392bedba4f2385aa14f13381ddbd896c5",
+          "source": "b7c8e4b347f3a67abe6f6c2c2246ef515aa18936557100ed954cc0e9b59feb73"
+        },
+        "horizons": [
+          24,
+          32
+        ],
+        "native_calls": 0,
+        "policy_call_stop_cap": 20000,
+        "production_ready": false,
+        "schema": "estate_a_two_unanticipated_psi_v1",
+        "scientific_validation": false,
+        "status": "PASS",
+        "total_seconds": 21480
+      }
+    },
+    "smoke": {
+      "manifest": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/inputs/smoke_manifest.json",
+        "sha256": "851175f7678316be93933b6e3d056bbc1ee5b79f7982288364b5afcc6b44c794"
+      },
+      "preflight": {
+        "fingerprints": {
+          "contract": "3440339739242e65e35aefc6ad0b1e7a958e4a6bdd9f6bb7da3a5f9772e4fa16",
+          "controls": "56a95c16a0fdbc88ea82194f4be996e06d0863518d23004f04c39e1d966959dc",
+          "smoke_controls": "6760d6be7aa0196adcec52daf6c6865392bedba4f2385aa14f13381ddbd896c5",
+          "source": "b7c8e4b347f3a67abe6f6c2c2246ef515aa18936557100ed954cc0e9b59feb73"
+        },
+        "horizons": [
+          6,
+          8
+        ],
+        "native_calls": 0,
+        "policy_call_stop_cap": 2000,
+        "production_ready": false,
+        "schema": "estate_a_two_unanticipated_psi_v1",
+        "scientific_validation": false,
+        "status": "PASS",
+        "total_seconds": 3480
+      }
+    }
+  },
+  "production_ready": false,
+  "review": "One-line fix preserves full measured receipt for unchanged Jacobian helper. Real-helper regression and actual saved seed extension passed. All native economic sources/gates unchanged.",
+  "schema": "two_shock_seed_receipt_repair_v1",
+  "scientific_validation": false,
+  "status": "PASS",
+  "tests": 16,
+  "unchanged_v9_files": 709
+}
