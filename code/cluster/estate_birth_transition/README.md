@@ -108,7 +108,7 @@ file is detached from local hardlinks before writing; its file/plan SHA pins are
 updated, and only that file is added to the launcher delta. This does not modify
 the previous stage or the author-owned original plan.
 
-The 96 GiB allocation requires Torch partition `cl`; `cs` rejected it before creating a job. Submission now explicitly selects `cl`, including when using the previously frozen v4 launcher. Smoke 19138166 was submitted with that explicit override. Read current receipts before any further submission.
+The earlier one-CPU/96-GiB request was rejected in `cs`; the eight-CPU/96-GiB dry-run was accepted on October 4. The submitted v6 array uses `cl`; current capacity and failed pending-task partition updates are recorded in the main transition readout. Submission now explicitly selects `cl`, including when using the previously frozen v4 launcher. Smoke 19138166 was submitted with that explicit override. Read current receipts before any further submission.
 
 ## Frozen-source revision for the eight-thread native runtime
 

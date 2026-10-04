@@ -769,8 +769,9 @@ manuscript wording or certify a new paper calibration.
    guesses must run simultaneously, with at most 48 nodes. The current design
    uses twelve independently refining scalar-fit starts, each with the same
    saved baseline, target contract and numerical gates. Torch smoke 19139732
-   passed; twelve six-hour searches are submitted as array 19140535 and were
-   queued as of October 4 at 01:03 New York. Live receipts and fit outcomes are in
+   passed; twelve six-hour searches are submitted as array 19140535. Tasks 0–1
+   are running and 2–11 await capacity, verified October 4 at 01:08 New York.
+   Live receipts and fit outcomes are in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
    economic choice remains distinct.
