@@ -140,7 +140,9 @@ This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
 **Estate-A recovery submitted October 4 at 01:15 New York; all 15 tasks in Slurm
-array 19141024 were running by 01:20, with 15/15 pinned start contracts written.** The failed-parent-dependent
+array 19141024 started by 01:20. At the October 4, 05:00 New York check, 14 tasks remain RUNNING; task 6 (count3 chain 1) failed at 04:56:47.** The failed candidate exhausted the per-GE lifecycle allowance: 31 price trials used, one solve retained for exact repeat, and renewal residuals still outside acceptance. About 16,393 seconds remained in its search window, so this was not the repaired wall-clock boundary bug. Its saved best remains provisional; no automatic retry or gate relaxation occurred. All other checkpoints were recent.
+
+The failed-parent-dependent
 controllers **19136605** and **19139361** were canceled; their proposed native
 continuations never ran. The isolated [recovery stage](code/cluster/estate_birth_calibration/recovery/README.md)
 starts five binary and ten count-three chains from the ten *provisional* saved
