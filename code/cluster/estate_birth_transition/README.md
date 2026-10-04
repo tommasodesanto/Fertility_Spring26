@@ -1,9 +1,10 @@
 # Isolated current Estate-A transition on Torch
 
-Current deployment defaults are v6 and use the twelve-start panel below. The
+Current deployment defaults are v7 and use the revised twelve-start workflow
+below: ten cluster tasks and two local workers. The
 v5 launcher is frozen and its native smoke remains the reference for the exact
 unchanged native identity and plans. Earlier standalone steps below document
-that reference workflow; v6 uses `panel_launch_torch.sh`.
+that reference workflow; v6 uses `panel_launch_torch.sh`; v7 uses `panel_launch_torch_v7.sh`.
 
 This launcher runs the current one-birth Estate-A adapter through the retained
 one-permanent-shock controller. It creates one job at a time in a new immutable
@@ -202,3 +203,52 @@ The driver collector can combine saved results with
 `transition_panel.py --collect --inputs RECEIPT_OR_DIRECTORY ... --output OUT`.
 It rejects mixed contracts and ranks accepted diagnostic fits by their final
 window gap. No panel result is promoted automatically to a production policy.
+
+## v7: endpoint-cap continuation, ordinary nodes and two local starts
+
+v7 changes only `endpoint.max_evaluations` from 16 to 48 in the fit plan.
+The native engine, runtime, handoff, panel driver, smoke plan, parameter bounds,
+targets and gates remain unchanged. The endpoint still has its 1,800-second
+stage deadline; each fit retains its 21,480-second total budget and 20,000-call
+cap inside six hours. The native-smoke bridge normalizes exactly that one
+iteration-cap field and rejects any other fit-plan, source, deadline, bound or
+gate change.
+
+The twelve author-selected starting ratios are
+`[0.70,0.76,0.82,0.88,0.92,0.94,0.96,0.98,1.00,1.02,1.08,1.15]`.
+Indices 5 and 7 run on two local one-core workers. The cluster array is exactly
+`0-4,6,8-11%10`, and its launcher rejects indices 5 and 7 to prevent duplication.
+At most ten cluster nodes are active; each uses one node, eight CPUs and a
+48 GiB hard memory limit on ordinary partition `cs`. Forty-eight GiB exceeds
+three times the observed six-date smoke peak, but full 24/32 memory use is not
+certified; Slurm enforces the cap. v5/v6 launchers and old results are preserved.
+
+After the root freezes `plans_v7` inputs:
+
+```sh
+python3 code/cluster/estate_birth_transition/deploy.py build \
+  --from-stage output/model/transition_readiness_v1/current_baseline_20261003/deployment_v6 \
+  --smoke-plan /absolute/path/unchanged_v5_smoke_plan.json \
+  --fit-plan /absolute/path/plans_v7/fit_plan.json \
+  --panel-config /absolute/path/plans_v7/panel_config.json
+python3 code/cluster/estate_birth_transition/deploy.py verify
+python3 code/cluster/estate_birth_transition/deploy.py verify-panel
+python3 code/cluster/estate_birth_transition/deploy.py stage
+ssh torch /scratch/td2248/projects/current_estate_transition_20261003_v7/panel_launch_torch_v7.sh preflight
+python3 code/cluster/estate_birth_transition/deploy.py review-smoke \
+  --smoke-receipt /absolute/path/actual_v5_smoke_receipt.json \
+  --native-stage output/model/transition_readiness_v1/current_baseline_20261003/deployment_v5 \
+  --panel-test-receipt /absolute/path/panel_mock_test_receipt.json \
+  --gate /absolute/path/v7_panel_review_gate.json --reviewer lead
+python3 code/cluster/estate_birth_transition/deploy.py submit \
+  --mode panel --partition cs --wall-seconds 21600 \
+  --gate /absolute/path/v7_panel_review_gate.json
+```
+
+Staging uploads a small delta from authenticated v6 sources into the new v7 root.
+The prior v5 actual smoke and its inventory are authenticated again by the v7
+remote review gate. Existing v5 source/data pins are retained, while the new fit
+plan and panel config have their own SHA identities. Cancellation of pending old
+array tasks is a separate root-owned action; this tooling never cancels jobs.
+Scheduler test-only start estimates use Torch's New York timezone (`-04:00` at
+the October 4 check); they are estimates, not launch guarantees.

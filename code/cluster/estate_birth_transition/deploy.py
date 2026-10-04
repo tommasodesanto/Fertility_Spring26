@@ -15,8 +15,8 @@ elif HERE.parts[-3:] == ('code','cluster','estate_birth_transition'):
     ROOT = HERE.parents[2]
 else:
     raise RuntimeError('Copied deployer requires its adjacent inventory.json')
-REMOTE = '/scratch/td2248/projects/current_estate_transition_20261003_v6'
-OUT = ROOT/'output/model/transition_readiness_v1/current_baseline_20261003/deployment_v6'
+REMOTE = '/scratch/td2248/projects/current_estate_transition_20261003_v7'
+OUT = ROOT/'output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7'
 PARENT = ROOT/'output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/stage.tar.gz'
 PARENT_SHA = '5cb99a84f1aa51dab49462292ab31756f9183776e30d2d327844ae2af2c5fc44'
 CASE = 'output/model/experiments/birth_count_choice/estate_a_v1/single/cases/20261003T212605039706Z_a739edc3'
@@ -34,7 +34,7 @@ def relative(path): return str(Path(path).resolve().relative_to(ROOT))
 
 def build(args):
     out = Path(args.stage).resolve()
-    require(getattr(args,'panel_config',None), 'v6 build requires an explicit pinned panel config')
+    require(getattr(args,'panel_config',None), 'v7 build requires an explicit pinned panel config')
     require(not out.exists() or not any(out.iterdir()), 'Refusing nonempty deployment directory')
     previous=Path(args.from_stage).resolve() if getattr(args,'from_stage',None) else None
     if previous:
@@ -52,7 +52,14 @@ def build(args):
         require({k:sha(v) for k,v in source.items()} == prior['files'], 'Immutable parent inventory drift')
         parent_archive_sha256=PARENT_SHA
     def add_file(path):
-        path = Path(path).resolve(); source[relative(path)] = path.read_bytes()
+        path = Path(path).resolve();rel=relative(path)
+        # This experiment README is documentation, not an executable input.
+        # Retain the prior pinned copy in source deltas; never rewrite the
+        # author's working README or relax any code/data pin.
+        if previous and rel=='code/model/experiments/birth_count_choice/README.md' and rel in prior['files']:
+            require(sha(source[rel])==prior['files'][rel], 'Prior experiment README pin drift')
+            return
+        source[rel] = path.read_bytes()
     def add_directory(path):
         for file in sorted((ROOT/path).rglob('*')):
             if file.is_file() and '__pycache__' not in file.parts and file.suffix not in EXCLUDED: add_file(file)
@@ -86,17 +93,17 @@ def build(args):
     panel_path=relative(args.panel_config) if getattr(args,'panel_config',None) else None
     if panel_path:
         add_file(ROOT/panel_path);collect(read(ROOT/panel_path))
-    names=('deploy.py','launch_torch.sh','panel_launch_torch.sh') if panel_path else ('deploy.py','launch_torch.sh')
+    names=('deploy.py','launch_torch.sh','panel_launch_torch_v7.sh') if panel_path else ('deploy.py','launch_torch.sh')
     entrypoints={name:sha((HERE/name).read_bytes()) for name in names}
     inventory=dict(schema='estate_a_transition_stage_v1', remote_root=REMOTE, root=str(ROOT),
         parent_archive_sha256=parent_archive_sha256, files={k:sha(v) for k,v in sorted(source.items())},
         entrypoints=entrypoints, plans={k:dict(path=v,sha256=sha(source[v])) for k,v in plan_paths.items()},
-        identity=plans['fit']['identity'], resources=dict(cpus=8,numba_threads=8,blas_threads=1,memory_GiB=96,maximum_wall_seconds=21600),
+        identity=plans['fit']['identity'], resources=dict(cpus=8,numba_threads=8,blas_threads=1,memory_GiB=48,maximum_wall_seconds=21600),
         no_old_transition_state_or_jacobian_reuse=True)
     if panel_path:
         inventory['panel_config']=dict(path=panel_path,sha256=sha(source[panel_path]))
         validate_panel(inventory,read(ROOT/panel_path),plans['fit'])
-        inventory['panel_resources']=dict(nodes_per_task=1,ntasks=1,cpus_per_task=8,memory_GiB=96,guesses=12,maximum_concurrent_nodes=12,array='0-11%12')
+        inventory['panel_resources']=dict(nodes_per_task=1,ntasks=1,cpus_per_task=8,memory_GiB=48,guesses=12,maximum_concurrent_nodes=10,array='0-4,6,8-11%10',cluster_indices=[0,1,2,3,4,6,8,9,10,11],local_indices=[5,7])
     out.mkdir(parents=True, exist_ok=True)
     if previous:shutil.copytree(previous/'source',out/'source',copy_function=os.link)
     write(out/'inventory.json', inventory)
@@ -132,6 +139,7 @@ def validate_panel(inventory, config, plan):
     require(set(pin)=={'path','sha256'} and relative(pin['path'])==inventory['plans']['fit']['path'] and
             pin['sha256']==inventory['plans']['fit']['sha256'], 'Panel must pin the exact fit plan')
     require(plan['mode']=='diagnostic' and plan['horizons']==[24,32] and plan['budget']['total_seconds']<=21480, 'Panel requires retained bounded 24/32 diagnostic fit plan')
+    require(plan['endpoint']['max_evaluations']==48 and plan['budget']['endpoint_seconds']==1800 and plan['budget']['maximum_policy_calls']==20000, 'v7 requires only the reviewed 48-step endpoint cap with unchanged endpoint/native-call deadlines')
     guesses=config.get('guesses',[])
     require(len(guesses)==12 and [row.get('index') for row in guesses]==list(range(12)), 'Exactly 12 ordered independent guesses required')
     for row in guesses:
@@ -141,7 +149,7 @@ def validate_panel(inventory, config, plan):
     require(len({float(row['psi']) for row in guesses})==12,'Panel guesses must be distinct')
     panel=config.get('panel_source',{})
     require(set(panel)=={'path','sha256'} and relative(panel['path'])=='code/model/experiments/birth_count_choice/transition_panel.py' and inventory['files'].get(relative(panel['path']))==panel['sha256'], 'Separate panel-driver source pin required')
-    return dict(status='passed_zero_solves',guesses=12,maximum_concurrent_nodes=12,policy_parameter='psi_child')
+    return dict(status='passed_zero_solves',guesses=12,maximum_concurrent_nodes=10,local_indices=[5,7],policy_parameter='psi_child')
 
 def panel_verify(args):
     stage=Path(args.stage);inv=read(stage/'inventory.json');root=Path(args.mounted_root) if args.mounted_root else stage/'source'
@@ -199,7 +207,7 @@ def mount_bindings(stage, base, floor, repo):
                 verified_staged_files=len(own),effective_pinned_files=len(final),duplicate_targets=0)
 
 def revise_launcher(args):
-    require(False, 'v6 panel deployment requires build --from-stage with both unchanged plans and panel config')
+    require(False, 'v7 panel deployment requires build --from-stage with both unchanged plans and panel config')
     previous=Path(args.from_stage).resolve();out=Path(args.stage).resolve()
     verify(argparse.Namespace(stage=previous,mounted_root=None))
     require(not out.exists() or not any(out.iterdir()),'Refusing nonempty revised stage')
@@ -226,7 +234,7 @@ def revise_launcher(args):
         target.unlink();target.write_bytes(blob)
         inventory['files'][rel]=sha(blob);inventory['plans']['fit']['sha256']=sha(blob)
     inventory['remote_root']=REMOTE
-    inventory['resources']=dict(cpus=8,numba_threads=8,blas_threads=1,memory_GiB=96,maximum_wall_seconds=21600)
+    inventory['resources']=dict(cpus=8,numba_threads=8,blas_threads=1,memory_GiB=48,maximum_wall_seconds=21600)
     inventory['entrypoints']={name:sha((HERE/name).read_bytes()) for name in ('deploy.py','launch_torch.sh')}
     write(out/'inventory.json',inventory)
     entries={'inventory.json':(out/'inventory.json').read_bytes()}
@@ -266,6 +274,20 @@ def stage_remote(args):
     write(stage/'remote_stage_receipt.json',{**receipt,'status':'staged_no_submission','verification':result})
     return dict(status='staged_no_submission',verification=result)
 
+def native_plan_compatibility(native, stage):
+    """Admit exactly one numerical iteration-cap change from the v5 smoke."""
+    native,stage=map(Path,(native,stage));old,new=read(native/'inventory.json'),read(stage/'inventory.json')
+    require(old['identity']==new['identity'], 'Native identity changed; a new native smoke is required')
+    require(old['plans']['smoke']==new['plans']['smoke'], 'Smoke plan changed; bridge forbidden')
+    before=read(native/'source'/old['plans']['fit']['path']);after=read(stage/'source'/new['plans']['fit']['path'])
+    require(before['endpoint']['max_evaluations']==16 and after['endpoint']['max_evaluations']==48, 'Only the reviewed endpoint cap 16 to 48 bridge is allowed')
+    left,right=copy.deepcopy(before),copy.deepcopy(after)
+    left['endpoint'].pop('max_evaluations');right['endpoint'].pop('max_evaluations')
+    require(left==right,'Fit plan changed beyond endpoint.max_evaluations; bridge forbidden')
+    require(all(new['files'].get(rel)==digest for rel,digest in old['files'].items()), 'Existing native/source/data pins changed; bridge forbidden')
+    return dict(only_endpoint_iteration_cap_changed=True,field='endpoint.max_evaluations',before=16,after=48,
+        original_fit_plan=old['plans']['fit'],revised_fit_plan=new['plans']['fit'],native_identity_unchanged=True,smoke_plan_unchanged=True)
+
 def gate_check(stage, gate_path):
     inv=read(stage/'inventory.json'); gate=read(gate_path)
     require(gate.get('reviewed_by_lead') is True and bool(gate.get('reviewer')), 'Explicit lead smoke review required')
@@ -274,7 +296,8 @@ def gate_check(stage, gate_path):
     if str(stage) == inv['remote_root']:
         native=Path(gate.get('native_remote_root',str(stage)))
         if native!=stage:
-            require(gate.get('bridge_kind')=='identical_native_v5_panel_v6', 'Explicit unchanged-native bridge required')
+            require(gate.get('bridge_kind')=='identical_native_v5_endpoint_cap_v7', 'Explicit unchanged-native endpoint-cap bridge required')
+            require(native_plan_compatibility(native,stage)==gate['plan_compatibility'], 'Endpoint-cap bridge proof changed')
             require(sha((native/'inventory.json').read_bytes())==gate['native_inventory_sha256'],'Native smoke inventory changed')
         smoke_path=native/'results/smoke/run/smoke_receipt.json'
         require(smoke_path.is_file() and sha(smoke_path.read_bytes())==gate['smoke_receipt_sha256'], 'Actual staged smoke receipt differs')
@@ -286,11 +309,10 @@ def review(args):
     if inv.get('panel_config'):
         require(args.native_stage and args.panel_test_receipt, 'Panel review requires authenticated native stage and mocked panel test receipt')
         native=Path(args.native_stage);verify(argparse.Namespace(stage=native,mounted_root=None));old=read(native/'inventory.json')
-        require(old['identity']==inv['identity'] and old['plans']==inv['plans'], 'Native identity or plans changed; a new native smoke is required')
-        require(all(inv['files'].get(rel)==digest for rel,digest in old['files'].items()), 'Existing native/source/data pins changed; cross-stage smoke forbidden')
+        compatibility=native_plan_compatibility(native,stage)
         test=read(args.panel_test_receipt);config=read(stage/'source'/inv['panel_config']['path'])
         require(test.get('status')=='PASS' and test.get('panel_source_sha256')==config['panel_source']['sha256'] and test.get('controller_run_reused') is True and test.get('effective_plan_only_added_fit_start_psi') is True, 'Panel mock test must pin current driver and prove unchanged controller/effective plan')
-        bridge=dict(bridge_kind='identical_native_v5_panel_v6',native_remote_root=old['remote_root'],
+        bridge=dict(bridge_kind='identical_native_v5_endpoint_cap_v7',plan_compatibility=compatibility,native_remote_root=old['remote_root'],
             native_inventory_sha256=sha((native/'inventory.json').read_bytes()),panel_test_receipt_sha256=sha(Path(args.panel_test_receipt).read_bytes()))
     require(smoke.get('status')=='PASS' and smoke.get('identity')==inv['identity'], 'Actual smoke did not pass matching identity')
     require(smoke.get('native_setup_verified') is True and bool(smoke.get('native_root_gates')) and all(smoke['native_root_gates'].values()), 'Actual native root/replay/accounting gates required')
@@ -317,10 +339,10 @@ def submit(args):
     with os.fdopen(fd,'w') as handle: json.dump(dict(status='submission_guard_created',mode=args.mode,time=time.time()),handle)
     try:
         if args.mode in ('fit','panel'): run(['scp',args.gate,'torch:'+REMOTE+'/fit_review_gate.json'])
-        command='cd '+quote(REMOTE)+' && sbatch --parsable --partition=cl --time='+f'{args.wall_seconds//3600:02d}:{args.wall_seconds%3600//60:02d}:{args.wall_seconds%60:02d}'+' --export=ALL,TRANSITION_MODE='+args.mode+',TRANSITION_WALL_SECONDS='+str(args.wall_seconds)+(' --nodes=1 --ntasks=1 --array=0-11%12' if args.mode=='panel' else ' --nodes=1 --ntasks=1')+(' panel_launch_torch.sh' if inv.get('panel_config') else ' launch_torch.sh')
+        command='cd '+quote(REMOTE)+' && sbatch --parsable --partition='+args.partition+' --time='+f'{args.wall_seconds//3600:02d}:{args.wall_seconds%3600//60:02d}:{args.wall_seconds%60:02d}'+' --export=ALL,TRANSITION_MODE='+args.mode+',TRANSITION_WALL_SECONDS='+str(args.wall_seconds)+(' --nodes=1 --ntasks=1 --array=0-4,6,8-11%10' if args.mode=='panel' else ' --nodes=1 --ntasks=1')+(' panel_launch_torch_v7.sh' if inv.get('panel_config') else ' launch_torch.sh')
         job=ssh(command).split(';')[0]; require(job.isdigit(), 'Unrecognized sbatch reply')
         receipt=dict(status='submitted',mode=args.mode,job_id=job,wall_seconds=args.wall_seconds,submitted_epoch=time.time(),
-                     inventory_sha256=sha((stage/'inventory.json').read_bytes()),remote_root=REMOTE,partition='cl',cpus=8,numba_threads=8,memory_GiB=96,nodes_per_task=1,ntasks=1,array='0-11%12' if args.mode=='panel' else None,maximum_concurrent_nodes=12 if args.mode=='panel' else 1,no_auto_retry=True)
+                     inventory_sha256=sha((stage/'inventory.json').read_bytes()),remote_root=REMOTE,partition=args.partition,cpus=8,numba_threads=8,memory_GiB=48,nodes_per_task=1,ntasks=1,array='0-4,6,8-11%10' if args.mode=='panel' else None,maximum_concurrent_nodes=10 if args.mode=='panel' else 1,no_auto_retry=True)
     except Exception as exc:
         write(receipt_path,dict(status='submission_failed_or_unknown_no_retry',error=str(exc),mode=args.mode));raise
     write(receipt_path,receipt); return receipt
@@ -341,7 +363,7 @@ def main():
         if action=='review-smoke':
             item.add_argument('--smoke-receipt',required=True);item.add_argument('--gate',required=True);item.add_argument('--reviewer',required=True);item.add_argument('--native-stage');item.add_argument('--panel-test-receipt')
         if action=='submit':
-            item.add_argument('--mode',choices=('smoke','fit','panel'),required=True);item.add_argument('--wall-seconds',type=int,required=True);item.add_argument('--gate')
+            item.add_argument('--partition',choices=('cs','cl','cs,cl'),default='cs');item.add_argument('--mode',choices=('smoke','fit','panel'),required=True);item.add_argument('--wall-seconds',type=int,required=True);item.add_argument('--gate')
     args=parser.parse_args(); actions={'build':build,'revise-launcher':revise_launcher,'mounts':lambda a: mount_bindings(a.stage,a.base,a.floor,a.repo),'verify':verify,'verify-panel':panel_verify,'verify-gate':lambda a: gate_check(Path(a.stage),a.gate),'stage':stage_remote,'review-smoke':review,'submit':submit}
     print(json.dumps(actions[args.action](args),indent=2))
 if __name__=='__main__':main()

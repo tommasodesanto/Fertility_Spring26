@@ -760,8 +760,25 @@ manuscript wording or certify a new paper calibration.
    guesses must run simultaneously, with at most 48 nodes. The current design
    uses twelve independently refining scalar-fit starts, each with the same
    saved baseline, target contract and numerical gates. Torch smoke 19139732
-   passed; twelve six-hour searches are submitted as array 19140535. Tasks 0–1
-   are running and 2–11 await capacity, verified October 4 at 01:08 New York.
+   passed with measured peak RSS 13.93 GiB; its six-date terminal check failed,
+   so it is not production certification. Prior v6 array 19140535 tasks 0–1
+   failed after roughly sixteen minutes at the 16-evaluation endpoint cap,
+   not from memory exhaustion; tasks 2–11 were last seen pending at 01:25
+   New York, and no current authenticated SSH check is available. V7 increases
+   the endpoint cap to 48 within the same 1,800-second budget, preserving
+   the model and all scientific gates. Its twelve numerical starting ratios are
+   `0.70, 0.76, 0.82, 0.88, 0.92, 0.94, 0.96, 0.98, 1.00, 1.02, 1.08, 1.15`.
+   Two one-core, six-hour local searches launched October 4 at 05:33 UTC
+   (01:33 New York): manager 27036, workers 27037/index 5 and 27038/index 7.
+   [Local status](output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/status.json)
+   records the 24-GiB pause/30-GiB termination guard. Ten ordinary-`cs` starts
+   (indices 0–4, 6, 8–11; eight CPUs/48 GiB each) are prepared and verified,
+   not staged or submitted, under
+   [the v7 release review](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/panel_review_gate.json):
+   the shared SSH session expired and the author has been asked to reconnect.
+   [V7 plans](output/model/transition_readiness_v1/current_baseline_20261003/plans_v7/)
+   pin this execution; cancel only v6 tasks confirmed still pending before
+   replacement, preserving any old tasks now running under the 48-node cap.
    Live receipts and fit outcomes are in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
