@@ -1,0 +1,88 @@
+{
+  "status": "failed_preflight_not_ready",
+  "verified_epoch": 1791148994.597877,
+  "classification": "preflight_shared_wall_budget_exhaustion_during_zero_call_constructor",
+  "original_external_limit_seconds": 600,
+  "original_terminal": {
+    "deadline_epoch": 1791148831,
+    "exit_code": 124,
+    "finished_epoch": 1791148819.833077,
+    "mode": "preflight",
+    "no_auto_retry": true,
+    "slurm_job_id": null,
+    "start_epoch": 1791148231
+  },
+  "model_smoke_launched": false,
+  "empirical_fit_launched": false,
+  "constructor_completion_confirmed": false,
+  "prior_passes": {
+    "host_verification.json": {
+      "files": 4599,
+      "model_solves": 0,
+      "native_calls": 0,
+      "scientific_validation": false,
+      "status": "PASS_ZERO_SOLVES_PACKAGE"
+    },
+    "container_verification.json": {
+      "files": 4599,
+      "model_solves": 0,
+      "native_calls": 0,
+      "scientific_validation": false,
+      "status": "PASS_ZERO_SOLVES_PACKAGE"
+    },
+    "run/preflight.json": {
+      "fingerprints": {
+        "contract": "b294837966df5a14d001e19d2b5deb992e8825937a155aa75789da27a9403b6f",
+        "controls": "d20308e2c86b42ea56884229dbc79976ea2c54929ca284d6496bcd76cc1d8494",
+        "empirical_controls": "386d479e8da0c68fece9bfaa3f449c0a7832c757d9ae716f30e736afe7368e4e",
+        "smoke_controls": "36c8fcddd4c4dffb5496792bb1dce9baa8bac4910165c66108f2cd69247e6db9",
+        "source": "329cda5aa18624b4f1696043894b9972f8df967646ecffd2cc2b046555dd8af2"
+      },
+      "horizons": [
+        6
+      ],
+      "native_calls": 0,
+      "policy_call_stop_cap": 400,
+      "production_ready": false,
+      "schema": "estate_a_two_unanticipated_psi_v1",
+      "scientific_validation": false,
+      "status": "PASS",
+      "total_seconds": 1680
+    }
+  },
+  "phase_seconds_observed": {
+    "host_authentication": 240.0,
+    "container_authentication": 259.0,
+    "driver_preflight": 24.0,
+    "remaining_constructor_and_cleanup": 65.83307695388794
+  },
+  "evidence_pins": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/launcher_start.json",
+      "sha256": "d6893ede2e5472c9ca9584ce290f404258140989bff3f6f6c4c25c238d5fbd5e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/launcher_terminal.json",
+      "sha256": "6b534e0eb6c353616a755ac901de40ec58cabba2d64ee32910b705c9cbf75342"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/host_verification.json",
+      "sha256": "43857de3f5f1c29c559ba383168dba636a042fd65ae830ee3170f8aa5252d3c1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/container_verification.json",
+      "sha256": "43857de3f5f1c29c559ba383168dba636a042fd65ae830ee3170f8aa5252d3c1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/run/preflight.json",
+      "sha256": "5f721e10a436bc7faae32ab1766c9eb3ceaf99df94e5db8f7a90541041befc16"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/native_constructor.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "unchanged_retry_forbidden": true,
+  "selected_changed_method": "Fresh small constructor-completion verification packet referencing immutable v4 and authentic passed receipts; original constructor program unchanged, new separately bounded600second zero-solve check; no repeated4599file scans, old preflight remains failed.",
+  "repair_status": "bounded_worker_implementation_pending"
+}

@@ -1,6 +1,6 @@
 {
-  "status": "transfer_in_progress_no_submission",
-  "verified_epoch": 1791147524.166286,
+  "status": "preflight_timed_out_smoke_not_launched",
+  "verified_epoch": 1791148994.598303,
   "remote_root": "/scratch/td2248/projects/current_estate_two_shock_20261004_v4",
   "inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
   "implementation_commit": "70362320",
@@ -9,9 +9,25 @@
   "transfer_method": "rsync -a -c --copy-dest of preserved v3; fresh destination, no hardlinks",
   "smoke_launched": false,
   "empirical_fit_launched": false,
-  "preflight": "not_started_waiting_for_transfer_exit_zero",
+  "preflight": {
+    "name": "preflight_v1",
+    "attempt_recorded_epoch": 1791148224.399594,
+    "status": "failed_wall_timeout",
+    "repeat_forbidden_until_reconciled": true,
+    "tool_session": 98774,
+    "exit_code": 124,
+    "terminal_pin": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/preflight_preflight_v1/launcher_terminal.json",
+      "sha256": "6b534e0eb6c353616a755ac901de40ec58cabba2d64ee32910b705c9cbf75342"
+    },
+    "host_and_container_authentication_passed": true,
+    "driver_preflight_passed": true,
+    "constructor_completion_confirmed": false
+  },
   "observed_remote_inventory_paths": 2660,
   "expected_inventory_paths": 4599,
-  "transfer_exit_code": null,
-  "transfer_completion_verified": false
+  "transfer_exit_code": 0,
+  "transfer_completion_verified": true,
+  "remote_inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
+  "next_step": "reviewed_fresh_constructor_completion_packet_pending"
 }

@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 16:43 New York:** the
+   **Current transition direction, verified October 4 at 17:21 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -884,7 +884,10 @@ manuscript wording or certify a new paper calibration.
    map hit the original 360-second seed deadline. The watchdog timeout was
    wrapped by Numba; peak RSS was about 11.0 GiB, below 24 GiB. All evidence and
    completed work are preserved. A four-date/date-1 smoke seed repair passes 26 focused tests and lead review.
-   Its fresh v4 package is transferring; the 30-minute total and all stage caps
+   Its fresh v4 transfer completed with exit zero and matching inventory; its
+   zero-solve preflight timed out after host/container/driver checks passed,
+   leaving its constructor incomplete. A separate bounded completion check is
+   being prepared; no smoke has launched. The 30-minute total and all stage caps
    remain unchanged. No unchanged retry is authorized.
    No complete smoke pass or empirical fitting launch has occurred. The original
    empirical 24/32 roots, accounting, replay,
