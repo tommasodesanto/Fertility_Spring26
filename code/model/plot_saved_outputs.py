@@ -31,11 +31,14 @@ def cdf_mean(panel,series):
     last=0.; total=0.
     for x,f in points(panel,series): total+=x*(f-last); last=f
     return total
+coverage=json.loads((OUT/'2023/metadata.json').read_text())['coverage']
+def mean_children(panel,series):
+    return coverage[panel]['mean_model' if series=='Model' else 'mean_data']
 checks=[]
 for label,panel,operator in [
-    ('Children ever born, ages 22–25 (cap 3)','children_22_25',mean_count),
+    ('Children ever born, ages 22–25 (model 3+ adjusted)','children_22_25',mean_children),
     ('Childlessness, ages 22–25','children_22_25',lambda p,s:points(p,s)[0][1]),
-    ('Children ever born, ages 40–44 (cap 3)','children_40_44',mean_count),
+    ('Children ever born, ages 40–44 (model 3+ adjusted)','children_40_44',mean_children),
     ('Childlessness, ages 40–44','children_40_44',lambda p,s:points(p,s)[0][1]),
     ('First-birth mean age (band midpoints)','first_birth_age',lambda p,s:sum((20+4*x)*y for x,y in points(p,s))),
     ('First-birth share age 30+','first_birth_age',lambda p,s:sum(y for x,y in points(p,s) if x>=3)),
@@ -58,7 +61,7 @@ with (OUT/'2023/target_fit.csv').open() as stream:
 text += ['', 'Estimated shock: psi_child=0.1199969464, bounds [0.0017892072, 0.3578414413], away from either bound. [All 31 supplied baseline parameters and reference bounds](../transition/solution/baseline_parameters.csv).', '',
          '## CPS data check','',
          'The weighted five-year age groups reproduce Census Table 1 population totals and children-count shares to its published rounding. Ages 35–45 have about 600–700 respondents per single age. The annual-age line is a cross-section of different cohorts, not a trajectory for the same women. No monotonicity is imposed.', '',
-         'Capping at three is intentional and applied to both model and data: ages 40–44 have a CPS mean of 1.739771 after this cap, versus 1.918425 in the public file before the cap (which itself codes five or more as five).', '',
-         '[Official Census Table 1](https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t1.xlsx). No data or graph definition was changed by this check.']
+         'Mean graphs use the retained model 3+ weight, 3.602359422009, and CPS public counts (five or more coded five). Distribution bars still group 3+. Applying the completed-fertility tail mean at younger ages and within income groups is a reporting approximation: fourth and later birth dates are not separately modeled. The previous capped-at-three view was comparable on its own terms, but omitted this existing measurement adjustment.', '',
+         '[Official Census Table 1](https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t1.xlsx). Census documentation identifies PRTAGE as the masked public-use age variable; masking is a possible contributor to single-age irregularity, not an established explanation of these specific jumps. Mean graph definitions now include the existing top-bin adjustment; model behavior and calibration targets are unchanged.']
 (OUT/'2023/model_data_fit.md').write_text('\n'.join(text)+'\n')
 print(OUT)

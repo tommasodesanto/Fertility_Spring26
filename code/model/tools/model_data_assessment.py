@@ -153,7 +153,7 @@ def baseline_cps():
                     continue
                 age, count, weight = int(line[146:148]), int(line[238:241]), int(line[250:260]) / 10000
                 if 18 <= age <= 49 and 0 <= count <= 20 and weight > 0:
-                    records.append((age, min(count, 3), weight))
+                    records.append((age, min(count, 5), weight))
     return np.asarray(records, float), pins
 
 
@@ -222,7 +222,7 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
     cps_manifest = json.loads((ROOT / 'code/data/cps_fertility/source_manifest.json').read_text())
     require_sha256(CPS24, cps_manifest['sha256'], 'CPS 2024')
     if contemporary:
-        baseline = np.array([(number(r['PRTAGE']), min(number(r['PTSF1']), 3), number(r['PWSSWGT']))
+        baseline = np.array([(number(r['PRTAGE']), number(r['PTSF1']), number(r['PWSSWGT']))
                              for r in rows(CPS24) if r['PESEX'] == '2'
                              and 18 <= number(r['PRTAGE']) <= 49 and 0 <= number(r['PTSF1']) <= 5
                              and number(r['PWSSWGT']) > 0])
@@ -237,6 +237,7 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
     else:
         post, pre, starts, first_flow = model_arrays(result)
     P, s = result.P, result.solution
+    child_weights = np.array([0., 1., 2., float(P.tfr_top_bin_weight)])
     g = np.asarray(s.g, float)
     b = np.asarray(s.b_grid, float)
     ages = starts + P.period_years / 2
@@ -313,7 +314,7 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
     # Fertility: same-cell pre/post stocks, weighted by the survey's exact age exposure.
     page = 1
     fig, axs = newpage('Fertility: model versus data',
-        ('CPS June 2024 women (orange);' if contemporary else 'CPS June 2004/06 women (orange);') + ' saved model reproductive-member proxy (blue). Counts cap at 3+. ' +
+        ('CPS June 2024 women (orange);' if contemporary else 'CPS June 2004/06 women (orange);') + f' saved model reproductive-member proxy (blue). Means: model 3+ = {child_weights[-1]:.3f}; data counts up to 5+. ' +
         ('First births: NCHS 2023 counts. Income:' if contemporary else 'First births: NCHS 2003–06 counts. Income:') + ' CPS June 2024 family money income versus model current labor earnings ranks; external validation.', pooled=True)
     cx = np.arange(18, 46)
     data_mean, model_mean = [], []
@@ -322,17 +323,19 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
         data_mean.append(np.average(r[:, 1], weights=r[:, 2]) if len(r) else np.nan)
         q = model_stock_at_age(pre, post, starts, age, P.period_years)
         nm = q.sum(axis=(0, 1, 2, 3, 5))
-        model_mean.append(nm @ np.arange(4) / nm.sum())
-    line(axs[0], 'children_by_age', 'Mean children ever born by age', cx, model_mean, cx, data_mean, 'Mean, capped at 3')
+        model_mean.append(nm @ child_weights / nm.sum())
+    line(axs[0], 'children_by_age', 'Mean children ever born by age', cx, model_mean, cx, data_mean, 'Mean children')
     for ax, lo, hi, panel in ((axs[1], 22, 25, 'children_22_25'), (axs[2], 40, 44, 'children_40_44')):
         r = baseline[(baseline[:, 0] >= lo) & (baseline[:, 0] <= hi)]
-        d = np.bincount(r[:, 1].astype(int), weights=r[:, 2], minlength=4); d /= d.sum()
+        d = np.bincount(np.minimum(r[:, 1], 3).astype(int), weights=r[:, 2], minlength=4); d /= d.sum()
         m = np.zeros(4)
         for age in range(lo, hi + 1):
             w = r[r[:, 0] == age, 2].sum()
             q = model_stock_at_age(pre, post, starts, age, P.period_years)
             nm = q.sum(axis=(0, 1, 2, 3, 5)); m += w * nm / nm.sum()
         m /= m.sum()
+        coverage[panel] = {'mean_data': float(np.average(r[:, 1], weights=r[:, 2])),
+                           'mean_model': float(m @ child_weights)}
         bars(ax, panel, f'Children ever born, ages {lo}–{hi}', ['0', '1', '2', '3+'], m, d)
     nr = [r for r in rows(NCHS) if (int(r['year']) == data_year if contemporary else 2003 <= int(r['year']) <= 2006)]
     n_age = np.array([int(r['age']) for r in nr]); n_w = np.array([float(r['n_first_births']) for r in nr])
@@ -353,7 +356,7 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
             age, count, wt, category = map(number, (r['PRTAGE'], r['PTSF1'], r['PWSSWGT'], r['HEFAMINC']))
             if (18 <= age <= 45 and 0 <= count <= 5
                     and wt > 0 and 1 <= category <= 16):
-                income_rows.append((int(age), min(int(count), 3), wt, int(category)))
+                income_rows.append((int(age), int(count), wt, int(category)))
     income_rows = np.asarray(income_rows, float)
     earnings_grid = np.array([[annual_gross_income_at_state(P, 0, j, float(z)) if j < P.J_R else np.nan
                                for z in P.z_grid] for j in range(P.J)])
@@ -371,14 +374,14 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
             yz = q.sum(axis=(0, 1, 2, 4, 5))
             for z in range(P.Nz):
                 state.append((earnings_grid[j, z], w * yz[z] / q.sum(),
-                              w * np.sum(q[:, :, :, z] * np.arange(4)[None, None, None, :, None]) / q.sum()))
+                              w * np.sum(q[:, :, :, z] * child_weights[None, None, None, :, None]) / q.sum()))
         # Rank unique gross earnings values; split all exact ties fractionally.
         earnings = sorted(set(x[0] for x in state))
         masses = np.array([sum(x[1] for x in state if x[0] == e) for e in earnings])
         numerators = np.array([sum(x[2] for x in state if x[0] == e) for e in earnings])
         a = thirds(masses)
         mv = np.sum(a * numerators, axis=1) / np.sum(a * masses, axis=1)
-        bars(ax, panel, f'Children by income third, ages {lo}–{hi}', ['Low', 'Middle', 'High'], mv, dv, 'Mean, cap 3')
+        bars(ax, panel, f'Children by income third, ages {lo}–{hi}', ['Low', 'Middle', 'High'], mv, dv, 'Mean children')
     pooled = income_rows
     category_mass = np.bincount(pooled[:, 3].astype(int), weights=pooled[:, 2], minlength=17)[1:]
     allocation = weighted_groups(category_mass, 5)
@@ -393,14 +396,14 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
         by_z = q.sum(axis=(0, 1, 2, 4, 5))
         for z in range(P.Nz):
             pooled_states.append((earnings_grid[j, z], exposure * by_z[z] / q.sum(),
-                                  exposure * np.sum(q[:, :, :, z] * np.arange(4)[None, None, None, :, None]) / q.sum()))
+                                  exposure * np.sum(q[:, :, :, z] * child_weights[None, None, None, :, None]) / q.sum()))
     unique_earnings = sorted(set(x[0] for x in pooled_states))
     pooled_mass = np.array([sum(x[1] for x in pooled_states if x[0] == earnings) for earnings in unique_earnings])
     pooled_children = np.array([sum(x[2] for x in pooled_states if x[0] == earnings) for earnings in unique_earnings])
     pooled_allocation = weighted_groups(pooled_mass, 5)
     pooled_model = np.sum(pooled_allocation * pooled_children, axis=1) / np.sum(pooled_allocation * pooled_mass, axis=1)
     bars(axs[6], 'income_fifths_pooled', 'Children ever born by income fifth',
-         ['Lowest', 'Second', 'Middle', 'Fourth', 'Highest'], pooled_model, pooled_data, 'Mean, cap 3')
+         ['Lowest', 'Second', 'Middle', 'Fourth', 'Highest'], pooled_model, pooled_data, 'Mean children')
     axs[6].text(.02, .96, 'Pooled ages 18–45', transform=axs[6].transAxes,
                 ha='left', va='top', fontsize=8)
     coverage['income_fifths_pooled'] = {'cps_2024_women': int(len(pooled)),
@@ -549,13 +552,15 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
         'sources_sha256': {'psid_cache': sha256(PSID), 'psid_metadata': sha256(PSID.with_name('metadata.json')),
                            'cps_2024': sha256(CPS24), 'cps_fertility_partitions': baseline_pins,
                            'acs_profile': sha256(ACS), 'nchs_first_birth_counts': sha256(NCHS)},
+        'fertility_top_bin_weight': float(P.tfr_top_bin_weight),
+        'fertility_mean_limitation': 'The retained completed-fertility 3+ mean is used at every age and income; the model does not date fourth or later births explicitly.',
         'normalizers': {'psid_annual_gross_labor_age18_65': float(denom_p),
                         'model_annual_gross_labor_before_retirement': float(denom_m)},
         'coverage': {'psid_rows': len(ps), 'psid_earnings_rows': int(valid_work.sum()),
                      'psid_normalizer_rows': int(normalizer_sample.sum()),
                      'psid_wealth_rows': int(valid_wealth.sum()),
                      'psid_financial_rows': int(valid_finance.sum()), **coverage},
-        'definitions': {'fertility': 'prebirth/postbirth stock interpolation within same four-year age cell, empirical integer-age exposure',
+        'definitions': {'fertility': 'prebirth/postbirth stock interpolation within same four-year age cell, empirical integer-age exposure; means use model weights [0,1,2,tfr_top_bin_weight] and data min(N,5); distributions group 3+',
                         'income': 'fractional weighted thirds of HEFAMINC (CPS) and current gross labor income (model)',
                         'model_financial': 'beginning b including mortgage debt; total b + price times old owned rooms',
                         'psid_financial': 'NETWORTHR minus gross HOMEVALUER',

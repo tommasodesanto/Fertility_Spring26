@@ -4,9 +4,9 @@ These cross-sectional comparisons are validation moments, not fitted targets. CP
 
 | Validation moment | Data | Model | Model − data |
 |---|---:|---:|---:|
-| Children ever born, ages 22–25 (cap 3) | 0.3048 | 0.3052 | +0.0004 |
+| Children ever born, ages 22–25 (model 3+ adjusted) | 0.3089 | 0.3052 | -0.0037 |
 | Childlessness, ages 22–25 | 0.7891 | 0.7280 | -0.0611 |
-| Children ever born, ages 40–44 (cap 3) | 1.7398 | 1.4562 | -0.2836 |
+| Children ever born, ages 40–44 (model 3+ adjusted) | 1.9184 | 1.5968 | -0.3216 |
 | Childlessness, ages 40–44 | 0.1882 | 0.2993 | +0.1111 |
 | First-birth mean age (band midpoints) | 28.0902 | 26.9731 | -1.1171 |
 | First-birth share age 30+ | 0.3766 | 0.2872 | -0.0894 |
@@ -33,6 +33,6 @@ Estimated shock: psi_child=0.1199969464, bounds [0.0017892072, 0.3578414413], aw
 
 The weighted five-year age groups reproduce Census Table 1 population totals and children-count shares to its published rounding. Ages 35–45 have about 600–700 respondents per single age. The annual-age line is a cross-section of different cohorts, not a trajectory for the same women. No monotonicity is imposed.
 
-Capping at three is intentional and applied to both model and data: ages 40–44 have a CPS mean of 1.739771 after this cap, versus 1.918425 in the public file before the cap (which itself codes five or more as five).
+Mean graphs use the retained model 3+ weight, 3.602359422009, and CPS public counts (five or more coded five). Distribution bars still group 3+. Applying the completed-fertility tail mean at younger ages and within income groups is a reporting approximation: fourth and later birth dates are not separately modeled. The previous capped-at-three view was comparable on its own terms, but omitted this existing measurement adjustment.
 
-[Official Census Table 1](https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t1.xlsx). No data or graph definition was changed by this check.
+[Official Census Table 1](https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t1.xlsx). Census documentation identifies PRTAGE as the masked public-use age variable; masking is a possible contributor to single-age irregularity, not an established explanation of these specific jumps. Mean graph definitions now include the existing top-bin adjustment; model behavior and calibration targets are unchanged.
