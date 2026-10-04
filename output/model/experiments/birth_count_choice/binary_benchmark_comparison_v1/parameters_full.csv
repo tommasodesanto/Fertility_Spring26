@@ -1,0 +1,32 @@
+parameter,role,new_estimate,new_lower,new_upper,new_native_near_bound,new_native_status,old_estimate,old_lower,old_upper,old_native_near_bound,old_native_status
+H0,derived,6.1245552591467405,0.2,80.0,False,derived housing supply coefficient at N0=1; reference bounds advisory,6.40569359569417,0.2,80.0,False,derived calibrated housing supply coefficient at N0=1
+beta_annual,estimated/free,0.9444437995936287,.93,.99,False,supplied primitive; reference calibration bounds advisory,0.9663191380998087,0.94,0.99,False,free in experimental utility calibration
+chi,estimated/free,1.088196976146629,0.1,5.0,False,supplied primitive; reference calibration bounds advisory,1.0500762402240174,0.1,5.0,False,free in experimental utility calibration
+first_birth_fixed_cost,estimated/free,0.2827067667825205,0.0,8.0,False,supplied primitive; reference calibration bounds advisory,0.3045994545418478,0.0,8.0,False,free in experimental utility calibration
+kappa_fert,estimated/free,0.11612031168396098,0.02,50.0,True,supplied primitive; reference calibration bounds advisory,0.11652185618155607,0.02,50.0,True,free in experimental utility calibration
+kappa_fert_continuation,estimated/free,0.4164292250768279,0.02,50.0,True,supplied primitive; reference calibration bounds advisory,0.40070847699255835,0.02,50.0,True,free in experimental utility calibration
+theta0,estimated/free,0.14389227339225366,0.0,8.0,False,supplied primitive; reference calibration bounds advisory,0.10097400014250629,0.0,8.0,False,free in experimental utility calibration
+delta_alpha_jump,fixed/retained,0.0,,,,fixed zero under experimental utility contract,0.0,,,,fixed zero under experimental utility contract
+child_benefit_curvature,estimated/free,0.10313883854657178,0.0,0.8,False,supplied primitive; reference calibration bounds advisory,0.0629608477756522,0.0,0.8,False,free in experimental utility calibration
+tenure_choice_kappa,estimated/free,0.015769047253080707,0.001,0.1,False,supplied primitive; reference calibration bounds advisory,0.014123854930856623,0.001,0.1,False,free in experimental utility calibration
+psi_child,estimated/free,0.17788162876169034,0.01,0.5,False,supplied primitive; reference calibration bounds advisory,0.17892072066041628,0.01,0.5,False,free in experimental utility calibration
+child_benefit_CRRA_coefficient,derived,0.15953512417243712,,,,derived from supplied benefit and curvature,0.1676557204030058,,,,derived from fixed benefit and proposed curvature
+theta1,fixed/retained,0.008193084126995582,,,,fixed external restriction,0.008193084126995582,,,,fixed external restriction
+sigma,fixed/retained,2.0,,,,fixed,2.0,,,,fixed
+alpha_cons,fixed/retained,0.733,,,,fixed CEX childless expenditure share,0.733,,,,fixed CEX childless expenditure share
+delta_alpha,fixed/retained,0.0,,,,fixed zero under experimental utility contract,0.0,,,,fixed zero under experimental utility contract
+h_P,estimated/free,2.5426884388222315,0.1,2.6,False,supplied primitive; reference calibration bounds advisory,2.593759507364224,0.1,2.6,True,free in experimental utility calibration
+utility_reference_rent,fixed/retained,0.11046592704873838,,,,retained inactive normalization; compensation off,0.11046592704873838,,,,retained inactive normalization; compensation off
+q_annual,fixed/retained,0.020000000000000018,,,,author-retained 2% annual real rate,0.020000000000000018,,,,author-retained 2% annual real rate
+financed_share,fixed/retained,0.8,,,,inherited credit contract,0.8,,,,inherited credit contract
+housing_supply_elasticity,fixed/retained,0.63,,,,fixed provisional external mapping,0.63,,,,fixed provisional external mapping
+payroll_tax,derived,0.08028070961950022,,,,derived from adopted pension ratio,0.08028070961950022,,,,derived from adopted pension ratio
+pension_period,derived,0.917784047463731,,,,balanced PAYGO,0.917784047463731,,,,balanced PAYGO
+annual_depreciation,fixed/retained,0.01416143718381309,,,,adopted,0.01416143718381309,,,,adopted
+period_depreciation,derived,0.05545379079326218,,,,compounded,0.05545379079326218,,,,compounded
+annual_property_tax,fixed/retained,0.010598360773872594,,,,adopted,0.010598360773872594,,,,adopted
+period_property_tax,derived,0.042393443095490375,,,,linear period convention,0.042393443095490375,,,,linear period convention
+selling_cost,fixed/retained,0.06,,,,retained,0.06,,,,retained
+rental_cap,fixed/retained,6.0,,,,retained provisional,6.0,,,,retained provisional
+wealth_grid_nodes,fixed/retained,120.0,,,,retained exact grid,120.0,,,,retained exact grid
+income_states,fixed/retained,9.0,,,,retained B15,9.0,,,,retained B15
