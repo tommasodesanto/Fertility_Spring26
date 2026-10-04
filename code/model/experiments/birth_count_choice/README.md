@@ -1,5 +1,11 @@
 # Joint intended-birth count experiment
 
+## Cap-two diagnostic at the verified binary winner (October 4)
+
+The [fixed-point cap-two result](../../../../output/model/experiments/birth_count_choice/cap2_at_binary_winner_v1/README.md) uses the exact ten coordinates from the verified Estate-A binary chain-1 winner (new-contract loss 21.275413361071312). The source search receipt is pinned by SHA-256 `2e104f260050b802370de3d8bdd0d0792c8a7af9e13be849fadfdd6171106f71`. Its derived population-one coefficient $H_0=6.1245552591467405$ is held fixed; the native price root then yields endogenous population scale 1.378614. All other fixed inputs, Estate A, targets, weights, and gates are retained. This is one diagnostic GE, without recalibration or a change to defaults.
+
+The new-contract loss is **1386.601504576907**. The result packet gives all 14 target rows, 31 parameter records, and 17 standard plus eight policy and seven aggregate figures. All 31 numeric parameter estimates match the binary selected packet; the native table shows advisory original beta bounds 0.94–0.99, while the Estate-A search restriction was 0.93–0.99. The native selected/repeat tables and all 17 standard figure hashes match. To authenticate inputs without solving, run `"$PYTHON" code/model/experiments/birth_count_choice/run_cap2_at_binary_winner.py --preflight`; the same command without `--preflight` performs one bounded run at the pinned point. Use the one-thread environment below and an external 1,800-second process limit. The completed case and launch/terminal receipts are linked in the result packet.
+
 **Reference:** canonical October 3 post-interest, soft-credit chain-13 input file
 `code/model/parameters/best_params.py`. The complete 245-field native input object
 and its 120-node grid are preserved. The experiment adds only the Boolean field

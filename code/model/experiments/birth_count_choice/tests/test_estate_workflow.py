@@ -9,11 +9,11 @@ from model.inputs import load_inputs
 
 class EstateWorkflowTests(unittest.TestCase):
     def test_whitelist_and_caps(self):
-        for cap in (1,3):
+        for cap in (1,2,3):
             P,_=load_inputs();apply_experiment_flags(P,experiment_flags(cap))
             self.assertEqual(P.birth_count_choice_cap,cap)
             self.assertTrue(P.bequest_net_of_selling_cost and P.estate_flow_net_of_selling_cost)
-        for cap in (0,2,4,True):
+        for cap in (0,4,True):
             with self.assertRaises(ValueError):experiment_flags(cap)
         with self.assertRaises(ValueError):apply_experiment_flags(None,{'something_else':True})
         flags=experiment_flags(1);flags['estate_flow_net_of_selling_cost']=False

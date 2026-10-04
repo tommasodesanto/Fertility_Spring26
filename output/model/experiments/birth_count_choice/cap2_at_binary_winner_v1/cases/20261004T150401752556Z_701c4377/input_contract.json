@@ -1,0 +1,45 @@
+{
+  "budget_seconds": 1500.0,
+  "closure": "fixed_h0",
+  "entry_law": "reference entrant-wealth mapping retained; no entry-law input was edited",
+  "experiment_flags": {
+    "bequest_net_of_selling_cost": true,
+    "birth_count_choice_cap": 2,
+    "birth_count_choice_enabled": true,
+    "estate_flow_net_of_selling_cost": true
+  },
+  "experimental_economic_change": "Intended birth menu k=0..min(2,3-n), Binomial(k, pi); Estate A utility and death flow use bp+(1-psi)*price*chosen_house, no additional R; receiver none. New wealth target 4.45838713455674; other targets and weights retained.",
+  "experimental_estate_contract": "estate_a_postsaving_net_selling_cost_v1",
+  "external_inputs": {
+    "H0": [
+      6.1245552591467405
+    ]
+  },
+  "fiscal_mapping": {
+    "edited_primitives": [],
+    "status": "reference earnings/payroll primitives retained; no fiscal mapping change",
+    "supplied_primitives": []
+  },
+  "native_overrides": {},
+  "parameter_file": {
+    "H0_source": "derived binary-winner coefficient; held fixed in diagnostic",
+    "source_closure": "population_one",
+    "source_search_sha256": "2e104f260050b802370de3d8bdd0d0792c8a7af9e13be849fadfdd6171106f71",
+    "source_selected_loss": 21.275413361071312,
+    "source_target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+    "source_weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4"
+  },
+  "parameters": {
+    "beta_annual": 0.9444437995936287,
+    "chi": 1.088196976146629,
+    "child_benefit_curvature": 0.10313883854657178,
+    "first_birth_fixed_cost": 0.2827067667825205,
+    "h_P": 2.5426884388222315,
+    "kappa_fert": 0.11612031168396098,
+    "kappa_fert_continuation": 0.4164292250768279,
+    "psi_child": 0.17788162876169034,
+    "tenure_choice_kappa": 0.015769047253080707,
+    "theta0": 0.14389227339225366
+  },
+  "price_guess": 0.7811670615311468
+}

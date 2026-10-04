@@ -19,7 +19,8 @@ def apply_count_fertility(pre, first, P, continuation=None, *, birth_count_reali
         probabilities = getattr(P, 'birth_count_realized_probs', None)
     if probabilities is None:
         raise RuntimeError('Count observer requires owned realized-count probabilities')
-    result = birth_count_transition(pre, probabilities, cap=3)
+    result = birth_count_transition(pre, probabilities,
+                                    cap=getattr(P, 'birth_count_choice_cap', 3))
     locations = np.sum(result['expected_births_by_cell'], axis=(0, 1, 3, 4))
     return result['post'], result['expected_births'], locations
 
@@ -29,7 +30,8 @@ def first_birth_accounting_by_age(evaluation, P):
     probabilities = evaluation.policy.birth_count_realized_probs
     flows = np.zeros(int(P.J)); risk = np.zeros_like(flows)
     for j in range(int(P.J)):
-        result = birth_count_transition(pre[:, :, :, j], probabilities[:, :, :, j])
+        result = birth_count_transition(pre[:, :, :, j], probabilities[:, :, :, j],
+                                        cap=getattr(P, 'birth_count_choice_cap', 3))
         flows[j] = result['births_by_order'][0]
         risk[j] = np.sum(pre[:, :, :, j, :, 0, :])
     hazard = np.divide(flows, risk, out=np.zeros_like(flows), where=risk > 1e-15)
@@ -42,7 +44,8 @@ def count_flows_and_risks(evaluation, P):
     flows = np.zeros((int(P.J), 3)); risk = np.zeros_like(flows)
     for j in range(int(P.J)):
         result = birth_count_transition(evaluation.g_pre[:, :, :, j],
-                                      evaluation.policy.birth_count_realized_probs[:, :, :, j])
+                                      evaluation.policy.birth_count_realized_probs[:, :, :, j],
+                                      cap=getattr(P, 'birth_count_choice_cap', 3))
         if np.max(np.abs(result['post'] - evaluation.g_post_fertility[:, :, :, j])) > 2e-10:
             raise RuntimeError('Count observer does not replay its evaluation')
         flows[j] = result['births_by_order']; risk[j] = result['at_risk_by_order']
@@ -129,7 +132,7 @@ def install_birth_count_observers(context, facade, out):
         '            realized = float(fecundity[j]) * childless * attempt\n',
         '            origin = np.zeros(shape)\n'
         '            origin[:, :, :, zz, 0, settled] = childless\n'
-        '            tagged = _count_transition(origin, policy.birth_count_realized_probs[:, :, :, j])["first_birth_tagged_post"]\n'
+        '            tagged = _count_transition(origin, policy.birth_count_realized_probs[:, :, :, j], cap=P.birth_count_choice_cap)["first_birth_tagged_post"]\n'
         '            realized = np.sum(tagged, axis=(-2, -1))[:, :, :, zz]\n'),
         ('            birth_cohort[:, :, :, zz, 1, 1] = realized\n',
          '            birth_cohort = tagged\n'),
@@ -159,7 +162,7 @@ def install_birth_count_observers(context, facade, out):
         '                treated[:, :, :, j, zz, 1, 1] = realized\n',
         '                origin = np.zeros_like(evaluation.g_pre[:, :, :, j])\n'
         '                origin[:, :, :, zz, 0, settled] = childless\n'
-        '                tagged = _count_transition(origin, policy.birth_count_realized_probs[:, :, :, j])["first_birth_tagged_post"]\n'
+        '                tagged = _count_transition(origin, policy.birth_count_realized_probs[:, :, :, j], cap=P.birth_count_choice_cap)["first_birth_tagged_post"]\n'
         '                realized = np.sum(tagged, axis=(-2, -1))[:, :, :, zz]\n'
         '                treated[:, :, :, j] += tagged\n')], {'_count_transition': birth_count_transition}, receipt)
     wrapped = rt['observe_recent_parent_flow']
@@ -177,7 +180,7 @@ def install_birth_count_observers(context, facade, out):
         ('selected_birth_flow_error=abs(float(birth_post.sum()) - selected_births)',
          'selected_birth_flow_error=abs(float(birth_post.sum()) - selected_households)'),
         ('    weights = uniform_age_cell_overlap(P, 30., 56.)\n',
-         '    first_post = _count_transition(pre * never, policy.birth_count_realized_probs)["first_birth_tagged_post"]\n'
+         '    first_post = _count_transition(pre * never, policy.birth_count_realized_probs, cap=P.birth_count_choice_cap)["first_birth_tagged_post"]\n'
          '    former_post, _, _ = fertility(pre * former)\n'
          '    first_current = transport(first_post)\n'
          '    continuation_current = transport(former_post * ((parity > 0) & (child_state > 0)))\n'
@@ -190,7 +193,7 @@ def install_birth_count_observers(context, facade, out):
         ('"supplied policy.fert_probs and owned policy.fert2_probs"',
          '"owned policy.birth_count_realized_probs; first/continuation groups tagged by origin"'),
         ('"At most one explicit birth per four-year period; top-code representative does not scale household mass"',
-         '"Up to three births per period; successful households counted once; first-birth families keep n=1/2/3 mixtures"')],
+         '"Up to the configured birth-count cap per period; successful households counted once; first-birth families retain actual count mixtures"')],
         {'_count_transition': birth_count_transition}, receipt)
     cal._birth_count_observers_installed = True
     context['birth_count_observer_adapters'] = receipt

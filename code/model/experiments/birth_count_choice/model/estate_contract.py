@@ -16,8 +16,8 @@ FLAG_NAMES = {'birth_count_choice_enabled', 'birth_count_choice_cap',
 
 
 def experiment_flags(birth_cap):
-    if isinstance(birth_cap, bool) or birth_cap not in (1, 3):
-        raise ValueError('Estate-A birth cap must be 1 or 3')
+    if isinstance(birth_cap, bool) or birth_cap not in (1, 2, 3):
+        raise ValueError('Estate-A birth cap must be 1, 2, or 3')
     return dict(birth_count_choice_enabled=True, birth_count_choice_cap=birth_cap,
                 bequest_net_of_selling_cost=True, estate_flow_net_of_selling_cost=True)
 

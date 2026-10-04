@@ -9,10 +9,28 @@ import numpy as np
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 from model.engine.birth_count import birth_count_transition, identity_realized_probabilities
-from model.observer_adapters import first_birth_accounting_by_age, count_flows_and_risks
+from model.observer_adapters import apply_count_fertility, first_birth_accounting_by_age, count_flows_and_risks
 
 
 class ReportingTests(unittest.TestCase):
+    def test_cap_two_observers_use_configured_support(self):
+        pre = np.zeros((1, 1, 1, 1, 1, 4, 4))
+        pre[0, 0, 0, 0, 0, 0, 0] = 1.
+        rp = identity_realized_probabilities(pre.shape)
+        rp[0, 0, 0, 0, 0, 0, 0] = [0., .25, .75, 0.]
+        P = SimpleNamespace(J=1, birth_count_choice_cap=2)
+        post, births, _ = apply_count_fertility(pre, None, P, birth_count_realized_probs=rp)
+        self.assertAlmostEqual(births, 1.75)
+        evaluation = SimpleNamespace(g_pre=pre, g_post_fertility=post,
+            policy=SimpleNamespace(birth_count_realized_probs=rp))
+        flows, risks = count_flows_and_risks(evaluation, P)
+        np.testing.assert_array_equal(flows[0], [1., .75, 0.])
+        np.testing.assert_array_equal(risks[0], [1., 1., 0.])
+        self.assertAlmostEqual(first_birth_accounting_by_age(evaluation, P)['flow'][0], 1.)
+        rp[0, 0, 0, 0, 0, 0, 0] = [0., .25, .5, .25]
+        with self.assertRaises(ValueError):
+            apply_count_fertility(pre, None, P, birth_count_realized_probs=rp)
+
     def test_crossed_orders_count_children_and_first_events_once(self):
         pre = np.zeros((2, 2, 1, 17, 1, 4, 4))
         pre[0, 0, 0, 3, 0, 0, 0] = 1
