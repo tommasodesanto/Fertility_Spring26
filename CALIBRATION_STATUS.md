@@ -150,6 +150,24 @@ ID is not yet assigned. All parent-final and continuation-native gates remain
 pending; this is an experimental search, not an adopted calibration or exact
 optimizer-state resume. No failed chain will be restarted automatically.
 
+**Five additional count-three starts queued October 4, about 00:32 New York.**
+The isolated [count-three expansion](code/cluster/estate_birth_calibration/count3_expansion/README.md)
+controller **19139361** is PENDING on `afterok:19136605`; both controllers
+wait behind parent array **19127370**, whose ten tasks remain running. The
+new controller will select the best verified binary and count-three parent
+endpoints and construct five bounded, nonduplicate search starts (binary best,
+the midpoint, and three deterministic count-three perturbations). All ten
+parameters, bounds, target values, weights, economics and native gates remain
+unchanged. One fresh two-call count-three native smoke must pass before a
+five-task array can be released. Combined with the existing continuation,
+this caps Estate-A production at **15 one-core tasks**. The extra tasks retain
+500 calls each, a 1,800-second fresh-native reserve and the same October 4
+**10:00 New York** absolute stop. A 7,800-GiB free-space gate covers the
+7,500-GiB combined retained-case planning maximum; the actual staging check
+found about 434,526 GiB free. The new smoke, final parent verification and
+five-task production remain pending. No production job ID, adopted result,
+automatic retry or exact optimizer-state resume is claimed.
+
 The hourly heartbeat **Monitor matched estate and birth calibrations**
 (automation `finish-and-monitor-soft-timing-calibration`) in chat
 **Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`)

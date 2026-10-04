@@ -1,0 +1,58 @@
+def checked_plan(path, digest):
+    require(sha(path)==digest, 'Count-three expansion plan SHA-256 drift')
+    plan=json.loads(Path(path).read_text()); anchor=json.loads(ANCHOR.read_text())
+    require(anchor['status']=='selected_numerically_verified' and anchor['chain']==13 and anchor['arm']=='alternative', 'Chain13 identity drift')
+    require(plan['source_checkpoint_sha256']==sha(ANCHOR), 'Anchor checkpoint drift')
+    require(plan['continuation_arm']=='count3' and plan['arms']=={'binary':1,'count3':3}, 'Count-three contract drift')
+    require(plan['bounds']['beta_annual']==[.93,.99] and len(plan['bounds'])==10, 'Parameter bounds drift')
+    require(plan['target_fingerprint']==canonical(plan['target_contract']), 'Target fingerprint drift')
+    require(plan['weight_fingerprint']==canonical(dict(base_contract=plan['target_contract'],multipliers={})), 'Weight fingerprint drift')
+    require(plan['parent_job_id']=='19127370' and plan['parent_inventory_sha256']=='d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe', 'Parent identity drift')
+    require(sha(Path(plan['parent_receipt_root'])/'inventory.json')==plan['parent_inventory_sha256'], 'Parent inventory bytes drift')
+    base=Path(plan['base_controller_root'])
+    require(sha(base/'inventory.json')==plan['base_controller_inventory_sha256']=='a3f82c0b40d64911ad1354e77c777553eb9e27260abfb4c8e88a55a323f9d6cc', 'Base continuation inventory drift')
+    terminal=json.loads((base/'control/controller_terminal.json').read_text())
+    require(terminal['exit_code']==0 and terminal['controller_job_id']=='19136605', 'Base controller unsuccessful')
+    require(sha(base/'control/smoke_gate.json')==plan['base_smoke_gate_sha256'], 'Base smoke gate bytes drift')
+    smoke=json.loads((base/'control/smoke_gate.json').read_text())
+    require(smoke['status']=='matched_both_arm_smoke_passed' and smoke['stage_inventory_sha256']==plan['base_controller_inventory_sha256'], 'Base native smoke failure')
+    submission=json.loads((base/'control/production_submission.json').read_text())
+    require(submission['controller_job_id']=='19136605' and submission['array']=='0-9%10' and submission['cores_max']==10, 'Base production submission drift')
+    require(sha(base/'control/gate/parent_gate.json')==plan['parent_gate_sha256'], 'Parent gate bytes drift')
+    gate=json.loads((base/'control/gate/parent_gate.json').read_text())
+    require(gate['status']=='all_ten_parent_endpoints_verified' and gate['parent_receipts']==plan['parent_receipts'], 'Parent gate drift')
+    require(sha(base/'source/output/model/experiments/birth_count_choice/estate_a_continuation_20261004_v1/plan_count3.json')==plan['base_count3_plan_sha256']==gate['plan_count3_sha256'], 'Base count-three plan bytes drift')
+    require([r['task'] for r in plan['parent_receipts']]==list(range(10)), 'Parent task order/map drift')
+    original_plan=json.loads((Path(plan['parent_receipt_root'])/'source/output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json').read_text())
+    require(plan['bounds']==original_plan['bounds'] and plan['target_contract']==original_plan['target_contract'], 'Parent bounds or target contract drift')
+    for item in plan['parent_receipts']:
+        task=item['task']; arm='binary' if task<5 else 'count3'; chain=task%5
+        require(item['arm']==arm and item['chain']==chain, 'Parent task map drift')
+        folder=Path(plan['parent_receipt_root'])/'results'/f'production_{arm}_chain_{chain}'
+        launcher=json.loads((folder/'launcher_terminal.json').read_text())
+        require(launcher['exit_code']==0 and launcher['slurm_job_id']==item['slurm_task_job_id'], 'Parent launcher unsuccessful')
+        receipt=folder/'run/completed.json'
+        require(sha(receipt)==item['completed_sha256'], 'Parent completion bytes drift')
+        result=json.loads(receipt.read_text())
+        require(result['status']=='selected_numerically_verified' and result['arm']==arm and result['chain']==chain, 'Parent numerical gate drift')
+        require(result['repeat']['status']=='exact_full_ge_repeat_passed' and len(result['repeat']['standard_plot_hashes'])==17, 'Parent native repeat drift')
+        require(result['selected_postcheck']['status']=='passed' and len(result['target_fit'])==14 and len(result['parameters'])==31, 'Parent report drift')
+        require(result['target_fingerprint']==plan['target_fingerprint'] and result['weight_fingerprint']==plan['weight_fingerprint'], 'Parent target/weight drift')
+        require(result['selected']['parameters']==item['parameters'] and result['native_loss']==item['native_loss'], 'Parent endpoint drift')
+    binary=min(plan['parent_receipts'][:5],key=lambda r:(r['native_loss'],r['task']))
+    count3=min(plan['parent_receipts'][5:],key=lambda r:(r['native_loss'],r['task']))
+    require(plan['source_tasks']=={'binary_best':binary['task'],'count3_best':count3['task']}, 'Best-source selection drift')
+    b=binary['parameters'];c=count3['parameters'];bounds=plan['bounds']
+    def clipped(row):return {k:min(bounds[k][1],max(bounds[k][0],float(v))) for k,v in row.items()}
+    one=dict(b)
+    two={k:(b[k]+c[k])/2 for k in c}
+    three=dict(c);three['beta_annual']=.94;three['first_birth_fixed_cost']=c['first_birth_fixed_cost']*.5
+    four=dict(c);four['kappa_fert']=c['kappa_fert']*3;four['kappa_fert_continuation']=c['kappa_fert_continuation']*3
+    five=dict(c);five['theta0']=c['theta0']*2;five['psi_child']=c['psi_child']*1.5;five['h_P']=c['h_P']-.25
+    expected=[clipped(row) for row in (one,two,three,four,five)]
+    require(plan['starts']==expected, 'Expansion seed construction drift')
+    require(len({canonical(s) for s in expected})==5, 'Duplicate expansion starts')
+    require(not ({canonical(s) for s in expected}&{canonical(r['parameters']) for r in plan['parent_receipts'][5:]}), 'Expansion start duplicates original count-three endpoint')
+    for row in expected:
+        require(set(row)==set(bounds) and all(math.isfinite(v) and bounds[k][0]<=v<=bounds[k][1] for k,v in row.items()), 'Expansion seed outside bounds')
+    return plan,anchor
