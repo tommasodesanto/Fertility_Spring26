@@ -769,6 +769,10 @@ manuscript wording or certify a new paper calibration.
    At approximately 02:10 New York on October 4, old tasks 7–9 remained
    running. Tasks 10–11 failed when saving inherited-state diagnostics to a
    read-only baseline folder; this does not establish an infeasibility failure.
+   At 05:04 New York, v6 task 9 had also failed on the same read-only
+   diagnostic path during candidate 3; tasks 7–8 continue. Its completed
+   trials are preserved, and the already-running v9 replacement carries
+   the verified routing fix. No duplicate restart is launched.
    No cancellations were performed. V7 increases
    the endpoint cap to 48 within the same 1,800-second budget, preserving
    the model and all scientific gates. Its prepared starting ratios are
@@ -787,7 +791,7 @@ manuscript wording or certify a new paper calibration.
    records inventory SHA-256
    `5f1ee713bd1c5ab62d2a1776667f6191d61e69794cfe9a1fd22e6a6841397e92`;
    zero-solve preflight passed with exit zero and native/plan/config pins are
-   unchanged. Four new and three retained cluster tasks remain below the
+   unchanged. Four v7, two v6 and one v9 cluster search remain below the
    48-node cap. SSH authentication is restored; bounded keepalive PID 31864
    lasts at most 21,700 seconds under
    [its receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/ssh_keepalive.json).
