@@ -794,14 +794,18 @@ manuscript wording or certify a new paper calibration.
    targets, bounds and gates. The scalar optimizer restarts, and fresh reference
    and seed are still required. Existing budgets are not extended.
 
-   Best completed local trial: psi_child 0.12839959665634437 gives final-window
-   fertility 1.714388 versus 1.645750, gap +0.068638. **No matched fit is
-   accepted.** The [full four-window table and parameter bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
-   preserve the comparison. The diagnostic 24/32 horizons are not 104/128
-   production certification; their terminal failures and the smoke's six-date
-   terminal failure remain disclosed. Estate recipient/funding closure remains
-   provisional. Unrelated calibrations are untouched. The hard-versus-soft
-   economic choice remains distinct from this authorized search.
+   **First continuation trial within tolerance, verified 09:36 New York:**
+   psi_child 0.11999694638724082 gives final-window fertility 1.643134 versus
+   1.645750, gap −0.002616 (tolerance ±0.005), loss 6.8433245884109135e-06.
+   Both 24/32 roots converged and passed exact replay, accounting and horizon
+   checks. The unchanged estimator is completing its derivative probe and final
+   reproduction/output steps; **no final fit is accepted yet**. The
+   [full four-window table and parameter bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
+   retain the sizeable earlier-window validation gaps. Both terminal checks
+   remain false. Diagnostic 24/32 horizons are not 104/128 production
+   certification; estate recipient/funding closure remains provisional.
+   Unrelated calibrations are untouched. The hard-versus-soft economic choice
+   remains distinct from this authorized search.
 2. **Identification and weights:** count is ten moments for ten free parameters.
    Check informative rank/substitution and the two near-bound fertility/continuation
    noise parameters. National ACS uncertainty and the early-fertility weight remain
