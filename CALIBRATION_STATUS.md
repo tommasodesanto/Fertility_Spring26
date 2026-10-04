@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 19:22 New York:** the
+   **Current transition direction, verified October 4 at 19:29 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -912,9 +912,10 @@ manuscript wording or certify a new paper calibration.
    after 19m20s/39 calls. Both seeds, two-evaluation roots, zero replay gaps,
    own-vintage handoff, both queues, exact 2023 state and all 85 standard PNGs
    passed the actual artifact validator. Both smoke terminal diagnostics were
-   true and nongating. One new empirical fit, **19183608**, was submitted at
-   **19:21:54** and is **PENDING** for Torch resources. Its one-CPU, 24-GiB,
-   six-hour budget begins when scheduled; start/deadline are not known yet.
+   true and nongating. One new empirical fit, **19183608**, is **RUNNING**
+   on cl011 from **19:23:53 New York**, with actual native progress verified.
+   Its one-CPU, 24-GiB allocation has a hard scheduler deadline of
+   **October 5 at 01:23:53 New York**, two seconds before the launcher deadline.
    No empirical estimate is accepted. The discussed 1e-7 mass cutoff has not
    been applied; immutable v5 retains 1e-12. This smoke does not certify the
    failed empirical point or 24/32 paths, which must pass freshly. All economics, bounds,
