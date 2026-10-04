@@ -179,6 +179,24 @@ launch guard (137 and 126 objective attempts), then passed fresh final checks.
 The hourly monitor is PAUSED after the final collection and review; no automatic
 extension, transition or additional calibration is authorized.
 
+**October 4 fixed-parameter two-birth diagnostic:** at the verified one-birth
+Estate-A chain-1 estimates, allowing at most two intended births per period
+passed the native stationary-GE and exact-repeat gates in nine lifecycle solves.
+All 31 reported parameter values remain unchanged, including the previously
+inverted supply coefficient H0=6.1245552591467405, now held fixed. Price adjusts
+from 0.781167 to 0.999336 and population scale from one to 1.378614 under the
+existing fixed-H0 renewal closure. Children ever born at completed interview
+age 25 fall from 0.549585 to 0.451039; mean first-birth age rises from 25.973636
+to 28.009497. Same new-target loss is 1386.601505. This is a menu-change GE
+diagnostic, not recalibration or a fixed-price effect. Source-bound inputs,
+complete 14-row fit/31 parameters and 17 exact-repeat standard plots are in
+[the two-birth packet](output/model/experiments/birth_count_choice/cap2_at_binary_winner_v1/README.md).
+The [one-birth benchmark comparison](output/model/experiments/birth_count_choice/binary_benchmark_comparison_v1/README.md)
+compares the 21.275413 Estate-A/new-wealth point with the verified 13.771131
+revised-timing old-wealth anchor, preserving different estate/target definitions
+and providing arithmetic rescoring under both target systems. Neither result
+changes the working baseline or certifies optimizer/grid convergence.
+
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain
 historical; the working revised-timing anchor is chain 13. Neither resolves
