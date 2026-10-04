@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 16:07 New York:** the
+   **Current transition direction, verified October 4 at 16:25 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -877,8 +877,11 @@ manuscript wording or certify a new paper calibration.
    authenticated reference contract. V2 repaired that input graph but then found a
    missing physical import entry for an existing authenticated overlay source.
    V3 materializes exact missing filenames without overwriting sources and passes
-   19 packaging tests. It is transferring to Torch; the native constructor remains
-   unverified. No new Slurm smoke or empirical two-shock fit has launched. The original
+   19 packaging tests. Its host/container checks and actual native constructor
+   passed with zero calls and one thread. One small smoke is RUNNING on Torch:
+   job **19173749**, cl015, one CPU/24 GiB, started 16:22:25 with hard deadline
+   16:52:25 New York. Its first actual native call began at 16:25. The smoke has
+   not passed; empirical fitting has not launched. The original
    empirical 24/32 roots, accounting, replay,
    horizon gates, 0.005 fitted-gap tolerance and six-hour budget remain unchanged.
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
