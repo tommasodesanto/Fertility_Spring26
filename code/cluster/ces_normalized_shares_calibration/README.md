@@ -9,7 +9,7 @@ V5 source inventory SHA-256 is
 files). Its three-context preflight, smoke **19132940**, full native gate, and
 collector passed. Four-chain production array **19133352** (`0-3%4`) was
 submitted October 3 at 22:31:16 EDT. At 22:32:52 EDT all four tasks were
-verified `RUNNING` on cs604/cs606/cs633 ([launch health](../../../output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/launch_health.json)). This is a search in progress, not an adopted calibration.
+verified `RUNNING` on cs604/cs606/cs633 ([launch health](../../../output/model/experiments/ces_normalized_shares/overnight_v1/deployment/attempt5/launch_health.json)). All four searches have finished and passed fresh native verification; [full final fits and parameters](../../../output/model/experiments/ces_normalized_shares/overnight_v1/final_results/README.md) are retained. The experimental calibration has not been adopted.
 
 V4 smoke **19132298** passed its two-GE native gate and collector, then Slurm
 reported `FAILED 1:0` because its EXIT receipt function lacked an `os` import.
@@ -33,3 +33,7 @@ authenticated numerical candidate that cannot be bracketed receives a
 errors are terminal without retry or fallback. Native verification compares
 11 coordinates, full target and parameter tables, all 17 diagnostic plot
 hashes, and an exact repeat.
+
+## Fixed-price mortgage-financing diagnostic
+
+The author-requested two-case diagnostic uses the verified best overnight chain, holds its price and all fitted preferences fixed, and changes the uniformly financed mortgage share from 80% to 95%. Run `bash code/cluster/ces_normalized_shares_calibration/credit_diagnostic.sh`. The driver authenticates the frozen v5 stage and the chain-1 JSON, checks the reached utility arrays and that only phi differs, and saves the standard 17 graphs and full arrays for each case. One CPU, 24 GiB and a 30-minute cap. See the [diagnostic packet](../../../output/model/experiments/ces_normalized_shares/credit_diagnostic_v1/README.md) for status, interpretation and limitations.

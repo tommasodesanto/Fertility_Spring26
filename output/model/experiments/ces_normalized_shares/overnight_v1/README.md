@@ -13,3 +13,7 @@ Per chain: 1 CPU, 24 GiB, 6 hours, at most 500 objective calls/rounds and 32 lif
 ## Historical fitted-vector check
 
 The author suggested the September 27 share-based fit as an alternative starting point. [Full diagnostic fit and all parameter bounds](historical_start_diagnostic/README.md) retain all eleven transferable coordinates under the current utility and fixed-input contract. Original price caps rejected this point. A wider-cap diagnostic found a stationary root with exact repeat, but derived housing supply coefficient 0.198580 falls below its retained 0.2 calibration lower bound. Diagnostic loss 4417.699 is not an accepted candidate; fertility fit is good but housing fit is poor. The original four searches finished without changes.
+
+## Mortgage-financing follow-up
+
+The author-requested 80%→95% mortgage-share test uses the best verified chain 1 at held price, with no recalibration. [Complete diagnostic comparison and standard plots](../credit_diagnostic_v1/README.md) show a strong ownership response and tiny birth/room responses. The relaxed case remains rejected by the unchanged negative-estate gate; this is descriptive evidence, not an adopted policy result.
