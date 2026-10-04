@@ -17,3 +17,5 @@ The command reads the saved full 2023 household solution and survey caches. It d
 Data dates are explicit: CPS June 2024 (nearest local fertility supplement), NCHS 2023, ACS 2023, and the latest PSID wave with measured age, weight and wealth fields (2019). The local shelf has 2021 records but those required fields are missing. This is descriptive validation, not a change to calibration targets.
 
 This routine uses only the 2023 cross-section. Original experimental certification limitations remain in the parent README.
+
+Snapshot check: distributions come from `actual_2023.initial_state.g_pre`, not the stationary observer arrays embedded in parameters. First births by age, population, ownership and housing demand reproduce the original dated record. The plot loader requires this receipt. An earlier plotting cache used stale stationary distributions; it has been replaced.

@@ -21,7 +21,7 @@ state_path = REF/'state_2023/actual_2023.pkl.gz'
 state = load(state_path)
 assert state['calendar_year'] == 2023
 cache = OUT/'assessment_solution.pkl.gz'
-if not cache.exists() or not hasattr(load(cache).solution,'V'):
+if not cache.exists() or getattr(load(cache).solution,'dated_snapshot_version',0) != 3:
     # Recover only this date's missing policies, using the original frozen engine
     # and saved continuation. No equilibrium or transition is re-estimated.
     sys.path.insert(0,str(REF/'source_snapshot/code/model/experiments/birth_count_choice'))
@@ -29,21 +29,30 @@ if not cache.exists() or not hasattr(load(cache).solution,'V'):
     seed_path = ROOT/'output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_032/map_001/date_000/diagnostic_packet.pkl.gz'
     seed = load(seed_path)
     P = state['parameters']; b = state['b_grid']; price = np.array([state['forecast_prices'][0]])
-    pre = P.birth_count_pre_distribution.copy(); post = P.birth_count_post_distribution.copy()
-    first = P.birth_count_first_birth_tagged_distribution.sum(axis=(0,1,2,4,5,6))
+    pre = state['initial_state'].g_pre.copy()
     print('Recovering the 2023 policies at saved prices and continuation',flush=True)
     V,c,h,bp,choice,ten,loc,fert,fv,_ = engine.solve_bellman_full_markov_income(
-        P.user_cost_rate*price + price-state['forecast_prices'][1],price,P,b,engine.precompute_shared(P,b),continuation_V=state['continuation_V'])
+        P.user_cost_rate*price + (price-state['forecast_prices'][1]),price,P,b,engine.precompute_shared(P,b),continuation_V=state['continuation_V'])
     error = float(np.max(np.abs(V-state['current_2023_V'])))
     np.testing.assert_allclose(V,state['current_2023_V'],rtol=2e-14,atol=1e-10,err_msg='2023 policy reproduction')
+    from model.engine.birth_count import birth_count_transition
+    flow = birth_count_transition(pre,P.birth_count_realized_probs,P.birth_count_action_probs,P.birth_count_choice_cap)
+    post=flow['post']; first=flow['first_birth_tagged_post'].sum(axis=(0,1,2,4,5,6))
     import run_dynamic_population_transition as calendar
-    maps = calendar.build_transition_maps(price,P,b,seed['shared'])
+    from model.engine.utils import interp_indices
+    engine.interp_indices=interp_indices
+    previous_engine=calendar.model
+    try:
+        calendar.model=engine
+        maps=calendar.build_transition_maps(price,P,b,engine.precompute_shared(P,b))
+    finally:
+        calendar.model=previous_engine
     g = engine.realize_current_cross_section(post,loc,choice,ten,maps.lmm_idx,maps.lmm_wt,maps.tmx_idx,maps.tmx_wt,
         use_compiled_scatter=bool(getattr(P,'use_numba_scatter',False)))
     s=SimpleNamespace(g=g,g_beginning_distribution=post,b_grid=b,p_eq=price,hR_pol=h,
-        assessment_prebirth=pre,assessment_first_births=first, V=V,c_pol=c,bp_pol=bp,tenure_choice=choice,
+        assessment_prebirth=pre,assessment_first_births=first,dated_snapshot_version=3, V=V,c_pol=c,bp_pol=bp,tenure_choice=choice,
         tenure_probs=ten,loc_probs=loc,fert_probs=fert,fert_value=fv,fert2_probs=getattr(P,'_fert2_probs',None),
-        g_stay_distribution=getattr(P,'_g_stay_distribution',None))
+        g_stay_distribution=engine.realize_stayer_cross_section(post,loc,choice,ten))
     result=SimpleNamespace(P=P,solution=s)
     with gzip.open(cache,'wb') as f:pickle.dump(result,f)
     (OUT/'state_receipt.json').write_text(json.dumps(dict(checkpoint=str(state_path),checkpoint_sha256=sha256(state_path),
@@ -52,6 +61,21 @@ else:
     receipt=json.loads((OUT/'state_receipt.json').read_text())
     if receipt['checkpoint_sha256'] != sha256(state_path):raise RuntimeError('Saved 2023 checkpoint changed')
     result=load(cache)
+
+# The population snapshot must be the actual dated inherited state, never fields in P.
+np.testing.assert_array_equal(result.solution.assessment_prebirth,state['initial_state'].g_pre)
+native_path=ROOT/'output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_032/map_001/native_record.json'
+native=json.loads(native_path.read_text()); row=native['rows'][4]
+np.testing.assert_allclose(result.solution.assessment_first_births,native['fertility'][4]['birth_flow_first'],rtol=1e-11,atol=1e-12)
+import run_dynamic_population_transition as calendar
+s=result.solution; P=result.P
+demand=float(calendar.housing_demand_by_location(s.g,s.hR_pol,P).sum())
+np.testing.assert_allclose([s.g.sum(),demand,s.g[:,1:].sum()/s.g.sum()],
+    [row['adult_population'],row['housing_demand'],row['owner_rate']],rtol=1e-11,atol=1e-12)
+receipt=json.loads((OUT/'state_receipt.json').read_text())
+receipt.update(distribution_source='actual_2023.initial_state.g_pre',actual_dated_state_exact=True,
+    population=float(s.g.sum()),housing_demand=demand,dated_native_aggregates_verified=True)
+(OUT/'state_receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
 
 psid=DATA/'psid_recent.csv'
 if not psid.exists():
