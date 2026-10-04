@@ -2,6 +2,8 @@
 
 Verified case: `20261003T175652812716Z_b1c72f13`, post-interest soft chain 13. The existing `code/model/plot_model_aggregates.py` writes the three-page comparison under that case's `aggregate_plots/model_data_assessment/`. No model, input, target or calibration change was made.
 
+The fertility page also compares mean children ever born (capped at three) across five income groups, pooling ages 18–45. CPS 2024 uses family money income; the model uses current labor earnings. Tied income categories split fractionally across equal-weight groups. The model uses the observed CPS pooled age weights; the conditional age composition within each income group can differ.
+
 The [older-age extraction](oldwealth_model_check/extract.py) reads the pinned case and PSID cache; its [summary](oldwealth_model_check/summary.json) records hashes, samples and quantiles. Reproduce with the pinned model Python, one thread. Current target and parameter tables remain in the pinned case.
 
 The reported older-age wealth-to-income dispersion, 2.904, reproduces exactly using the authenticated observer's age-overlap weights. It is a zero-weight validation statistic against 3.516 in PSID 2003/2005. The model uses pension income while the data use total family income; this is an unresolved comparison limitation. The native whole-cell statistic, 2.740, is a different age operator.

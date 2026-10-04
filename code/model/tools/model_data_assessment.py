@@ -60,8 +60,8 @@ def weighted_ecdf(values, weights):
     return v[starts], np.cumsum(mass) / mass.sum()
 
 
-def thirds(category_mass):
-    """Fractionally split tied ordered income categories at exact weighted thirds."""
+def weighted_groups(category_mass, n_groups):
+    """Fractionally split tied ordered income categories into equal weighted groups."""
     mass = np.asarray(category_mass, float)
     total = mass.sum()
     if total <= 0:
@@ -69,10 +69,14 @@ def thirds(category_mass):
     lower = np.cumsum(mass) - mass
     upper = np.cumsum(mass)
     return np.array([
-        np.maximum(0, np.minimum(upper, (k + 1) * total / 3)
-                   - np.maximum(lower, k * total / 3)) / np.maximum(mass, 1e-300)
-        for k in range(3)
+        np.maximum(0, np.minimum(upper, (k + 1) * total / n_groups)
+                   - np.maximum(lower, k * total / n_groups)) / np.maximum(mass, 1e-300)
+        for k in range(n_groups)
     ])
+
+
+def thirds(category_mass):
+    return weighted_groups(category_mass, 3)
 
 
 def within_cell_stock(pre, post, cell_starts, ages, weights, period_years):
@@ -262,11 +266,18 @@ def prepare_assessment(result, run_directory, *, output=None):
                                    'visible_range': [float(low), float(high)],
                                    'display_quantiles': [lower_quantile, upper_quantile]}
 
-    def newpage(title, footnote):
-        fig, axs = plt.subplots(3, 2, figsize=(8.5, 11))
+    def newpage(title, footnote, *, pooled=False):
+        if pooled:
+            fig = plt.figure(figsize=(8.5, 11))
+            grid = fig.add_gridspec(4, 2)
+            axs = [fig.add_subplot(grid[row, col]) for row in range(3) for col in range(2)]
+            axs.append(fig.add_subplot(grid[3, :]))
+        else:
+            fig, axs = plt.subplots(3, 2, figsize=(8.5, 11))
+            axs = axs.ravel()
         fig.suptitle(title, fontsize=15, y=.987)
         fig.text(.045, .012, footnote, ha='left', va='bottom', fontsize=8, wrap=True)
-        return fig, axs.ravel()
+        return fig, axs
 
     def finish(fig, page):
         for ax in fig.axes:
@@ -276,7 +287,8 @@ def prepare_assessment(result, run_directory, *, output=None):
             ax.title.set_fontsize(10)
             ax.xaxis.label.set_size(9)
             ax.yaxis.label.set_size(9)
-        fig.subplots_adjust(left=.11, right=.97, top=.94, bottom=.065, hspace=.42, wspace=.32)
+        fig.subplots_adjust(left=.11, right=.97, top=.94, bottom=.065,
+                            hspace=.54 if page == 1 else .42, wspace=.32)
         figures.append(fig)
         fig.savefig(out / f'page_{page}.png', dpi=180)
 
@@ -284,7 +296,7 @@ def prepare_assessment(result, run_directory, *, output=None):
     page = 1
     fig, axs = newpage('Fertility: model versus data',
         'CPS June 2004/06 women (orange); saved model reproductive-member proxy (blue). Counts cap at 3+. '
-        'First births: NCHS 2003–06 counts. Income: CPS June 2024 family money income versus model current labor earnings ranks; external validation.')
+        'First births: NCHS 2003–06 counts. Income: CPS June 2024 family money income versus model current labor earnings ranks; external validation.', pooled=True)
     cx = np.arange(18, 46)
     data_mean, model_mean = [], []
     for age in cx:
@@ -321,7 +333,7 @@ def prepare_assessment(result, run_directory, *, output=None):
             if r['PESEX'] != '2':
                 continue
             age, count, wt, category = map(number, (r['PRTAGE'], r['PTSF1'], r['PWSSWGT'], r['HEFAMINC']))
-            if ((24 <= age <= 26 or 40 <= age <= 44) and 0 <= count <= 5
+            if (18 <= age <= 45 and 0 <= count <= 5
                     and wt > 0 and 1 <= category <= 16):
                 income_rows.append((int(age), min(int(count), 3), wt, int(category)))
     income_rows = np.asarray(income_rows, float)
@@ -349,6 +361,32 @@ def prepare_assessment(result, run_directory, *, output=None):
         a = thirds(masses)
         mv = np.sum(a * numerators, axis=1) / np.sum(a * masses, axis=1)
         bars(ax, panel, f'Children by income third, ages {lo}–{hi}', ['Low', 'Middle', 'High'], mv, dv, 'Mean, cap 3')
+    pooled = income_rows
+    category_mass = np.bincount(pooled[:, 3].astype(int), weights=pooled[:, 2], minlength=17)[1:]
+    allocation = weighted_groups(category_mass, 5)
+    pooled_data = [float(np.sum(pooled[:, 2] * pooled[:, 1] * allocation[k, pooled[:, 3].astype(int) - 1]) /
+                         np.sum(pooled[:, 2] * allocation[k, pooled[:, 3].astype(int) - 1]))
+                   for k in range(5)]
+    pooled_states = []
+    for age in range(18, 46):
+        exposure = pooled[pooled[:, 0] == age, 2].sum()
+        q = model_stock_at_age(pre, post, starts, age, P.period_years)
+        j = int((age + .5 - starts[0]) // P.period_years)
+        by_z = q.sum(axis=(0, 1, 2, 4, 5))
+        for z in range(P.Nz):
+            pooled_states.append((earnings_grid[j, z], exposure * by_z[z] / q.sum(),
+                                  exposure * np.sum(q[:, :, :, z] * np.arange(4)[None, None, None, :, None]) / q.sum()))
+    unique_earnings = sorted(set(x[0] for x in pooled_states))
+    pooled_mass = np.array([sum(x[1] for x in pooled_states if x[0] == earnings) for earnings in unique_earnings])
+    pooled_children = np.array([sum(x[2] for x in pooled_states if x[0] == earnings) for earnings in unique_earnings])
+    pooled_allocation = weighted_groups(pooled_mass, 5)
+    pooled_model = np.sum(pooled_allocation * pooled_children, axis=1) / np.sum(pooled_allocation * pooled_mass, axis=1)
+    bars(axs[6], 'income_fifths_pooled', 'Children ever born by income fifth',
+         ['Lowest', 'Second', 'Middle', 'Fourth', 'Highest'], pooled_model, pooled_data, 'Mean, cap 3')
+    axs[6].text(.02, .96, 'Pooled ages 18–45', transform=axs[6].transAxes,
+                ha='left', va='top', fontsize=8)
+    coverage['income_fifths_pooled'] = {'cps_2024_women': int(len(pooled)),
+                                        'age_range': [18, 45], 'income_groups': 5}
     finish(fig, page)
 
     # Housing: realized tenure and renter policy; annual ACS cells are disjoint.

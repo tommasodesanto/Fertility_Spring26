@@ -4,7 +4,7 @@ import pytest
 
 from model_data_assessment import (financial_positions, invert_independent_birth_map,
                                    require_sha256, select_grouped_national_acs,
-                                   thirds, weighted_ecdf, within_cell_stock)
+                                   thirds, weighted_ecdf, weighted_groups, within_cell_stock)
 
 
 def test_ecdf_ties_and_negative_values():
@@ -39,6 +39,12 @@ def test_fractional_tied_terciles():
     allocation = thirds([2, 1])
     np.testing.assert_allclose((allocation * [2, 1]).sum(axis=1), [1, 1, 1])
     np.testing.assert_allclose(allocation[:, 0], [.5, .5, 0])
+
+
+def test_fractional_tied_fifths():
+    allocation = weighted_groups([3, 2], 5)
+    np.testing.assert_allclose((allocation * [3, 2]).sum(axis=1), np.ones(5))
+    np.testing.assert_allclose(allocation.sum(axis=0), np.ones(2))
 
 
 def test_bad_source_hash_rejected(tmp_path):
