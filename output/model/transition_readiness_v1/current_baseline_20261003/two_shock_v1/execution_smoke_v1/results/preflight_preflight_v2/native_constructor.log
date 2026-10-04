@@ -1,0 +1,34 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/code/model/experiments/birth_count_choice/two_shock_runtime.py", line 265, in build_runtime
+    return NativeRuntime(plan,output)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/code/model/experiments/birth_count_choice/two_shock_runtime.py", line 168, in __init__
+    self.rt=module.CurrentEstateARuntime.from_handoff(base['handoff'],self.output/'constructor')
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/code/model/experiments/birth_count_choice/transition_runtime.py", line 281, in from_handoff
+    self.ctx = reporting.build_context(self.P, self.grid, self.folder, price_start=self.reference_price,
+               ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        deadline=float('inf'), max_lifecycle=0, closure='fixed_h0')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/code/model/experiments/birth_count_choice/model/reporting.py", line 113, in build_context
+    authored.authenticate_frozen(initial)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/driver.py", line 100, in authenticate_frozen
+    manifest, _unused, objective, runtime, prepared, reference = fp.authenticate(auth_dir)
+                                                                 ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py", line 118, in authenticate
+    require(sha(pin['path']) == pin['sha256'], 'Reference pin differs: ' + key)
+            ~~~^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py", line 41, in sha
+    with Path(path).open('rb') as stream:
+         ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/code/model/experiments/birth_count_choice/model/frozen_sources.py", line 32, in path_open
+    return old_path_open(target_for(self, mode), mode, *args, **kwargs)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py", line 26, in <lambda>
+    Path.open=lambda self,mode="r",*args,**kwargs:redirected_open(self,mode,*args,**kwargs)
+                                                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py", line 19, in redirected_open
+    return old_io_open(target,mode,*args,**kwargs)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v1/frozen/source/code/cluster/estate_birth_transition/two_shock_source_overlay.py", line 100, in safe_io
+    return old_io(resolve(file),mode,*args,**kwargs)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/contract.json'

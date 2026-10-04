@@ -138,6 +138,49 @@ class PackagingTests(unittest.TestCase):
         self.assertIn('Refusing duplicate or unknown',second.stdout)
         self.assertEqual((remote/'jobs/smoke.claim/run_name').read_text(),'first\n')
         self.assertFalse((remote/'jobs/smoke_second').exists())
+    def test_reference_graph_follows_explicit_constructor_pins(self):
+        root=self.root/'repo';case=root/'original_case';pair=root/'portable/pair';export=root/'export';docs={}
+        def item(path,value=None):
+            record=dict(path=str(path),sha256=hashlib.sha256(json.dumps(value,sort_keys=True).encode()).hexdigest())
+            if value is not None:docs[str(path)]=value
+            return record
+        artifact=item(export/'table.csv')
+        source=item(root/'native_inventory.json',dict(files={'code/native.py':'native-sha'}))
+        base=item(root/'base.json',dict(reference_root=str(pair),parent_lock={'path':'/obsolete/scratch','sha256':'unused'}))
+        native=item(root/'native.json',dict(files={'tool':item(root/'tool.py')},base_contract=base,
+             objective=item(root/'objective.json',{}),source_manifest=source,source_root=str(root/'native_source')))
+        contract=item(root/'contract.json',dict(files={'builder':item(root/'builder.py')},reference_case=str(case)))
+        manifest=dict(contract=contract,objective=item(root/'objective.json',{}),source_manifest=item(root/'source_manifest.json',{}),
+           source_contract=item(root/'source_contract.json',{}),native_ancestry_contract=native,
+           local_export=str(export),artifact_hashes={'table.csv':artifact['sha256']},checkpoint={'sha256':'reference-checkpoint'})
+        docs[str(pair/'inputs/launch_lock.json')]=dict(runtime_file_sha256={'run_pair.py':'pair-driver'},
+          objective_sha256='pair-objective',proposal_bank_sha256='bank',source_manifest_sha256='pair-source',ancestor_sha256='ancestor',tax_driver_sha256='tax')
+        docs[str(pair/'inputs/objective.json')]={};docs[str(pair/'inputs/proposal_bank.json')]={}
+        docs[str(pair/'inputs/source_manifest.json')]=dict(source_root=str(pair/'source'),files={'code/pair.py':'pair-code'})
+        files,provenance=p.reference_input_pins(manifest,root,lambda pin:docs[pin['path']])
+        self.assertEqual(files['contract.json'],contract['sha256'])
+        self.assertEqual(files['export/initial_state.pkl.gz'],'reference-checkpoint')
+        self.assertEqual(files['native_source/code/native.py'],'native-sha')
+        self.assertEqual(files['portable/pair/source/code/pair.py'],'pair-code')
+        self.assertEqual(files['original_case/initial_state.pkl.gz'],p.CASE_CHECKPOINT_SHA)
+        for name,digest in p.CASE_LEAVES.items():
+            self.assertEqual(files['original_case/'+name],digest)
+            self.assertIn(p.REVIEW_MANIFEST_SHA,provenance['original_case/'+name][0])
+        self.assertNotIn('/obsolete/scratch',files)
+    def test_reference_resolver_rejects_missing_and_drifted_bytes(self):
+        repo=self.root/'repo';frozen=self.root/'frozen';overlay=self.root/'overlay'
+        manifest_path=frozen/p.REFERENCE_REL;digest=self.put(manifest_path,b'{}')
+        wanted=hashlib.sha256(b'exact').hexdigest()
+        with patch.object(p,'EXPECTED_INPUTS',{p.REFERENCE_REL:digest}),patch.object(p,'reference_input_pins',return_value=({'required.json':wanted},{'required.json':['declared original pin']})):
+            with self.assertRaisesRegex(ValueError,'No exact authenticated reference input'):
+                p.authenticated_reference_sources(repo,frozen,overlay,{}, {})
+            self.put(repo/'required.json',b'drift')
+            with self.assertRaisesRegex(ValueError,'No exact authenticated reference input'):
+                p.authenticated_reference_sources(repo,frozen,overlay,{}, {})
+            self.put(overlay/'historical/exact.json',b'exact')
+            files,authority,chosen=p.authenticated_reference_sources(repo,frozen,overlay,{}, {'historical/exact.json':wanted})
+            self.assertEqual(chosen['required.json'],overlay/'historical/exact.json')
+            self.assertEqual(files['required.json'],wanted)
     def test_verify_rejects_uninventoried_control_drift(self):
         stage=self.root/'stage';control='inputs/fit_manifest.json'
         digest=self.put(stage/control,b'{}')

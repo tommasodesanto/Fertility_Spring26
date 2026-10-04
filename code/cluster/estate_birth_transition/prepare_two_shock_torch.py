@@ -103,6 +103,82 @@ def relocate_overlay(meta, manifest, destination, canonical_root):
     return result
 
 
+REFERENCE_REL = 'output/model/fertility_identification_20260928/fixed_reference_manifest.json'
+PAIR_LOCK_SHA = '6c5e14b40eba0ca63911f5a4514d3a63832259f2f36458b05c57d801eb0dadad'
+CASE_CHECKPOINT_SHA = '090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e'
+REVIEW_ARCHIVE_SHA = '7bc2ddf44e15751aa1b3790783ec4e9c56a96d431ee3e190cd6336b68caf5e5f'
+REVIEW_MANIFEST_SHA = 'c6a2aa6909e4ef7afe8610a2ee3a70e92a4ddf6b1c5333bdba1eb5d323fe319d'
+CASE_LEAVES = {'parameters.csv':'48e01f453c90e10f0527afe05b1b751a67fb6b056e69d1c66ed57696f93fa92c',
+               'receipt.json':'c15cdd5862106cf95c392d4e2d75adfc786625b5108f5cc3c660b4c3cc1d76de'}
+
+
+def reference_input_pins(manifest, canonical_root, read_pin):
+    """The explicit zero-constructor authentication graph, without imports/solves.
+
+    Follow only pins consumed by fixed_price.authenticate, evening.setup,
+    current_transition.setup and pair_runtime/read_contract. In particular the
+    base contract's obsolete /scratch pins are not used by pair_runtime: its
+    reviewed relocated reference_root and PARENT_LOCK define that namespace.
+    """
+    root=Path(canonical_root);files={};provenance={}
+    def add(item,label):
+        require(set(item)=={'path','sha256'},'Exact reference dependency pin required: '+label)
+        rel=str(safe_rel(Path(item['path']).relative_to(root)))
+        require(rel not in files or files[rel]==item['sha256'],'Conflicting reference input hashes: '+rel)
+        files[rel]=item['sha256'];provenance.setdefault(rel,[]).append(label)
+        return item
+    def load(item,label):return read_pin(add(item,label))
+    controls={k:load(manifest[k],'fixed_reference_manifest.'+k) for k in
+        ('contract','objective','source_manifest','source_contract','native_ancestry_contract')}
+    contract=controls['contract'];native=controls['native_ancestry_contract']
+    for name,item in contract['files'].items():add(item,'reference contract.files.'+name)
+    for name,digest in manifest['artifact_hashes'].items():
+        add(dict(path=str(Path(manifest['local_export'])/safe_rel(name)),sha256=digest),'reference export artifact '+name)
+    add(dict(path=str(Path(manifest['local_export'])/'initial_state.pkl.gz'),sha256=manifest['checkpoint']['sha256']),'reference checkpoint')
+    for name,item in native['files'].items():add(item,'native ancestry.files.'+name)
+    base=load(native['base_contract'],'native ancestry.base_contract')
+    load(native['objective'],'native ancestry.objective')
+    native_inventory=load(native['source_manifest'],'native ancestry.source_manifest')
+    for rel,digest in native_inventory['files'].items():
+        add(dict(path=str(Path(native['source_root'])/safe_rel(rel)),sha256=digest),'native source inventory '+rel)
+    case=Path(contract['reference_case'])
+    add(dict(path=str(case/'initial_state.pkl.gz'),sha256=CASE_CHECKPOINT_SHA),'pinned current_transition_runtime.CHECKPOINT_SHA')
+    for name,digest in CASE_LEAVES.items():
+        add(dict(path=str(case/name),sha256=digest),'reviewed ZIP '+REVIEW_ARCHIVE_SHA+' / SOURCE_MANIFEST '+REVIEW_MANIFEST_SHA)
+    pair=Path(base['reference_root'])
+    lock=load(dict(path=str(pair/'inputs/launch_lock.json'),sha256=PAIR_LOCK_SHA),'pinned recovery_runner.PARENT_LOCK')
+    for rel,digest in lock['runtime_file_sha256'].items():
+        add(dict(path=str(pair/safe_rel(rel)),sha256=digest),'pair lock.runtime_file_sha256 '+rel)
+    for name,key in [('objective.json','objective_sha256'),('proposal_bank.json','proposal_bank_sha256'),('source_manifest.json','source_manifest_sha256')]:
+        value=load(dict(path=str(pair/'inputs'/name),sha256=lock[key]),'pair lock.'+key)
+        if name=='source_manifest.json':
+            require(value['source_root']==str(pair/'source'),'Pair source inventory root differs')
+            for rel,digest in value['files'].items():
+                add(dict(path=str(pair/'source'/safe_rel(rel)),sha256=digest),'pair source inventory '+rel)
+    add(dict(path=str(pair/'ancestor_commute.py'),sha256=lock['ancestor_sha256']),'pair lock.ancestor_sha256')
+    tax=pair.parent/'paygo_tax_comparison_20260924/run_paygo_two_rate.py'
+    add(dict(path=str(tax),sha256=lock['tax_driver_sha256']),'pair lock.tax_driver_sha256')
+    return files,provenance
+
+
+def authenticated_reference_sources(repo, frozen, overlay, original_inventory, overlay_inventory):
+    """Resolve every required byte using its independent pin; never default it."""
+    repo=Path(repo);candidates={}
+    for directory,inventory in ((Path(frozen),original_inventory),(Path(overlay),overlay_inventory)):
+        for rel,digest in inventory.items():candidates.setdefault(digest,[]).append(directory/safe_rel(rel))
+    chosen={}
+    def source(item):
+        rel=str(Path(item['path']).relative_to(repo));digest=item['sha256']
+        for path in [Path(frozen)/rel,Path(overlay)/rel,*candidates.get(digest,[]),repo/rel]:
+            if path.is_file() and sha(path)==digest:
+                chosen[rel]=path;return path
+        raise ValueError('No exact authenticated reference input bytes: '+rel+' SHA256='+digest)
+    manifest=read(source(dict(path=str(repo/REFERENCE_REL),sha256=EXPECTED_INPUTS[REFERENCE_REL])))
+    files,provenance=reference_input_pins(manifest,repo,lambda item:read(source(item)))
+    for rel,digest in files.items():source(dict(path=str(repo/rel),sha256=digest))
+    return files,provenance,chosen
+
+
 def prepare_plans(destination, python):
     destination=Path(destination);source=destination/'frozen/source'
     # A fresh process imports the staged driver, so active concurrent edits can
@@ -135,6 +211,12 @@ def build(args):
     require(Path(meta['snapshot_root']).resolve()==(overlay_base/'files').resolve(),'Overlay snapshot escapes frozen package')
     authenticate_files(overlay_base/'files',manifest['files'])
     require(sha(frozen/HELPER_REL)==EXPECTED_HELPER and sha(repo/HELPER_REL)==EXPECTED_HELPER,'Read-only overlay helper changed')
+    reference_files,reference_provenance,reference_sources=authenticated_reference_sources(repo,frozen,overlay_base/'files',inv['files'],manifest['files'])
+    original_pins={**inv['files'],**EXPECTED_INPUTS,HELPER_REL:EXPECTED_HELPER,MANIFEST_REL:EXPECTED_MANIFEST}
+    for rel in set(reference_files)&set(original_pins):
+        require(reference_files[rel]==original_pins[rel],'Reference input conflicts with immutable original pin: '+rel)
+    review_manifest=repo/'output/model/review_bundle_20261003/Fertility_Model_Review_20261003/SOURCE_MANIFEST.sha256'
+    require(sha(review_manifest)==REVIEW_MANIFEST_SHA,'Reviewed case-leaf authority manifest changed')
     additions={rel:sha(repo/rel) for rel in (DRIVER_REL,RUNTIME_REL,LOCAL_LAUNCHER_REL)}
     require(not (set(additions)&set(inv['files'])),'Reviewed additions would overwrite original native source')
     # All immutable inputs authenticate before creating any destination content.
@@ -143,6 +225,15 @@ def build(args):
     copy_exact(frozen,source,{HELPER_REL:EXPECTED_HELPER})
     copy_exact(repo,source,additions)
     copy_exact(repo,source,{MANIFEST_REL:EXPECTED_MANIFEST})
+    for rel,digest in reference_files.items():
+        existing=source/rel
+        if existing.exists():require(sha(existing)==digest,'Reference input conflicts with native source: '+rel)
+        if not existing.exists():
+            existing.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(reference_sources[rel],existing);existing.chmod(0o444)
+        require(sha(existing)==digest,'Reference input copy mismatch: '+rel)
+    dump(dest/'provenance/reference_inputs.json',dict(files=reference_files,authority=reference_provenance,reviewed_case_leaf_authority=dict(archive_sha256=REVIEW_ARCHIVE_SHA,source_manifest_sha256=REVIEW_MANIFEST_SHA,no_baseline_adoption=True)))
+    shutil.copyfile(review_manifest,dest/'provenance/reviewed_case_leaf_manifest.sha256')
+    require(sha(dest/'provenance/reviewed_case_leaf_manifest.sha256')==REVIEW_MANIFEST_SHA,'Copied reviewed leaf authority changed')
     copy_exact(overlay_base/'files',dest/'frozen/source_overlay/files',manifest['files'])
     dump(dest/'frozen/source_overlay/overlay.json',newmeta)
     copy_exact(base/'deployment_v9',dest/'provenance',{'inventory.json':EXPECTED_INVENTORY})
@@ -164,7 +255,7 @@ def build(args):
     files={str(p.relative_to(dest)):sha(p) for p in sorted(dest.rglob('*')) if p.is_file()}
     inventory=dict(schema=SCHEMA,local_root=str(dest),remote_root=str(remote),canonical_root=str(canonical),files=files,
         native_inventory_sha256=EXPECTED_INVENTORY,native_file_count=709,auxiliary_file_count=4,overlay_manifest_sha256=EXPECTED_MANIFEST,
-        overlay_file_count=1241,identity=inv['identity'],plans={m:pin(dest/'inputs'/f'{m}_manifest.json') for m in ('smoke','fit')},
+        overlay_file_count=1241,reference_input_count=len(reference_files),identity=inv['identity'],plans={m:pin(dest/'inputs'/f'{m}_manifest.json') for m in ('smoke','fit')},
         resources=dict(cpus=1,numba_threads=1,blas_threads=1,memory_gib=24,maximum_wall_seconds=21600),
         no_model_solves=True,no_submission=True)
     dump(dest/'inventory.json',inventory)
@@ -185,6 +276,12 @@ def verify(stage):
     authenticate_files(stage/'frozen/source',EXPECTED_INPUTS)
     require(sha(stage/'frozen/source'/MANIFEST_REL)==EXPECTED_MANIFEST,'Original overlay manifest changed')
     authenticate_files(stage/'frozen/source_overlay/files',read(stage/'frozen/source'/MANIFEST_REL)['files'])
+    require(sha(stage/'provenance/reviewed_case_leaf_manifest.sha256')==REVIEW_MANIFEST_SHA,'Reviewed case-leaf authority differs')
+    reference_receipt=read(stage/'provenance/reference_inputs.json')
+    reference_manifest=read(stage/'frozen/source'/REFERENCE_REL)
+    expected_reference,_=reference_input_pins(reference_manifest,inv['canonical_root'],lambda item:read(stage/'frozen/source'/Path(item['path']).relative_to(inv['canonical_root'])))
+    require(reference_receipt['files']==expected_reference,'Reference input graph differs')
+    authenticate_files(stage/'frozen/source',expected_reference)
     require(read(stage/'inputs/fit_manifest.json')['identity']==inv['identity'],'Fit native identity differs')
     require(read(stage/'inputs/smoke_manifest.json')['identity']==inv['identity'],'Smoke native identity differs')
     return dict(status='PASS_ZERO_SOLVES_PACKAGE',files=len(inv['files']),native_calls=0,model_solves=0,scientific_validation=False)

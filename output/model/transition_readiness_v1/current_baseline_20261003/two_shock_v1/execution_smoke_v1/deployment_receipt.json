@@ -1,5 +1,5 @@
 {
-  "verified_epoch": 1791142444.7475462,
+  "verified_epoch": 1791142919.340041,
   "stage_inventory_sha256": "1f5bb7f6db502e768cd5805682ceaa81e04c666eca548fbfba25ca344d971f1e",
   "remote_inventory_sha256": "1f5bb7f6db502e768cd5805682ceaa81e04c666eca548fbfba25ca344d971f1e",
   "remote_root": "/scratch/td2248/projects/current_estate_two_shock_20261004_v1",
@@ -11,5 +11,43 @@
     "explanation": "Lead sequenced container preflight before rsync completion; host authentication rejected missing package file before any model or constructor. Preserve attempt; rerun only zero-solve preflight after completed transfer under fresh name."
   },
   "empirical_fit_launched": false,
-  "smoke_launched": false
+  "smoke_launched": false,
+  "transfer_completed_epoch": 1791142614.932575,
+  "transfer_exit_code": 0,
+  "implementation_commit": "c0d4de29",
+  "second_remote_preflight": {
+    "name": "preflight_v2",
+    "status": "failed_before_native_solves",
+    "exit_code": 1,
+    "classification": "missing_nested_authenticated_reference_input",
+    "native_calls": 0,
+    "host_inventory": "PASS_ZERO_SOLVES_PACKAGE",
+    "container_inventory": "PASS_ZERO_SOLVES_PACKAGE",
+    "missing_reference": "output/model/fertility_identification_20260928/contract_v1/contract.json",
+    "evidence": {
+      "results/preflight_preflight_v2/launcher_terminal.json": {
+        "sha256": "5c87309bb341961378dfb2646012ee7d49db23b96c5f2bb2dad8638f8bf58e2f"
+      },
+      "results/preflight_preflight_v2/native_constructor.log": {
+        "sha256": "a656c251c89e4a387d856793a27efe25a8b876345eb242709613dd9b6bf9a84c"
+      },
+      "results/preflight_preflight_v2/host_verification.json": {
+        "sha256": "ba7afe9fc9ea37fc0849156c2e924e9770995de7de6184f1fd6917673f8ced57"
+      },
+      "results/preflight_preflight_v2/container_verification.json": {
+        "sha256": "ba7afe9fc9ea37fc0849156c2e924e9770995de7de6184f1fd6917673f8ced57"
+      }
+    },
+    "next_action": "Inspect explicit nested reference pins and build a fresh authenticated package; preserve v1 unchanged; no smoke or fit release."
+  },
+  "nested_reference_leaf_authority": {
+    "archive_path": "output/model/review_bundle_20261003/Fertility_Model_Review_20261003.zip",
+    "archive_sha256": "7bc2ddf44e15751aa1b3790783ec4e9c56a96d431ee3e190cd6336b68caf5e5f",
+    "internal_manifest_sha256": "c6a2aa6909e4ef7afe8610a2ee3a70e92a4ddf6b1c5333bdba1eb5d323fe319d",
+    "verification": "Lead checked delivered archive hash and exact internal manifest entries without rebuilding or rerunning ZIP. Authority applies only to original historical dependency bytes; no ZIP calibration/economic choice is adopted.",
+    "leaf_sha256": {
+      "parameters.csv": "48e01f453c90e10f0527afe05b1b751a67fb6b056e69d1c66ed57696f93fa92c",
+      "receipt.json": "c15cdd5862106cf95c392d4e2d75adfc786625b5108f5cc3c660b4c3cc1d76de"
+    }
+  }
 }

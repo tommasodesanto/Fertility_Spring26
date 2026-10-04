@@ -1,0 +1,30 @@
+{
+  "verified_epoch": 1791143495.406521,
+  "status": "local_packaging_review_passed_remote_constructor_pending",
+  "inventory_sha256": "13d62072f50af06718e25d7cc43bce70b33c9fa9b73597e22ceb160282a683a7",
+  "package_files": 3363,
+  "reference_input_count": 1394,
+  "packaging_tests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "unchanged_scientific_sources": {
+    "two_shock.py": "20fdf029c153336e4bafae59db36826aae2d33b967ef57e4bc12d3d1993ff461",
+    "two_shock_runtime.py": "b6e3bc2ddb7e2e5717e5db8f0925ec0729b679fce0f9c80b854567a3f07739e3"
+  },
+  "builder_sha256": "6e923038e70665ec40d2a799c7864470e746dae110e936db04facf006a9aeeae",
+  "failure_addressed": "v1 remote constructor missing nested authenticated reference inputs",
+  "checks": "Lead reviewed exact pin graph and no-overwrite guards; hashes independently match native checkpoint, parent lock and delivered ZIP source-manifest leaf entries. No economics, model, control, budget or gate edits.",
+  "empirical_fit_launched": false,
+  "smoke_launched": false,
+  "manifest_comparison": {
+    "both_modes_non_path_fields_unchanged": 26,
+    "target_contract_hashes_and_fields_unchanged": true,
+    "relocated_fields_only": [
+      "base_plan",
+      "legacy_source_overlay",
+      "source_pins",
+      "target_contract"
+    ]
+  }
+}
