@@ -174,8 +174,11 @@ matched starts and launch receipts. The fixed-parameter pair and matched search
 are different exercises.
 
 An [isolated overnight continuation](../../../cluster/estate_birth_calibration/continuation/README.md)
-is queued as controller job **19136605**, dependent on successful completion of
-parent array **19127370**. It adds no economic or target change. If all ten
+was queued as controller job **19136605**, dependent on successful completion of
+parent array **19127370**. All ten parent tasks failed at the search budget
+boundary before final native verification, so the controller has
+`DependencyNeverSatisfied` and did not run. The design adds no economic or
+target change. If all ten
 parent endpoints pass fresh native verification, each chain starts a new
 optimizer simplex at its own verified endpoint. Two fresh native smoke loops
 must pass before conditional production release. The ten-task maximum remains
@@ -185,10 +188,10 @@ verified results yet; neither its estimates nor the earlier experimental
 Estate-A estimates are author adopted.
 
 The [additional count-three search](../../../cluster/estate_birth_calibration/count3_expansion/README.md)
-has controller **19139361** queued after successful completion of controller
-**19136605**. It adds five bounded, nonduplicate starts under the unchanged
+has controller **19139361** blocked behind controller **19136605**. It would
+add five bounded, nonduplicate starts under the unchanged
 count-three economics and target contract. Its own native smoke and five-task
-production remain pending; the combined production cap is 15 one-core tasks
+production did not run; the combined planned production cap was 15 one-core tasks
 with the same October 4 10:00 New York stop.
 
 Four descriptive engine arrays—`attempt_hazard_by_age`,

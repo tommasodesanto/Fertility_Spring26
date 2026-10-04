@@ -79,9 +79,14 @@ mass gate. Descriptive count hazards use pre-birth exposure; active empirical
 target observers remain separate. The original no-A count experiment and its
 full fit remain in [current_params_v1](output/model/experiments/birth_count_choice/current_params_v1/RESULTS.md).
 
-**Matched Estate-A recalibration: reviewed v3 smoke passed; production array
-19127370 submitted October 3, 19:21:31 New York; all ten tasks RUNNING at
-the latest scheduler check.**
+**Matched Estate-A recalibration: production array 19127370 failed in all ten
+tasks around October 4, 00:40 New York.** Its earlier two-arm smoke passed,
+but the production optimizer launched another full GE with under the native
+700-second minimum search reserve. Eight tasks exited on
+`uncomputed_bounded_budget`; two exited on the explicit selected-report/repeat
+time-reserve guard. No final selected native postcheck ran. Saved search cases
+remain provisional, with no new adopted calibration. See the
+[failure diagnosis](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/failure_diagnosis_20261004.md).
 Smoke array **19125188**, tasks **0 and 5**, has a 1.5-hour limit, two objective
 calls plus fresh selected-point GE verification per arm; both smokes must pass
 before production release. Both tasks completed with exit code 0, in 15m40s
@@ -134,9 +139,9 @@ and [release review](output/model/experiments/birth_count_choice/estate_a_calibr
 This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
-**Overnight Estate-A continuation queued October 3, 23:34 New York.**
-Controller **19136605** is pending `afterok:19127370`; the original ten-task
-array remains running. The separate [continuation stage](code/cluster/estate_birth_calibration/continuation/README.md)
+**Overnight Estate-A continuation blocked by the failed parent.**
+Controller **19136605** is PENDING with `DependencyNeverSatisfied` because
+parent array **19127370** failed. The separate [continuation stage](code/cluster/estate_birth_calibration/continuation/README.md)
 and [submission receipt](output/model/experiments/birth_count_choice/estate_a_continuation_20261004_v1/deployment/controller_submission.json)
 pin the same economic inputs, ten free-parameter bounds, target and weight
 fingerprints, and numerical gates. If every parent task exits successfully with
@@ -146,14 +151,14 @@ native optimizer calls and fresh selected-point verification in each arm; only
 if both pass does it release up to ten one-core production tasks. Search retains
 the 500-call cap per task, reserves 1,800 seconds for native verification and
 stops by October 4 **10:00 New York** (epoch `1791122400`). The production job
-ID is not yet assigned. All parent-final and continuation-native gates remain
-pending; this is an experimental search, not an adopted calibration or exact
+ID was never assigned. Parent-final and continuation-native gates did not pass;
+this is an experimental design, not an adopted calibration or exact
 optimizer-state resume. No failed chain will be restarted automatically.
 
-**Five additional count-three starts queued October 4, about 00:32 New York.**
+**Five additional count-three starts also blocked by the failed parent.**
 The isolated [count-three expansion](code/cluster/estate_birth_calibration/count3_expansion/README.md)
-controller **19139361** is PENDING on `afterok:19136605`; both controllers
-wait behind parent array **19127370**, whose ten tasks remain running. The
+controller **19139361** remains PENDING on `afterok:19136605`; that dependency
+cannot release while controller **19136605** is blocked. The
 new controller will select the best verified binary and count-three parent
 endpoints and construct five bounded, nonduplicate search starts (binary best,
 the midpoint, and three deterministic count-three perturbations). All ten
@@ -165,7 +170,7 @@ this caps Estate-A production at **15 one-core tasks**. The extra tasks retain
 **10:00 New York** absolute stop. A 7,800-GiB free-space gate covers the
 7,500-GiB combined retained-case planning maximum; the actual staging check
 found about 434,526 GiB free. The new smoke, final parent verification and
-five-task production remain pending. No production job ID, adopted result,
+five-task production did not run. No production job ID, adopted result,
 automatic retry or exact optimizer-state resume is claimed.
 
 The hourly heartbeat **Monitor matched estate and birth calibrations**

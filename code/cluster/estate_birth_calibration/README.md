@@ -1,5 +1,12 @@
 # Matched estate-A calibration deployment
 
+**Current status, October 4:** all ten tasks in array **19127370** failed at
+the search time boundary before final native selected-point verification.
+The saved per-case and best-so-far checkpoints remain provisional. See the
+[failure diagnosis](../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/failure_diagnosis_20261004.md).
+The dependent continuation controllers cannot release production. No repair
+or restart was made.
+
 The isolated search uses the net estate `bp+(1-psi)*P*h_prime` in utility and deceased-estate accounting, the experimental PSID wealth target 4.45838713455674, and the original numerical weight. All other target values and weights remain unchanged. The SCF recipient and wealth-scope mismatch remains provisional. No production default or parameter file changes.
 
 `prepare_plan.py` writes the chain-13 anchor, the preserved unverified new-target chain-6 checkpoint, and three deterministic bounded chain-13 perturbations shared by binary cap 1 and count cap 3. Start 1 is seed-only: paused array 19111687, chain 6, case 0060_nm, saved loss 22.141841386410267; it has no final native verification and is not adopted. Its target identity and source SHA are pinned. Tasks 0–4 are binary chains 0–4; tasks 5–9 are count-3 chains 0–4. Each task has one core, 24 GiB, six hours, at most 500 calls, and 1,800 seconds reserved for a fresh native check. Every proposal calls full native GE with the unchanged 32-lifecycle cap. The complete contract, timing estimate and conservative storage budget are in `output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json`.

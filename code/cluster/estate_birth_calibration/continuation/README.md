@@ -1,11 +1,12 @@
 # Estate-A verified-endpoint continuation
 
-**Queued October 3, 2026, 23:34 New York.** Controller job **19136605** is
-pending `afterok:19127370` while all ten parent tasks continue running. Its
+**Blocked October 4, 2026, about 00:48 New York.** Controller job **19136605**
+is PENDING with `DependencyNeverSatisfied` because all ten parent tasks in
+**19127370** failed before final native verification. Its
 [submission receipt](../../../../output/model/experiments/birth_count_choice/estate_a_continuation_20261004_v1/deployment/controller_submission.json)
 and [lead review](../../../../output/model/experiments/birth_count_choice/estate_a_continuation_20261004_v1/deployment/lead_review.json)
-pin the stage. The controller has not yet checked parent final receipts or run
-the two native smoke loops. No continuation production job ID exists yet, and
+pin the stage. The controller did not run its two native smoke loops. No
+continuation production job ID exists, and
 there is no new calibration result or adoption.
 
 This is an experimental continuation of parent array `19127370`, five binary-cap and five count-three-cap chains. It is a **new optimizer stage**: every chain starts from its own parent's selected, fresh-native-verified endpoint with a fresh Nelder-Mead simplex. There is no serialized optimizer state to resume. The stage requires all ten parent tasks to finish successfully and pass the exact native repeat; a failed or incomplete parent prevents the entire continuation. The historical parent results and stage remain untouched.

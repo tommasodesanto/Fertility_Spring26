@@ -1,9 +1,10 @@
 # Additional count-three Estate-A searches
 
-**Staged and queued October 4, 2026, about 00:32 New York.** The 412-file
-remote source check and local zero-solve seed/collector tests passed.
-Controller **19139361** is PENDING on `afterok:19136605`; the original parent
-array **19127370** is still running. The new count-three smoke has not run,
+**Blocked October 4, 2026, about 00:48 New York.** The 412-file remote source
+check and local zero-solve seed/collector tests passed, but all ten parent
+tasks failed before final native verification. Controller **19139361** remains
+PENDING on **19136605**, whose parent dependency cannot be satisfied. The new
+count-three smoke has not run,
 and there is no five-task production job ID or calibrated result. The
 [stage](../../../../output/model/experiments/birth_count_choice/estate_a_count3_expansion_20261004_v1/deployment/stage_receipt.json),
 [storage](../../../../output/model/experiments/birth_count_choice/estate_a_count3_expansion_20261004_v1/deployment/staging_storage.json),
