@@ -256,3 +256,11 @@ the October 4 check); they are estimates, not launch guarantees.
 ### Actual October 4 release
 
 Array `19142578` was submitted as `0-1,3-4,6,8-11%9` and all nine tasks were observed running on ordinary `cs` nodes at about 02:04 New York. Each has eight CPUs, 48 GiB and six hours. This strict subset of the prepared panel skips index 2 after the exact starting guess failed inherited-distribution feasibility in v6. Native sources, fit plan and panel configuration are unchanged. The authoritative receipt is `output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/panel_submission_receipt.json`; do not resubmit the array. Local indices 5 and 7 and already-running v6 tasks are preserved.
+
+### Local continuation after a budget failure
+
+`continue_local.py` preserves the native model and scalar controller. It authenticates a completed candidate and both saved roots, then uses their price paths, pension paths and Jacobians only as numerical starting guesses. It restarts the scalar estimator from an explicitly chosen value; it does not restore optimizer state or reuse a measured fertility result. A fresh reference, seed, convergence checks and replay remain required.
+
+Prepare a new metadata directory with `--prepare` and pinned source plan, panel configuration and failure receipt. Run `--smoke` at the saved candidate value before `--run`; the fit requires an explicit SHA-pinned smoke receipt. Each execution needs a fresh output directory. `launch_continuation.py` runs one local process with one numerical thread, a 24-GiB maximum owned-RSS guard, an explicit one-hour smoke or six-hour fit ceiling, duplicate-start guards, 15-second status and a bounded sleep-prevention assertion. Use each script’s `--help` for arguments. No command here authorizes resubmitting an existing job.
+
+The continuation configuration has a separate fingerprint; collect its receipts separately with the retained `transition_panel.py`. The source trials, tests, native smoke and launch decisions are recorded in `output/model/transition_readiness_v1/current_baseline_20261003/README.md`.

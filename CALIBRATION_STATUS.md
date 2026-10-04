@@ -757,81 +757,43 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   The author authorized resuming the current one-birth Estate-A fertility-shock
-   estimation on October 3 and clarified on October 4 that different shock
-   guesses must run simultaneously, with at most 48 nodes. The prepared design
-   uses twelve scalar-fit starts with the same saved baseline, target contract
-   and numerical gates. Torch smoke 19139732 passed with measured peak RSS
-   13.93 GiB; its six-date terminal check failed, so it is not production
-   certification. Prior v6 array 19140535 tasks 0–1 failed at the 16-evaluation
-   endpoint cap; tasks 2–6 failed `InheritedDistributionInfeasible` (task 6
-   reported mass `2.9164e-11`). These were not out-of-memory failures.
-   At approximately 02:10 New York on October 4, old tasks 7–9 remained
-   running. Tasks 10–11 failed when saving inherited-state diagnostics to a
-   read-only baseline folder; this does not establish an infeasibility failure.
-   At 05:04 New York, v6 task 9 had also failed on the same read-only
-   diagnostic path during candidate 3; tasks 7–8 continue. Its completed
-   trials are preserved, and the already-running v9 replacement carries
-   the verified routing fix. No duplicate restart is launched.
-   No cancellations were performed. V7 increases
-   the endpoint cap to 48 within the same 1,800-second budget, preserving
-   the model and all scientific gates. Its prepared starting ratios are
-   `0.70, 0.76, 0.82, 0.88, 0.92, 0.94, 0.96, 0.98, 1.00, 1.02, 1.08, 1.15`.
-   Two one-core, six-hour local searches launched at 05:33 UTC (01:33 New York):
-   manager 27036, workers 27037/index 5 and 27038/index 7, both healthy in root
-   maps at the latest check.
-   [Local status](output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/status.json)
-   records the 24-GiB pause/30-GiB termination guard. V7 array **19142578**
-   submitted nine ordinary-`cs` starts as `0-1,3-4,6,8-11%9`, each with eight
-   CPUs, 48 GiB and six hours; all nine were running at approximately 02:04
-   New York. Index 2's exact `0.82` start was skipped because v6 task 5 had
-   already failed feasibility there. New index 3's `0.88` start was already
-   running when its prior failure was recognized and was preserved.
-   [The submission receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/panel_submission_receipt.json)
-   records inventory SHA-256
-   `5f1ee713bd1c5ab62d2a1776667f6191d61e69794cfe9a1fd22e6a6841397e92`;
-   zero-solve preflight passed with exit zero and native/plan/config pins are
-   unchanged. Four v7, two v6 and one v9 cluster search remain below the
-   48-node cap. SSH authentication is restored; bounded keepalive PID 31864
-   lasts at most 21,700 seconds under
-   [its receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/ssh_keepalive.json).
-   Local caffeinate PID 28708 supports overnight execution.
-   [V7 plans](output/model/transition_readiness_v1/current_baseline_20261003/plans_v7/)
-   pin this execution. By about 02:30 New York, v7 tasks 0, 1 and 3 had
-   failed initial trial feasibility, and task 11 had failed on diagnostic
-   output routing. At 03:39 New York, task 4 had also failed on that output
-   path during its second candidate endpoint, after completing its initial
-   24/32-date trial. Tasks 6, 8, 9 and 10 remain active. Rejected initial
-   trials do not establish equilibrium infeasibility. The four-line routing
-   fix was staged separately as v8, whose zero-solve preflight caught a stale
-   handoff-reference hash. V9 corrects only that metadata and passed actual container/native-constructor
-   preflight with zero solves and eight threads. Smoke 19146797 passed
-   required native gates with 64 calls and verified owned diagnostic paths;
-   its six-date terminal failure remains disclosed. After exact same-stage
-   local/remote gate review, replacement 19147666, index 4 only, was submitted
-   for six hours in `cs` at eight CPUs/48 GiB; it was **RUNNING** on `cs615`
-   at 04:27 New York. At 06:14 New York, its second candidate's previously
-   failing endpoint converged with 13 verified candidate-owned diagnostic
-   paths; [the repair receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v9/endpoint_output_fix_verified.json)
-   preserves the evidence. Seven cluster searches on seven physical nodes
-   and both local searches remain active. All existing searches and their
-   sources remain unchanged. At 07:04 New York both local searches had
-   completed five 24/32-date trial measurements and were evaluating candidate 6.
-   Both local workers subsequently stopped at their internal 21,480-second
-   deadline during candidate 6, verified 07:34 New York. The traceback shows
-   watchdog TimeoutError wrapped by Numba SystemError, not a memory stop;
-   [failure evidence](output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/budget_failure_review.json)
-   preserves both receipts. Seven cluster searches remain active. A separate
-   numerical-initialization loader is under implementation review; no new
-   fit is launched and no existing budget or gate is extended.
-   The best completed local trial, index 5 at psi_child=0.12839959665634437,
-   reports fertility 1.714388 versus target 1.645750, gap +0.068638. This
-   is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
-   retain the four target rows and all fixed parameter links. The search continues.
-   No fertility fit is accepted yet. Live receipts and fit outcomes are in
-   [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
-   This authorization does not certify a transition result. The hard-versus-soft
-   economic choice remains distinct.
+   The author authorized current one-birth Estate-A fertility-shock estimation
+   with simultaneous guesses and at most 48 cluster nodes. **Verified 07:59
+   New York, October 4:** five searches are running on five ordinary `cs`
+   nodes: v7 array 19142578 indices 6, 8, 9, 10, and v9 replacement 19147666_4.
+   Each requests eight CPUs/48 GiB/six hours. Never resubmit these arrays.
+   All v6 workers and both original one-core local searches have ended.
+   Local workers 5/7 and v6 tasks 7/8 exhausted time; these were not memory
+   failures. Earlier endpoint-cap, initial-path feasibility and diagnostic
+   output failures remain documented in the [transition README](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
+   Initial-path rejection does not establish equilibrium infeasibility.
+   V7 increased the endpoint cap 16→48 within the same 1,800-second endpoint
+   budget. V9 applies only a four-line diagnostic-routing fix; its fresh
+   native smoke passed required gates, and its second-candidate endpoint
+   passed the previously failing output stage. Sources and panel identities
+   stay separate; completed candidates and all failure evidence are retained.
+
+   Following the concrete local budget failure, a separately fingerprinted
+   numerical-initialization recovery passed nine focused tests and real-source
+   zero-solve preflight. Its native 24/32-date replay smoke is **RUNNING**:
+   manager 89244, worker 89246, started 07:58:57 New York, one core, one-hour
+   limit and 24-GiB owned-process memory guard. [Review and launch evidence](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/lead_preflight.json)
+   and [live status](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/smoke_job/status.json)
+   bind this run. It restores only authenticated converged price/pension paths
+   and Jacobians, preserving native source, `Controller.run`, economics,
+   targets, bounds and gates. Fresh reference and seed are still required.
+   No new fit is launched yet: native replay and four-window agreement must
+   pass before one separate six-hour scalar restart at psi_child
+   0.11999694638724082. Existing budgets are not extended.
+
+   Best completed local trial: psi_child 0.12839959665634437 gives final-window
+   fertility 1.714388 versus 1.645750, gap +0.068638. **No matched fit is
+   accepted.** The [full four-window table and parameter bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
+   preserve the comparison. The diagnostic 24/32 horizons are not 104/128
+   production certification; their terminal failures and the smoke's six-date
+   terminal failure remain disclosed. Estate recipient/funding closure remains
+   provisional. Unrelated calibrations are untouched. The hard-versus-soft
+   economic choice remains distinct from this authorized search.
 2. **Identification and weights:** count is ten moments for ten free parameters.
    Check informative rank/substitution and the two near-bound fertility/continuation
    noise parameters. National ACS uncertainty and the early-fertility weight remain

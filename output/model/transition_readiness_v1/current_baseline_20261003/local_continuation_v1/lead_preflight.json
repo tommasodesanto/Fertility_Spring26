@@ -1,0 +1,46 @@
+{
+  "launcher": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/estate_birth_transition/launch_continuation.py",
+    "sha256": "3a4c39d473c0e8e326f4b3d34556970ef8ced54353a8f0286783b0a73c3b74da"
+  },
+  "lead_reviewed": true,
+  "manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/inputs/manifest.json",
+    "sha256": "7f5e30f9e7b88e82a89da4e0c31f28504f1316643ee631e5ff6dc52e90ffd1ef"
+  },
+  "native_calls": 0,
+  "preflight": {
+    "conservative_iteration_policy_calls": 16838,
+    "fitted_moments": 1,
+    "free_shock_parameters": 1,
+    "horizons": [
+      24,
+      32
+    ],
+    "mode": "diagnostic",
+    "native_calls": 0,
+    "policy_call_stop_cap": 20000,
+    "production_ready": false,
+    "scientific_validation": false,
+    "status": "PASS",
+    "stop_conditions": [
+      "deadline",
+      "iteration cap",
+      "actual policy-call cap",
+      "failed native accounting",
+      "missing native seed"
+    ],
+    "total_seconds": 21480
+  },
+  "review_scope": "Line-by-line numerical initialization, immutable source/target/gate authentication, CLI dispatch, owned-process launcher limits; native smoke still required",
+  "reviewer": "Codex lead",
+  "test": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/estate_birth_transition/test_continue_local.py",
+    "sha256": "8acebc2f4d93985c9ae8e606ebcb804db63945167674fba74e7cff43e35be633"
+  },
+  "tests_passed": 9,
+  "wrapper": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/estate_birth_transition/continue_local.py",
+    "sha256": "2e42b1f592e2d4b3c939f6b581cab5967af07358ca2d4e1c2dff8412eea265c4"
+  }
+}

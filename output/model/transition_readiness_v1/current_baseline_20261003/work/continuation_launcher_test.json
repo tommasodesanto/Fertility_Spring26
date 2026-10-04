@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "scope": "Harmless sleep child only; no model calls",
+  "launcher_sha256": "3a4c39d473c0e8e326f4b3d34556970ef8ced54353a8f0286783b0a73c3b74da",
+  "duplicate_output_rejected": true,
+  "duplicate_manager_rejected": true,
+  "smoke_pin_forwarded": true,
+  "terminal": {
+    "manager_pid": 88449,
+    "finished_epoch": 1791114416.153007,
+    "worker_pid": 88452,
+    "exit_code": -15,
+    "reason": "wall_timeout",
+    "forced_kill_after_grace": false
+  },
+  "keep_awake": {
+    "pid": 88450,
+    "command": [
+      "caffeinate",
+      "-i",
+      "-w",
+      "88449",
+      "-t",
+      "61"
+    ],
+    "manager_pid": 88449,
+    "maximum_seconds": 61,
+    "mode": "run"
+  }
+}
