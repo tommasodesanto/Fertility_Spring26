@@ -764,8 +764,10 @@ manuscript wording or certify a new paper calibration.
    certification. Prior v6 array 19140535 tasks 0–1 failed at the 16-evaluation
    endpoint cap; tasks 2–6 failed `InheritedDistributionInfeasible` (task 6
    reported mass `2.9164e-11`). These were not out-of-memory failures.
-   At approximately 02:04 New York on October 4, old tasks 7–11 remained
-   running and were preserved; no cancellations were performed. V7 increases
+   At approximately 02:10 New York on October 4, old tasks 7–9 remained
+   running. Tasks 10–11 failed when saving inherited-state diagnostics to a
+   read-only baseline folder; this does not establish an infeasibility failure.
+   No cancellations were performed. V7 increases
    the endpoint cap to 48 within the same 1,800-second budget, preserving
    the model and all scientific gates. Its prepared starting ratios are
    `0.70, 0.76, 0.82, 0.88, 0.92, 0.94, 0.96, 0.98, 1.00, 1.02, 1.08, 1.15`.
@@ -783,13 +785,15 @@ manuscript wording or certify a new paper calibration.
    records inventory SHA-256
    `5f1ee713bd1c5ab62d2a1776667f6191d61e69794cfe9a1fd22e6a6841397e92`;
    zero-solve preflight passed with exit zero and native/plan/config pins are
-   unchanged. Nine new and five retained cluster tasks remain below the
+   unchanged. Nine new and three retained cluster tasks remain below the
    48-node cap. SSH authentication is restored; bounded keepalive PID 31864
    lasts at most 21,700 seconds under
    [its receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/ssh_keepalive.json).
    Local caffeinate PID 28708 supports overnight execution.
    [V7 plans](output/model/transition_readiness_v1/current_baseline_20261003/plans_v7/)
-   pin this execution. Live receipts and fit outcomes are in
+   pin this execution. Both local 24-date roots
+   converged with exact replay (zero reproduction gap); the 32-date checks
+   are running. No fertility fit is accepted yet. Live receipts and fit outcomes are in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
    economic choice remains distinct.

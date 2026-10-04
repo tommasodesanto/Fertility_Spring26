@@ -1,0 +1,13 @@
+--- a/code/model/experiments/transition_readiness/floor_runtime.py
++++ b/code/model/experiments/transition_readiness/floor_runtime.py
+@@ -414,6 +414,10 @@
+     def stationary(self,psi,price,folder):
+         """One counted native Bellman+KFE solve and unchanged stationary gates."""
+         folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);P=copy.deepcopy(self.P);P.psi_child=float(psi)
++        saved_output=getattr(P,'native_inherited_distribution_evidence_dir',None)
++        P.native_inherited_distribution_evidence_dir=str(folder/'inherited_state_evidence')
++        write(folder/'output_override.json',dict(field='native_inherited_distribution_evidence_dir',
++            saved=saved_output,effective=P.native_inherited_distribution_evidence_dir,economic_change=False))
+         ctx=dict(self.ctx,P=P,reference_psi=float(psi),out=folder)
+         counter=self.pf.calendar.SolveCounter()
+         with self.native_bindings():

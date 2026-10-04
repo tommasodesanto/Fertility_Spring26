@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "new_native_calls": 0,
+  "active_sources_unchanged": true,
+  "source_sha256": {
+    "code/model/experiments/transition_readiness/floor_runtime.py": "94914395f158ed58e0d50943708270d74525a875b880ddddf09e8b91cfe09880",
+    "code/model/tools/run_dynamic_population_transition.py": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c",
+    "code/model/experiments/birth_count_choice/model/native_price.py": "53e8e83d90f34b64050b7f75dc45a7bd24e8c891b8ab1754d87852d23e9e5450"
+  },
+  "cases": [
+    {
+      "case": "below_tolerance",
+      "status": "passed",
+      "rejected": false,
+      "evidence_files": 1
+    },
+    {
+      "case": "above_tolerance",
+      "status": "passed",
+      "rejected": true,
+      "evidence_files": 1
+    },
+    {
+      "case": "nonfinite",
+      "status": "passed",
+      "rejected": true,
+      "evidence_files": 1
+    },
+    {
+      "case": "no_bad_values",
+      "status": "passed",
+      "rejected": false,
+      "evidence_files": 0
+    },
+    {
+      "case": "old_route_below_tolerance_reproduces_errno30",
+      "status": "passed"
+    }
+  ],
+  "patch_sha256": "828e41afd3f0c17a185164021dc1cc52feea64c8298e03012a3d3e37bbae811e"
+}
