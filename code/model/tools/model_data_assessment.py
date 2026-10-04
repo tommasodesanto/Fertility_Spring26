@@ -203,7 +203,7 @@ def profiles(result, empirical_ages, empirical_weights, pre, post, starts):
     return out
 
 
-def prepare_assessment(result, run_directory, *, output=None, data_year=None, psid_path=None, acs_path=None):
+def prepare_assessment(result, run_directory, *, output=None, data_year=None, psid_path=None, acs_path=None, save_pages=True):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -307,7 +307,8 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
         fig.subplots_adjust(left=.11, right=.97, top=.94, bottom=.065,
                             hspace=.54 if page == 1 else .42, wspace=.32)
         figures.append(fig)
-        fig.savefig(out / f'page_{page}.png', dpi=180)
+        if save_pages:
+            fig.savefig(out / f'page_{page}.png', dpi=180)
 
     # Fertility: same-cell pre/post stocks, weighted by the survey's exact age exposure.
     page = 1
@@ -564,7 +565,7 @@ def prepare_assessment(result, run_directory, *, output=None, data_year=None, ps
                                 'ACS ownership target DUE sample differs from national all-structures profiles.',
                                 ('PSID '+psid_label+' provides room CDFs; ACS 2023 provides housing profiles.' if contemporary else 'AHS 2007 has a room mean but no local room distribution; PSID provides CDF validation.'),
                                 'PSID reference-person earnings are household earnings; model is reproductive-member proxy.'],
-        'files': {'pdf': str(pdf), 'pages': [str(out / f'page_{i}.png') for i in (1, 2, 3)],
+        'files': {'pdf': str(pdf), 'pages': [str(out / f'page_{i}.png') for i in (1, 2, 3)] if save_pages else [],
                   'plotted_long': str(out / 'plotted_long.csv')}
     }
     (out / 'metadata.json').write_text(json.dumps(receipt, indent=2, allow_nan=False) + '\n')

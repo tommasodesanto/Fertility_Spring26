@@ -165,3 +165,5 @@ read-only dependencies where current code imports or authenticates them.
 > Read `memory/AGENT_MEMORY.md`, the latest `memory/daily/` note, `CALIBRATION_STATUS.md`, and this model map before model work. Use the linked production, playground, or experiment packet for the task. Recheck mutable queue or run status from its live receipt; do not carry pasted runtime values forward as current facts.
 
 The standard model–data packet can also plot the retained **2023 transition snapshot**: run `code/model/tools/plot_transition_model_data.py` with the same pinned Python environment. The [routine README](../../output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/model_data_assessment_2023/README.md) gives the single command, saved solution and data vintages. Reruns use cached data and policies.
+
+The simple standard output folder is [`output/model/production/`](../../output/model/production/README.md), with `2007/`, `2023/`, and `transition/`. Run [`plot_saved_outputs.py`](plot_saved_outputs.py) to pick up the saved results and regenerate the PDFs without separate page images.
