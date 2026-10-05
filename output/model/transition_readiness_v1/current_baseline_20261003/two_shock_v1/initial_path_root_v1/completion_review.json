@@ -1,0 +1,937 @@
+{
+  "schema": "bounded_root_completion_review_v1",
+  "verified_utc": "2026-10-05T02:07:12.973781+00:00",
+  "job_id": "19189373",
+  "status": "completed_nonconverged_evaluation_budget",
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit": "0:0",
+  "start_new_york": "2026-10-04T21:24:00-04:00",
+  "end_new_york": "2026-10-04T21:56:39-04:00",
+  "elapsed_scheduler_seconds": 1959,
+  "peak_rss_kib": 20759224,
+  "peak_rss_gib": 19.79753875732422,
+  "actual_native_calls": 152,
+  "seed_native_calls": 29,
+  "root_native_calls": 123,
+  "seed_map_calls": [
+    1,
+    7,
+    7,
+    7,
+    7
+  ],
+  "root_evaluations": 3,
+  "original_root_gates": {
+    "fiscal_replay": true,
+    "housing": false,
+    "mapping": true,
+    "market_replay": true,
+    "social_security": false
+  },
+  "replay_maximum_absolute_discrepancy": 0,
+  "all_72_dated_audits_passed": true,
+  "original_initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+  "terminal_V_sha256": "fbe3eacff8a14d71c663a766fa1a238f350320df215086d874e1c1c6de687d20",
+  "state_assertions": "Executed before/after state_hash assertions cover g_pre, scheduled_entries and scheduled_raw_entries. Every map gets a copy of this state; unchanged reference restoration passed.",
+  "maps": [
+    {
+      "map": 1,
+      "phase": "initial",
+      "actual_calls": 41,
+      "maximum_absolute_relative_housing_residual": 0.075991875289444,
+      "maximum_absolute_scaled_fiscal_residual": 0.1156396978967876,
+      "score": 5781.984894839379,
+      "mass_error": 9.992007221626409e-16,
+      "projected_mass": 0,
+      "policy_reproduction_error": 0,
+      "dated_audit_count": 24,
+      "rows": [
+        {
+          "period": 0,
+          "calendar_year": 2007,
+          "house_price": 0.7572901438425542,
+          "rent": 0.1368988124902835,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.020398179883551658,
+          "scaled_fiscal_residual": 2.7742285850075324e-14,
+          "population": 1.0009489339264204
+        },
+        {
+          "period": 1,
+          "calendar_year": 2011,
+          "house_price": 0.7569151394821326,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.021168585392619163,
+          "scaled_fiscal_residual": 3.275454757929046e-14,
+          "population": 1.0009489339264244
+        },
+        {
+          "period": 2,
+          "calendar_year": 2015,
+          "house_price": 0.7564725295629086,
+          "rent": 0.13689881249028346,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.021740956960188365,
+          "scaled_fiscal_residual": 3.8349630439809625e-14,
+          "population": 1.00094893392643
+        },
+        {
+          "period": 3,
+          "calendar_year": 2019,
+          "house_price": 0.7559501261957177,
+          "rent": 0.13689881249028354,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.022199189583682305,
+          "scaled_fiscal_residual": 4.324532794276383e-14,
+          "population": 1.0009489339264337
+        },
+        {
+          "period": 4,
+          "calendar_year": 2023,
+          "house_price": 0.7553335442661241,
+          "rent": 0.1368988124902835,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.020392723526573862,
+          "scaled_fiscal_residual": -0.003121827433004469,
+          "population": 0.9977363391102194
+        },
+        {
+          "period": 5,
+          "calendar_year": 2027,
+          "house_price": 0.7546058053199807,
+          "rent": 0.13689881249028354,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.0161564622619318,
+          "scaled_fiscal_residual": -0.009151687007250307,
+          "population": 0.9915311608849111
+        },
+        {
+          "period": 6,
+          "calendar_year": 2031,
+          "house_price": 0.7537468700377172,
+          "rent": 0.13689881249028354,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.011457604043134551,
+          "scaled_fiscal_residual": -0.01587228401095242,
+          "population": 0.9856036526966307
+        },
+        {
+          "period": 7,
+          "calendar_year": 2035,
+          "house_price": 0.7527330864233777,
+          "rent": 0.1368988124902834,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.006402074984983631,
+          "scaled_fiscal_residual": -0.02338292055604199,
+          "population": 0.9797839293989955
+        },
+        {
+          "period": 8,
+          "calendar_year": 2039,
+          "house_price": 0.7515365385135108,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": 0.001104110506040096,
+          "scaled_fiscal_residual": -0.03160043635175928,
+          "population": 0.9738927053798292
+        },
+        {
+          "period": 9,
+          "calendar_year": 2043,
+          "house_price": 0.7501242776716941,
+          "rent": 0.13689881249028357,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.004561446562714207,
+          "scaled_fiscal_residual": -0.04089513486800861,
+          "population": 0.9675504110556737
+        },
+        {
+          "period": 10,
+          "calendar_year": 2047,
+          "house_price": 0.7484574153013018,
+          "rent": 0.13689881249028346,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.0106523999888727,
+          "scaled_fiscal_residual": -0.05085446005059882,
+          "population": 0.9604820885126711
+        },
+        {
+          "period": 11,
+          "calendar_year": 2051,
+          "house_price": 0.7464900519930794,
+          "rent": 0.13689881249028354,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.017174178991576375,
+          "scaled_fiscal_residual": -0.061669596650550794,
+          "population": 0.9525728523899991
+        },
+        {
+          "period": 12,
+          "calendar_year": 2055,
+          "house_price": 0.7441680136200916,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.024134951618329716,
+          "scaled_fiscal_residual": -0.07351212206460103,
+          "population": 0.9437771898884845
+        },
+        {
+          "period": 13,
+          "calendar_year": 2059,
+          "house_price": 0.7414273595766351,
+          "rent": 0.13689881249028346,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.03151189911216376,
+          "scaled_fiscal_residual": -0.08655695876819346,
+          "population": 0.9341135023574761
+        },
+        {
+          "period": 14,
+          "calendar_year": 2063,
+          "house_price": 0.7381926220833656,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.03923127629128085,
+          "scaled_fiscal_residual": -0.1005729641526487,
+          "population": 0.9236460655554074
+        },
+        {
+          "period": 15,
+          "calendar_year": 2067,
+          "house_price": 0.7343747280754201,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.04707943390314425,
+          "scaled_fiscal_residual": -0.1154064619017832,
+          "population": 0.9125666605964994
+        },
+        {
+          "period": 16,
+          "calendar_year": 2071,
+          "house_price": 0.7298685464497908,
+          "rent": 0.13689881249028357,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.054739563512161096,
+          "scaled_fiscal_residual": -0.1156396978967876,
+          "population": 0.9010845814167331
+        },
+        {
+          "period": 17,
+          "calendar_year": 2075,
+          "house_price": 0.7245499931319404,
+          "rent": 0.1368988124902835,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.06182482292070031,
+          "scaled_fiscal_residual": -0.1024547153093919,
+          "population": 0.8893882282786911
+        },
+        {
+          "period": 18,
+          "calendar_year": 2079,
+          "house_price": 0.7182726142455829,
+          "rent": 0.13689881249028338,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.06787407232060408,
+          "scaled_fiscal_residual": -0.09250008254320381,
+          "population": 0.877586482161608
+        },
+        {
+          "period": 19,
+          "calendar_year": 2083,
+          "house_price": 0.7108635532983829,
+          "rent": 0.13689881249028357,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.072686289250282,
+          "scaled_fiscal_residual": -0.0855625264743154,
+          "population": 0.8657133822194057
+        },
+        {
+          "period": 20,
+          "calendar_year": 2087,
+          "house_price": 0.7021187913343367,
+          "rent": 0.13689881249028354,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.075991875289444,
+          "scaled_fiscal_residual": -0.08146850702948114,
+          "population": 0.8539292901578664
+        },
+        {
+          "period": 21,
+          "calendar_year": 2091,
+          "house_price": 0.6917975289837109,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.0748927370391631,
+          "scaled_fiscal_residual": -0.08496084034737122,
+          "population": 0.8440138503226444
+        },
+        {
+          "period": 22,
+          "calendar_year": 2095,
+          "house_price": 0.6796155557123476,
+          "rent": 0.13689881249028352,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.06842671497463629,
+          "scaled_fiscal_residual": -0.09260122712256222,
+          "population": 0.835564259613441
+        },
+        {
+          "period": 23,
+          "calendar_year": 2099,
+          "house_price": 0.6652374236832538,
+          "rent": 0.13689881249028346,
+          "pension": 0.917784047463731,
+          "signed_housing_residual": -0.05521513194576811,
+          "scaled_fiscal_residual": -0.09588071003496745,
+          "population": 0.8267100264330461
+        }
+      ]
+    },
+    {
+      "map": 2,
+      "phase": "iterate",
+      "actual_calls": 41,
+      "maximum_absolute_relative_housing_residual": 0.0343582924578139,
+      "maximum_absolute_scaled_fiscal_residual": 0.052928680440590466,
+      "score": 2646.434022029523,
+      "mass_error": 1.1102230246251565e-15,
+      "projected_mass": 0,
+      "policy_reproduction_error": 0,
+      "dated_audit_count": 24,
+      "rows": [
+        {
+          "period": 0,
+          "calendar_year": 2007,
+          "house_price": 0.7678543716559353,
+          "rent": 0.14100114941391767,
+          "pension": 0.9178069035152406,
+          "signed_housing_residual": 0.0019340490869338158,
+          "scaled_fiscal_residual": -2.4902897762639623e-05,
+          "population": 1.0009489339264195
+        },
+        {
+          "period": 1,
+          "calendar_year": 2011,
+          "house_price": 0.7652815429589785,
+          "rent": 0.13967956605659537,
+          "pension": 0.9178138535652616,
+          "signed_housing_residual": 0.004048945067765894,
+          "scaled_fiscal_residual": -3.247510526165177e-05,
+          "population": 1.0009489339263886
+        },
+        {
+          "period": 2,
+          "calendar_year": 2015,
+          "house_price": 0.7635664696212772,
+          "rent": 0.13957001852371168,
+          "pension": 0.9178666278994657,
+          "signed_housing_residual": 0.0047387051457902845,
+          "scaled_fiscal_residual": -8.996997293167784e-05,
+          "population": 1.0009489339264306
+        },
+        {
+          "period": 3,
+          "calendar_year": 2019,
+          "house_price": 0.7616517514346639,
+          "rent": 0.1400988490180423,
+          "pension": 0.9180016965600347,
+          "signed_housing_residual": 0.004907970226350579,
+          "scaled_fiscal_residual": -0.000237090080604071,
+          "population": 1.000948933926434
+        },
+        {
+          "period": 4,
+          "calendar_year": 2023,
+          "house_price": 0.7588630185195696,
+          "rent": 0.14020377525153618,
+          "pension": 0.9157970793915874,
+          "signed_housing_residual": 0.0043106696727095665,
+          "scaled_fiscal_residual": -0.00136372824120459,
+          "population": 0.9973206844515824
+        },
+        {
+          "period": 5,
+          "calendar_year": 2027,
+          "house_price": 0.7554666082913306,
+          "rent": 0.13961476747177673,
+          "pension": 0.9114384167125718,
+          "signed_housing_residual": 0.002972754081897201,
+          "scaled_fiscal_residual": -0.003445147342570455,
+          "population": 0.9903130255715784
+        },
+        {
+          "period": 6,
+          "calendar_year": 2031,
+          "house_price": 0.7520469030655066,
+          "rent": 0.13898831690225605,
+          "pension": 0.9066486290830078,
+          "signed_housing_residual": 0.0014362772944535264,
+          "scaled_fiscal_residual": -0.005868413298760602,
+          "population": 0.9836138460198366
+        },
+        {
+          "period": 7,
+          "calendar_year": 2035,
+          "house_price": 0.7486371460238135,
+          "rent": 0.13869304037752891,
+          "pension": 0.9020414354000469,
+          "signed_housing_residual": -0.000981205054709886,
+          "scaled_fiscal_residual": -0.009431137551650374,
+          "population": 0.9770310764172175
+        },
+        {
+          "period": 8,
+          "calendar_year": 2039,
+          "house_price": 0.7449079565740632,
+          "rent": 0.13832474520463622,
+          "pension": 0.8969730057528931,
+          "signed_housing_residual": -0.0033772980763788394,
+          "scaled_fiscal_residual": -0.013303689342199106,
+          "population": 0.9704054357167345
+        },
+        {
+          "period": 9,
+          "calendar_year": 2043,
+          "house_price": 0.7408747662835082,
+          "rent": 0.13791523469755398,
+          "pension": 0.8913129302881693,
+          "signed_housing_residual": -0.0058230253903308144,
+          "scaled_fiscal_residual": -0.01771876463883512,
+          "population": 0.9633736665638437
+        },
+        {
+          "period": 10,
+          "calendar_year": 2047,
+          "house_price": 0.7365239853990163,
+          "rent": 0.13745283779985862,
+          "pension": 0.8853427986917842,
+          "signed_housing_residual": -0.008337031338311048,
+          "scaled_fiscal_residual": -0.02248149081562252,
+          "population": 0.9556548689883588
+        },
+        {
+          "period": 11,
+          "calendar_year": 2051,
+          "house_price": 0.7318512452714208,
+          "rent": 0.13692497348298566,
+          "pension": 0.8789044053800428,
+          "signed_housing_residual": -0.010955281649868654,
+          "scaled_fiscal_residual": -0.027631380511913252,
+          "population": 0.9471219241695046
+        },
+        {
+          "period": 12,
+          "calendar_year": 2055,
+          "house_price": 0.7268639707026956,
+          "rent": 0.13632384389771077,
+          "pension": 0.8718738386249091,
+          "signed_housing_residual": -0.013704304336460766,
+          "scaled_fiscal_residual": -0.03322301436941792,
+          "population": 0.9377325722609957
+        },
+        {
+          "period": 13,
+          "calendar_year": 2059,
+          "house_price": 0.7215787228828388,
+          "rent": 0.13564122847057697,
+          "pension": 0.8641710999324888,
+          "signed_housing_residual": -0.016658629734770964,
+          "scaled_fiscal_residual": -0.039362828302149544,
+          "population": 0.9275271354973414
+        },
+        {
+          "period": 14,
+          "calendar_year": 2063,
+          "house_price": 0.7160232692166001,
+          "rent": 0.13486570272785864,
+          "pension": 0.8559686996488334,
+          "signed_housing_residual": -0.01975093257711356,
+          "scaled_fiscal_residual": -0.045957533499470585,
+          "population": 0.9166020541092987
+        },
+        {
+          "period": 15,
+          "calendar_year": 2067,
+          "house_price": 0.7102418074733532,
+          "rent": 0.1340007731346753,
+          "pension": 0.8473711464829722,
+          "signed_housing_residual": -0.022982302285760297,
+          "scaled_fiscal_residual": -0.052928680440590466,
+          "population": 0.9051988640101236
+        },
+        {
+          "period": 16,
+          "calendar_year": 2071,
+          "house_price": 0.7042829969044261,
+          "rent": 0.13306370063077524,
+          "pension": 0.8474877995014127,
+          "signed_housing_residual": -0.026302747348843265,
+          "scaled_fiscal_residual": -0.05163616641421114,
+          "population": 0.8935797848678151
+        },
+        {
+          "period": 17,
+          "calendar_year": 2075,
+          "house_price": 0.698187008081735,
+          "rent": 0.13207079779034622,
+          "pension": 0.8556110001686895,
+          "signed_housing_residual": -0.029157158715610913,
+          "scaled_fiscal_residual": -0.04255111579591976,
+          "population": 0.8819827069495971
+        },
+        {
+          "period": 18,
+          "calendar_year": 2079,
+          "house_price": 0.6919849409293655,
+          "rent": 0.1310547976297627,
+          "pension": 0.8618639168301903,
+          "signed_housing_residual": -0.03152330887977995,
+          "scaled_fiscal_residual": -0.03476836151605155,
+          "population": 0.8705493699095099
+        },
+        {
+          "period": 19,
+          "calendar_year": 2083,
+          "house_price": 0.685680769030493,
+          "rent": 0.1301270163602589,
+          "pension": 0.8663268092685957,
+          "signed_housing_residual": -0.03352432341530987,
+          "scaled_fiscal_residual": -0.028048449545831147,
+          "population": 0.8593251882622677
+        },
+        {
+          "period": 20,
+          "calendar_year": 2087,
+          "house_price": 0.6791678661122251,
+          "rent": 0.12895551139079975,
+          "pension": 0.8690672948270447,
+          "signed_housing_residual": -0.0343582924578139,
+          "scaled_fiscal_residual": -0.02247487389794602,
+          "population": 0.8484841516543961
+        },
+        {
+          "period": 21,
+          "calendar_year": 2091,
+          "house_price": 0.6726523259728547,
+          "rent": 0.12824395523734566,
+          "pension": 0.8671722714819037,
+          "signed_housing_residual": -0.03308232535919991,
+          "scaled_fiscal_residual": -0.020962960911278205,
+          "population": 0.8400152701566558
+        },
+        {
+          "period": 22,
+          "calendar_year": 2095,
+          "house_price": 0.6656737243597549,
+          "rent": 0.12798620837140037,
+          "pension": 0.8627300439004612,
+          "signed_housing_residual": -0.029261762391558633,
+          "scaled_fiscal_residual": -0.021939052260583413,
+          "population": 0.8334250303577571
+        },
+        {
+          "period": 23,
+          "calendar_year": 2099,
+          "house_price": 0.6576947715435997,
+          "rent": 0.12799637559457883,
+          "pension": 0.8608749675550584,
+          "signed_housing_residual": -0.022685450785584437,
+          "scaled_fiscal_residual": -0.020808991568192655,
+          "population": 0.8265493113092708
+        }
+      ]
+    },
+    {
+      "map": 3,
+      "phase": "final",
+      "actual_calls": 41,
+      "maximum_absolute_relative_housing_residual": 0.0343582924578139,
+      "maximum_absolute_scaled_fiscal_residual": 0.052928680440590466,
+      "score": 2646.434022029523,
+      "mass_error": 1.1102230246251565e-15,
+      "projected_mass": 0,
+      "policy_reproduction_error": 0,
+      "dated_audit_count": 24,
+      "rows": [
+        {
+          "period": 0,
+          "calendar_year": 2007,
+          "house_price": 0.7678543716559353,
+          "rent": 0.14100114941391767,
+          "pension": 0.9178069035152406,
+          "signed_housing_residual": 0.0019340490869338158,
+          "scaled_fiscal_residual": -2.4902897762639623e-05,
+          "population": 1.0009489339264195
+        },
+        {
+          "period": 1,
+          "calendar_year": 2011,
+          "house_price": 0.7652815429589785,
+          "rent": 0.13967956605659537,
+          "pension": 0.9178138535652616,
+          "signed_housing_residual": 0.004048945067765894,
+          "scaled_fiscal_residual": -3.247510526165177e-05,
+          "population": 1.0009489339263886
+        },
+        {
+          "period": 2,
+          "calendar_year": 2015,
+          "house_price": 0.7635664696212772,
+          "rent": 0.13957001852371168,
+          "pension": 0.9178666278994657,
+          "signed_housing_residual": 0.0047387051457902845,
+          "scaled_fiscal_residual": -8.996997293167784e-05,
+          "population": 1.0009489339264306
+        },
+        {
+          "period": 3,
+          "calendar_year": 2019,
+          "house_price": 0.7616517514346639,
+          "rent": 0.1400988490180423,
+          "pension": 0.9180016965600347,
+          "signed_housing_residual": 0.004907970226350579,
+          "scaled_fiscal_residual": -0.000237090080604071,
+          "population": 1.000948933926434
+        },
+        {
+          "period": 4,
+          "calendar_year": 2023,
+          "house_price": 0.7588630185195696,
+          "rent": 0.14020377525153618,
+          "pension": 0.9157970793915874,
+          "signed_housing_residual": 0.0043106696727095665,
+          "scaled_fiscal_residual": -0.00136372824120459,
+          "population": 0.9973206844515824
+        },
+        {
+          "period": 5,
+          "calendar_year": 2027,
+          "house_price": 0.7554666082913306,
+          "rent": 0.13961476747177673,
+          "pension": 0.9114384167125718,
+          "signed_housing_residual": 0.002972754081897201,
+          "scaled_fiscal_residual": -0.003445147342570455,
+          "population": 0.9903130255715784
+        },
+        {
+          "period": 6,
+          "calendar_year": 2031,
+          "house_price": 0.7520469030655066,
+          "rent": 0.13898831690225605,
+          "pension": 0.9066486290830078,
+          "signed_housing_residual": 0.0014362772944535264,
+          "scaled_fiscal_residual": -0.005868413298760602,
+          "population": 0.9836138460198366
+        },
+        {
+          "period": 7,
+          "calendar_year": 2035,
+          "house_price": 0.7486371460238135,
+          "rent": 0.13869304037752891,
+          "pension": 0.9020414354000469,
+          "signed_housing_residual": -0.000981205054709886,
+          "scaled_fiscal_residual": -0.009431137551650374,
+          "population": 0.9770310764172175
+        },
+        {
+          "period": 8,
+          "calendar_year": 2039,
+          "house_price": 0.7449079565740632,
+          "rent": 0.13832474520463622,
+          "pension": 0.8969730057528931,
+          "signed_housing_residual": -0.0033772980763788394,
+          "scaled_fiscal_residual": -0.013303689342199106,
+          "population": 0.9704054357167345
+        },
+        {
+          "period": 9,
+          "calendar_year": 2043,
+          "house_price": 0.7408747662835082,
+          "rent": 0.13791523469755398,
+          "pension": 0.8913129302881693,
+          "signed_housing_residual": -0.0058230253903308144,
+          "scaled_fiscal_residual": -0.01771876463883512,
+          "population": 0.9633736665638437
+        },
+        {
+          "period": 10,
+          "calendar_year": 2047,
+          "house_price": 0.7365239853990163,
+          "rent": 0.13745283779985862,
+          "pension": 0.8853427986917842,
+          "signed_housing_residual": -0.008337031338311048,
+          "scaled_fiscal_residual": -0.02248149081562252,
+          "population": 0.9556548689883588
+        },
+        {
+          "period": 11,
+          "calendar_year": 2051,
+          "house_price": 0.7318512452714208,
+          "rent": 0.13692497348298566,
+          "pension": 0.8789044053800428,
+          "signed_housing_residual": -0.010955281649868654,
+          "scaled_fiscal_residual": -0.027631380511913252,
+          "population": 0.9471219241695046
+        },
+        {
+          "period": 12,
+          "calendar_year": 2055,
+          "house_price": 0.7268639707026956,
+          "rent": 0.13632384389771077,
+          "pension": 0.8718738386249091,
+          "signed_housing_residual": -0.013704304336460766,
+          "scaled_fiscal_residual": -0.03322301436941792,
+          "population": 0.9377325722609957
+        },
+        {
+          "period": 13,
+          "calendar_year": 2059,
+          "house_price": 0.7215787228828388,
+          "rent": 0.13564122847057697,
+          "pension": 0.8641710999324888,
+          "signed_housing_residual": -0.016658629734770964,
+          "scaled_fiscal_residual": -0.039362828302149544,
+          "population": 0.9275271354973414
+        },
+        {
+          "period": 14,
+          "calendar_year": 2063,
+          "house_price": 0.7160232692166001,
+          "rent": 0.13486570272785864,
+          "pension": 0.8559686996488334,
+          "signed_housing_residual": -0.01975093257711356,
+          "scaled_fiscal_residual": -0.045957533499470585,
+          "population": 0.9166020541092987
+        },
+        {
+          "period": 15,
+          "calendar_year": 2067,
+          "house_price": 0.7102418074733532,
+          "rent": 0.1340007731346753,
+          "pension": 0.8473711464829722,
+          "signed_housing_residual": -0.022982302285760297,
+          "scaled_fiscal_residual": -0.052928680440590466,
+          "population": 0.9051988640101236
+        },
+        {
+          "period": 16,
+          "calendar_year": 2071,
+          "house_price": 0.7042829969044261,
+          "rent": 0.13306370063077524,
+          "pension": 0.8474877995014127,
+          "signed_housing_residual": -0.026302747348843265,
+          "scaled_fiscal_residual": -0.05163616641421114,
+          "population": 0.8935797848678151
+        },
+        {
+          "period": 17,
+          "calendar_year": 2075,
+          "house_price": 0.698187008081735,
+          "rent": 0.13207079779034622,
+          "pension": 0.8556110001686895,
+          "signed_housing_residual": -0.029157158715610913,
+          "scaled_fiscal_residual": -0.04255111579591976,
+          "population": 0.8819827069495971
+        },
+        {
+          "period": 18,
+          "calendar_year": 2079,
+          "house_price": 0.6919849409293655,
+          "rent": 0.1310547976297627,
+          "pension": 0.8618639168301903,
+          "signed_housing_residual": -0.03152330887977995,
+          "scaled_fiscal_residual": -0.03476836151605155,
+          "population": 0.8705493699095099
+        },
+        {
+          "period": 19,
+          "calendar_year": 2083,
+          "house_price": 0.685680769030493,
+          "rent": 0.1301270163602589,
+          "pension": 0.8663268092685957,
+          "signed_housing_residual": -0.03352432341530987,
+          "scaled_fiscal_residual": -0.028048449545831147,
+          "population": 0.8593251882622677
+        },
+        {
+          "period": 20,
+          "calendar_year": 2087,
+          "house_price": 0.6791678661122251,
+          "rent": 0.12895551139079975,
+          "pension": 0.8690672948270447,
+          "signed_housing_residual": -0.0343582924578139,
+          "scaled_fiscal_residual": -0.02247487389794602,
+          "population": 0.8484841516543961
+        },
+        {
+          "period": 21,
+          "calendar_year": 2091,
+          "house_price": 0.6726523259728547,
+          "rent": 0.12824395523734566,
+          "pension": 0.8671722714819037,
+          "signed_housing_residual": -0.03308232535919991,
+          "scaled_fiscal_residual": -0.020962960911278205,
+          "population": 0.8400152701566558
+        },
+        {
+          "period": 22,
+          "calendar_year": 2095,
+          "house_price": 0.6656737243597549,
+          "rent": 0.12798620837140037,
+          "pension": 0.8627300439004612,
+          "signed_housing_residual": -0.029261762391558633,
+          "scaled_fiscal_residual": -0.021939052260583413,
+          "population": 0.8334250303577571
+        },
+        {
+          "period": 23,
+          "calendar_year": 2099,
+          "house_price": 0.6576947715435997,
+          "rent": 0.12799637559457883,
+          "pension": 0.8608749675550584,
+          "signed_housing_residual": -0.022685450785584437,
+          "scaled_fiscal_residual": -0.020808991568192655,
+          "population": 0.8265493113092708
+        }
+      ]
+    }
+  ],
+  "housing_residual_reduction_fraction": 0.5478688698371075,
+  "fiscal_residual_reduction_fraction": 0.5422966212880361,
+  "native_packet_pins_verified": 9,
+  "evidence": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/result.json",
+      "sha256": "b51497c58b446b8ca4b134fd1d0ac629c8c9c5f130c8644f65ea5df02393895a"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/root.json",
+      "sha256": "08680897f5b77e6dc9341aa0a6dead679e9fbf731733bc714587746a1faa1ef6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed_receipt.json",
+      "sha256": "e9d9e9428b4939ef413bab81a9619bfc3c39c7daa4e8842a6de977e1eaeaf3aa"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed_full_receipt.json",
+      "sha256": "da0ac1ee4893275c1ab12f5f11d1f6b4a024ac95a97196c6afa424cf1d3cd593"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/baseline_checks.json",
+      "sha256": "bd585b0cf4396b11eb821b057b7fd13525797a4304a7c446b839d285c94772ed"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/reference_restored/reference_resume.json",
+      "sha256": "164937b7c01a58b0b6cb01cdff2e6f25e7c140cd149639128f5919d0b6fcd31e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/measured/receipt.json",
+      "sha256": "35e21a389d34f3d3973c21791f1205ef7db1fad2d7f124dc8873a45a696de0ef"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/measured/jacobian.npy",
+      "sha256": "2870d3ea3d05dd2a747e93d38c2c1e13bec7d20b144ac594275fe2617593a87e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/launcher_terminal.json",
+      "sha256": "553e1ca0a883b3dfc890bf84c8e729d49d8da3e9a555ea432b242cca4c628ce7"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/scheduler_terminal.json",
+      "sha256": "4a762c0e14582a2014976a09a98d67596edf4056958a0f3cb51254e509778cad"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/native_packet_verification.json",
+      "sha256": "9f09abe9f276fc279b89d546e75b3fad8641628bfa1196549e66980e38cbe149"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/map_001/native_record.json",
+      "sha256": "b5303924408b06ab2ba82a5f49ebd6eed8aa4ff1fea21a820d90b3082cb8acee"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/map_002/native_record.json",
+      "sha256": "5118d2bf210c768906ce439bafef75934bb5ba091bc45c3780bbc074639eb19c"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/map_003/native_record.json",
+      "sha256": "40409af229192fcdf0baced770879367bfdca5cba5a2f1afb8bde993682052e4"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/map_004/native_record.json",
+      "sha256": "9c8ceefebe944f8a22fc56b12752a0896674c9beacb89c508f14469f19c6c300"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed/map_005/native_record.json",
+      "sha256": "de734a92f395189d17187dcaf3db45845f0630198278a985eec216a99963c5b6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_001/native_record.json",
+      "sha256": "385fcd5831fb28ed71ad44553de15a8b26e6b0ba83fc1f2573499e142b81ba9a"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_001/mapping.json",
+      "sha256": "c04ba7cca8606cf6b1bbb4dfe51244a9589d3bf6b928933cd62f9d0ff0a13bec"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_001/dated_audits.json",
+      "sha256": "78b5243058e14d9e1eba7d15e12688c845dec0b45327fe24664c490f4c1e46c6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_002/native_record.json",
+      "sha256": "4d9a22c2b1ee8abf487ba3e8b8ddba40979546bec9e0dba57501557e0e6526df"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_002/mapping.json",
+      "sha256": "9983010d2bfad772696f27ba8bacd54d41d16dfbbb49d541808ca693447b9792"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_002/dated_audits.json",
+      "sha256": "73f9b4be310e091c1f660cec60b32d175faed24bc856306cdcac127fda1a7356"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_003/native_record.json",
+      "sha256": "c18950a1fae473c218bc399a8caf69ad0e9b9e2c5fdc772bca40d589fbe78482"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_003/mapping.json",
+      "sha256": "bc1f334ff7f0a406978bf49d58615b3a121eb81ced002f578982eaed136b8a9e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_003/dated_audits.json",
+      "sha256": "73f9b4be310e091c1f660cec60b32d175faed24bc856306cdcac127fda1a7356"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/config.json",
+      "sha256": "0f3127b692361b45f2f0236cca2fc5bf703cbf69d0187096f525f0b7d413ef85"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/diagnose_initial_path.py",
+      "sha256": "1e7ff20f96784383ccdad639ce43b0e7529cc0220742c72cc481f6913427dd5f"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/inputs/fit_manifest.json",
+      "sha256": "14c54b9d4fbb4a80ca8c71121268ac0fff8cf79868316cd348c01528782a0f46"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/frozen/source/code/model/experiments/transition_readiness/pinned_tools/e5f_four_shock_acceleration.py",
+      "sha256": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/joint_root/map_003/native_record.json",
+      "sha256": "c18950a1fae473c218bc399a8caf69ad0e9b9e2c5fdc772bca40d589fbe78482"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/results/root_v1/run/fresh_seed_full_receipt.json",
+      "sha256": "da0ac1ee4893275c1ab12f5f11d1f6b4a024ac95a97196c6afa424cf1d3cd593"
+    }
+  ],
+  "serialization_limitation": "V1 helper serialized NumPy root-summary arrays and augmented seed matrix as shortened text. Exact native rows, prices, residuals, packets and original measured jacobian.npy remain intact and were checked. No exact final Jacobian is recoverable from the text summary; no reuse is authorized.",
+  "residual_units": "Signed housing vector is (demand-supply)/supply; row relative_market_residual is its absolute magnitude. Fiscal vector equals the row scaled_pension_budget_residual.",
+  "scientific_validation": false,
+  "empirical_fitted": false,
+  "production_ready": false,
+  "terminal_checked": false,
+  "horizon_comparison_performed": false,
+  "next_scoped_check": "Separate original twelve-evaluation fixed-psi24 root diagnostic, fresh seed and original explicit initial paths, no optimizer-state reuse. Declared7080internal/7200external seconds720calls1CPU24GiB; unchanged scientific gates. New lossless wrapper receipts require focused validation."
+}

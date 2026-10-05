@@ -7,17 +7,19 @@ import time
 from types import SimpleNamespace
 import unittest
 
+import numpy as np
+
 HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('diagnose_path_root',HERE/'diagnose_path_root.py')
 m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
 
 
 class RootDiagnosticTests(unittest.TestCase):
-    def test_original_controls_with_only_three_evaluations(self):
+    def test_original_controls_with_twelve_evaluations(self):
         package = Path(__file__).resolve().parents[4] / 'output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5'
         plan = json.loads((package/'inputs/fit_manifest.json').read_text())
         controls = m.root_controls(plan)
-        self.assertEqual(controls['max_evaluations'],3)
+        self.assertEqual(controls['max_evaluations'],12)
         self.assertEqual(controls['market_tolerance'],2e-4)
         self.assertEqual(controls['fiscal_tolerance'],2e-5)
         self.assertEqual(controls['final_reproduction_tolerance'],1e-10)
@@ -28,13 +30,13 @@ class RootDiagnosticTests(unittest.TestCase):
             m.root_controls(plan)
 
     def test_root_callback_cap_includes_replay(self):
-        for completed in (0,1,2):
+        for completed in range(12):
             m.require_root_callback_slot(completed)
-        with self.assertRaisesRegex(ValueError,'Three-call'):
-            m.require_root_callback_slot(3)
-        m.require_native_slot(319,time.monotonic()+10)
-        with self.assertRaisesRegex(ValueError,'320-native-call'):
-            m.require_native_slot(320,time.monotonic()+10)
+        with self.assertRaisesRegex(ValueError,'Twelve-call'):
+            m.require_root_callback_slot(12)
+        m.require_native_slot(719,time.monotonic()+10)
+        with self.assertRaisesRegex(ValueError,'720-native-call'):
+            m.require_native_slot(720,time.monotonic()+10)
         with self.assertRaisesRegex(ValueError,'deadline'):
             m.require_native_slot(0,time.monotonic()-1)
 
@@ -93,6 +95,34 @@ class RootDiagnosticTests(unittest.TestCase):
             seed['source_evidence'][0]['sha256']=m.sha(first)
             with self.assertRaisesRegex(ValueError,'native gates failed'):
                 m.validate_seed(seed,folder,runtime,d,'state',0)
+
+    def test_lossless_numeric_receipts_and_unsupported_type(self):
+        matrix=np.arange(48*48,dtype=np.float64).reshape(48,48)/7.
+        payload=dict(seed_matrix=matrix,root=dict(history=[dict(step=np.int64(2),
+                    accepted=np.bool_(True),residual=np.array([.1,.2,-.3],dtype=np.float64))]),
+                    scalar=np.float64(1.25))
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'receipt.json'
+            m.write_output(path,payload)
+            restored=json.loads(path.read_text())
+            self.assertEqual(restored['seed_matrix'],matrix.tolist())
+            self.assertEqual(len(restored['seed_matrix']),48)
+            self.assertEqual(len(restored['seed_matrix'][0]),48)
+            self.assertEqual(restored['root']['history'][0]['residual'],[.1,.2,-.3])
+            self.assertEqual(restored['root']['history'][0]['step'],2)
+            self.assertIs(restored['root']['history'][0]['accepted'],True)
+            self.assertEqual(restored['scalar'],1.25)
+            self.assertNotIn('...',path.read_text())
+            original=path.read_bytes()
+            with self.assertRaisesRegex(TypeError,'Unsupported receipt type'):
+                m.write_output(path,{'object':object()})
+            self.assertEqual(path.read_bytes(),original)
+            with self.assertRaisesRegex(ValueError,'Only finite numeric arrays'):
+                m.write_output(path,{'array':np.array([1.,np.nan])})
+            self.assertEqual(path.read_bytes(),original)
+            with self.assertRaisesRegex(ValueError,'Only finite numeric arrays'):
+                m.write_output(path,{'array':np.array(['unsupported'])})
+            self.assertEqual(path.read_bytes(),original)
 
 
 if __name__=='__main__':

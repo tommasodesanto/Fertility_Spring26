@@ -1,0 +1,85 @@
+{
+  "budget": {
+    "actual_native_calls": 720,
+    "cpus": 1,
+    "external_seconds": 7200,
+    "internal_seconds": 7080,
+    "memory_gib": 24,
+    "per_mapping_seconds": 1800,
+    "root_evaluations_including_reserved_replay": 12,
+    "seed_seconds": 1800
+  },
+  "cost_basis": {
+    "conservative_seed_plus_root_calls": 696,
+    "observed_actual_calls": 152,
+    "observed_three_root_maps_seconds": 1249.6551976990886,
+    "observed_total_driver_seconds": 1859.3630135739222,
+    "peak_rss_gib": 19.79753875732422,
+    "projected_native_calls": 521,
+    "projected_total_seconds_including_authentication": 5707.965593097266,
+    "projected_twelve_root_maps_seconds": 4998.620790796354
+  },
+  "created_utc": "2026-10-05T02:09:20.136581+00:00",
+  "economic_changes": [],
+  "fresh_seed": {
+    "horizon": 12,
+    "log_step": 1e-05,
+    "mapping_count": 5,
+    "perturbed_date": 5
+  },
+  "horizon": 24,
+  "inherited_population_and_both_queues": "exact original state; no projection/deletion",
+  "initial_paths": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/config.json",
+    "sha256": "0f3127b692361b45f2f0236cca2fc5bf703cbf69d0187096f525f0b7d413ef85"
+  },
+  "limitations": [
+    "no scalar fertility fitting",
+    "no32-date comparison",
+    "no terminal certification",
+    "no2015 second surprise",
+    "no empirical2023 two-shock state",
+    "no104/128 production certification"
+  ],
+  "outputs": [
+    "full numeric seed/root receipts",
+    "all native mapping records and dated packets",
+    "latest completed and best residual summaries",
+    "actual progress at every native call and every180seconds",
+    "exact inherited-state/queue assertions",
+    "failure trace or complete root status"
+  ],
+  "previous_result": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json",
+    "sha256": "3386a6eecde9b3bdc15c671b4a35bc193c44c4a5aa3cc10d45ab7f685c6dfb51"
+  },
+  "psi_child": 0.14736308634876963,
+  "reason": "The bounded three-evaluation diagnostic preserved feasibility, reduced both residual maxima by more than54percent and replayed exactly. This fresh separate check uses the original twelve-evaluation limit to assess convergence. It does not extend or restart the ended job.",
+  "reference_and_terminal_restore": "Only same authenticated v5 reference and terminal V as passed mapping/root-v1; diagnostic restoration only",
+  "root_controls": {
+    "damping": 0.7,
+    "final_reproduction_tolerance": 1e-10,
+    "fiscal_tolerance": 2e-05,
+    "market_tolerance": 0.0002,
+    "max_condition_number": 100000000.0,
+    "max_evaluations": 12,
+    "max_log_step": 0.15,
+    "pension_bound_ratios": [
+      0.05,
+      20.0
+    ],
+    "price_bound_ratios": [
+      0.05,
+      20.0
+    ],
+    "worsening_factor": 1.5
+  },
+  "saved_result_or_optimizer_reuse": false,
+  "schema": "full_original_fixed_psi24_root_scope_v2",
+  "status": "prepared_not_submitted",
+  "stop_conditions": [
+    "original feasibility/accounting/source failures",
+    "original callback/time/call/memory budgets",
+    "original root final replay/gates"
+  ]
+}

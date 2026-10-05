@@ -1,0 +1,39 @@
+{
+  "status": "submitted",
+  "attempted_utc": "2026-10-05T02:14:27.164244+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--time=02:00:00",
+    "/scratch/td2248/projects/current_estate_path_root_20261004_v2/launch_path_root_diagnostic.sh",
+    "b6ba2dec7fbc44f751e0fb48a8a74d207ae256594d24fa5874afa0b58c29fa11"
+  ],
+  "scheduler_before": "",
+  "remote_claim_absent_before": true,
+  "remote_output_absent_before": true,
+  "local_output_absent_before": true,
+  "no_auto_retry": true,
+  "cpus": 1,
+  "memory_gib": 24,
+  "internal_seconds": 7080,
+  "external_seconds": 7200,
+  "maximum_actual_calls": 720,
+  "maximum_root_evaluations_including_replay": 12,
+  "diagnostic_only": true,
+  "empirical_fitted": false,
+  "final_remote_metadata_hashes": {
+    "lead_review.json": "12776752898429c07ad7d6abedaa332aa4f1df9dce5190143e056a7a2f7e4bd2",
+    "config_check.json": "e6303cb799222c59a4f67f817c48fade99708aba8a352843e05a51f0ae854791"
+  },
+  "ssh_exit": 0,
+  "stdout": "19193055\n",
+  "stderr": "",
+  "job_id": "19193055",
+  "scheduler_state": "RUNNING",
+  "latest_checked_utc": "2026-10-05T02:16:33.562153+00:00",
+  "node": "cl012",
+  "start_new_york": "2026-10-04T22:15:15",
+  "hard_scheduler_deadline_new_york": "2026-10-05T00:15:15",
+  "remote_claim_verified": true,
+  "launcher_start_verified": true
+}

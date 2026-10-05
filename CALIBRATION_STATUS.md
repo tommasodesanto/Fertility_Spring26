@@ -883,7 +883,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 21:27 New York:** the
+   **Current transition direction, verified October 4 at 22:16 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -970,15 +970,28 @@ manuscript wording or certify a new paper calibration.
    feasible prescribed path, not an equilibrium: maximum absolute housing
    and scaled pension residuals are 0.0759918753 and 0.1156396979, against the
    unchanged 0.0002 and 0.00002 tolerances. No empirical estimate or 24/32/terminal
-   certificate is claimed. Bounded original 24-date joint-root diagnostic
-   **19189373** was submitted once at **21:23:25 New York** and is **RUNNING**.
-   It uses a fresh 12-date/date-5 seed, at most three total root evaluations
-   including reserved replay, 320 calls, 3,000 internal/3,300 external seconds,
-   one CPU and 24 GiB. It started at 2026-10-04T21:24:00 on cl017; the hard scheduler deadline is 2026-10-04T22:19:00. At 21:27 New York, actual native progress was verified: one native call in the fresh seed, zero completed seed/root maps, and no failure or terminal receipt. Both full package authentications passed.
-   Five tests, launcher syntax and the actual zero-call input contract check
-   passed. This new bounded diagnostic does not extend an ended budget or
-   release a full fit. Original economics and all gates
-   remain fixed. The zero-call first diagnostic failure is preserved separately.
+   certificate is claimed. Original-root diagnostic **19189373 COMPLETED at
+   21:56:39**, exit0:0, after 32m39s/152 actual/controller calls and 19.798-GiB
+   peak RSS. The fresh seed used 29 calls and three root maps used 41 each.
+   One update lowered the worst housing/pension residuals to **0.0343582925 /
+   0.0529286804**; all 72 dated audits and exact replay passed, but both original
+   equilibrium gates remain false. The three-evaluation allowance was exhausted.
+   All nine saved native packet hashes and 31 evidence pins were verified.
+   The old wrapper's text summaries shortened arrays; actual dated records and
+   original seed matrix remain intact, and no final-Jacobian reuse is permitted.
+   A separate **12-evaluation fixed-preference root diagnostic 19193055** was
+   submitted once at **22:14:27 New York** and is **RUNNING** on cl012 from
+   **22:15:15**. Its hard deadline is **October 5 at 00:15:15 New York**. It measures
+   the original five-map seed from the same prescribed initial path, with limits
+   of 720 calls, 7,080 internal/7,200 external seconds, one CPU and 24 GiB.
+   Launcher and persistent claim match; native progress is not yet verified.
+   The new wrapper
+   preserves numeric arrays losslessly; six tests, bash syntax and actual pinned
+   inputs passed without a constructor or native call. No economic or gate
+   change, scalar fit, second shock, 32-date comparison or terminal certificate
+   is adopted. Preserve all immutable earlier packages and completed evidence.
+   [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).
+   [Current root submission](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/submission.json).
    [Completed mapping evidence and scope](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/completion_review.json).
    [Current failure and lead review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v5_initial_path.json).
    [Exact failure and budget audit](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_initial_path.json).

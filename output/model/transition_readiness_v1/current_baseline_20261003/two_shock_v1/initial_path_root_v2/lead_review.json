@@ -1,0 +1,65 @@
+{
+  "actual_numpy_roundtrip": "48x48float64 matrix, real np.int64/np.bool_/np.float64 and nested root history preserve exact values; invalid writes retain previous valid file",
+  "bash_syntax_passed": true,
+  "budgets": {
+    "actual_native_calls": 720,
+    "cpus": 1,
+    "external_seconds": 7200,
+    "internal_seconds": 7080,
+    "memory_gib": 24,
+    "per_mapping_seconds": 1800,
+    "root_evaluations_including_reserved_replay": 12,
+    "seed_seconds": 1800
+  },
+  "config": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/config.json",
+    "sha256": "b6ba2dec7fbc44f751e0fb48a8a74d207ae256594d24fa5874afa0b58c29fa11"
+  },
+  "config_check": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/config_check.json",
+    "sha256": "e6303cb799222c59a4f67f817c48fade99708aba8a352843e05a51f0ae854791"
+  },
+  "constructor_executed": false,
+  "deployment": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/deployment_receipt.json",
+    "sha256": "16bce30e46b1deb3976a5e948c80bff54a1a98e43920b08bce48a5457d4570bc"
+  },
+  "driver": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/diagnose_path_root.py",
+    "sha256": "d7e8e2a7a2c30e9b19a02b5a868c68c0c2b6c08e96ff60f8c315960b1c10b377"
+  },
+  "economic_changes": [],
+  "empirical_fitted": false,
+  "focused_checks": 6,
+  "launcher": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/launch_path_root_diagnostic.sh",
+    "sha256": "9fae4e610845e30842d7771399df7e1993ded248036efdc5978c43fae80c1797"
+  },
+  "math_review": [
+    "Original solve_joint_with_acceleration call AST unchanged",
+    "Original measure_seed/mapping/bind_reference_cache_outputs/restore_reference_with_bridge_redirect/validate_endpoint call ASTs unchanged",
+    "load_contract/validate_seed/require_accelerator_source function ASTs unchanged",
+    "Only root evaluation allowance now equals original plan12; all damping/bounds/physical/replay/feasibility/accounting gates unchanged",
+    "Fresh seed and original prescribed paths; previous root results, final Jacobian and best point are not inputs",
+    "Only wrapper output serialization changed from string fallback to lossless numeric lists/scalars; immutable v5/v2 helper never edited"
+  ],
+  "model_solve_executed": false,
+  "native_calls": 0,
+  "original_manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/inputs/fit_manifest.json",
+    "sha256": "14c54b9d4fbb4a80ca8c71121268ac0fff8cf79868316cd348c01528782a0f46"
+  },
+  "previous_completion_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json",
+    "sha256": "3386a6eecde9b3bdc15c671b4a35bc193c44c4a5aa3cc10d45ab7f685c6dfb51"
+  },
+  "production_ready": false,
+  "schema": "full_original_fixed_psi24_root_lead_review_v2",
+  "scientific_validation": false,
+  "scope": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/validation_scope.json",
+    "sha256": "ddbe7be5e20628daf0b0d78124ca4fd17e1ae0afc267aecc15801d5e8ca5a582"
+  },
+  "status": "passed_before_submission",
+  "verified_utc": "2026-10-05T02:09:20.137074+00:00"
+}
