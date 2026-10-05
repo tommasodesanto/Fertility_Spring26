@@ -1,0 +1,89 @@
+{
+  "schema": "parallel_candidate_lead_review_v1",
+  "reviewed_utc": "2026-10-05T03:03:45.467409+00:00",
+  "status": "passed_for_one_12_job_wave",
+  "author_priority": "at least12 distinct nodes to obtain two-shock2023 results",
+  "economic_changes": [],
+  "numerical_change": "cold price initial guess only: constant rent recurrence ending at fresh candidate endpoint; fixed-point candidates and horizon pairs evaluated concurrently",
+  "fresh_reference_seed_endpoint": true,
+  "previous_measured_outputs_reused": false,
+  "original_gates_and_solver_arguments_unchanged": true,
+  "scientific_call_comparison": {
+    "_endpoint": true,
+    "_mapping": true,
+    "extend_measured_jacobian": true,
+    "terminal_checks": true,
+    "select_warm": true,
+    "retain_warm": true,
+    "all_original_joint_solver_arguments_except_reporting_callback": true
+  },
+  "focused_tests": {
+    "passed": 5,
+    "model_calls": 0,
+    "kind": "fake native loop through actual copied evaluate; exact checkpoint and plot hashes; original gates; wrong sources/queues/pins rejection",
+    "test_source_sha256": "c36fb8bb5b05388fe355ecbd9f55fea839269238a789335ab232a8f7e4e974ea"
+  },
+  "launcher_bash_syntax_passed": true,
+  "independent_claims": true,
+  "unknown_submission_retry": false,
+  "existing_job_preserved": "19193055",
+  "single_horizon_acceptance": false,
+  "stage2_requires_original_prefix_replay_and_accepted_horizon_pair": true,
+  "reference": "one-birth Estate-A 20261003T212605039706Z_a739edc3 chain13",
+  "budget": {
+    "cpus": 1,
+    "memory_gib": 24,
+    "external_seconds": 10800,
+    "internal_seconds": 10700,
+    "maximum_policy_calls": 20000
+  },
+  "original_inner_caps": {
+    "candidate_seconds": 7200,
+    "path_seconds": 6000,
+    "endpoint_seconds": 1800,
+    "seed_seconds": 1800,
+    "mapping_seconds": 1800,
+    "path_evaluations": 12,
+    "endpoint_evaluations": 48
+  },
+  "files": {
+    "parallel_transition_candidate.py": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+    "launch_parallel_transition_candidate.sh": "556214def5bdad8b069d548fb6213ee44a95ef2d1cdf0d904e916b1b7d4ad05d"
+  },
+  "configs": {
+    "c00_h24.json": "058d0789e356321435547a7346cee0d170c4f8887c517230d5e1715ca08d680e",
+    "c00_h32.json": "602cae4bf1a661e3a93bf8b4f3c455d299795894115477662a97e0a63e956b00",
+    "c01_h24.json": "6408fdb55d283f34cb1e3ac3c2570c63d542a64d0c7c6c86f69ad4412e36bae2",
+    "c01_h32.json": "409c4e53929e7cffe50f2e88d7e40f1f119f2a987d94ee8fac5cae1cd48e560d",
+    "c02_h24.json": "83d12d8306bd784694f59a581259ac00a1d2f9f2101b6e5d94bbaf5ab5448e9b",
+    "c02_h32.json": "83a03083186f1aaf31cf22e202b5f5aa1b6281be18f42539efe917485836edab",
+    "c03_h24.json": "cb70b04a0efa66c895a11dbd6140205c53457e0a6f80ce7886e81ebeff22f869",
+    "c03_h32.json": "88a3128cb4735a856da0e4b98a60a00846098720d3b08f7d64d6361d200a015e",
+    "c04_h24.json": "9dbaf1927f80e3a95793de9d221aafbfcff7d77c0645de936d1071d57e11f985",
+    "c04_h32.json": "652c75aebb85f65e9501668bc85319f9fef8bc943cbed8cb7e5fb0e720f80d5a",
+    "c05_h24.json": "56fdaffbe7c47ac59321f56ecc45662bc943f526ec7d0e08874b4d7db8f9b24f",
+    "c05_h32.json": "c5e5d56f19ff30db2825a81d0ddaa36bf27a3161845dd28b73c5ac910bc3437d"
+  },
+  "native_full_loop_limitations": "Changed wrapper has fake-loop checks; existing frozen fresh-reference/seed/endpoint/native root and plots have actual execution evidence. Current recurrence has actual24-map and root-update evidence at initialpsi; otherpsi and32 paths remain experimental and must pass all native gates freshly.",
+  "run_size": {
+    "jobs": 12,
+    "max_root_maps_total": 144,
+    "max_endpoint_evaluations_per_job": 48,
+    "estimate_seconds_per_job": [
+      6500,
+      9500
+    ],
+    "observed_24map_seconds": 416.43,
+    "original_path_budget_seconds": 6000,
+    "external_cap_seconds": 10800
+  },
+  "empirical_fitted": false,
+  "production_ready": false,
+  "actual_container_config_check": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/config_check.json",
+    "sha256": "d60646f0343ad7726156f0e301847973cc8d2174c29e84d62ee33fa3308aa8d8",
+    "configs": 12,
+    "native_calls": 0,
+    "constructor_called": false
+  }
+}

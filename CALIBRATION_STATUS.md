@@ -905,7 +905,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 22:19 New York:** the
+   **Current transition direction, verified October 4 at 23:14 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -1007,11 +1007,29 @@ manuscript wording or certify a new paper calibration.
    the original five-map seed from the same prescribed initial path, with limits
    of 720 calls, 7,080 internal/7,200 external seconds, one CPU and 24 GiB.
    Launcher and claim match. Both full authentications passed; actual native
-   progress at epoch1791166707.6439238 records one call, zero completed root maps
-   and no failure/terminal receipt. The new wrapper preserves numeric arrays losslessly; six tests, bash syntax and actual pinned
+   progress at 23:12 records 286 calls, six completed root maps and no failure.
+   Map six has housing residual 0.0001920592 and fiscal residual 0.0003272544:
+   housing passes its 0.0002 gate, fiscal remains above 0.00002; final replay is pending. The new wrapper preserves numeric arrays losslessly; six tests, bash syntax and actual pinned
    inputs passed without a constructor or native call. No economic or gate
    change, scalar fit, second shock, 32-date comparison or terminal certificate
    is adopted. Preserve all immutable earlier packages and completed evidence.
+   Author priority now requests at least twelve concurrent Torch nodes for the 2023
+   numbers. Twelve fresh first-stage candidate jobs are submitted at six fixed
+   preferences (0.13, 0.14, 0.145, 0.14736308634876963, 0.15, 0.16), each at both
+   24/32 horizons, on distinct requested unreserved cs hosts. Each recomputes its
+   reference, five-map seed and endpoint; original solver/gates/economics remain
+   exact. Only the cold guess uses the exercised constant-rent recurrence.
+   One CPU/24 GiB/three external hours per job; all original tighter inner limits
+   remain. Five fake-loop tests, numerical-call comparison and twelve zero-call
+   Torch configuration checks passed. First scheduling requests were cancelled
+   with zero allocation/time/no claims after reserved-host selection; replacement
+   requests have known IDs and must never be duplicated. Eleven new jobs are
+   RUNNING on eleven distinct cs hosts, with one pending. Including preserved
+   19193055 on cl012, twelve transition jobs are actively allocated on twelve hosts.
+   Nine new jobs passed both authentications and entered construction; first native
+   calls remain to verify. No first-stage candidate, second shock or 2023 result is
+   accepted. Require the original horizon, fit, fresh-replay and prefix gates.
+   [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
    [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).
    [Current root submission](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/submission.json).
    [Completed mapping evidence and scope](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/completion_review.json).

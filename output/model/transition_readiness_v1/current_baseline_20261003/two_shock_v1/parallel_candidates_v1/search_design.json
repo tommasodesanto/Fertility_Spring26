@@ -1,0 +1,120 @@
+{
+  "schema": "two_shock_parallel_stage1_search_v1",
+  "status": "preparing_not_submitted",
+  "author_priority": "2023 numbers are utmost priority; at least12 concurrent Torch nodes",
+  "author_instruction_supersedes": "prior one-job and no-extra-search restrictions only",
+  "stage": 1,
+  "start_year": 2007,
+  "target_window": "2012-2015",
+  "target_index": 1,
+  "target": 1.861,
+  "original_preference_bounds": [
+    0.001789207206604163,
+    0.35784144132083257
+  ],
+  "preferences": [
+    0.13,
+    0.14,
+    0.145,
+    0.14736308634876963,
+    0.15,
+    0.16
+  ],
+  "jobs": [
+    {
+      "task_id": "c00_h24",
+      "psi": 0.13,
+      "horizon": 24
+    },
+    {
+      "task_id": "c00_h32",
+      "psi": 0.13,
+      "horizon": 32
+    },
+    {
+      "task_id": "c01_h24",
+      "psi": 0.14,
+      "horizon": 24
+    },
+    {
+      "task_id": "c01_h32",
+      "psi": 0.14,
+      "horizon": 32
+    },
+    {
+      "task_id": "c02_h24",
+      "psi": 0.145,
+      "horizon": 24
+    },
+    {
+      "task_id": "c02_h32",
+      "psi": 0.145,
+      "horizon": 32
+    },
+    {
+      "task_id": "c03_h24",
+      "psi": 0.14736308634876963,
+      "horizon": 24
+    },
+    {
+      "task_id": "c03_h32",
+      "psi": 0.14736308634876963,
+      "horizon": 32
+    },
+    {
+      "task_id": "c04_h24",
+      "psi": 0.15,
+      "horizon": 24
+    },
+    {
+      "task_id": "c04_h32",
+      "psi": 0.15,
+      "horizon": 32
+    },
+    {
+      "task_id": "c05_h24",
+      "psi": 0.16,
+      "horizon": 24
+    },
+    {
+      "task_id": "c05_h32",
+      "psi": 0.16,
+      "horizon": 32
+    }
+  ],
+  "requested_distinct_nodes": 12,
+  "partition": "cs",
+  "resource_per_job": {
+    "cpus": 1,
+    "memory_gib": 24,
+    "external_seconds": 10800,
+    "internal_seconds": 10700,
+    "maximum_policy_calls": 20000
+  },
+  "original_inner_caps": {
+    "candidate_seconds": 7200,
+    "path_seconds": 6000,
+    "endpoint_seconds": 1800,
+    "seed_seconds": 1800,
+    "mapping_seconds": 1800,
+    "path_evaluations": 12,
+    "endpoint_evaluations": 48
+  },
+  "original_acceptance_gates_unchanged": true,
+  "fresh_reference_seed_endpoint_each_job": true,
+  "reuse_prior_measured_outputs": false,
+  "economic_changes": [],
+  "numerical_changes": [
+    "cold initial price path uses tested constant-rent recurrence ending at each newly solved endpoint; no economic or population change",
+    "six fixed scalar points and24/32horizons run independently in parallel; no optimizer reuse"
+  ],
+  "unchanged_initial_rent": 0.13689881249028354,
+  "horizon_pairing_required_before_candidate_acceptance": true,
+  "second_shock_not_yet_run": true,
+  "stage2_depends_on": "accepted stage1 two-period own-vintage prefix and exact2015state/queues/value/price/pension",
+  "diagnostic_24_32_not_104_128_certification": true,
+  "earlier_running_job_preserved": "19193055",
+  "no_arrays": true,
+  "no_unchanged_retry": true,
+  "prepared_utc": "2026-10-05T02:53:33.469272+00:00"
+}
