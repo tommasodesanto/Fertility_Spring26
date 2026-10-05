@@ -179,7 +179,7 @@ launch guard (137 and 126 objective attempts), then passed fresh final checks.
 The hourly monitor is PAUSED after the final collection and review; no automatic
 extension, transition or additional calibration is authorized.
 
-**One-birth Estate-A global exploration submitted October 4, 2026, 7:33 PM New York.**
+**One-birth Estate-A global exploration terminal October 4, 2026, 8:04 PM New York.**
 Tommaso authorized a wider experimental search for a **fresh-native-verified
 same-contract loss below 13**. Relative to the verified one-birth Estate-A
 recovery chain 1, earnings, entry wealth and income, timing, transfers and
@@ -218,18 +218,36 @@ verified recovery receipt exactly, with 17 standard diagnostic plots checked.
 The [preflight comparison and submission receipt](output/model/experiments/birth_count_choice/estate_a_global_search_20261004_v1/deployment/)
 are retained.
 
-Production array **19183972** was submitted exactly once as `0-15%16`, with
-16 one-core, 24-GiB tasks, four points per task, a 90-minute task wall and
-20-minute native allowance per case. It has a five-minute delayed start for
-receipt durability, per-case checkpoints, latest and best summaries,
-heartbeats, classified no-loss numerical rejections, and no automatic retry
-or extension. No stage-1 loss is accepted as a calibrated winner until fresh
-native selected-point and exact-repeat gates pass. After the array finishes,
-up to eight distinct feasible basins, the verified incumbent and the canceled
-provisional point will be reviewed before any separately bounded refinement;
-any stage 2 is limited to eight jobs and is not automatically launched. The hourly
-`monitor-one-birth-estate-a-calibration` heartbeat is active, quiet while
-healthy, and expires October 5, 2026 at 12:00 UTC.
+Production array **19183972** ran exactly once as `0-15%16`, with 16 one-core,
+24-GiB tasks, four planned points per task, a 90-minute task wall and
+20-minute native allowance per case. It is terminal: **15 tasks exited 1 and
+one exited 0**. Of 64 planned points, **13 have completed checkpoints, 15
+additional points were attempted and failed, and 36 were never attempted**.
+Five checkpointed native evaluations passed and eight were recorded as
+`inadmissible_numerical` without finite losses. The best stage-1 loss is
+**2015.9706126598514, provisional**, far worse than the verified 21.275413
+incumbent. Its 14-row loss contributions sum to the residual-square loss;
+all ten free estimates and bounds match the 31-row native parameter report.
+The [terminal collection, full fit and parameter tables](output/model/experiments/birth_count_choice/estate_a_global_search_20261004_v1/collection/)
+retain every completed case and launcher/error receipt.
+
+Fourteen task-stopping cases returned `uncomputed_price_unbracketed`: the
+native price search recorded `both_diagnostic_price_caps` after 11 attempts
+with no bracket over the fixed numerical search range
+`0.0987336877`–`6.3189560140`. The other task-stopping case raised
+`InheritedDistributionInfeasible` at exact inherited infeasible mass
+$1.77536618261\times10^{-12}$. The stage runner whitelisted only a different
+bounded-budget status and therefore aborted each affected four-case task;
+the remaining points in those tasks were not evaluated. These outcomes do not
+establish that the whole calibration region is economically infeasible, and
+there is no target, weight, source-pin or infrastructure drift in the saved
+receipts. No task was retried, no numerical gate was relaxed, and stage 2 was
+not launched. The five dispersed stage-1 passing points are only supplemental,
+weak-fit diagnostic seeds; the verified incumbent and canceled continuation's
+19.14485687996558 provisional point remain stronger candidates for any
+separately reviewed, at-most-eight-job refinement. The hourly
+`monitor-one-birth-estate-a-calibration` heartbeat is **PAUSED** after this
+terminal collection.
 
 **October 4 fixed-parameter two-birth diagnostic:** at the verified one-birth
 Estate-A chain-1 estimates, allowing at most two intended births per period
@@ -865,7 +883,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 19:29 New York:** the
+   **Current transition direction, verified October 4 at 20:04 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -932,14 +950,22 @@ manuscript wording or certify a new paper calibration.
    after 19m20s/39 calls. Both seeds, two-evaluation roots, zero replay gaps,
    own-vintage handoff, both queues, exact 2023 state and all 85 standard PNGs
    passed the actual artifact validator. Both smoke terminal diagnostics were
-   true and nongating. One new empirical fit, **19183608**, is **RUNNING**
-   on cl011 from **19:23:53 New York**, with actual native progress verified.
-   Its one-CPU, 24-GiB allocation has a hard scheduler deadline of
-   **October 5 at 01:23:53 New York**, two seconds before the launcher deadline.
-   No empirical estimate is accepted. The discussed 1e-7 mass cutoff has not
-   been applied; immutable v5 retains 1e-12. This smoke does not certify the
-   failed empirical point or 24/32 paths, which must pass freshly. All economics, bounds,
-   24/32 root/accounting/replay/horizon gates and budgets remain unchanged.
+   true and nongating. The changed-initializer empirical fit **19183608 FAILED**
+   at **19:44:46 New York**, exit 1:0, after **20m53s and 46 actual calls**
+   (31 controller-accounted calls), with **11.862-GiB** peak RSS. Fresh reference,
+   five-map 12-date seed and endpoint preparation completed. The first 24-date
+   endpoint-flat trial failed the inherited-state guard in **2007, period 0**;
+   the rejected population hash exactly equals the actual initial population.
+   It flagged **2,823 cells with mass 9.964257266e-5**, including indebted owners.
+   This rejects the initial guess, not equilibrium existence. No fit is running,
+   no candidate completed and neither preference level is estimated. The
+   discussed 1e-7 cutoff was not implemented and would not clear this failure;
+   rejected mass is about 996 times larger. Preserve immutable v5 and its claim.
+   A reference-anchored alternative initializer remains an unverified proposal;
+   screen renter and owner constraints, then validate one explicit 24-date map
+   before any full retry. All economics, bounds, root/accounting/replay/horizon
+   gates and budgets remain unchanged.
+   [Current failure and lead review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v5_initial_path.json).
    [Exact failure and budget audit](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_initial_path.json).
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
 
