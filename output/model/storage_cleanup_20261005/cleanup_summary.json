@@ -1,9 +1,9 @@
 {
   "status": "completed",
-  "recorded_utc": "2026-10-05T16:14:25.517368+00:00",
-  "scope": "Four named ended historical Fertility experiments on Torch; nonbest generated checkpoint payloads only",
-  "total_removed_files": 1694,
-  "total_removed_allocated_bytes": 309594630656,
+  "recorded_utc": "2026-10-05T16:37:13.253760+00:00",
+  "scope": "Six executed passes across five named ended historical Fertility experiment families on Torch; generated checkpoint payloads only",
+  "total_removed_files": 2054,
+  "total_removed_allocated_bytes": 356459412480,
   "passes": [
     {
       "name": "nightpair",
@@ -36,10 +36,24 @@
       "retained_checkpoint_entries": 38,
       "completion_receipt": "old_sep07/completion.json",
       "completion_sha256": "9b894eca9c5af649e70abc4862127ea005f8a7817fbe29b4f93331fed38de751"
+    },
+    {
+      "name": "lean completed archives",
+      "removed_files": 105,
+      "removed_allocated_bytes": 19931538944,
+      "completion_receipt": "lean_completed/completion.json",
+      "completion_sha256": "83ad4a31fe4b7ff7c0421afec2bee9f6d44330b003a661180ef4d0d6a6ee812c"
+    },
+    {
+      "name": "September 11\u201312 recent parent cache",
+      "removed_files": 255,
+      "removed_allocated_bytes": 26933242880,
+      "completion_receipt": "recent_parent/completion.json",
+      "completion_sha256": "c78eae3ea56cb58ae297fa41fc76e3dc0fbe183af4198b03b495e7d5f8f52eca"
     }
   ],
-  "retention": "Worker/stage minimum loss cases including ties, latest completed checkpoints, named selected/reference/final cases, pinned dependencies, repeats/probes, incomplete or ambiguous cases, compact trial parameters/loss/moments/status/provenance, plots/logs/source/inputs/runtime retained.",
-  "verification": "Exact candidate manifests matched successful per-file unlink receipts; every candidate was regular and single-link with unchanged device/inode/size/mtime/ctime/allocation checks; protected checkpoint metadata matched before and after each pass. Only nightpair also has a measured before/after directory-size delta; later narrow du checks exceeded their 60-second bounds, so later reclaimed bytes are from exact successful unlink receipts.",
+  "retention": "For tightened completed archives: selected full solutions per distinct contract, explicit pinned inputs and one ambiguous utility case; compact trial parameters/loss/moments/status/provenance, plots/logs/source/inputs/runtime retained. Nightpair still retains its original 40 protected states. Earlier per-pass keeper counts describe that pass, not the current keep set.",
+  "verification": "Exact candidate manifests matched successful per-file unlink receipts; every candidate was regular and single-link with unchanged device/inode/size/mtime/ctime/allocation checks; protected checkpoint metadata matched before and after each pass. Only nightpair also has a measured before/after directory-size delta; later narrow du checks exceeded their 60-second bounds, so later reclaimed bytes are from exact successful unlink receipts. Tightened pass independently reconciled 105 candidate paths to unlink receipts and 12 unchanged keepers. Recent-parent pass independently reconciled 255 unique paths, exact byte sum and manifest/receipt hashes; postcheck confirms all 255 absent and all 10 selected keeper identities intact.",
   "CSI_touched": false,
   "other_projects_touched": false,
   "model_or_pipeline_changed": false,
@@ -51,5 +65,24 @@
     "measured_utc": "2026-10-05T16:10:37.561981+00:00",
     "limitation": "Account-wide displayed usage was read before the final September 7 deletion and does not reconcile exactly to the four file-level passes; no derived current account usage is asserted."
   },
-  "execution_notice": "All four cleanup passes have executed once. Never rerun their execution commands."
+  "execution_notice": "All six cleanup passes executed once. Never rerun their execution commands.",
+  "current_checkpoint_entries": {
+    "nightpair": 40,
+    "utility": 5,
+    "gated": 6,
+    "September 7": 1,
+    "recent parent selected": 10
+  },
+  "tightened_three_archives": {
+    "before_entries": 117,
+    "after_entries": 12,
+    "after_allocated_bytes": 1723362816,
+    "physical_states": 9,
+    "selected_export_symlinks": 3
+  },
+  "limitations": [
+    "262 multiply-linked nonselected recent-parent states left untouched; their named-path allocation is not a reclaimable-byte estimate.",
+    "No additional plot deletion in the tightened round.",
+    "Cleanup is limited to named checkpoint scopes; no claim that all old output is now lean."
+  ]
 }
