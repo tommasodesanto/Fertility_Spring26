@@ -373,6 +373,11 @@ Update selected pointers explicitly when a better result is chosen, preserving
 previous identities and verification status. A newer diagnostic or provisional
 best does not silently replace a selected presentation baseline. Cached reads
 should take milliseconds; saved-data plot regeneration should take seconds.
+The default transition figures follow the retained September 14 presentation:
+the fertility-fit panel and the four-panel fertility, household heads, total
+housing and house-price display. Reuse that visual design with current saved
+values; keep supplemental diagnostics separately named and do not substitute
+them for the standard figures. Never extrapolate an unsaved horizon.
 
 Routing is the lead agent's responsibility. The user should normally state the
 outcome, any deadline or urgency, and any non-negotiable constraints; do not
