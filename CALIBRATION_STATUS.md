@@ -262,7 +262,10 @@ preferences, ten search bounds, fourteen targets or weights, or native
 acceptance gates changed. The only code change is scoped orchestration:
 recognized numerical rejected points do not terminate independent starts or
 acquire a finite valid loss. Each task has a twelve-hour wall, 500-call cap,
-and 1,800-second native verification reserve; no automatic retry or extension.
+and 1,800-second native verification reserve. Tommaso subsequently authorized
+evidence-based repair and restart of genuinely stalled tasks, within each
+logical chain's original cumulative 500-call budget and October 5 noon New
+York cutoff; healthy tasks remain untouched and there is no blind retry loop.
 Exact two-case launch-loop mocks passed in both arms with zero model solves.
 The jobs were submitted after source-pin checks and are not yet result evidence.
 The [design, source identities and submission receipts](code/cluster/overnight_dual_v1/README.md)
@@ -270,6 +273,25 @@ are retained; the `monitor-one-birth-estate-a-calibration` heartbeat is now
 **ACTIVE** for these two arrays, quiet while healthy. A sub-13 provisional
 search loss is not verified until unchanged selected-point and exact-repeat
 checks pass and the complete target-fit and free-parameter tables are reviewed.
+
+**Dependent completion of the unattempted global points submitted October 4,
+2026, 11:27 PM New York.** Separate array **19196205** (`0-8%9`) covers only
+the 36 original Sobol indices never attempted by terminal array 19183972;
+it excludes all 13 checkpointed and 15 fatal-attempted indices. The
+[exact nine-chunk index plan, source identities and receipt](code/cluster/estate_birth_calibration/global_completion_v1/README.md)
+retain the original one-birth Estate-A 64-point contract, source pins, target
+and weight fingerprints, bounds and native gates. The narrow stage change
+routes the preserved points and records recognized numerical rejections
+without a finite valid loss; unexpected errors remain fatal. The exact
+two-case launch-loop smoke passed with zero model solves, and source-pin and
+recognized-error classification checks passed. Each one-core task has a
+90-minute wall and at most 20 minutes per point. Slurm holds the array on
+`afterany:19194495:19194496`; a fail-closed launch guard also waits for
+active successors of those searches before native cases. The independent
+global stage ends by October 5, 2:00 PM New York (18:00 UTC), with no
+automatic retry, new points, or stage extension. Its active shared heartbeat
+will collect complete/rejected/remaining indices; any lower loss is
+provisional pending fresh selected-point and exact-repeat native checks.
 
 **October 4 fixed-parameter two-birth diagnostic:** at the verified one-birth
 Estate-A chain-1 estimates, allowing at most two intended births per period

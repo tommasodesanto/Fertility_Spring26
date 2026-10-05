@@ -1,0 +1,26 @@
+{
+  "status": "submitted",
+  "array": "0-8%9",
+  "dependency": "afterany:19194495:19194496",
+  "wall_seconds_per_task": 5400,
+  "case_budget_seconds": 1200,
+  "absolute_cutoff_utc": "2026-10-05T18:00:00Z",
+  "plan_sha256": "5c738c7ee4c1c331eea2511fb8288a24af8d53acf02aa13ae0c80b3d8d9ce5a9",
+  "stage_manifest_sha256": "79f82cc2f35a40af02359d92bfd594a634a43e2f21c9fffbe261ef065ff7aa79",
+  "no_auto_retry": true,
+  "no_auto_extension": true,
+  "submit_epoch": 1791170830.6345222,
+  "job_id": "19196205",
+  "sbatch_stdout": "19196205",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--time=01:30:00",
+    "--array=0-8%9",
+    "--dependency=afterany:19194495:19194496",
+    "--begin=now+5minutes",
+    "--job-name=estateglobalcompletion",
+    "--export=ALL,ESTATE_RUN_MODE=production",
+    "/scratch/td2248/projects/estate_birth_global_completion_20261005_v1/launch_torch.sh"
+  ]
+}
