@@ -1,0 +1,33 @@
+{
+  "focused_tests": "Worker reports six focused zero-model tests passed; lead inspected their scope and corrected a flat-versus-nested contract mismatch before sealing. Native execution remains to be tested in the bounded job.",
+  "limitations": [
+    "The small H6 execution check does not establish empirical H16 convergence or strict horizon stability.",
+    "The calibration optimizer postcheck remains outstanding.",
+    "The output limit is monitored every 60 seconds, so it can overshoot between checks."
+  ],
+  "native_model_calls_during_local_review": 0,
+  "no_original_package_modifications": true,
+  "production_ready": false,
+  "reference": "Estate-A overnight chain11/0149_nm provisional lower-wealth estimate",
+  "reviewed_objects": [
+    "one fixed-price bridge and fixed-H0 population-one accounting",
+    "source and new wealth-target fingerprints",
+    "new-reference user-cost rent in numerical initializer",
+    "fixed-tax path solver and measured-Jacobian arguments",
+    "rough market/fiscal gates with original replay/accounting gates",
+    "actual stage1 two-period own-vintage handoff and both queues",
+    "H16 forecast slice [2:14] without empirical padding",
+    "sequential target clocks and full continuation export",
+    "common job deadline and bounded aggregate native calls",
+    "pruning of owned superseded diagnostic packets with numeric records retained",
+    "separate rough/provisional classification and original production gates untouched"
+  ],
+  "sources": {
+    "code/cluster/launch_lower_wealth_rough_transition.sh": "e0dca9d99a5b43af1ae522337a69d709895e05214d490bd44a35aeded9a70072",
+    "code/model/experiments/birth_count_choice/lower_wealth_transition_reference.py": "80414c124fa918faa77b172e7f9077ce85975369f9c7a3c36121eb62eef359db",
+    "code/model/experiments/birth_count_choice/rough_two_shock.py": "5fd013a58cc8ce4a476114626bdbe2f2703df68df120a80ce0c25f3bb96246c6",
+    "code/model/experiments/birth_count_choice/rough_two_shock_runtime.py": "0a68497ea5c364bfed5e9f3315bb121c537c8b991e47ba10f8db2c83121e00a2",
+    "code/model/experiments/birth_count_choice/test_rough_two_shock.py": "ccd358a68e7dffc7259f78d8f019f17b81436381e32a384b8c8b49e247410f8a"
+  },
+  "status": "reviewed_for_bounded_diagnostic_execution"
+}
