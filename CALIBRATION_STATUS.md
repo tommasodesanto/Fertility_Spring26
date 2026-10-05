@@ -1048,15 +1048,25 @@ manuscript wording or certify a new paper calibration.
    remain. Five fake-loop tests, numerical-call comparison and twelve zero-call
    Torch configuration checks passed. First scheduling requests were cancelled
    with zero allocation/time/no claims after reserved-host selection; replacement
-   requests have known IDs and must never be duplicated. At 23:55, all twelve
-   candidate jobs are allocated on distinct cs hosts. c00_h24 started at
-   23:53:41, deadline October 5 02:53:41, and is in construction after authentication.
-   Ten show native progress (115–134 calls); c03_h32 has no native entry after
-   over 30 minutes and is stalled during container verification. Read-only
-   investigation does not establish its OS process state or an economic failure.
-   No job was cancelled or resubmitted. The completed diagnostic no longer
-   occupies a node. No first-stage candidate, second shock or 2023 result is
-   accepted. Require original paired horizon, fit, fresh-replay and prefix gates.
+   requests have known IDs and must never be duplicated. **Verified October 5 at
+   01:18 New York:** five fresh 24-period candidates completed (preferences .14,
+   .145, .14736308634876963, .15, .16), exit 0, with original root/accounting and
+   fresh-replay gates passing. Four used 455 calls/ten maps; .16 used 413/nine.
+   All 1,176 dated audits pass with zero projection and zero replay discrepancy.
+   Terminal diagnostics remain false and nongating. The closest fixed point gives
+   fertility 1.861092771 against 1.861; neither preference is estimated.
+   **c02_h32 / 19195638 failed at 01:17:41**, exit 1:0, on the original 6,000-second
+   path limit during mapping nine. It recorded 527 native entries, versus 501
+   accounted through eight completed maps. Last housing/fiscal maxima were
+   6.1279227e-5 / 5.1678709e-5: housing passed, fiscal failed; no final replay.
+   The underlying TimeoutError was wrapped by Numba, not an OOM or scheduler
+   timeout. Six jobs remain allocated at this snapshot, five with native progress;
+   c03_h32 remains stalled during container verification. Preserve original caps
+   and completed artifacts; no retry or extension. Paired horizon, scalar fit,
+   final reproduction and exact own-2015 prefix gates remain necessary before
+   the second surprise. No accepted first-stage estimate or two-shock 2023 state.
+   [Full tables and completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/completion_review.json).
+   [Bounded path failure](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/failure_review.json).
    [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
    [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).
    [Current root submission](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/submission.json).

@@ -1,0 +1,233 @@
+{
+  "schema": "parallel_candidate_path_timeout_review_v1",
+  "reviewed_utc": "2026-10-05T05:27:27.021773+00:00",
+  "task": "c02_h32",
+  "job_id": "19195638",
+  "psi": 0.145,
+  "horizon": 32,
+  "economic_changes": [],
+  "scheduler": {
+    "slurm_job_id": "19195638",
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "finished_local_time": "2026-10-05 01:17:41 America/New_York",
+    "actual_native_calls": 527,
+    "launcher_terminal": {
+      "deadline_epoch": 1791180765,
+      "exit_code": 1,
+      "finished_epoch": 1791177461.3458405,
+      "no_auto_retry": true,
+      "node": "cs641",
+      "slurm_job_id": "19195638",
+      "start_epoch": 1791169965,
+      "status": "failed"
+    },
+    "progress_receipt": {
+      "actual_native_calls": 527,
+      "elapsed_seconds": 7409.085056942888,
+      "epoch": 1791177459.9278343,
+      "phase": "failed"
+    },
+    "addon_source_pins": {
+      "config_sha256": "83a03083186f1aaf31cf22e202b5f5aa1b6281be18f42539efe917485836edab",
+      "driver_sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+      "task_id": "c02_h32",
+      "verified": true
+    },
+    "completed_candidate_maps": 8,
+    "native_call_accounting": {
+      "completed_candidate_map_cumulative_calls": 501,
+      "global_recorded_calls": 527,
+      "calls_after_completed_map_counter": 26
+    },
+    "failure_evidence": "driver.log records TimeoutError: Bounded path timed out, raised in one_shock_floor.py timeout wrapper; surfaced through Numba SystemError at full_owner_block_kernel during backward_value_path -> solve_date_policy. Eight candidate maps completed; root_progress_full evaluation=8, elapsed_seconds=5739.312349886866, final market residual=6.12792269302495e-5 and fiscal residual=5.167870940412746e-5. Candidate/map_008/native_record.json total_native_calls=501; global run/progress.json reports 527 actual_native_calls, leaving 26 calls beyond the completed-map cumulative counter when failure was recorded.",
+    "batch_max_rss_kib": 25159600,
+    "batch_max_rss_gib_exact": 23.994064331054688,
+    "scheduler_elapsed_seconds": 7498,
+    "progress_elapsed_seconds": 7409.085056942888
+  },
+  "underlying_exception": "TimeoutError: Bounded native numerical call timed out",
+  "outer_exception": "SystemError('CPUDispatcher(<function full_owner_block_kernel at 0x146a41848540>) returned a result with an exception set')",
+  "binding_limit": "original path_seconds=6000",
+  "deadline_evidence": {
+    "last_completed_root_elapsed_seconds": 5739.312349886866,
+    "last_completed_root_receipt_mtime_epoch": 1791177199.0,
+    "failed_progress_epoch": 1791177459.9278343,
+    "reconstructed_path_elapsed_seconds": 6000.24018406868,
+    "timestamp_resolution_uncertainty_seconds": 1,
+    "mapping9_elapsed_after_last_completed_callback_seconds": 260.92783427238464,
+    "original_map_cap_seconds": 1800,
+    "original_candidate_cap_seconds": 7200,
+    "original_internal_cap_seconds": 10700,
+    "interpretation": "Root callback clock plus saved file timestamp reconstructs path deadline within one second. Frozen _mapping applies min(path deadline,1800-second map allowance), and watchdog raises the preserved TimeoutError. The shared path cap binds."
+  },
+  "exact_failing_operation": "ninth joint-root trial, backward_value_path -> solve_date_policy -> solve_bellman_full_markov_income -> _savings_stage -> full_owner_block_kernel",
+  "failing_calendar_period": "not recorded; no inference made",
+  "completed_maps": [
+    {
+      "map": 1,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 102,
+      "housing_max": 0.18015004540622434,
+      "fiscal_max": 0.1265683980284326
+    },
+    {
+      "map": 2,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 159,
+      "housing_max": 0.05898302551710299,
+      "fiscal_max": 0.057798937457553164
+    },
+    {
+      "map": 3,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 216,
+      "housing_max": 0.013467593329383132,
+      "fiscal_max": 0.016020144538843026
+    },
+    {
+      "map": 4,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 273,
+      "housing_max": 0.005336565005669495,
+      "fiscal_max": 0.0054228087620753
+    },
+    {
+      "map": 5,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 330,
+      "housing_max": 0.002063974877266868,
+      "fiscal_max": 0.0017954163127773296
+    },
+    {
+      "map": 6,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 387,
+      "housing_max": 0.0006457625273432561,
+      "fiscal_max": 0.0005668632456887271
+    },
+    {
+      "map": 7,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 444,
+      "housing_max": 0.00020052375313295436,
+      "fiscal_max": 0.0001706462255828042
+    },
+    {
+      "map": 8,
+      "policy_calls": 57,
+      "cumulative_actual_calls": 501,
+      "housing_max": 6.12792269302495e-05,
+      "fiscal_max": 5.167870940412745e-05
+    }
+  ],
+  "dated_audits": 256,
+  "completed_map_gates_pass": true,
+  "maximum_projection_mass": 0,
+  "maximum_mass_error": 1.6653345369377348e-15,
+  "maximum_occupied_budget_excess": 2.842170943040401e-14,
+  "actual_native_entries": 527,
+  "completed_operation_controller_calls": 501,
+  "unfinished_mapping_entries": 26,
+  "reference_calls": 2,
+  "seed_calls": 29,
+  "endpoint_calls": 14,
+  "completed_root_calls": 456,
+  "housing_gate_at_last_completed_map": true,
+  "fiscal_gate_at_last_completed_map": false,
+  "fresh_final_replay_completed": false,
+  "accepted_candidate": false,
+  "empirical_fitted": false,
+  "two_shock_2023_delivered": false,
+  "retry_or_extension": false,
+  "evidence_pins": [
+    {
+      "path": "results/c02_h32/run/candidate/map_001/native_record.json",
+      "sha256": "369a6f297490e23a5ff72356e7bf825e52222f2f1dda20442bd92aa8242d1c6b"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_001/dated_audits.json",
+      "sha256": "89e6c55146a54bbb45acd9d5f0b2d9be748053a6f4331c2f3e29463845b2e58e"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_002/native_record.json",
+      "sha256": "e53d3aebb938785e4d23e15a9fa47229ccfce51449f9e8001f6c77d6c7c68247"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_002/dated_audits.json",
+      "sha256": "acab3ef236f6d4b52ec008a6fe4a735062b950c572105c231fed5bae286c9fb9"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_003/native_record.json",
+      "sha256": "86f7c580c9963bc1af249b275eb67359f66216a4a3bf425577d5bb835c97a10a"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_003/dated_audits.json",
+      "sha256": "a683abf5a6fbbc70773ab6c171075a39450b19bfdf3205d0a61c7163cf6f35e9"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_004/native_record.json",
+      "sha256": "7cc554526e39d8ca16482f0e28efeb6d0ded77b8aa71362d206dcb0f15839795"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_004/dated_audits.json",
+      "sha256": "1a0e719234bdbf202aa194271408454f0046a3e4ab3b3eca773be8667a6279cd"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_005/native_record.json",
+      "sha256": "276537362940cef79d3ea1a8f6ba1adbc94030db887cb932054473b0d7b9220c"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_005/dated_audits.json",
+      "sha256": "cec6702ef13128cb0294f8a7289ae0b5784d1522e57843a77f7d9d7a5296b4c9"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_006/native_record.json",
+      "sha256": "8ea43b874ad6a121aa267973cc09593fc2047aa1ad2cee01b9d572bb535b69d3"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_006/dated_audits.json",
+      "sha256": "990459f1a5a7fcf6cdb6170b010824439290fbe48bb213d51ddd978e6c66b212"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_007/native_record.json",
+      "sha256": "ea8903bdc3ba9a2a7d4e21fb06b604c48ff8e88508c064caa42150804ceff7de"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_007/dated_audits.json",
+      "sha256": "12ee7e93ac3396d8c166c1fe8b18d537f4abe93383d09ffcb0a979b9cb875d2a"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_008/native_record.json",
+      "sha256": "9299625495244b08b32055e830835cf6f72fddb47dee7584d3f255bb5e274884"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/map_008/dated_audits.json",
+      "sha256": "ea279812fe6b8ad7f3cc1a4418bd13efcf1b57e8cda03d3e939aeb55e9e0b3ea"
+    },
+    {
+      "path": "results/c02_h32/run/failure.json",
+      "sha256": "61b452a466d4bd69c06cafb7de0d0a6f7803c63d1d538c9f9312f13ddc142ee8"
+    },
+    {
+      "path": "results/c02_h32/run/progress.json",
+      "sha256": "1897c898398ccd27a9516aafb08c4d5788f8ab29f3b4c7d0cc707870e159f943"
+    },
+    {
+      "path": "results/c02_h32/run/candidate/root_progress_full.json",
+      "sha256": "5ee516b3de4fd1a34465267b8ffe4b0e1e51389f57672776ca5b6554b2e06fc2"
+    },
+    {
+      "path": "results/c02_h32/run/source_identity.json",
+      "sha256": "bd28588a4c0a7cb863e2fef1fd8546dcf8fd7bca1be1ed7312af7961634c8845"
+    },
+    {
+      "path": "new_terminal_collection.json",
+      "sha256": "5d4a3f8f2ffd44cb95e64088da7bf00b6cf4eab4f764d76ec7429e9ee8b8665c"
+    },
+    {
+      "path": "new_terminal_artifact_verification.json",
+      "sha256": "26c1c8e3442435e45916178a450006b1afe81bdb47fb7b065f4c1321b2191161"
+    }
+  ]
+}

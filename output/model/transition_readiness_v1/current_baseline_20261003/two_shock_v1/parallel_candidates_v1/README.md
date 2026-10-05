@@ -33,7 +33,11 @@ The 17 standard plot names are preserved when original root gates pass. Diagnost
 
 ## Active scheduling records
 
-At 23:55 New York, all **twelve candidate jobs are allocated on twelve distinct cs hosts**. c00_h24 started at **23:53:41**, with hard scheduler deadline **October 5 02:53:41**, and is in construction after authentication. Ten jobs have genuine native progress (115–134 calls). c03_h32 remains stalled before model execution during container verification; no terminal receipt exists and OS process state is unverified. No job was cancelled, extended or resubmitted. [Current allocation and native progress](current_native_progress.json). The separate fixed-preference diagnostic 19193055 completed successfully at 23:39:53 with all original root gates and exact fresh replay. [Completion review](../initial_path_root_v2/completion_review.json). Ten candidate deadlines remain October 5 02:12:43, and c00_h32 is 02:14:17. [Preparation investigation](preparation_investigation.json).
+**Verified October 5 at 01:18 New York:** five fresh 24-period candidates (preferences 0.14, 0.145, 0.14736308634876963, 0.15 and 0.16) completed with exit 0 and all original root/accounting/fresh-replay gates passing. Four used 455 native calls and ten root maps; the 0.16 case used 413 calls and nine maps. All 1,176 dated audits pass, projected mass is zero, and fresh replay discrepancy is zero. Terminal diagnostics remain false and nongating. The closest fixed preference produces 2012–2015 fertility **1.861092771 versus target 1.861**, but no preference estimate is accepted. [Full tables, bounds and lead review](completion_review.json).
+
+The 32-period candidate **c02_h32 / 19195638 failed at 01:17:41**, exit 1:0, after 527 actual native calls: its original 6,000-second path deadline expired during the ninth mapping. Eight completed mappings account for 501 cumulative calls including preparation; 26 additional entries belong to the unfinished map. Last maximum housing/fiscal residuals were **6.1279227e-5 / 5.1678709e-5**: housing passed, fiscal did not, and no final replay occurred. The underlying TimeoutError was wrapped by Numba; this was neither OOM nor an external scheduler timeout. No job was extended or restarted. [Failure evidence](failure_review.json).
+
+Six jobs remain allocated at this snapshot: c00_h24, c00_h32, c01_h32, c03_h32, c04_h32 and c05_h32. Five show native progress; c03_h32 remains stalled during container verification, with process state unverified. Do not repeat unchanged node-access checks. Original deadlines remain October 5 02:12:43, except c00_h32 at 02:14:17 and c00_h24 at 02:53:41. Original paired 24/32, scalar-fit/final-reproduction and exact own-2015 prefix gates remain required before the second surprise. No two-shock 2023 state is accepted.
 
 | Task | Preference | Horizon | Active job | Requested host |
 |---|---:|---:|---:|---|
@@ -49,3 +53,16 @@ At 23:55 New York, all **twelve candidate jobs are allocated on twelve distinct 
 | c04_h32 | 0.15 | 32 | 19195663 | cs717 |
 | c05_h24 | 0.16 | 24 | 19195664 | cs748 |
 | c05_h32 | 0.16 | 32 | 19195665 | cs718 |
+
+
+## Completed fixed-preference readout
+
+| Fixed preference | 2008–2011 model (target 1.974875; weight 0) | 2012–2015 model (target 1.861; weight 1) | Fitted-window gap | Loss contribution |
+|---:|---:|---:|---:|---:|
+| 0.14000000000000001 | 1.7865183985 | 1.8027095598 | -0.0582904402 | 0.003397775415 |
+| 0.14499999999999999 | 1.8269099482 | 1.8424294022 | -0.0185705978 | 0.000344867104 |
+| 0.14736308634876963 | 1.8460211906 | 1.8610927710 | +0.0000927710 | 8.60645808e-09 |
+| 0.14999999999999999 | 1.8673521968 | 1.8818053598 | +0.0208053598 | 0.0004328629976 |
+| 0.16 | 1.9482310634 | 1.9591896869 | +0.0981896869 | 0.009641214609 |
+
+The remaining 2016–2019 and 2020–2023 rows retain targets 1.755375 and 1.64575 and weights 0 and 1; model values, gaps and losses await the second surprise. Both preference parameters remain unestimated, with unchanged bounds [0.001789207206604163, 0.35784144132083257]. The full four-row table for every point, exact 2015 checkpoint pins and residual trajectories are in the lead review. Saved 2023 continuations belong to the first shock alone.

@@ -1,0 +1,1442 @@
+{
+  "schema": "parallel_candidates_completion_review_v1",
+  "reviewed_utc": "2026-10-05T05:27:26.999988+00:00",
+  "status": "five_completed_fixed_preference_roots_verified_pending_horizon_fit_prefix",
+  "economic_changes": [],
+  "source_driver_sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+  "tasks": {
+    "c01_h24": {
+      "psi_fixed": 0.14,
+      "estimated_parameters": [],
+      "original_psi_bounds": [
+        0.001789207206604163,
+        0.35784144132083257
+      ],
+      "horizon": 24,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_maximum_gap": 0.0,
+      "terminal_diagnostic_pass": false,
+      "terminal_diagnostic_gating": false,
+      "actual_and_controller_calls": 455,
+      "reference_calls": 2,
+      "seed_calls": 29,
+      "seed_map_calls": [
+        1,
+        7,
+        7,
+        7,
+        7
+      ],
+      "endpoint_calls": 14,
+      "root_map_calls": 410,
+      "root_evaluations": 10,
+      "root_elapsed_seconds": 5063.641662820941,
+      "seed_matrix_shape": [
+        24,
+        24
+      ],
+      "final_matrix_shape": [
+        48,
+        48
+      ],
+      "map_residuals": [
+        {
+          "map": 1,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.10604550202222954,
+          "maximum_absolute_scaled_fiscal_residual": 0.14859852699460024
+        },
+        {
+          "map": 2,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.04418030209058523,
+          "maximum_absolute_scaled_fiscal_residual": 0.06691986904282547
+        },
+        {
+          "map": 3,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.00882759954345121,
+          "maximum_absolute_scaled_fiscal_residual": 0.015291838447115562
+        },
+        {
+          "map": 4,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.002892992135886362,
+          "maximum_absolute_scaled_fiscal_residual": 0.004680795626043929
+        },
+        {
+          "map": 5,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0008027456360461678,
+          "maximum_absolute_scaled_fiscal_residual": 0.0013338039441372653
+        },
+        {
+          "map": 6,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.00024749011952309433,
+          "maximum_absolute_scaled_fiscal_residual": 0.0004072965226435652
+        },
+        {
+          "map": 7,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 7.265858204897955e-05,
+          "maximum_absolute_scaled_fiscal_residual": 0.00012086281195431048
+        },
+        {
+          "map": 8,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 2.2013189028258853e-05,
+          "maximum_absolute_scaled_fiscal_residual": 3.648783939398749e-05
+        },
+        {
+          "map": 9,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 6.5727480013946205e-06,
+          "maximum_absolute_scaled_fiscal_residual": 1.0914365318195124e-05
+        },
+        {
+          "map": 10,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 6.5727480013946205e-06,
+          "maximum_absolute_scaled_fiscal_residual": 1.0914365318195124e-05
+        }
+      ],
+      "dated_audits": 240,
+      "all_dated_audit_gates_pass": true,
+      "maximum_projection_mass": 0.0,
+      "maximum_mass_error": 1.3322676295501878e-15,
+      "maximum_occupied_budget_excess": 2.842170943040401e-14,
+      "initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+      "own_2015_state_sha256": "77ee1778fe351dd61dc919721f8f8766934cd4b7a334ce71abcad805edb062b8",
+      "own_2015_boundary_value_sha256": "532fb754d0a9cf1a5c1fef8821f364eaedc7e1567ed5155292ab32c94e556ef2",
+      "own_2015_queue_lengths": [
+        7,
+        7
+      ],
+      "own_2015_full_forecast_length": 24,
+      "checkpoint_roundtrip": "original pinned driver assertions passed; no fresh prefix replay yet",
+      "full_target_fit_table": [
+        {
+          "window": "2008\u20132011",
+          "target": 1.974875,
+          "weight": 0,
+          "model": 1.7865183984524842,
+          "gap": -0.18835660154751577,
+          "loss_contribution": 0.0,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2012\u20132015",
+          "target": 1.861,
+          "weight": 1,
+          "model": 1.802709559833107,
+          "gap": -0.05829044016689289,
+          "loss_contribution": 0.0033977754148501195,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2016\u20132019",
+          "target": 1.755375,
+          "weight": 0,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        },
+        {
+          "window": "2020\u20132023",
+          "target": 1.64575,
+          "weight": 1,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        }
+      ],
+      "evidence_pins": [
+        {
+          "path": "results/c01_h24/run/candidate/map_001/native_record.json",
+          "sha256": "b58c06d8c98d5b78203abe4e32fece3423a799fb2896e359bbc80a67806b3720"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_001/dated_audits.json",
+          "sha256": "25939a92c0e2c26cec3eddd72c5bff023f604694027cb6829430348334bf4478"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_002/native_record.json",
+          "sha256": "37432ea1f917a55e90dbf4d914c1ffa462c063f3caa1a8f5df9d734cae712142"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_002/dated_audits.json",
+          "sha256": "b374772d281a237ac2917f404659d5da3a43e4c233730343d1b2a41cad6c0a55"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_003/native_record.json",
+          "sha256": "da85d6ac58a241f0af66cc34b554570edbfd4ac02f4be6b1748a6ab2c5993d34"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_003/dated_audits.json",
+          "sha256": "56408d806b6b7c6cbf085ed19a6e26a7d9c078af656df429f66df7938e8a42dd"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_004/native_record.json",
+          "sha256": "ac07f5542d23e448d136e85aa217c907f263a40b2f47ebd4c30cd0829239cb4c"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_004/dated_audits.json",
+          "sha256": "534be3231debfa2bace8f333378ac2e789fe0c796777dacaac1223758236c113"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_005/native_record.json",
+          "sha256": "cdf74d4f3bb7e16bfee9d8fe272633ea3d41e50a153cde56502c01bf3671c12c"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_005/dated_audits.json",
+          "sha256": "247b662600cf2b1884955ce9d647de2e692e42d0d8cd3d3d889d737d1e6aa389"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_006/native_record.json",
+          "sha256": "bc04740c79a63a8fbc1305276abd0a124424aa56db4f8352e55974d61438b239"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_006/dated_audits.json",
+          "sha256": "83ac985711d91ad47792ff40f25e48e32d90922418753a3db99b34c6a087f183"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_007/native_record.json",
+          "sha256": "ee4245e6f57c462e7c0b4316e26d1d8a246b623b182891ec7ece4d7c4b8e3841"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_007/dated_audits.json",
+          "sha256": "bf4423a6796ee3ee7b5855b691ab90ec180fb9065e14be003c5f99c67dccacfc"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_008/native_record.json",
+          "sha256": "ab8fccec3284a713c0ba542617983338c4c436ea787613daa9183443fc05b0f9"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_008/dated_audits.json",
+          "sha256": "f2427c1c6d6c066329228a7208dca3f046bbafddc6544593ff31dc443e7b50ce"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_009/native_record.json",
+          "sha256": "4a59fc59d0dcdb3a5726e1c0cabede65ad84159424034fbba4b881daaaca2e48"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_009/dated_audits.json",
+          "sha256": "1c18ffc04915b66210c8a92ba01ba54b03e31721a930d892ded7f2145468d6f0"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_010/native_record.json",
+          "sha256": "6710f9c49fa7aad7e35f4ea288038e583a70463600614b2bf3a3c0633864fdcb"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/map_010/dated_audits.json",
+          "sha256": "1c18ffc04915b66210c8a92ba01ba54b03e31721a930d892ded7f2145468d6f0"
+        },
+        {
+          "path": "results/c01_h24/run/result.json",
+          "sha256": "0a652391750c4a8f1dd6a5cedc0bdf2427aac152f2dca02cbd22d477aefe2753"
+        },
+        {
+          "path": "results/c01_h24/run/seed_receipt.json",
+          "sha256": "ff958e869eba1c2290613960fa8cb3e2ba3de7e2fdc3712bd8268fbbe0c565c8"
+        },
+        {
+          "path": "results/c01_h24/run/reference_receipt.json",
+          "sha256": "23b55f879a1d03403600d7422aa0abc7fc6deb6ef9cfc81b35930221fdbd3233"
+        },
+        {
+          "path": "results/c01_h24/run/source_identity.json",
+          "sha256": "5567253cb75c900f1748b27f3aa7c264fdac6046c2d4d75646dd4536dad0ca13"
+        },
+        {
+          "path": "results/c01_h24/run/candidate/root_full.json",
+          "sha256": "f4ec5973263a552a16ff50612aaab0c1bb60b528c6fa483189582d27df7ec4bf"
+        },
+        {
+          "path": "results/c01_h24/run/own_vintage_2015/boundary_receipt.json",
+          "sha256": "299ab71545ab7ddc37c44c7bf56317eb6064cda736f8a23cfe91f07cd0e8b532"
+        },
+        {
+          "path": "results/c01_h24/run/diagnostics.json",
+          "sha256": "595bd3554ff40bc8ececb22e84e41ff4b25f105543d615e8b7cee06f82335464"
+        }
+      ],
+      "scientific_acceptance": false,
+      "terminal": {
+        "job_id": "19195630",
+        "node": "cs784",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "scheduler_elapsed_seconds": 6757,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1791176720.7020411,
+        "peak_rss_kib": 25159484,
+        "peak_rss_gib": 23.993953704833984,
+        "launcher_pin": {
+          "path": "results/c01_h24/launcher_terminal.json",
+          "sha256": "3f24ede6733156385220bf234f432e622258f5528b8e448fed1690e1605e3f1b"
+        }
+      }
+    },
+    "c02_h24": {
+      "psi_fixed": 0.145,
+      "estimated_parameters": [],
+      "original_psi_bounds": [
+        0.001789207206604163,
+        0.35784144132083257
+      ],
+      "horizon": 24,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_maximum_gap": 0.0,
+      "terminal_diagnostic_pass": false,
+      "terminal_diagnostic_gating": false,
+      "actual_and_controller_calls": 455,
+      "reference_calls": 2,
+      "seed_calls": 29,
+      "seed_map_calls": [
+        1,
+        7,
+        7,
+        7,
+        7
+      ],
+      "endpoint_calls": 14,
+      "root_map_calls": 410,
+      "root_evaluations": 10,
+      "root_elapsed_seconds": 5733.541958163027,
+      "seed_matrix_shape": [
+        24,
+        24
+      ],
+      "final_matrix_shape": [
+        48,
+        48
+      ],
+      "map_residuals": [
+        {
+          "map": 1,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.08550840070460998,
+          "maximum_absolute_scaled_fiscal_residual": 0.1261542192089299
+        },
+        {
+          "map": 2,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.037407023152465996,
+          "maximum_absolute_scaled_fiscal_residual": 0.05728758441882204
+        },
+        {
+          "map": 3,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.007068827421028089,
+          "maximum_absolute_scaled_fiscal_residual": 0.012864323644545182
+        },
+        {
+          "map": 4,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.002465321281565554,
+          "maximum_absolute_scaled_fiscal_residual": 0.004066065323300819
+        },
+        {
+          "map": 5,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0006564260047206399,
+          "maximum_absolute_scaled_fiscal_residual": 0.0011416148427258648
+        },
+        {
+          "map": 6,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.00022465186404981827,
+          "maximum_absolute_scaled_fiscal_residual": 0.0003624707165443769
+        },
+        {
+          "map": 7,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 6.0073636261837046e-05,
+          "maximum_absolute_scaled_fiscal_residual": 0.0001027607218519392
+        },
+        {
+          "map": 8,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 1.8680332627640195e-05,
+          "maximum_absolute_scaled_fiscal_residual": 3.163820655921429e-05
+        },
+        {
+          "map": 9,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.472771748809788e-06,
+          "maximum_absolute_scaled_fiscal_residual": 9.385880300778104e-06
+        },
+        {
+          "map": 10,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.472771748809788e-06,
+          "maximum_absolute_scaled_fiscal_residual": 9.385880300778104e-06
+        }
+      ],
+      "dated_audits": 240,
+      "all_dated_audit_gates_pass": true,
+      "maximum_projection_mass": 0.0,
+      "maximum_mass_error": 1.4432899320127035e-15,
+      "maximum_occupied_budget_excess": 2.842170943040401e-14,
+      "initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+      "own_2015_state_sha256": "6c5968ad1cbb927d364b9c40db9c4347fcdde07fc7658f79f1afd1525facef97",
+      "own_2015_boundary_value_sha256": "665e49fd509b5e4c6ad055aabe30216c5c9db2ecb9b45e20450fc0b9ba3b2c2b",
+      "own_2015_queue_lengths": [
+        7,
+        7
+      ],
+      "own_2015_full_forecast_length": 24,
+      "checkpoint_roundtrip": "original pinned driver assertions passed; no fresh prefix replay yet",
+      "full_target_fit_table": [
+        {
+          "window": "2008\u20132011",
+          "target": 1.974875,
+          "weight": 0,
+          "model": 1.8269099481690279,
+          "gap": -0.14796505183097208,
+          "loss_contribution": 0.0,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2012\u20132015",
+          "target": 1.861,
+          "weight": 1,
+          "model": 1.842429402162705,
+          "gap": -0.018570597837294978,
+          "loss_contribution": 0.0003448671040345449,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2016\u20132019",
+          "target": 1.755375,
+          "weight": 0,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        },
+        {
+          "window": "2020\u20132023",
+          "target": 1.64575,
+          "weight": 1,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        }
+      ],
+      "evidence_pins": [
+        {
+          "path": "results/c02_h24/run/candidate/map_001/native_record.json",
+          "sha256": "089a7d782a265fec32888108cac4c5cf52a9ecfe64e4b1f2e23dd557dafb3a50"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_001/dated_audits.json",
+          "sha256": "45c79ca1ee1d91c4f5fdb171745f821428b3a8b68c15f088190e1558f09331ab"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_002/native_record.json",
+          "sha256": "b071610a5731bfaaaff98d1e69e5157400b7be7115f5cab40ed0005cc499a656"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_002/dated_audits.json",
+          "sha256": "7721bf6cbcc25d9b1416cf984edc3efc2f8f8d2f0a149b2a7a96e9b3f0bc728a"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_003/native_record.json",
+          "sha256": "d0fa855bf41a0d3b6e2d26e80788a2bac2c7c07b6262af06fba59460b2ccf4bd"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_003/dated_audits.json",
+          "sha256": "83258e6fc537983dc5295e44011c7dcff5f1a2fb6b05561368bf69a00205c178"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_004/native_record.json",
+          "sha256": "6b6e60a5b97f736e102ba2316353025d64d11183c845bf7fded432c67533ba63"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_004/dated_audits.json",
+          "sha256": "a118f077aea5d713807dd48b06ced0c8d4888114c216a4eeb0a7c9753faac4f3"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_005/native_record.json",
+          "sha256": "3dc73c135d2d730e3e1376fbc729c258bb745d3cac065698b63c226a3422b5b8"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_005/dated_audits.json",
+          "sha256": "4dcafa98c65597e368c337046002f3883be4a2f8617dd363e984d6b390829f6d"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_006/native_record.json",
+          "sha256": "294b9160d0701a17a8507942ae141108c2ec783d9cd4cf862807ceb4c8eb822a"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_006/dated_audits.json",
+          "sha256": "d9eede87f1c8a12be44101be9a886f1691ac8bce0352906dd093848411754bde"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_007/native_record.json",
+          "sha256": "b68932a61abbc330439478a547e62daf94e0a8b3de7475207b2c3cee107446f2"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_007/dated_audits.json",
+          "sha256": "467e4e4e4d4e249c33aad23de6bafa8b92689d8e752c24a6f22725522be34908"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_008/native_record.json",
+          "sha256": "9fe2acb59622bf4ba50619672ac91fcd8d9ad57e52523fa3ee410063861c06ef"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_008/dated_audits.json",
+          "sha256": "6235c584de2a9f1896eb9ddfab059004edd08dcfe4d89b64acfc53fd571b5902"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_009/native_record.json",
+          "sha256": "1df169bf6198258da7ecd0cdc5f173c3bc78b0e10315ede1fa7ddf828f07be06"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_009/dated_audits.json",
+          "sha256": "fdb21df36366369efd49eb87c6c8110901ab025505b441ccbb3370879d972120"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_010/native_record.json",
+          "sha256": "49289b1dba9588ebc4bf587d0d21a4c71dc811946922ee787dcc506fd87d2095"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/map_010/dated_audits.json",
+          "sha256": "fdb21df36366369efd49eb87c6c8110901ab025505b441ccbb3370879d972120"
+        },
+        {
+          "path": "results/c02_h24/run/result.json",
+          "sha256": "bec4d59a5be75761414a17989953d0982a2b993139f6adf1f182b33dc58ffb93"
+        },
+        {
+          "path": "results/c02_h24/run/seed_receipt.json",
+          "sha256": "2b18b896c6c5a8a436ab9567766c2bb6ceebf421c23407a603cf5647f3044780"
+        },
+        {
+          "path": "results/c02_h24/run/reference_receipt.json",
+          "sha256": "39d25cd3e3e933bb54218fbd169eeb4fb7d39da65e814af091eac5d72e2bbc03"
+        },
+        {
+          "path": "results/c02_h24/run/source_identity.json",
+          "sha256": "a875e479fcb615a5f2b14f6b4a8705bea247cd8d28a1faea01e0d57e8de30e2e"
+        },
+        {
+          "path": "results/c02_h24/run/candidate/root_full.json",
+          "sha256": "afd677d540f1d31ef3f8520308f40818e6a2beeddb73f696444033b1b1e4442d"
+        },
+        {
+          "path": "results/c02_h24/run/own_vintage_2015/boundary_receipt.json",
+          "sha256": "15f827ba0c87d5eaa2b2dc4dc58a457c00acb1fa1d6be2eb2b89b152dfa70214"
+        },
+        {
+          "path": "results/c02_h24/run/diagnostics.json",
+          "sha256": "613204dd84bc9a92d03d584c4b063ee7c07b187a0dbd7d0144da4845c65a1abe"
+        }
+      ],
+      "scientific_acceptance": false,
+      "terminal": {
+        "job_id": "19195636",
+        "node": "cs669",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "scheduler_elapsed_seconds": 7364,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1791177327.8456786,
+        "peak_rss_kib": 25159188,
+        "peak_rss_gib": 23.993671417236328,
+        "launcher_pin": {
+          "path": "results/c02_h24/launcher_terminal.json",
+          "sha256": "dfd5d82f15bc070e2f8923643bf025630868af501e7aed784c226cb1099d699d"
+        }
+      }
+    },
+    "c03_h24": {
+      "psi_fixed": 0.14736308634876963,
+      "estimated_parameters": [],
+      "original_psi_bounds": [
+        0.001789207206604163,
+        0.35784144132083257
+      ],
+      "horizon": 24,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_maximum_gap": 0.0,
+      "terminal_diagnostic_pass": false,
+      "terminal_diagnostic_gating": false,
+      "actual_and_controller_calls": 455,
+      "reference_calls": 2,
+      "seed_calls": 29,
+      "seed_map_calls": [
+        1,
+        7,
+        7,
+        7,
+        7
+      ],
+      "endpoint_calls": 14,
+      "root_map_calls": 410,
+      "root_evaluations": 10,
+      "root_elapsed_seconds": 5308.292073142016,
+      "seed_matrix_shape": [
+        24,
+        24
+      ],
+      "final_matrix_shape": [
+        48,
+        48
+      ],
+      "map_residuals": [
+        {
+          "map": 1,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.075991875289444,
+          "maximum_absolute_scaled_fiscal_residual": 0.1156396978967876
+        },
+        {
+          "map": 2,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0343582924578139,
+          "maximum_absolute_scaled_fiscal_residual": 0.052928680440590466
+        },
+        {
+          "map": 3,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.006157044387472623,
+          "maximum_absolute_scaled_fiscal_residual": 0.01170837130331102
+        },
+        {
+          "map": 4,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.002236861077868924,
+          "maximum_absolute_scaled_fiscal_residual": 0.00377482624917121
+        },
+        {
+          "map": 5,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0006087698660278766,
+          "maximum_absolute_scaled_fiscal_residual": 0.0010570191510487546
+        },
+        {
+          "map": 6,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.00019205915657442735,
+          "maximum_absolute_scaled_fiscal_residual": 0.0003272543576717354
+        },
+        {
+          "map": 7,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.558883051601998e-05,
+          "maximum_absolute_scaled_fiscal_residual": 9.641013092623007e-05
+        },
+        {
+          "map": 8,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 1.703656043493338e-05,
+          "maximum_absolute_scaled_fiscal_residual": 2.9262795013163536e-05
+        },
+        {
+          "map": 9,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.0505534114975565e-06,
+          "maximum_absolute_scaled_fiscal_residual": 8.718799858813862e-06
+        },
+        {
+          "map": 10,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.0505534114975565e-06,
+          "maximum_absolute_scaled_fiscal_residual": 8.718799858813862e-06
+        }
+      ],
+      "dated_audits": 240,
+      "all_dated_audit_gates_pass": true,
+      "maximum_projection_mass": 0.0,
+      "maximum_mass_error": 1.4432899320127035e-15,
+      "maximum_occupied_budget_excess": 2.842170943040401e-14,
+      "initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+      "own_2015_state_sha256": "bf67dae94ca95f92f8716e3bb157171b0ae8e47c7aee18e2fc134e3b0556934f",
+      "own_2015_boundary_value_sha256": "80d2a03b47c456b9510a01d616b9416869bf0218b7fd14c5e7713b1935af5c4e",
+      "own_2015_queue_lengths": [
+        7,
+        7
+      ],
+      "own_2015_full_forecast_length": 24,
+      "checkpoint_roundtrip": "original pinned driver assertions passed; no fresh prefix replay yet",
+      "full_target_fit_table": [
+        {
+          "window": "2008\u20132011",
+          "target": 1.974875,
+          "weight": 0,
+          "model": 1.846021190637462,
+          "gap": -0.12885380936253799,
+          "loss_contribution": 0.0,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2012\u20132015",
+          "target": 1.861,
+          "weight": 1,
+          "model": 1.8610927709980534,
+          "gap": 9.277099805338196e-05,
+          "loss_contribution": 8.6064580798206e-09,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2016\u20132019",
+          "target": 1.755375,
+          "weight": 0,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        },
+        {
+          "window": "2020\u20132023",
+          "target": 1.64575,
+          "weight": 1,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        }
+      ],
+      "evidence_pins": [
+        {
+          "path": "results/c03_h24/run/candidate/map_001/native_record.json",
+          "sha256": "cf5fcaa0d10beb664ca7031109a8b34477c7938d41e1ef3ddbe689aec6b520cc"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_001/dated_audits.json",
+          "sha256": "78b5243058e14d9e1eba7d15e12688c845dec0b45327fe24664c490f4c1e46c6"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_002/native_record.json",
+          "sha256": "ff8e825b9dce58011a3c252dbb4c953f4f2cd85f86d7ae8c9c44c5d618369573"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_002/dated_audits.json",
+          "sha256": "73f9b4be310e091c1f660cec60b32d175faed24bc856306cdcac127fda1a7356"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_003/native_record.json",
+          "sha256": "4dbc110c32858ee70f8a63f32802d22e0a9f875ea42b88c3e0e61e3bbdf51e77"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_003/dated_audits.json",
+          "sha256": "3a3982a3f4bf5b7fb7bfa3a113c5cd20026a67eb3f5de8fa22e9e67a335354dd"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_004/native_record.json",
+          "sha256": "3ab3e4777e0675abf383de4bf51fb68d542982446dfd5105bb7c507f9489ed7c"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_004/dated_audits.json",
+          "sha256": "0d03c3109eb22c4e74968c4f477b82838f9555bdaae3feedafa98371724f03b7"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_005/native_record.json",
+          "sha256": "4b8f2a8851621a7c2eae2f4714a9addf764a9272915a268e8b71f88ccfade5c3"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_005/dated_audits.json",
+          "sha256": "05be3f18234393f10752b57dff2da303631d8e22510cceb077a2eb37152d6f0e"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_006/native_record.json",
+          "sha256": "b0f92b17f0aa11b6cfea04db902ffc4c0e82959ac3a6994610334e4ea60e0d64"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_006/dated_audits.json",
+          "sha256": "51d9675de61bb21d121359f4503f7c3bf8e4a4f5fa1711f0b66ece1cf64f6f26"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_007/native_record.json",
+          "sha256": "5cd5f19ed42de9f80726050f83720514591b1b954e30d862388a2f45520e9cab"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_007/dated_audits.json",
+          "sha256": "f5cf7039f80160d1ec40c3c941952caeaef671230e44ee1cd83d2f760c4646a3"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_008/native_record.json",
+          "sha256": "bbe613ab89a9e634db0048f242bcd1a3a1011e3041f01c9308e4dd18aeb823ee"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_008/dated_audits.json",
+          "sha256": "44d4e0ca9ec76581209535a5c99f0d07f63bf356086361740483a8c31d87bf95"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_009/native_record.json",
+          "sha256": "1772a9c2f551b823f4f69eeff6d8263233089ce831c6f01633f492f3f6a1098d"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_009/dated_audits.json",
+          "sha256": "7ecde9cc0df4dcceae87e90a437ae75c6cd9faa780bea71e92dbad48b86eba1b"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_010/native_record.json",
+          "sha256": "d6d1930b0f729e2c8b41bf36983e5472413cf291c5800b3a001be544339a80b4"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/map_010/dated_audits.json",
+          "sha256": "7ecde9cc0df4dcceae87e90a437ae75c6cd9faa780bea71e92dbad48b86eba1b"
+        },
+        {
+          "path": "results/c03_h24/run/result.json",
+          "sha256": "f7966eb3b38a21b147114fe58e373a608c62d9c2e3252188f2cdbd372e25d4af"
+        },
+        {
+          "path": "results/c03_h24/run/seed_receipt.json",
+          "sha256": "3713972e85acf22fdd31d8ff3c84c0040c26ab2b98ad1b76f983a1d3343924ce"
+        },
+        {
+          "path": "results/c03_h24/run/reference_receipt.json",
+          "sha256": "0ecc0e983c2f8bac6a30524e88c85a6aa5b034582cdc3b2bed3ddfdeb9392e44"
+        },
+        {
+          "path": "results/c03_h24/run/source_identity.json",
+          "sha256": "1aebc68eb6f61c85c0d1e9624171aedc8c58c2e397ed6a9890757a904b58b6a1"
+        },
+        {
+          "path": "results/c03_h24/run/candidate/root_full.json",
+          "sha256": "012c08376cccbf1e0e04d9de9b36ca24a6fc88bd975a30ef94a01f7a7c6b6f54"
+        },
+        {
+          "path": "results/c03_h24/run/own_vintage_2015/boundary_receipt.json",
+          "sha256": "d00e875fa60fe8a106ce7bd424aeccbc0d9ba791086e43a639d3f358e6f99b46"
+        },
+        {
+          "path": "results/c03_h24/run/diagnostics.json",
+          "sha256": "9359ec098724123bbf41c90c834580c376f169c59b636c4094fa605d4b09c058"
+        }
+      ],
+      "scientific_acceptance": false,
+      "terminal": {
+        "job_id": "19195645",
+        "node": "cs680",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "scheduler_elapsed_seconds": 6829,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1791176791.7239532,
+        "peak_rss_kib": 25159452,
+        "peak_rss_gib": 23.99392318725586,
+        "launcher_pin": {
+          "path": "results/c03_h24/launcher_terminal.json",
+          "sha256": "22414fa26fee1bd652c96a0b0ac8f726384b0271ec58d5932c9dae4bfd00dc77"
+        }
+      }
+    },
+    "c04_h24": {
+      "psi_fixed": 0.15,
+      "estimated_parameters": [],
+      "original_psi_bounds": [
+        0.001789207206604163,
+        0.35784144132083257
+      ],
+      "horizon": 24,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_maximum_gap": 0.0,
+      "terminal_diagnostic_pass": false,
+      "terminal_diagnostic_gating": false,
+      "actual_and_controller_calls": 455,
+      "reference_calls": 2,
+      "seed_calls": 29,
+      "seed_map_calls": [
+        1,
+        7,
+        7,
+        7,
+        7
+      ],
+      "endpoint_calls": 14,
+      "root_map_calls": 410,
+      "root_evaluations": 10,
+      "root_elapsed_seconds": 5322.870038824854,
+      "seed_matrix_shape": [
+        24,
+        24
+      ],
+      "final_matrix_shape": [
+        48,
+        48
+      ],
+      "map_residuals": [
+        {
+          "map": 1,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.06544005077142352,
+          "maximum_absolute_scaled_fiscal_residual": 0.10399557752455463
+        },
+        {
+          "map": 2,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.031010832044389362,
+          "maximum_absolute_scaled_fiscal_residual": 0.04820372173280083
+        },
+        {
+          "map": 3,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.005394016288663411,
+          "maximum_absolute_scaled_fiscal_residual": 0.010418112510367188
+        },
+        {
+          "map": 4,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.002036856375942681,
+          "maximum_absolute_scaled_fiscal_residual": 0.003448411045778665
+        },
+        {
+          "map": 5,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0005300364965248078,
+          "maximum_absolute_scaled_fiscal_residual": 0.0009456700894325542
+        },
+        {
+          "map": 6,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.00017002220910316412,
+          "maximum_absolute_scaled_fiscal_residual": 0.0002970666139652731
+        },
+        {
+          "map": 7,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 4.825541786629198e-05,
+          "maximum_absolute_scaled_fiscal_residual": 8.663730604161079e-05
+        },
+        {
+          "map": 8,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 1.4938163416807186e-05,
+          "maximum_absolute_scaled_fiscal_residual": 2.6465281458692993e-05
+        },
+        {
+          "map": 9,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 4.392817524804526e-06,
+          "maximum_absolute_scaled_fiscal_residual": 7.851629972767259e-06
+        },
+        {
+          "map": 10,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 4.392817524804526e-06,
+          "maximum_absolute_scaled_fiscal_residual": 7.851629972767259e-06
+        }
+      ],
+      "dated_audits": 240,
+      "all_dated_audit_gates_pass": true,
+      "maximum_projection_mass": 0.0,
+      "maximum_mass_error": 1.3322676295501878e-15,
+      "maximum_occupied_budget_excess": 2.842170943040401e-14,
+      "initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+      "own_2015_state_sha256": "5073ce17e9cf35fa237ef6f631fcb2a30b678c75acc4283d9d02f4fda51978fb",
+      "own_2015_boundary_value_sha256": "00130e520974ab42f86f50f55920c6f8c8635ec07441f53aebbe3ab61eaf95a0",
+      "own_2015_queue_lengths": [
+        7,
+        7
+      ],
+      "own_2015_full_forecast_length": 24,
+      "checkpoint_roundtrip": "original pinned driver assertions passed; no fresh prefix replay yet",
+      "full_target_fit_table": [
+        {
+          "window": "2008\u20132011",
+          "target": 1.974875,
+          "weight": 0,
+          "model": 1.8673521968081455,
+          "gap": -0.10752280319185448,
+          "loss_contribution": 0.0,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2012\u20132015",
+          "target": 1.861,
+          "weight": 1,
+          "model": 1.8818053598295374,
+          "gap": 0.020805359829537462,
+          "loss_contribution": 0.0004328629976365311,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2016\u20132019",
+          "target": 1.755375,
+          "weight": 0,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        },
+        {
+          "window": "2020\u20132023",
+          "target": 1.64575,
+          "weight": 1,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        }
+      ],
+      "evidence_pins": [
+        {
+          "path": "results/c04_h24/run/candidate/map_001/native_record.json",
+          "sha256": "8fc983ef14701c0789b8ae4ce87ae57766932595183ddba4d4aac58a180ce843"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_001/dated_audits.json",
+          "sha256": "33ed0203ee2001abf71d5ec8523085fc9d48ae471a81c75f8038059969c95b05"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_002/native_record.json",
+          "sha256": "962920489eb3f7be9f2dda89d10f55296e39ba44e5c8d3f92afb1dfcab17183a"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_002/dated_audits.json",
+          "sha256": "877b2c746473e04bc17a70e3120209c74cd7ea21303b0e35d40c1c180ecf5860"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_003/native_record.json",
+          "sha256": "f2dca9574eb98710e4b0fdb58125cab40507f65dda0205adc76b4e6108146691"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_003/dated_audits.json",
+          "sha256": "fc979746720e4f83d4efbdce4b54ac2e14f9303952b6dbf07be8cb98896730d4"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_004/native_record.json",
+          "sha256": "9ccc49685a1de25266e10db4aafed3d598f6ea5c9db6ee0147bafaaabbae03f8"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_004/dated_audits.json",
+          "sha256": "18632048ef66f4fd128533d6c542debde8944a884fde9594b032f4c9cd1ca734"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_005/native_record.json",
+          "sha256": "7f5a9922189c9ed7e5ff237e50c12db6b3041df0ca59794c13fabe61b7d3eee8"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_005/dated_audits.json",
+          "sha256": "f438d2d19bc100869f3b855fc3bc3438e651293c11c12cbb0108a864cf4f77c2"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_006/native_record.json",
+          "sha256": "9d128586d76ddf569619c597c42fdde284309c74f33ce8227aa76ebb59035602"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_006/dated_audits.json",
+          "sha256": "3a3d790aa5f2e1d8e4753021486b41431f568a3edae4d15fd11e27beb897494c"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_007/native_record.json",
+          "sha256": "06cc04b7a99feb3b63842de3b649a9bd9dcf330440c472035cfab4420af59d39"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_007/dated_audits.json",
+          "sha256": "519cd320ddd33b3839f96ef4e852a9d1033451d204bff273f705b498f28b484d"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_008/native_record.json",
+          "sha256": "4dbdc927a060039d584c2f4bd73d4ca0cc9449e6a3ff8221de509fac37c8511c"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_008/dated_audits.json",
+          "sha256": "efcbfb0c611f11e61d00b6680bebdc2f5e4de95d6d38df9e4af8a6bcdace4cb7"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_009/native_record.json",
+          "sha256": "5f60f5eb8128964089615bbf68f34e205c2615447fdc7687dd568f5df8cfa3dd"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_009/dated_audits.json",
+          "sha256": "2db40d1f05b4c49aa04fa5cf755268936842bc0ebe097b7cc9f9029aea1e145a"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_010/native_record.json",
+          "sha256": "b9dd99c2ad68190a9ac21ce26adbc65e1c11d09d349d50a4cca2cab7470b4f3d"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/map_010/dated_audits.json",
+          "sha256": "2db40d1f05b4c49aa04fa5cf755268936842bc0ebe097b7cc9f9029aea1e145a"
+        },
+        {
+          "path": "results/c04_h24/run/result.json",
+          "sha256": "200879bd46e317807121ce7e09fcfb87785cb55d35558e5d7fe2fc3e866579f0"
+        },
+        {
+          "path": "results/c04_h24/run/seed_receipt.json",
+          "sha256": "cf08ef2bc64d49ccc69258020f79b44d1451993c05ac10c3a243a4029a28d174"
+        },
+        {
+          "path": "results/c04_h24/run/reference_receipt.json",
+          "sha256": "2ed1b603d561143e4c0a2d6b74cfe65bdfce0c56b3c800de5a81b224a73d7b70"
+        },
+        {
+          "path": "results/c04_h24/run/source_identity.json",
+          "sha256": "7f5f2b3b848f002feb15aa715cc1b96487824367a32ec7fe5077de9de9cec444"
+        },
+        {
+          "path": "results/c04_h24/run/candidate/root_full.json",
+          "sha256": "164c0b24c35cf27c6a4275d33539731f911cd92f514ea92a0cac3b32c9ac668d"
+        },
+        {
+          "path": "results/c04_h24/run/own_vintage_2015/boundary_receipt.json",
+          "sha256": "4de4270e0fb1e2b92eabf6b97305c4bfe326332c4ec1ed798e7fdfa7c5dccbf4"
+        },
+        {
+          "path": "results/c04_h24/run/diagnostics.json",
+          "sha256": "7ea5338f01dc8e3a57a26e5454a53a080a44951d7d5986f1ca2189ee7447df82"
+        }
+      ],
+      "scientific_acceptance": false,
+      "terminal": {
+        "job_id": "19195660",
+        "node": "cs756",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "scheduler_elapsed_seconds": 6922,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1791176885.2679114,
+        "peak_rss_kib": 25159480,
+        "peak_rss_gib": 23.99394989013672,
+        "launcher_pin": {
+          "path": "results/c04_h24/launcher_terminal.json",
+          "sha256": "1c7ddc77cf70be714c216a2ec7964a2d384324c35b68b869e013c6847d5dda13"
+        }
+      }
+    },
+    "c05_h24": {
+      "psi_fixed": 0.16,
+      "estimated_parameters": [],
+      "original_psi_bounds": [
+        0.001789207206604163,
+        0.35784144132083257
+      ],
+      "horizon": 24,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "replay_maximum_gap": 0.0,
+      "terminal_diagnostic_pass": false,
+      "terminal_diagnostic_gating": false,
+      "actual_and_controller_calls": 413,
+      "reference_calls": 2,
+      "seed_calls": 29,
+      "seed_map_calls": [
+        1,
+        7,
+        7,
+        7,
+        7
+      ],
+      "endpoint_calls": 13,
+      "root_map_calls": 369,
+      "root_evaluations": 9,
+      "root_elapsed_seconds": 5367.030163861113,
+      "seed_matrix_shape": [
+        24,
+        24
+      ],
+      "final_matrix_shape": [
+        48,
+        48
+      ],
+      "map_residuals": [
+        {
+          "map": 1,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.026838603140127346,
+          "maximum_absolute_scaled_fiscal_residual": 0.06106272064699139
+        },
+        {
+          "map": 2,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.019577747401874047,
+          "maximum_absolute_scaled_fiscal_residual": 0.03168725767203401
+        },
+        {
+          "map": 3,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0025120317940302813,
+          "maximum_absolute_scaled_fiscal_residual": 0.0051531069943691514
+        },
+        {
+          "map": 4,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.000898381233148609,
+          "maximum_absolute_scaled_fiscal_residual": 0.002083794816068723
+        },
+        {
+          "map": 5,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 0.0002143460640515879,
+          "maximum_absolute_scaled_fiscal_residual": 0.0004780542944566655
+        },
+        {
+          "map": 6,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.2765452802701984e-05,
+          "maximum_absolute_scaled_fiscal_residual": 0.000162461943833951
+        },
+        {
+          "map": 7,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 1.7929321127662904e-05,
+          "maximum_absolute_scaled_fiscal_residual": 4.5320762029372695e-05
+        },
+        {
+          "map": 8,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.04962913173548e-06,
+          "maximum_absolute_scaled_fiscal_residual": 1.4181492160764459e-05
+        },
+        {
+          "map": 9,
+          "policy_calls": 41,
+          "maximum_absolute_relative_housing_residual": 5.04962913173548e-06,
+          "maximum_absolute_scaled_fiscal_residual": 1.4181492160764459e-05
+        }
+      ],
+      "dated_audits": 216,
+      "all_dated_audit_gates_pass": true,
+      "maximum_projection_mass": 0.0,
+      "maximum_mass_error": 1.5543122344752192e-15,
+      "maximum_occupied_budget_excess": 2.842170943040401e-14,
+      "initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+      "own_2015_state_sha256": "764fedbf9c5dfee88a5f9eefa7771f77eed61f934703fef613da5a98298f535a",
+      "own_2015_boundary_value_sha256": "b4664f4930b4689f58e5009b05dd75bfa4ca8440888756cf77bee757f1d69e32",
+      "own_2015_queue_lengths": [
+        7,
+        7
+      ],
+      "own_2015_full_forecast_length": 24,
+      "checkpoint_roundtrip": "original pinned driver assertions passed; no fresh prefix replay yet",
+      "full_target_fit_table": [
+        {
+          "window": "2008\u20132011",
+          "target": 1.974875,
+          "weight": 0,
+          "model": 1.9482310633978535,
+          "gap": -0.02664393660214648,
+          "loss_contribution": 0.0,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2012\u20132015",
+          "target": 1.861,
+          "weight": 1,
+          "model": 1.9591896868790069,
+          "gap": 0.09818968687900687,
+          "loss_contribution": 0.009641214609397413,
+          "status": "fixed_preference_first_shock"
+        },
+        {
+          "window": "2016\u20132019",
+          "target": 1.755375,
+          "weight": 0,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        },
+        {
+          "window": "2020\u20132023",
+          "target": 1.64575,
+          "weight": 1,
+          "model": null,
+          "gap": null,
+          "loss_contribution": null,
+          "status": "pending_second_shock"
+        }
+      ],
+      "evidence_pins": [
+        {
+          "path": "results/c05_h24/run/candidate/map_001/native_record.json",
+          "sha256": "c2720bde329a486ec98ac0ac1f57f4ef610ed2d81129fec238ed4d97e61f7f12"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_001/dated_audits.json",
+          "sha256": "0491b0bbecf0735466f56471ac49a4982db5149864f5c521b408d933f0205db5"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_002/native_record.json",
+          "sha256": "51807a04315391530ce043919d538e0ac6fc41f0e339ded65bd0f428173664ac"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_002/dated_audits.json",
+          "sha256": "a842fbb3ceff9c08a50d275e1a74987c8d359b0155940947bba4d2404e7ea5a4"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_003/native_record.json",
+          "sha256": "e918f72d6e7c3fd80da9af1ed5f683f5857ff197424887af667efaee57d58ebb"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_003/dated_audits.json",
+          "sha256": "a9b8a998ebeb620d9fcf9a1d83187215a893fc2bb4e0bb21ebb1399796133416"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_004/native_record.json",
+          "sha256": "b7904481e7dc167d71d8e14823b14c14428000772239f244086545db71401501"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_004/dated_audits.json",
+          "sha256": "2e31cd8313d8bbfd0a2cb34325b215380de4b1d36803b709f599805d45de6367"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_005/native_record.json",
+          "sha256": "f38e965d21228e0c34c51b33a86e207837a1232f8f7ec3e414e6fc3b7ac3ee6f"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_005/dated_audits.json",
+          "sha256": "a61386c1fa24ff29bea24913646542c5f97660179018e9674e1934cfaa947c51"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_006/native_record.json",
+          "sha256": "365912737a87e1ec7db3c528726cedf9f73efabd93b4b2e831eeae85269cbda2"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_006/dated_audits.json",
+          "sha256": "16cd8f84dab852997451e632be31881d4ece9945a5a4e6c7b2747913423d5ccc"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_007/native_record.json",
+          "sha256": "ee7f36f184d6c49916a8383771a5d7b7ad2bf4b9652883bdfc3a75351ed0e4e8"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_007/dated_audits.json",
+          "sha256": "8c20197bcae71a7cc42d761c8485a6974b3d288e89418231362f22c8d57149dd"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_008/native_record.json",
+          "sha256": "0e01e97fb9699e3b6889eda1961f42364c254bdae04661b2ad912dda067a322d"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_008/dated_audits.json",
+          "sha256": "d4efce7a4c27b773230db84e4e95e49be4202627dcb9ca052f193642aff0af96"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_009/native_record.json",
+          "sha256": "d77ae3515364a3a198e4215d5c4ae378c6d30af00f70f88a160a3fe06490ddc3"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/map_009/dated_audits.json",
+          "sha256": "d4efce7a4c27b773230db84e4e95e49be4202627dcb9ca052f193642aff0af96"
+        },
+        {
+          "path": "results/c05_h24/run/result.json",
+          "sha256": "f56ca48f2c56c8e023d46898531adfcb575269a0baf5279911177b2c0b6f3ca7"
+        },
+        {
+          "path": "results/c05_h24/run/seed_receipt.json",
+          "sha256": "8a385f163ebe4090b6f6b77e725673abe191e061f6be35ea12f499ff6b589b72"
+        },
+        {
+          "path": "results/c05_h24/run/reference_receipt.json",
+          "sha256": "4f3efbda96345e3723d27165ac941c10705551ef5dfd17d4239d9c91cb7ed74b"
+        },
+        {
+          "path": "results/c05_h24/run/source_identity.json",
+          "sha256": "94c78b74b9034a773c293130a10b77f11735eee20bb0d793b386dc731d5237b4"
+        },
+        {
+          "path": "results/c05_h24/run/candidate/root_full.json",
+          "sha256": "bb6ee0cbab6b3838f62b19e933053d6e5cc5bfc3c36820a991676799ca1a8f29"
+        },
+        {
+          "path": "results/c05_h24/run/own_vintage_2015/boundary_receipt.json",
+          "sha256": "f949b4181867ad5a690521c1737644cb732100a4bf53ecbac61682d07f594aa9"
+        },
+        {
+          "path": "results/c05_h24/run/diagnostics.json",
+          "sha256": "71185a9309f84a7457c181c625ede22f91d5b3e772d4b037a8257dea3af9b686"
+        }
+      ],
+      "scientific_acceptance": false,
+      "terminal": {
+        "job_id": "19195664",
+        "node": "cs748",
+        "scheduler_state": "COMPLETED",
+        "scheduler_exit": "0:0",
+        "scheduler_elapsed_seconds": 7029,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1791176992.3707566,
+        "peak_rss_kib": 24366376,
+        "peak_rss_gib": 23.237586975097656,
+        "launcher_pin": {
+          "path": "results/c05_h24/launcher_terminal.json",
+          "sha256": "3cc9e21055a90214996c616e2c4fa24d03035639d6c80d7f2f374384d6f7b8e4"
+        }
+      }
+    }
+  },
+  "accepted_candidate": false,
+  "empirical_fitted": false,
+  "stage2_started": false,
+  "two_shock_2023_delivered": false,
+  "remaining_gates": [
+    "paired24/32 original horizon and state comparison",
+    "informative scalar fit and final fitted reproduction",
+    "exact two-period own-vintage2015 prefix before second surprise",
+    "second-stage fit and original gates"
+  ],
+  "snapshot_utc": "2026-10-05T05:18:05Z",
+  "collection_evidence": [
+    {
+      "path": "completion_artifact_verification.json",
+      "sha256": "fcccff27da3ef19f97ecd366895500eface7ed8cfa953effc20d89dec89c6525"
+    },
+    {
+      "path": "native_packet_verification.json",
+      "sha256": "0050ee711e4ed7d7d47d33d0d6f57297e784f2c2f97bf43255dfc1047f014aa6"
+    },
+    {
+      "path": "new_terminal_artifact_verification.json",
+      "sha256": "26c1c8e3442435e45916178a450006b1afe81bdb47fb7b065f4c1321b2191161"
+    },
+    {
+      "path": "new_terminal_collection.json",
+      "sha256": "5d4a3f8f2ffd44cb95e64088da7bf00b6cf4eab4f764d76ec7429e9ee8b8665c"
+    }
+  ],
+  "verification_scope": {
+    "native_packets": 171,
+    "completed_candidate_native_packets": 147,
+    "failed_candidate_completed_map_packets": 24,
+    "all_remote_native_packet_hashes_match": true,
+    "completed_dated_audits": 1176,
+    "standard_png_hashes_matched": 255,
+    "checkpoint_hashes_verified": 15,
+    "independent_packet_content_inspection": false,
+    "original_driver_checkpoint_roundtrip_assertions_passed": true,
+    "visual_plot_review_completed": false,
+    "model_calls_for_review": 0
+  }
+}

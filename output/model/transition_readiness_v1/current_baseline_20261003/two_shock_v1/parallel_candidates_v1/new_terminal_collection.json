@@ -1,0 +1,117 @@
+{
+  "schema": "new_terminal_collection_v1",
+  "scope": [
+    "c02_h24",
+    "c02_h32"
+  ],
+  "remote_root": "/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1",
+  "collection_method": "read-only rsync of JSON/log receipts; no model calls or job changes",
+  "jobs": {
+    "c02_h24": {
+      "slurm_job_id": "19195636",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "finished_local_time": "2026-10-05 01:15:27 America/New_York",
+      "actual_native_calls": 455,
+      "launcher_terminal": {
+        "deadline_epoch": 1791180765,
+        "exit_code": 0,
+        "finished_epoch": 1791177327.8456786,
+        "no_auto_retry": true,
+        "node": "cs669",
+        "slurm_job_id": "19195636",
+        "start_epoch": 1791169965,
+        "status": "complete"
+      },
+      "progress_receipt": {
+        "accepted_candidate": false,
+        "actual_native_calls": 455,
+        "elapsed_seconds": 7271.976112503093,
+        "epoch": 1791177326.513144,
+        "pending_horizon_comparison": true,
+        "phase": "complete",
+        "root_gate_passed": true
+      },
+      "addon_source_pins": {
+        "config_sha256": "83d12d8306bd784694f59a581259ac00a1d2f9f2101b6e5d94bbaf5ab5448e9b",
+        "driver_sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+        "task_id": "c02_h24",
+        "verified": true
+      },
+      "completed_candidate_maps": null,
+      "native_call_accounting": null,
+      "failure_evidence": "",
+      "batch_max_rss_kib": 25159188,
+      "batch_max_rss_gib_exact": 23.993671417236328,
+      "scheduler_elapsed_seconds": 7364,
+      "progress_elapsed_seconds": 7271.976112503093
+    },
+    "c02_h32": {
+      "slurm_job_id": "19195638",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "finished_local_time": "2026-10-05 01:17:41 America/New_York",
+      "actual_native_calls": 527,
+      "launcher_terminal": {
+        "deadline_epoch": 1791180765,
+        "exit_code": 1,
+        "finished_epoch": 1791177461.3458405,
+        "no_auto_retry": true,
+        "node": "cs641",
+        "slurm_job_id": "19195638",
+        "start_epoch": 1791169965,
+        "status": "failed"
+      },
+      "progress_receipt": {
+        "actual_native_calls": 527,
+        "elapsed_seconds": 7409.085056942888,
+        "epoch": 1791177459.9278343,
+        "phase": "failed"
+      },
+      "addon_source_pins": {
+        "config_sha256": "83a03083186f1aaf31cf22e202b5f5aa1b6281be18f42539efe917485836edab",
+        "driver_sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+        "task_id": "c02_h32",
+        "verified": true
+      },
+      "completed_candidate_maps": 8,
+      "native_call_accounting": {
+        "completed_candidate_map_cumulative_calls": 501,
+        "global_recorded_calls": 527,
+        "calls_after_completed_map_counter": 26
+      },
+      "failure_evidence": "driver.log records TimeoutError: Bounded path timed out, raised in one_shock_floor.py timeout wrapper; surfaced through Numba SystemError at full_owner_block_kernel during backward_value_path -> solve_date_policy. Eight candidate maps completed; root_progress_full evaluation=8, elapsed_seconds=5739.312349886866, final market residual=6.12792269302495e-5 and fiscal residual=5.167870940412746e-5. Candidate/map_008/native_record.json total_native_calls=501; global run/progress.json reports 527 actual_native_calls, leaving 26 calls beyond the completed-map cumulative counter when failure was recorded.",
+      "batch_max_rss_kib": 25159600,
+      "batch_max_rss_gib_exact": 23.994064331054688,
+      "scheduler_elapsed_seconds": 7498,
+      "progress_elapsed_seconds": 7409.085056942888
+    }
+  },
+  "checks": {
+    "diagnostic_packet_hashes": "incomplete; no packet files downloaded or independently rehashed before bounded collection stop",
+    "new native/checkpoint/PNG hash verification": "incomplete",
+    "jacobian_npy": "c02_h32 fresh_seed/measured/jacobian.npy collected; c02_h24 no corresponding measured receipt was confirmed",
+    "immutable inputs/addon": "left unchanged"
+  },
+  "pins": {
+    "c02_h24": {
+      "config_sha256": "83d12d8306bd784694f59a581259ac00a1d2f9f2101b6e5d94bbaf5ab5448e9b",
+      "driver_sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+      "task_id": "c02_h24",
+      "verified": true
+    },
+    "c02_h32": {
+      "config_sha256": "83a03083186f1aaf31cf22e202b5f5aa1b6281be18f42539efe917485836edab",
+      "driver_sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318",
+      "task_id": "c02_h32",
+      "verified": true
+    },
+    "same_config_sha256": false,
+    "same_driver_sha256": true
+  },
+  "hash_receipt_path": "results/c02_h32/run/fresh_seed/measured/receipt.json",
+  "timeout_cap_attribution": {
+    "finding": "path_seconds cap is the binding limit at approximately 6000 seconds (\u00b11 second from file timestamp precision); candidate and map budgets are not binding",
+    "basis": "lead verified frozen _mapping/watchdog code and map_008 elapsed 5739.312 seconds against failed epoch; this is path elapsed, not a native-call timeout"
+  }
+}
