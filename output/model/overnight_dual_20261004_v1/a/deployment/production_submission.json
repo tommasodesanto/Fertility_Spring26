@@ -1,0 +1,19 @@
+{
+  "arm": "a",
+  "job_id": "19194495",
+  "submitted_utc": "2026-10-05T02:49:33.686787+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--begin=now+5minutes",
+    "--array=0-11%12",
+    "--time=12:00:00",
+    "--export=ALL,ESTATE_RUN_MODE=production",
+    "/scratch/td2248/projects/estate_birth_overnight_20261004_v1/launch_torch.sh"
+  ],
+  "mock": {
+    "objective_calls": 2,
+    "lifecycle_solves": 0
+  },
+  "no_auto_retry": true
+}

@@ -1,0 +1,19 @@
+{
+  "arm": "b",
+  "job_id": "19194496",
+  "submitted_utc": "2026-10-05T02:49:41.784086+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--begin=now+5minutes",
+    "--array=0-11%12",
+    "--time=12:00:00",
+    "--export=ALL,CONTINUE_RUN_MODE=production",
+    "/scratch/td2248/projects/soft_timing_overnight_20261004_v1/launch_torch.sh"
+  ],
+  "mock": {
+    "objective_calls": 2,
+    "lifecycle_solves": 0
+  },
+  "no_auto_retry": true
+}

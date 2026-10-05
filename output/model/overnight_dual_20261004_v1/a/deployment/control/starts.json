@@ -1,0 +1,1029 @@
+{
+  "arms": {
+    "binary": 1
+  },
+  "bounds": {
+    "beta_annual": [
+      0.93,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.6
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "psi_child": [
+      0.01,
+      0.5
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "continuation_arm": "binary",
+  "continuation_design": "5 verified recovery selected vectors; 5 authenticated provisional parent feasible checkpoints; 10 bounded perturbations around verified recovery chain 1",
+  "coordinates": [
+    "beta_annual",
+    "chi",
+    "child_benefit_curvature",
+    "first_birth_fixed_cost",
+    "h_P",
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "psi_child",
+    "tenure_choice_kappa",
+    "theta0"
+  ],
+  "deterministic_seed": 20261004,
+  "economic_changes": {
+    "beta_bound": "both arms .93 to .99",
+    "birth_menu": "matched engine cap1 current binary economics versus cap3",
+    "estate_A": "utility and deceased-account estate bp+(1-psi)*P*h_prime; no extra R",
+    "unchanged": "all other primitives, entry, timing, targets, weights and numerical gates",
+    "wealth_target": "experimental narrowerPSID wealth target with retained weight"
+  },
+  "free_parameter_count": 10,
+  "identification_rank_certified": false,
+  "no_auto_retry": true,
+  "no_parameter_promotion": true,
+  "no_scientific_adoption": true,
+  "original_start_plan_sha256": "b2f46d15a78cd3ee5b70a206ee76df78822c0cca706755aa45c188fc9ea29c66",
+  "overnight_canceled_sources": [
+    {
+      "filename": "canceled_chain1_best_so_far.json",
+      "loss": 19.14485687996558,
+      "sha256": "65e2a4a9492344e9863f3bc438f0087e748410513e935f37ffe314fc05bef1e9"
+    },
+    {
+      "filename": "canceled_chain2_best_so_far.json",
+      "loss": 21.3535626415978,
+      "sha256": "48fe8746a94cc555627056237e39d9e2527c875cdececb071718020a99ad7a52"
+    }
+  ],
+  "overnight_parent_starts_sha256": "c69da5eea6aa7d31bacf4df1b6c0ea0d70f057c8fa7b2305f701d738d800ebf5",
+  "pairwise_normalized_distances": [
+    0.15731586821354054,
+    0.01347552696321537,
+    0.16541723255175764,
+    0.06785543915330203,
+    0.22300783953530373,
+    0.06158160733541828,
+    0.050139836793555624,
+    0.20457138212074807,
+    0.04343845868718283,
+    0.02011072840738411,
+    0.16701332197284072,
+    0.3206085073270875,
+    0.16043774648039877,
+    0.09976798818526224,
+    0.11849436421150757,
+    0.15146823106488325,
+    0.030420387853379575,
+    0.16066026238585143,
+    0.21558242646783227,
+    0.1978609299636056,
+    0.3107860453700069,
+    0.15159808110752862,
+    0.304235476509656,
+    0.1452873272100501,
+    0.08490862774906198,
+    0.10363746443933276,
+    0.0178316600506303,
+    0.29406840144065766,
+    0.19228301931470676,
+    0.34559883116913176,
+    0.1858613608607282,
+    0.12528577757350862,
+    0.14428323912760604,
+    0.02646210110270955,
+    0.33522054507953347,
+    0.04154397434233186,
+    0.1908069954922253,
+    0.3443656762801471,
+    0.18444038275382277,
+    0.12347022528864464,
+    0.14241077486402828,
+    0.024582540000291375,
+    0.33428082324007047,
+    0.04105024254445358,
+    0.00923536317390066,
+    0.14785828839467624,
+    0.030572776321377556,
+    0.15548344365860148,
+    0.21340524394548946,
+    0.19537397633534434,
+    0.31051788075869535,
+    0.03989908607497725,
+    0.2940185781774875,
+    0.3352674718660258,
+    0.33432213596994265,
+    0.164537865528945,
+    0.04999999999999995,
+    0.17193255614875,
+    0.22676949537386426,
+    0.20877348272284896,
+    0.32153136230448803,
+    0.056504015134970664,
+    0.30509343859139404,
+    0.3461395882299325,
+    0.3451729157304682,
+    0.04510038143400574,
+    0.15011470072652316,
+    0.05215950109849568,
+    0.15809556459814814,
+    0.21325508255863002,
+    0.19624261824159883,
+    0.3085441171007138,
+    0.04910779847360246,
+    0.29198890993480864,
+    0.33283166373348144,
+    0.3317331593218272,
+    0.060351719939566534,
+    0.08202023006753985,
+    0.14644911072366962,
+    0.06672015759965971,
+    0.15338319881783138,
+    0.2100137629737704,
+    0.19069776268215285,
+    0.30718149047796084,
+    0.07995094114405892,
+    0.2925286592895473,
+    0.33324398222657864,
+    0.33064308092225103,
+    0.07394242073424023,
+    0.08957450532940517,
+    0.08939004126122065,
+    0.21991469950784617,
+    0.0926888491552736,
+    0.22759144972390308,
+    0.2806534806035168,
+    0.26229699523487093,
+    0.37492948936719067,
+    0.10373232455813935,
+    0.3594495751165603,
+    0.4002025776731618,
+    0.39776005997067493,
+    0.10899743270734606,
+    0.10951830975099056,
+    0.11126079615225241,
+    0.09594106058236805,
+    0.14681166122513029,
+    0.031064813084210337,
+    0.15398098519141065,
+    0.21222225653682747,
+    0.19344073407500204,
+    0.30978721141642196,
+    0.04712597466711451,
+    0.2936518330937797,
+    0.3348044838795397,
+    0.3337528967108942,
+    0.04707812253585066,
+    0.06596262783922334,
+    0.06147187790093083,
+    0.06905108544950234,
+    0.11124269761747126,
+    0.15705434988502742,
+    0.038462485905189435,
+    0.16372165791295767,
+    0.22114404294843834,
+    0.20223148504981125,
+    0.31822021188013144,
+    0.0563535080518191,
+    0.3022242856317124,
+    0.3436046799700156,
+    0.34195380412550924,
+    0.04544193558634867,
+    0.05498503761007344,
+    0.06207991986561641,
+    0.059149912532796126,
+    0.09427794403782803,
+    0.04468936695597005,
+    0.15284699111607175,
+    0.058869288275744926,
+    0.1627889034567777,
+    0.2157676472694366,
+    0.19950572108533005,
+    0.30976480316219746,
+    0.043418058643051115,
+    0.2930261060081427,
+    0.33336258826822696,
+    0.3326047287112606,
+    0.06708147344762373,
+    0.09139737404109162,
+    0.04181846316513031,
+    0.10053013375225779,
+    0.1232946904276227,
+    0.06523602663000953,
+    0.07926937893351461,
+    0.17004871698065827,
+    0.07673921555937971,
+    0.18141293908276215,
+    0.23246569583424045,
+    0.21600499549414381,
+    0.32652618723165905,
+    0.07095830171599628,
+    0.3107937618563612,
+    0.3505256312190754,
+    0.3488277496449647,
+    0.08037275135551515,
+    0.09102063814586313,
+    0.09696801445957624,
+    0.09020585063023995,
+    0.11325254194088756,
+    0.09134049273999206,
+    0.09307492790777824,
+    0.07635739021596522,
+    0.17752616971207952,
+    0.09315549926770354,
+    0.18339158306466694,
+    0.2368509453083664,
+    0.2199785067499951,
+    0.3272725615760385,
+    0.0877826516215683,
+    0.31110228455949096,
+    0.3510659525302565,
+    0.35050714362462815,
+    0.1006582483447629,
+    0.10791934065429443,
+    0.06258539939592539,
+    0.11886345813732031,
+    0.13550806068288457,
+    0.09438139447916563,
+    0.09352501400359112,
+    0.08499455264947141,
+    0.1364819919620784
+  ],
+  "parent_array_task_job_ids": [
+    "19127379",
+    "19127380",
+    "19127381",
+    "19127382",
+    "19127383"
+  ],
+  "parent_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+  "parent_job_id": "19127370",
+  "parent_receipt_root": "/work/parent",
+  "parent_root": "/work/parent",
+  "parent_rows": [
+    {
+      "arm": "binary",
+      "best_sha256": "3c6d1bbdb1acc72706208cb24082b431bbce695ec6f89d84dcec8f09c67730c3",
+      "cases_sha256": "95c3d91abeef1579a5eee78d83cb6e66cfa705e36a955287de40bda42c0db9e4",
+      "chain": 0,
+      "contract_sha256": "a92c7711fdff0b57875b5bd30a42668bf3e6b2b3754d7597c43f398d71639f2d",
+      "launcher_start_sha256": "3855dcd09648bbae0acd7775d8c515456928faac3a031a3c5ed918fc99d12067",
+      "parameters": {
+        "beta_annual": 0.9634252312182169,
+        "chi": 1.0435282858288566,
+        "child_benefit_curvature": 0.06558751341412128,
+        "first_birth_fixed_cost": 0.32370179096431634,
+        "h_P": 2.5867783874295953,
+        "kappa_fert": 0.11982058789102132,
+        "kappa_fert_continuation": 0.404044002164409,
+        "psi_child": 0.18018864422368217,
+        "tenure_choice_kappa": 0.015113451448816106,
+        "theta0": 0.10978212421037725
+      },
+      "provisional_loss": 47.91209165004216,
+      "task": 0,
+      "terminal_sha256": "431bfdab46913b33991be275cc4feda5762f1172d12b9b722441e36ff95984f3"
+    },
+    {
+      "arm": "binary",
+      "best_sha256": "65c2f51a68fd3bb692fa12b6085ea9605c7c8dfbe9273b9419b9c43678df930a",
+      "cases_sha256": "16268dc9a0900882b4b5bd5428eff10ac3b38cebf10921701853401e5f02d105",
+      "chain": 1,
+      "contract_sha256": "1efe2334f27958a7dc774154f2088fd0e6d4ae883483fbc3ff3101d8cf62ed94",
+      "launcher_start_sha256": "48b6f98c1c78c6085faee1e99b9f69ab7ceccfb988435774940cca85af6c88ca",
+      "parameters": {
+        "beta_annual": 0.9451896112861619,
+        "chi": 1.092228903928348,
+        "child_benefit_curvature": 0.10784530143653813,
+        "first_birth_fixed_cost": 0.3217217614426666,
+        "h_P": 2.5012143276596217,
+        "kappa_fert": 0.1209085818651128,
+        "kappa_fert_continuation": 0.4099317147389977,
+        "psi_child": 0.18477904551086777,
+        "tenure_choice_kappa": 0.014296308125547316,
+        "theta0": 0.11077920153438148
+      },
+      "provisional_loss": 25.156336808299073,
+      "task": 1,
+      "terminal_sha256": "1ce2e4cc9cac45c7d83fe19c55580c34d0272295dfcf6b73ba02f7f3c45ff6dc"
+    },
+    {
+      "arm": "binary",
+      "best_sha256": "3582811a7acf08ec68e99c86ed9b614cf379ebb4305f700611642c7aeda149ab",
+      "cases_sha256": "8ed8b424a788859fff0ae34266db909347db94ef17c66412e946a5225f559a1b",
+      "chain": 2,
+      "contract_sha256": "b107a87ec32856a3c52d23a0a78d479d465c495958a64794c70735b97dc8b894",
+      "launcher_start_sha256": "1f3c1ff347da4672021608b8699bd2fda4bc41542306668b6bc3e85749b735e2",
+      "parameters": {
+        "beta_annual": 0.9624515351810958,
+        "chi": 1.0528035748454498,
+        "child_benefit_curvature": 0.06746923970856034,
+        "first_birth_fixed_cost": 0.3084520045383921,
+        "h_P": 2.5805862314657344,
+        "kappa_fert": 0.11850099483282835,
+        "kappa_fert_continuation": 0.4012568304009756,
+        "psi_child": 0.18046362332939947,
+        "tenure_choice_kappa": 0.014525064527914244,
+        "theta0": 0.11212210761247729
+      },
+      "provisional_loss": 44.89284902690596,
+      "task": 2,
+      "terminal_sha256": "720f71f93fd857fb40399a076b4732328d06810cfd6fcea60b8352f7ec18f98f"
+    },
+    {
+      "arm": "binary",
+      "best_sha256": "76240c0227e8d2ee150b006fd1278df6678ad2cb555fdf01a597193155eeb423",
+      "cases_sha256": "be5e410231bb886fabbc7da71dea1599d76d8a191ecb2f65c2ff08694fd0de24",
+      "chain": 3,
+      "contract_sha256": "4ff3b707045d5509fb52991b218d7af7485507a2e29872b3fb8f0de066783b5f",
+      "launcher_start_sha256": "358085a8098697731125ae69d40454157d6bff6ffa0e5f16e855662b1bb0e268",
+      "parameters": {
+        "beta_annual": 0.9648846188392413,
+        "chi": 1.0428739975632575,
+        "child_benefit_curvature": 0.060622140418948825,
+        "first_birth_fixed_cost": 0.3146314205207504,
+        "h_P": 2.5784881452545094,
+        "kappa_fert": 0.11463964483054843,
+        "kappa_fert_continuation": 0.3985959466054962,
+        "psi_child": 0.18033891068913305,
+        "tenure_choice_kappa": 0.0143616317971812,
+        "theta0": 0.1108415125238647
+      },
+      "provisional_loss": 52.60345291757801,
+      "task": 3,
+      "terminal_sha256": "b17641537099efb37c0c9d4b8085afa37cd90f261b950ce89c1b36c22ba84db6"
+    },
+    {
+      "arm": "binary",
+      "best_sha256": "ab38295268471c7cef12ea3a2d6e4e79805f3d289dd324e625197f99b6c83789",
+      "cases_sha256": "46812a41d63ddaf3e07ac31eacaa7e490fb034e1d697e2942634a43949007efa",
+      "chain": 4,
+      "contract_sha256": "153d9d978e94ed97fe8f0ee4e6ecfeeabbe18f562759f85c8026138c748416d2",
+      "launcher_start_sha256": "daa90d7f357ebd4d0154727128e0ce989561aac77ebadea586aa650cd0cc7318",
+      "parameters": {
+        "beta_annual": 0.9648635252285206,
+        "chi": 1.052526478207392,
+        "child_benefit_curvature": 0.06365739839047008,
+        "first_birth_fixed_cost": 0.3112784800160176,
+        "h_P": 2.5769401903351388,
+        "kappa_fert": 0.11453873246288397,
+        "kappa_fert_continuation": 0.3932905534727476,
+        "psi_child": 0.17950051142787368,
+        "tenure_choice_kappa": 0.015145957213873497,
+        "theta0": 0.1044952691862876
+      },
+      "provisional_loss": 52.34597962034189,
+      "task": 4,
+      "terminal_sha256": "e16d9316c557be59aa09469452c81dd95d9e9e3bae7674fafff59bbf9ad2fe50"
+    },
+    {
+      "arm": "count3",
+      "best_sha256": "e5047693d8b0bd28c5210b2c2fde7cdfc88b54cd02be702faedeb2508a4e954d",
+      "cases_sha256": "a075acff8908ace0533bddf6988c9be2d91ff34c11b6a527838c13f5fbb4f237",
+      "chain": 0,
+      "contract_sha256": "4b4fd3e10a3e307a8f793af73954b6db63988063874cc138d58d21d9f552757f",
+      "launcher_start_sha256": "e0ece3684a2987b121e5135008fa54471331075275787de9e0498f285b2ad0ec",
+      "parameters": {
+        "beta_annual": 0.9665783259555915,
+        "chi": 1.008984866058336,
+        "child_benefit_curvature": 0.06860983504584345,
+        "first_birth_fixed_cost": 0.3800809041397923,
+        "h_P": 2.56129195328039,
+        "kappa_fert": 0.11529577700909913,
+        "kappa_fert_continuation": 0.4047594290526752,
+        "psi_child": 0.15119085588369155,
+        "tenure_choice_kappa": 0.014189579026271215,
+        "theta0": 0.10778023122640012
+      },
+      "provisional_loss": 556.7763909720807,
+      "task": 5,
+      "terminal_sha256": "ed4a5edc67416f1bd30a0a64c14f6b970a06cff9972a7ca90b267b89501deb87"
+    },
+    {
+      "arm": "count3",
+      "best_sha256": "9f16e66176a2dba5d3fd0b0c7155ef9d2f1bad224a465385c9943d46fc34a42a",
+      "cases_sha256": "2eba7c11e77674fa61466857af37c2e33e041c237a292bdb5594d2b36277dc08",
+      "chain": 1,
+      "contract_sha256": "33a25dbcce42d1318ea05f0eae970945518799c76dac2beeaf52c59f7d5c0d07",
+      "launcher_start_sha256": "6860f631f5e8729e19fb74086bf70a73406f036645d3f9ab9e7bfea1980f6251",
+      "parameters": {
+        "beta_annual": 0.9451536456975688,
+        "chi": 1.0421174778896565,
+        "child_benefit_curvature": 0.1106239005255022,
+        "first_birth_fixed_cost": 0.37009538008351733,
+        "h_P": 2.5432468367420484,
+        "kappa_fert": 0.11862786928835063,
+        "kappa_fert_continuation": 0.40949107676833785,
+        "psi_child": 0.16644388941017735,
+        "tenure_choice_kappa": 0.014558294870450527,
+        "theta0": 0.11275153454606818
+      },
+      "provisional_loss": 886.8784867738863,
+      "task": 6,
+      "terminal_sha256": "98b326a6137f8a9ff406ab57c63b4853a41e99aac62c8b96b7cad68202c46512"
+    },
+    {
+      "arm": "count3",
+      "best_sha256": "69f51c62420b03c7aa1f90db3648e60cbbf2b7d04087ccd2e7bc1bf1e152baf6",
+      "cases_sha256": "749dbd63d1c0239023c584faadde1783b72fc131a0b3723b354a2cdebec2250d",
+      "chain": 2,
+      "contract_sha256": "cba7aa71026729a590619873626c7a985038e1c0df68de20a6b563e1dc6b483a",
+      "launcher_start_sha256": "5245fed6b1cc244bde4f6a591fbe85c7ea805f643c4a88bd3e0f68efb5133618",
+      "parameters": {
+        "beta_annual": 0.9651564390565228,
+        "chi": 1.0089081792179526,
+        "child_benefit_curvature": 0.07125267894069212,
+        "first_birth_fixed_cost": 0.37675124263960297,
+        "h_P": 2.560660221933951,
+        "kappa_fert": 0.11823507534803404,
+        "kappa_fert_continuation": 0.4019627772611204,
+        "psi_child": 0.15166370494180847,
+        "tenure_choice_kappa": 0.014054074025584815,
+        "theta0": 0.10475235165819619
+      },
+      "provisional_loss": 600.8027214481609,
+      "task": 7,
+      "terminal_sha256": "7d1081932afb7f2c6b34039df1219395fdcc43a5b499cfbe84f66dede4d9d291"
+    },
+    {
+      "arm": "count3",
+      "best_sha256": "0ea7b2872ce69f0aa2dfce05668f8e1b407bcfe7efa6bfda18ab71d9d403e00a",
+      "cases_sha256": "2cafd593334d33d544da170cac48777685388328804d88d0fbce3d89ab668d36",
+      "chain": 3,
+      "contract_sha256": "d4e0ee270f48c062bf4dc5c91d647bc806af653061ba85166ef33a0d5aeaf9a8",
+      "launcher_start_sha256": "86a4e3f9b55490e77685dbff1fb6eaa353b6bea234bc756ff58dc4b49af68625",
+      "parameters": {
+        "beta_annual": 0.9669160570832341,
+        "chi": 1.0121714688327843,
+        "child_benefit_curvature": 0.06756585803626698,
+        "first_birth_fixed_cost": 0.3613029387105382,
+        "h_P": 2.551560609526888,
+        "kappa_fert": 0.11572340073140393,
+        "kappa_fert_continuation": 0.3974259098545765,
+        "psi_child": 0.14091950276536033,
+        "tenure_choice_kappa": 0.014962739608568476,
+        "theta0": 0.1130506986513862
+      },
+      "provisional_loss": 494.723860920201,
+      "task": 8,
+      "terminal_sha256": "c2010877e4104f9e9063e5b8b4061ea4ec9f617711394917cad1c6fe1e1ce538"
+    },
+    {
+      "arm": "count3",
+      "best_sha256": "881fa8f3e99aedb11a0948f429f63d2f216808f395e1b2cd33680bedda890d41",
+      "cases_sha256": "4de0e6d530370c55d2757ad00e4066d19e60c156f3b3e0a2a4b5587221be1a9d",
+      "chain": 4,
+      "contract_sha256": "a57805b28d342a0cb16a88923c16b03fc995f3a5dc5c197c1128dfb01da60f1b",
+      "launcher_start_sha256": "c7f78775770e0c580d0a5717c5c737be095b3ad9d4bc207d792b6ea81b35732c",
+      "parameters": {
+        "beta_annual": 0.9676425041418772,
+        "chi": 1.0376348000102849,
+        "child_benefit_curvature": 0.06807039500324011,
+        "first_birth_fixed_cost": 0.39525704442411075,
+        "h_P": 2.5668572062821715,
+        "kappa_fert": 0.11011972461291629,
+        "kappa_fert_continuation": 0.397472685664649,
+        "psi_child": 0.1500043752769314,
+        "tenure_choice_kappa": 0.014318234485920414,
+        "theta0": 0.0992168433744656
+      },
+      "provisional_loss": 490.00450277384294,
+      "task": 9,
+      "terminal_sha256": "d164dd0f8e8901d0d0b2e556e23ea051f1b36933301e932bf085d0e3f1391dd4"
+    }
+  ],
+  "per_chain": {
+    "absolute_stop_epoch": 1791122400,
+    "cpus": 1,
+    "final_native_reserve_seconds": 1800,
+    "max_lifecycle_per_GE": 32,
+    "max_objective_calls": 500,
+    "memory_GiB": 24,
+    "wall_seconds": 43200
+  },
+  "perturbation_patterns": [
+    {
+      "beta_annual": -0.0015,
+      "child_benefit_curvature": 0.04,
+      "kappa_fert": 0.04,
+      "tenure_choice_kappa": -0.035
+    },
+    {
+      "h_P": 0.012,
+      "kappa_fert_continuation": -0.035,
+      "psi_child": -0.025,
+      "theta0": 0.04
+    },
+    {
+      "beta_annual": 0.001,
+      "chi": -0.025,
+      "first_birth_fixed_cost": 0.035,
+      "kappa_fert": -0.035,
+      "theta0": -0.04
+    }
+  ],
+  "positive_weight_target_count": 10,
+  "production_release_required": true,
+  "provisional_seed": {
+    "source": "failed_parent_saved_best",
+    "verified": false
+  },
+  "provisional_seed_source": "/work/parent/inventory.json",
+  "provisional_seed_source_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+  "recovery_arm": "binary",
+  "recovery_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+  "recovery_job_id": "19141024",
+  "recovery_root": "/work/recovery",
+  "scf_provisional": "Retained target .007291... is not reconciled to recipient and wealth-scope conventions; no row dropped or reweighted.",
+  "solve_budget": {
+    "actual_chain_wall_cap_hours": 12,
+    "final_fresh_GE_calls": 15,
+    "final_max_lifecycle_solves": 320,
+    "rough_calls_per_chain_in_19800seconds_at_90sec": 220,
+    "rough_max_search_hours_at_90sec": 125,
+    "rough_parallel_wall_hours_for_500calls_at_90sec": 12.5,
+    "search_max_GE_calls": 7500,
+    "search_max_lifecycle_solves": 160000,
+    "smoke_final_fresh_GE_calls": 2,
+    "smoke_max_lifecycle_solves": 192,
+    "smoke_search_GE_calls": 4,
+    "total_chains": 15,
+    "typical_GE_seconds": 90,
+    "typical_fixed_price_seconds": 6,
+    "uncertainty": "Prior unchanged economics timing is indicative only; estate and birth menu changes may alter convergence and solve times. Time cap will likely bind before 500calls."
+  },
+  "source_checkpoint": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/completed.json",
+  "source_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+  "source_provenance": {
+    "parent_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+    "parent_plan_sha256": "b2f46d15a78cd3ee5b70a206ee76df78822c0cca706755aa45c188fc9ea29c66",
+    "recovery_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+    "recovery_plan_sha256": "7fb58a45a5f5e9383c192be3da13f8fa2f8ab75cb0da8edfb1d53eba439cec37",
+    "recovery_stage_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22"
+  },
+  "start_generation": "chain13, preserved unverified new-target chain6 checkpoint, and three deterministic bounded chain13 relative perturbations; no RNG",
+  "start_provenance": [
+    {
+      "chain": 0,
+      "completed_sha256": "dffa099aaa7a52e23cd854da7a4f02069072761c177bd8c8b48045cb25fc59af",
+      "index": 0,
+      "kind": "verified_recovery_selected",
+      "loss": 26.286369426991854,
+      "native_postcheck_sha256": "58de6cb912262f9b660845f213b28919ab536a4392c22d591c9d61a9eca52c41",
+      "search_sha256": "0957e4b1a75d3bd03201de973ccf21691f5e632db342dec8f103f75fc9248eee",
+      "source_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+      "source_job_id": "19141090"
+    },
+    {
+      "chain": 1,
+      "completed_sha256": "af1d38721d33af343daee6b8bcf989e76c29d8f9b0e7ef0ad05d4e554fe8aa23",
+      "index": 1,
+      "kind": "verified_recovery_selected",
+      "loss": 21.275413361071312,
+      "native_postcheck_sha256": "5a5ddb37c427504568033d4b4a5f90a2d8e07d4e3427eb7e810d675488d9e9fb",
+      "search_sha256": "2e104f260050b802370de3d8bdd0d0792c8a7af9e13be849fadfdd6171106f71",
+      "source_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+      "source_job_id": "19141091"
+    },
+    {
+      "chain": 2,
+      "completed_sha256": "c582de496c3beadf5feeed81cdd0fc2d0e6b44e7fe1046fbcf3683b1e87eab66",
+      "index": 2,
+      "kind": "verified_recovery_selected",
+      "loss": 26.88954280530199,
+      "native_postcheck_sha256": "7d6ff03e685d45dbc4068c4eac8d0ec1f6af93c3afe1ac2236c9491b179f37c2",
+      "search_sha256": "f6971fc7d8f8741f3862238f8d846412a5fa2b90c02e5986b0c9346d73db61e9",
+      "source_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+      "source_job_id": "19141092"
+    },
+    {
+      "chain": 3,
+      "completed_sha256": "ec10faa6c7149d9bd6780532dde5482cdbd1468d5c4fea10f8eb5121d836f7de",
+      "index": 3,
+      "kind": "verified_recovery_selected",
+      "loss": 32.41120669287403,
+      "native_postcheck_sha256": "24937c3ac4dc9d6366b2ade9e33683590a7cda6011727c9019c403fbd8e61bd8",
+      "search_sha256": "71df121d63052a6bab35ce70ae9fd9b38c2dc6bb661235daaf0e9126b3320ec7",
+      "source_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+      "source_job_id": "19141093"
+    },
+    {
+      "chain": 4,
+      "completed_sha256": "b8a28264be8f73bf5033634a53683ef19df7f581e21ee577560aa4f77053e75e",
+      "index": 4,
+      "kind": "verified_recovery_selected",
+      "loss": 31.82246291736183,
+      "native_postcheck_sha256": "360145bb53f9fae85f61878169fc3333c18c6420d18ecd76677afffe2bce44d7",
+      "search_sha256": "ef5bbba7670e5585c4a0951fe83117a90edc2cf1eeb9576cdbe2fc8b07b182f6",
+      "source_inventory_sha256": "974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22",
+      "source_job_id": "19141094"
+    },
+    {
+      "best_sha256": "3c6d1bbdb1acc72706208cb24082b431bbce695ec6f89d84dcec8f09c67730c3",
+      "cases_sha256": "95c3d91abeef1579a5eee78d83cb6e66cfa705e36a955287de40bda42c0db9e4",
+      "chain": 0,
+      "index": 5,
+      "kind": "parent_saved_feasible_checkpoint",
+      "parent_array_job_id": "19127370",
+      "parent_array_task_job_id": "19127379",
+      "provisional_loss": 47.91209165004216,
+      "source_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+      "start_contract_sha256": "a92c7711fdff0b57875b5bd30a42668bf3e6b2b3754d7597c43f398d71639f2d",
+      "verified_native": false
+    },
+    {
+      "best_sha256": "65c2f51a68fd3bb692fa12b6085ea9605c7c8dfbe9273b9419b9c43678df930a",
+      "cases_sha256": "16268dc9a0900882b4b5bd5428eff10ac3b38cebf10921701853401e5f02d105",
+      "chain": 1,
+      "index": 6,
+      "kind": "parent_saved_feasible_checkpoint",
+      "parent_array_job_id": "19127370",
+      "parent_array_task_job_id": "19127380",
+      "provisional_loss": 25.156336808299073,
+      "source_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+      "start_contract_sha256": "1efe2334f27958a7dc774154f2088fd0e6d4ae883483fbc3ff3101d8cf62ed94",
+      "verified_native": false
+    },
+    {
+      "best_sha256": "3582811a7acf08ec68e99c86ed9b614cf379ebb4305f700611642c7aeda149ab",
+      "cases_sha256": "8ed8b424a788859fff0ae34266db909347db94ef17c66412e946a5225f559a1b",
+      "chain": 2,
+      "index": 7,
+      "kind": "parent_saved_feasible_checkpoint",
+      "parent_array_job_id": "19127370",
+      "parent_array_task_job_id": "19127381",
+      "provisional_loss": 44.89284902690596,
+      "source_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+      "start_contract_sha256": "b107a87ec32856a3c52d23a0a78d479d465c495958a64794c70735b97dc8b894",
+      "verified_native": false
+    },
+    {
+      "best_sha256": "76240c0227e8d2ee150b006fd1278df6678ad2cb555fdf01a597193155eeb423",
+      "cases_sha256": "be5e410231bb886fabbc7da71dea1599d76d8a191ecb2f65c2ff08694fd0de24",
+      "chain": 3,
+      "index": 8,
+      "kind": "parent_saved_feasible_checkpoint",
+      "parent_array_job_id": "19127370",
+      "parent_array_task_job_id": "19127382",
+      "provisional_loss": 52.60345291757801,
+      "source_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+      "start_contract_sha256": "4ff3b707045d5509fb52991b218d7af7485507a2e29872b3fb8f0de066783b5f",
+      "verified_native": false
+    },
+    {
+      "best_sha256": "ab38295268471c7cef12ea3a2d6e4e79805f3d289dd324e625197f99b6c83789",
+      "cases_sha256": "46812a41d63ddaf3e07ac31eacaa7e490fb034e1d697e2942634a43949007efa",
+      "chain": 4,
+      "index": 9,
+      "kind": "parent_saved_feasible_checkpoint",
+      "parent_array_job_id": "19127370",
+      "parent_array_task_job_id": "19127383",
+      "provisional_loss": 52.34597962034189,
+      "source_inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+      "start_contract_sha256": "153d9d978e94ed97fe8f0ee4e6ecfeeabbe18f562759f85c8026138c748416d2",
+      "verified_native": false
+    },
+    {
+      "index": 10,
+      "kind": "canceled_saved_feasible_provisional",
+      "source": "canceled_chain1_best_so_far.json"
+    },
+    {
+      "index": 11,
+      "kind": "canceled_saved_feasible_provisional",
+      "source": "canceled_chain2_best_so_far.json"
+    }
+  ],
+  "starts": [
+    {
+      "beta_annual": 0.9534863369774237,
+      "chi": 1.064465761884963,
+      "child_benefit_curvature": 0.07052757757847204,
+      "first_birth_fixed_cost": 0.334211940780072,
+      "h_P": 2.5720866879332305,
+      "kappa_fert": 0.12733239192373533,
+      "kappa_fert_continuation": 0.4210900088460843,
+      "psi_child": 0.1805480154452842,
+      "tenure_choice_kappa": 0.016942543725659138,
+      "theta0": 0.14504800585230251
+    },
+    {
+      "beta_annual": 0.9444437995936287,
+      "chi": 1.088196976146629,
+      "child_benefit_curvature": 0.10313883854657178,
+      "first_birth_fixed_cost": 0.2827067667825205,
+      "h_P": 2.5426884388222315,
+      "kappa_fert": 0.11612031168396098,
+      "kappa_fert_continuation": 0.4164292250768279,
+      "psi_child": 0.17788162876169034,
+      "tenure_choice_kappa": 0.015769047253080707,
+      "theta0": 0.14389227339225366
+    },
+    {
+      "beta_annual": 0.9538808622927256,
+      "chi": 1.0567890159656492,
+      "child_benefit_curvature": 0.06871397423312448,
+      "first_birth_fixed_cost": 0.317455736098692,
+      "h_P": 2.6,
+      "kappa_fert": 0.12641346198444045,
+      "kappa_fert_continuation": 0.42104612698948946,
+      "psi_child": 0.18089758265036554,
+      "tenure_choice_kappa": 0.016973264701206334,
+      "theta0": 0.15344899064328502
+    },
+    {
+      "beta_annual": 0.9575239636822954,
+      "chi": 1.0581477957365748,
+      "child_benefit_curvature": 0.0687908036012964,
+      "first_birth_fixed_cost": 0.3080051012923435,
+      "h_P": 2.5823789449624495,
+      "kappa_fert": 0.11761195344005211,
+      "kappa_fert_continuation": 0.40310089741287486,
+      "psi_child": 0.1780250670722863,
+      "tenure_choice_kappa": 0.016560528381569423,
+      "theta0": 0.14078367075333992
+    },
+    {
+      "beta_annual": 0.9564213930856987,
+      "chi": 1.0490490555887824,
+      "child_benefit_curvature": 0.0732624190958084,
+      "first_birth_fixed_cost": 0.3251384741428424,
+      "h_P": 2.5922227655663295,
+      "kappa_fert": 0.12583732091480318,
+      "kappa_fert_continuation": 0.4233937078968162,
+      "psi_child": 0.17814153185882217,
+      "tenure_choice_kappa": 0.01681802961975121,
+      "theta0": 0.12296297170230788
+    },
+    {
+      "beta_annual": 0.9634252312182169,
+      "chi": 1.0435282858288566,
+      "child_benefit_curvature": 0.06558751341412128,
+      "first_birth_fixed_cost": 0.32370179096431634,
+      "h_P": 2.5867783874295953,
+      "kappa_fert": 0.11982058789102132,
+      "kappa_fert_continuation": 0.404044002164409,
+      "psi_child": 0.18018864422368217,
+      "tenure_choice_kappa": 0.015113451448816106,
+      "theta0": 0.10978212421037725
+    },
+    {
+      "beta_annual": 0.9451896112861619,
+      "chi": 1.092228903928348,
+      "child_benefit_curvature": 0.10784530143653813,
+      "first_birth_fixed_cost": 0.3217217614426666,
+      "h_P": 2.5012143276596217,
+      "kappa_fert": 0.1209085818651128,
+      "kappa_fert_continuation": 0.4099317147389977,
+      "psi_child": 0.18477904551086777,
+      "tenure_choice_kappa": 0.014296308125547316,
+      "theta0": 0.11077920153438148
+    },
+    {
+      "beta_annual": 0.9624515351810958,
+      "chi": 1.0528035748454498,
+      "child_benefit_curvature": 0.06746923970856034,
+      "first_birth_fixed_cost": 0.3084520045383921,
+      "h_P": 2.5805862314657344,
+      "kappa_fert": 0.11850099483282835,
+      "kappa_fert_continuation": 0.4012568304009756,
+      "psi_child": 0.18046362332939947,
+      "tenure_choice_kappa": 0.014525064527914244,
+      "theta0": 0.11212210761247729
+    },
+    {
+      "beta_annual": 0.9648846188392413,
+      "chi": 1.0428739975632575,
+      "child_benefit_curvature": 0.060622140418948825,
+      "first_birth_fixed_cost": 0.3146314205207504,
+      "h_P": 2.5784881452545094,
+      "kappa_fert": 0.11463964483054843,
+      "kappa_fert_continuation": 0.3985959466054962,
+      "psi_child": 0.18033891068913305,
+      "tenure_choice_kappa": 0.0143616317971812,
+      "theta0": 0.1108415125238647
+    },
+    {
+      "beta_annual": 0.9648635252285206,
+      "chi": 1.052526478207392,
+      "child_benefit_curvature": 0.06365739839047008,
+      "first_birth_fixed_cost": 0.3112784800160176,
+      "h_P": 2.5769401903351388,
+      "kappa_fert": 0.11453873246288397,
+      "kappa_fert_continuation": 0.3932905534727476,
+      "psi_child": 0.17950051142787368,
+      "tenure_choice_kappa": 0.015145957213873497,
+      "theta0": 0.1044952691862876
+    },
+    {
+      "beta_annual": 0.9435970422001188,
+      "chi": 1.0889419895063435,
+      "child_benefit_curvature": 0.1004632667951005,
+      "first_birth_fixed_cost": 0.28476731500115277,
+      "h_P": 2.5609600730942406,
+      "kappa_fert": 0.117117651759752,
+      "kappa_fert_continuation": 0.4180182397767877,
+      "psi_child": 0.17526531238106294,
+      "tenure_choice_kappa": 0.016780074842929753,
+      "theta0": 0.16059244771083125
+    },
+    {
+      "beta_annual": 0.9501555481028467,
+      "chi": 1.0690499364477872,
+      "child_benefit_curvature": 0.0705481885865189,
+      "first_birth_fixed_cost": 0.3356347804771193,
+      "h_P": 2.596958142836661,
+      "kappa_fert": 0.12829076878023601,
+      "kappa_fert_continuation": 0.4262147839040601,
+      "psi_child": 0.18053222371261265,
+      "tenure_choice_kappa": 0.01725013693769515,
+      "theta0": 0.16798324873780576
+    }
+  ],
+  "storage_budget": {
+    "all_chains_search_max_GiB": 5000,
+    "method": "Preserve generated reports, arrays and plots; no pruning; stop on cap.",
+    "observed_previous_native_GE_MiB": 82,
+    "per_objective_retained_cap_GiB": 1,
+    "runtime_shared_free_floor_GiB": 350,
+    "submission_required_free_GiB": 5200
+  },
+  "target_contract": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "4.45838713455674",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "task_map": [
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 0,
+      "task": 0
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 1,
+      "task": 1
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 2,
+      "task": 2
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 3,
+      "task": 3
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 4,
+      "task": 4
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 0,
+      "task": 5
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 1,
+      "task": 6
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 2,
+      "task": 7
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 3,
+      "task": 8
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 4,
+      "task": 9
+    }
+  ],
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4"
+}

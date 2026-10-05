@@ -249,6 +249,28 @@ separately reviewed, at-most-eight-job refinement. The hourly
 `monitor-one-birth-estate-a-calibration` heartbeat is **PAUSED** after this
 terminal collection.
 
+**Two isolated overnight continuations submitted October 4, 2026, 10:49 PM New York.**
+Tommaso authorized twelve one-core Torch search jobs for each of two separate
+calibration contracts. Array **19194495** (`0-11%12`) continues the one-birth
+Estate-A/new-wealth-target contract above (target 4.45838713455674;
+verified anchor 21.275413361071312). Array **19194496** (`0-11%12`)
+continues the original post-interest soft-financing chain-13 contract, with
+its original at-death mapping and old wealth target 6.92658379107299
+(verified anchor 13.771131463467462). The old and new target losses are not
+comparable. No arm's earnings, entry distributions, timing, transfers, floors,
+preferences, ten search bounds, fourteen targets or weights, or native
+acceptance gates changed. The only code change is scoped orchestration:
+recognized numerical rejected points do not terminate independent starts or
+acquire a finite valid loss. Each task has a twelve-hour wall, 500-call cap,
+and 1,800-second native verification reserve; no automatic retry or extension.
+Exact two-case launch-loop mocks passed in both arms with zero model solves.
+The jobs were submitted after source-pin checks and are not yet result evidence.
+The [design, source identities and submission receipts](code/cluster/overnight_dual_v1/README.md)
+are retained; the `monitor-one-birth-estate-a-calibration` heartbeat is now
+**ACTIVE** for these two arrays, quiet while healthy. A sub-13 provisional
+search loss is not verified until unchanged selected-point and exact-repeat
+checks pass and the complete target-fit and free-parameter tables are reviewed.
+
 **October 4 fixed-parameter two-birth diagnostic:** at the verified one-birth
 Estate-A chain-1 estimates, allowing at most two intended births per period
 passed the native stationary-GE and exact-repeat gates in nine lifecycle solves.

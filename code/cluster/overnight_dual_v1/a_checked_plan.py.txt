@@ -1,0 +1,22 @@
+def checked_plan(path, digest):
+    require(sha(path)==digest, 'Overnight A plan SHA drift')
+    plan=json.loads(Path(path).read_text());anchor=json.loads(ANCHOR.read_text())
+    require(anchor['status']=='selected_numerically_verified' and anchor['chain']==13 and anchor['arm']=='alternative', 'Pinned timing anchor drift')
+    require(plan['source_checkpoint_sha256']==sha(ANCHOR), 'Source checkpoint drift')
+    parent=Path('/work/parent_v2/control/starts.json')
+    require(sha(parent)==plan['overnight_parent_starts_sha256'], 'Parent v2 starts drift')
+    original=json.loads(parent.read_text())
+    require(plan['bounds']==original['bounds'] and plan['target_contract']==original['target_contract'], 'A bounds/targets drift')
+    require(plan['target_fingerprint']==original['target_fingerprint'] and plan['weight_fingerprint']==original['weight_fingerprint'], 'A fingerprint drift')
+    require(plan['arms']=={'binary':1} and len(plan['starts'])==12 and len(plan['bounds'])==10, 'A 12-start contract drift')
+    require(plan['starts'][:10]==original['starts'][:10], 'Authenticated first ten starts drift')
+    for offset,source in enumerate(plan['overnight_canceled_sources']):
+        f=Path('/work/deployment/control')/source['filename']
+        require(sha(f)==source['sha256'], 'Canceled checkpoint bytes drift')
+        best=json.loads(f.read_text())['best']
+        require(best['status']=='passed' and best['target_fingerprint']==plan['target_fingerprint'] and best['weight_fingerprint']==plan['weight_fingerprint'], 'Canceled source contract drift')
+        require(best['parameters']==plan['starts'][10+offset] and best['loss']==source['loss'], 'Canceled source vector/loss drift')
+    require(len({canonical(s) for s in plan['starts']})==12, 'Duplicate A starts')
+    for row in plan['starts']:
+        require(set(row)==set(plan['bounds']) and all(math.isfinite(v) and plan['bounds'][k][0]<=v<=plan['bounds'][k][1] for k,v in row.items()), 'A start outside bounds')
+    return plan,anchor
