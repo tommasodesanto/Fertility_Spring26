@@ -1,6 +1,6 @@
 # Parallel first-shock candidate solves
 
-Author-directed priority: obtain the two-shock 2023 numbers using at least 12 concurrent Torch nodes. This fresh wave has six fixed first-shock preference values, each at both 24 and 32 four-year periods: 12 separate jobs. It preserves the healthy fixed-preference diagnostic 19193055. No earlier job is restarted.
+Author-directed priority: obtain the two-shock 2023 numbers using at least 12 concurrent Torch nodes. This fresh wave has six fixed first-shock preference values, each at both 24 and 32 four-year periods: 12 separate jobs. The completed fixed-preference diagnostic 19193055 remains preserved. No earlier job is restarted.
 
 ## Contract and verified facts
 
@@ -33,13 +33,13 @@ The 17 standard plot names are preserved when original root gates pass. Diagnost
 
 ## Active scheduling records
 
-**Verified October 5 at 01:18 New York:** five fresh 24-period candidates (preferences 0.14, 0.145, 0.14736308634876963, 0.15 and 0.16) completed with exit 0 and all original root/accounting/fresh-replay gates passing. Four used 455 native calls and ten root maps; the 0.16 case used 413 calls and nine maps. All 1,176 dated audits pass, projected mass is zero, and fresh replay discrepancy is zero. Terminal diagnostics remain false and nongating. The closest fixed preference produces 2012–2015 fertility **1.861092771 versus target 1.861**, but no preference estimate is accepted. [Full tables, bounds and lead review](completion_review.json).
+**Verified October 5 at 01:42 New York:** all six fresh 24-period candidates completed with original root/accounting/fresh-replay gates passing. The last, c00_h24 / 19195622 at preference 0.13, completed at 01:38:50 with 455 calls, ten maps, maximum housing/fiscal residuals 1.0676976e-5 / 1.3597921e-5 and zero replay discrepancy. Across the six runs all 1,416 dated audits pass with zero projection; terminal diagnostics remain false and nongating. The closest fixed point still gives fertility 1.861092771 against 1.861, but neither preference is estimated. [Five earlier completion tables](completion_review.json); [last completion and full table](c00_completion_review.json).
 
-The 32-period candidate **c02_h32 / 19195638 failed at 01:17:41**, exit 1:0, after 527 actual native calls: its original 6,000-second path deadline expired during the ninth mapping. Eight completed mappings account for 501 cumulative calls including preparation; 26 additional entries belong to the unfinished map. Last maximum housing/fiscal residuals were **6.1279227e-5 / 5.1678709e-5**: housing passed, fiscal did not, and no final replay occurred. The underlying TimeoutError was wrapped by Numba; this was neither OOM nor an external scheduler timeout. No job was extended or restarted. [Failure evidence](failure_review.json).
+**All five H32 attempts that entered the model failed the original 6,000-second path cap.** c00/c01/c02 completed eight mappings, c04/c05 seven. Every last completed housing residual passes, every fiscal residual remains above 2e-5, and no final replay completed. c00's original root returned after 6000.006 seconds; a wrapper error then tried to pin the missing ninth map and masked that stop with FileNotFoundError. The narrow reporting repair passes seven focused tests, leaves all numerical calls and budgets unchanged, and has not been deployed into the frozen jobs. The other failures retain watchdog TimeoutError traces wrapped by Numba. These are not scheduler timeout or OOM classifications. [New four-job failure review](h32_wave_failure_review.json); [earlier c02 review](failure_review.json); [reporting repair](reporting_fix_review.json).
 
-Six jobs remain allocated at this snapshot: c00_h24, c00_h32, c01_h32, c03_h32, c04_h32 and c05_h32. Five show native progress; c03_h32 remains stalled during container verification, with process state unverified. Do not repeat unchanged node-access checks. Original deadlines remain October 5 02:12:43, except c00_h32 at 02:14:17 and c00_h24 at 02:53:41. Original paired 24/32, scalar-fit/final-reproduction and exact own-2015 prefix gates remain required before the second surprise. No two-shock 2023 state is accepted.
+Only c03_h32 / 19195648 remains allocated, still in container verification with no native entry; its original deadline is October 5 02:12:43 New York. Exact process state remains unverified; do not repeat unchanged node-access checks or duplicate its unknown outcome. A concrete six-job fresh H32 follow-up with a 3-hour path cap and 4-hour outer cap (at most 24 CPU-hours) is **proposed and awaiting explicit author approval**, as the overnight instruction prohibits automatic budget increases. No launch, retry, in-place extension or gate change is authorized by that proposal. [Budget decision](next_step_proposal.json). Original paired-horizon, scalar-fit/final-reproduction and exact own-2015 prefix gates still precede the second surprise. No two-shock 2023 state is accepted.
 
-| Task | Preference | Horizon | Active job | Requested host |
+| Task | Preference | Horizon | Submitted job | Requested host |
 |---|---:|---:|---:|---|
 | c00_h24 | 0.13 | 24 | 19195622 | cs602 |
 | c00_h32 | 0.13 | 32 | 19195626 | cs622 |
@@ -59,6 +59,7 @@ Six jobs remain allocated at this snapshot: c00_h24, c00_h32, c01_h32, c03_h32, 
 
 | Fixed preference | 2008–2011 model (target 1.974875; weight 0) | 2012–2015 model (target 1.861; weight 1) | Fitted-window gap | Loss contribution |
 |---:|---:|---:|---:|---:|
+| 0.13 | 1.7061502825 | 1.7224582626 | -0.1385417374 | 0.01919381301 |
 | 0.14000000000000001 | 1.7865183985 | 1.8027095598 | -0.0582904402 | 0.003397775415 |
 | 0.14499999999999999 | 1.8269099482 | 1.8424294022 | -0.0185705978 | 0.000344867104 |
 | 0.14736308634876963 | 1.8460211906 | 1.8610927710 | +0.0000927710 | 8.60645808e-09 |

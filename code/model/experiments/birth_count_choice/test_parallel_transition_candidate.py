@@ -29,7 +29,8 @@ def test_no_arbitrage_initial_path_matches_recursion():
         runner.no_arbitrage_prices(P, .65, 6)
 
 
-def fake_contract(tmp_path, monkeypatch, *, native_gate=True, bad_queue=False, bad_source=False):
+def fake_contract(tmp_path, monkeypatch, *, native_gate=True, bad_queue=False, bad_source=False,
+                  fail_second_mapping=False, fail_first_mapping=False):
     source = tmp_path/'frozen'; source.mkdir(parents=True)
     for name in ('two_shock.py','two_shock_runtime.py'):
         (source/name).write_text(name)
@@ -45,6 +46,7 @@ def fake_contract(tmp_path, monkeypatch, *, native_gate=True, bad_queue=False, b
             raise ValueError('Invalid raw queue')
         return runner.hashlib.sha256(b''.join(a.tobytes() for a in arrays)).hexdigest()
     driver = SimpleNamespace(state_hash=state_hash,pinned=runner.pinned)
+    interrupted_mapping_number=1 if fail_first_mapping else 2 if fail_second_mapping else None
     class RootSolver:
         @staticmethod
         def solve_joint_with_acceleration(**kwargs):
@@ -54,8 +56,23 @@ def fake_contract(tmp_path, monkeypatch, *, native_gate=True, bad_queue=False, b
             assert kwargs['final_reproduction_tolerance']==1e-10
             assert kwargs['initial_jacobian'].shape==(2*len(q),2*len(q))
             assert np.array_equal(q,runner.no_arbitrage_prices(P,.65,len(q)))
-            kwargs['evaluate'](q,b)
-            kwargs['evaluate'](q,b) # original reserved fresh replay
+            budget_result=dict(status='time_or_evaluation_budget',converged=False,
+                gates=dict(market_replay=False,fiscal_replay=False),
+                final_reproduction_max_abs=None,final=None)
+            if fail_first_mapping:
+                try:
+                    kwargs['evaluate'](q,b)
+                except TimeoutError:
+                    return budget_result
+            else:
+                kwargs['evaluate'](q,b)
+            if fail_second_mapping:
+                try:
+                    kwargs['evaluate'](q,b) # interrupted reserved fresh replay
+                except TimeoutError:
+                    return budget_result
+            else:
+                kwargs['evaluate'](q,b) # original reserved fresh replay
             return dict(converged=True,gates=dict(market_replay=True,fiscal_replay=True),
                         final_reproduction_max_abs=0.,final=dict(prices=q,fiscal_values=b,
                         market_residual=np.zeros(len(q)),fiscal_residual=np.zeros(len(q))))
@@ -84,6 +101,9 @@ def fake_contract(tmp_path, monkeypatch, *, native_gate=True, bad_queue=False, b
         def select_warm(self,horizon,psi): return None,'fresh_measured_seed_initialization'
         def retain_warm(self,*args): pass
         def _mapping(self,terminal,endpoint,q,b,psi_path,folder,deadline):
+            if interrupted_mapping_number == self.calls:
+                self.rt.total_native_calls+=1 # native entry began, but _account never observed completion
+                raise TimeoutError('mapping interrupted by budget')
             self.calls+=1;self.rt.total_native_calls+=1
             folder.mkdir(parents=True,exist_ok=True)
             h=len(q);rows=[dict(calendar_year=2007+4*i,asset_price=float(q[i]),
@@ -198,6 +218,37 @@ def test_full_fake_loop_accepts_only_original_root_gates(tmp_path,monkeypatch):
     assert progress['accepted_candidate'] is False
     assert progress['root_gate_passed'] is True
     assert progress['pending_horizon_comparison'] is True
+
+
+def test_interrupted_replay_pins_latest_successful_mapping_and_preserves_root_outcome(tmp_path,monkeypatch):
+    config=fake_contract(tmp_path,monkeypatch,fail_second_mapping=True)
+    result=runner.run(config,tmp_path/'interrupted')
+    assert result['status']=='candidate_unaccepted'
+    assert result['root_pass'] is False
+    assert result['replay_pass'] is False
+    assert result['root']['status']=='time_or_evaluation_budget'
+    assert result['root']['final'] is None
+    assert result['path_evaluations']==2  # attempted path maps
+    assert result['path_mappings_completed']==1
+    assert result['latest_completed_map_number']==1
+    pinned=runner.pinned(result['final_mapping_pin'])
+    assert pinned == (tmp_path/'interrupted/candidate/map_001/native_record.json').resolve()
+    assert result['replay_maximum_gap'] is None
+    assert result['candidate_native_calls']==3 # endpoint, successful map, interrupted native entry
+    assert result['candidate_completed_operation_calls']==2
+    assert result['candidate_unfinished_native_calls']==1
+    saved=json.loads((tmp_path/'interrupted/latest_completed.json').read_text())
+    assert saved['root']['status']=='time_or_evaluation_budget'
+    assert saved['root']['final'] is None
+    assert saved['final_mapping_pin']==result['final_mapping_pin']
+
+
+def test_interrupted_first_mapping_still_fails_without_latest_completed_map(tmp_path,monkeypatch):
+    config=fake_contract(tmp_path,monkeypatch,fail_first_mapping=True)
+    with pytest.raises(ValueError,match='Original root produced no completed native mapping'):
+        runner.run(config,tmp_path/'no_completed_map')
+    failure=json.loads((tmp_path/'no_completed_map/failure.json').read_text())
+    assert failure['status']=='failed'
 
 
 def test_fake_queue_and_source_failures_leave_receipt(tmp_path,monkeypatch):

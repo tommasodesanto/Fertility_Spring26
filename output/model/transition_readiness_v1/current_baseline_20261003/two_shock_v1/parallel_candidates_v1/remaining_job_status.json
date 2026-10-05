@@ -1,0 +1,65 @@
+{
+  "checked_epoch": 1791178959.6980002,
+  "squeue": "19195648|RUNNING|cs689|2026-10-04T23:12:43|2026-10-05T02:12:43|2:29:57|cs689\n",
+  "jobs": {
+    "c00_h24": {
+      "run/progress.json": {
+        "accepted_candidate": false,
+        "actual_native_calls": 455,
+        "elapsed_seconds": 6224.911072093062,
+        "epoch": 1791178728.6157835,
+        "pending_horizon_comparison": true,
+        "phase": "complete",
+        "root_gate_passed": true
+      },
+      "launcher_terminal.json": {
+        "deadline_epoch": 1791183223,
+        "exit_code": 0,
+        "finished_epoch": 1791178730.180839,
+        "no_auto_retry": true,
+        "node": "cs602",
+        "slurm_job_id": "19195622",
+        "start_epoch": 1791172423,
+        "status": "complete"
+      },
+      "launcher_start.json": {
+        "blas_threads": 1,
+        "config_sha256": "058d0789e356321435547a7346cee0d170c4f8887c517230d5e1715ca08d680e",
+        "cpus": 1,
+        "deadline_epoch": 1791183223,
+        "memory_gib": 24,
+        "no_auto_retry": true,
+        "node": "cs602",
+        "numba_threads": 1,
+        "openmp_threads": 1,
+        "output": "results/c00_h24/run",
+        "slurm_job_id": "19195622",
+        "start_epoch": 1791172423,
+        "task_id": "c00_h24"
+      }
+    },
+    "c03_h32": {
+      "launcher_start.json": {
+        "blas_threads": 1,
+        "config_sha256": "88a3128cb4735a856da0e4b98a60a00846098720d3b08f7d64d6361d200a015e",
+        "cpus": 1,
+        "deadline_epoch": 1791180765,
+        "memory_gib": 24,
+        "no_auto_retry": true,
+        "node": "cs689",
+        "numba_threads": 1,
+        "openmp_threads": 1,
+        "output": "results/c03_h32/run",
+        "slurm_job_id": "19195648",
+        "start_epoch": 1791169965,
+        "task_id": "c03_h32"
+      }
+    }
+  },
+  "raw_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/remaining_jobs_latest.json",
+    "sha256": "39c9e5b76236c63592cf57a18c24ad3d76331cec8b8b1b66887e996c7013fa4a"
+  },
+  "native_entry_seen_c03_h32": false,
+  "no_job_changed": true
+}

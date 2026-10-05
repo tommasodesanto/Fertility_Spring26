@@ -1,0 +1,39 @@
+{
+  "schema": "candidate_incomplete_mapping_reporting_fix_review_v1",
+  "reviewed_utc": "2026-10-05T05:45:51.645135+00:00",
+  "trigger": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/results/c00_h32/run/failure.json",
+    "sha256": "1042e593fd55834b8fa6fedd487f3c33fd29a0245db161b2c4b0cbf52355795d"
+  },
+  "original_root_budget_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/results/c00_h32/run/candidate/root_full.json",
+    "sha256": "28260ca2be31fd3be6a13c7c79029cc1de9ec49d7a3800449a76bc5753e4e147"
+  },
+  "source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/parallel_transition_candidate.py",
+    "sha256": "e815d61262927a39cb58b748312e5600b44e7bc5f1485741d662e3cf362788e9"
+  },
+  "tests": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/test_parallel_transition_candidate.py",
+    "sha256": "e5eec453e5a9ed83799f2a45abda5ca35a278c5281664ac5e5e3aeb0c7c54e10"
+  },
+  "pytest": "Seven tests passed in0.08seconds using existing publication_refactor local_env_v1 venv313; no native model call.",
+  "critical_calls_unchanged": {
+    "solve_joint_with_acceleration": true,
+    "extend_measured_jacobian": true,
+    "_endpoint": true,
+    "terminal_checks": true
+  },
+  "mapping_arguments": "All economic/native arguments unchanged. The output path uses map_folder defined from attempted_count before entry, equivalent to previous count. Only successful maps update latest completed packet pin.",
+  "ledger": "Nonnegative uncompleted native entries explicitly retained only for nonconverged time_or_evaluation_budget outcomes; every other outcome still requires equality. Root/replay/accounting acceptance gates unchanged.",
+  "missing_replay": "Conservative infinity remains in adapter. Saved result uses null for original absent replay only. Existing general serializer unchanged.",
+  "zero_completed_maps": "Original no-completed-native-map failure remains.",
+  "immutable_deployed_addon_unchanged": true,
+  "frozen_driver": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/parallel_transition_candidate.py",
+    "sha256": "cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318"
+  },
+  "economic_changes": [],
+  "budget_changes": [],
+  "new_launch": false
+}

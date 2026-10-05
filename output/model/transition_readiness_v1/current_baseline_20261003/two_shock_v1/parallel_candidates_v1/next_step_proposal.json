@@ -1,0 +1,92 @@
+{
+  "schema": "bounded_h32_followup_proposal_v1",
+  "created_utc": "2026-10-05T05:38:31.918404+00:00",
+  "status": "requires_explicit_author_budget_decision",
+  "launch_authorized": false,
+  "reason": "All five H32 jobs that reached numerical work stopped at the original 6000-second path cap after seven or eight completed root maps; the sixth remains in preparation with unknown terminal outcome. No accepted horizon pair is available.",
+  "scope": "A separately named fresh H32 diagnostic follow-up for the six existing fixed preference values, after each corresponding old job is confirmed terminal. Keep completed H24 artifacts for diagnostic comparison; no measured outputs or optimizer state supplied as inputs to fresh solves. This does not accept a scalar fit or authorize second-shock handoff.",
+  "preferences": [
+    0.13,
+    0.14,
+    0.145,
+    0.14736308634876963,
+    0.15,
+    0.16
+  ],
+  "horizon": 32,
+  "resource_and_budget_changes": {
+    "cpus": {
+      "old": 1,
+      "proposed": 1
+    },
+    "memory_gib": {
+      "old": 24,
+      "proposed": 24
+    },
+    "path_seconds": {
+      "old": 6000,
+      "proposed": 10800
+    },
+    "candidate_seconds": {
+      "old": 7200,
+      "proposed": 12600
+    },
+    "external_seconds": {
+      "old": 10800,
+      "proposed": 14400
+    },
+    "internal_seconds": {
+      "old": 10700,
+      "proposed": 14280
+    }
+  },
+  "unchanged_controls": {
+    "root_evaluations_including_replay": 12,
+    "seed_seconds": 1800,
+    "endpoint_seconds": 1800,
+    "mapping_seconds": 1800,
+    "endpoint_evaluations": 48,
+    "maximum_actual_native_calls": 20000,
+    "market_tolerance": 0.0002,
+    "fiscal_tolerance": 2e-05,
+    "replay_tolerance": 1e-10,
+    "inherited_mass_tolerance": 1e-12,
+    "damping": 0.7,
+    "maximum_log_step": 0.15
+  },
+  "economic_changes": [],
+  "measured_cost_basis": {
+    "latest_completed_h32_map_seconds": [
+      679.2367719279137,
+      772.3418995479587,
+      765.373011282878,
+      792.1577799320221
+    ],
+    "conservative_planning_seconds_per_map": 800,
+    "twelve_maps_seconds": 9600,
+    "preparation_and_export_allowance_estimate_seconds": 1800,
+    "approximate_job_seconds": 11400,
+    "maximum_job_seconds": 14400,
+    "maximum_cpu_hours_six_jobs": 24,
+    "uncertainty": "Observed speed is not a guarantee of convergence or completion; every declared cap still stops work."
+  },
+  "prelaunch_conditions": [
+    "Explicit author approval of the increased budgets and fresh follow-up",
+    "Verify the narrow incomplete-map reporting fix with a fake-loop test and lead review",
+    "Separate immutable addon, inputs, claims, submission receipts and original-source authentication",
+    "Never duplicate c03_h32 while its terminal outcome is unknown",
+    "Preserve all old jobs and claims; no in-place extension or gate relaxation"
+  ],
+  "node_use": "Six new H32 partners are the presently useful independent solves. Do not repeat successful H24 jobs only to occupy twelve nodes; expand parallel work when an accepted own-2015 state makes the second-stage tasks valid.",
+  "after_followup": "Require both original horizon roots/replay, strict horizon and physical-state checks, informative scalar fitting and final fitted reproduction, then the original own-vintage two-period prefix. All remaining empirical-fit controls require separate compliance; this proposal is not a new six-hour empirical fit.",
+  "reporting_fix_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/reporting_fix_review.json",
+    "sha256": "d52792e1b1b0519ca3261fdfd32ced271d10e7307990ca294e28beb9661c8ac1"
+  },
+  "failure_evidence": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/h32_wave_failure_review.json",
+    "sha256": "f830787e3a363b427bf0b8bd532c806246fbdacbf17768cb187e69c553ffb4e8"
+  },
+  "approval_request_sent": true,
+  "approval_received": false
+}

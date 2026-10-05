@@ -164,18 +164,23 @@ def candidate_adapter_class(native):
             b = np.full(horizon,bT) if warm is None else warm['fiscal_values'].copy()
             latest = {}
             best = {}
-            count = 0
+            attempted_count = 0
+            completed_count = 0
             path_deadline = min(deadline,time.monotonic()+budget['path_seconds'])
             def evaluate(q,b):
-                nonlocal count
-                count += 1
-                native,record = self._mapping(terminal,endpoint,q,b,psi_path,folder/f'map_{count:03d}',path_deadline)
-                latest.update(native=native,record=record)
+                nonlocal attempted_count, completed_count
+                attempted_count += 1
+                map_number = attempted_count
+                map_folder = folder/f'map_{map_number:03d}'
+                native,record = self._mapping(terminal,endpoint,q,b,psi_path,map_folder,path_deadline)
+                completed_count += 1
+                latest.update(native=native,record=record,map_number=map_number,
+                              mapping_pin=pin(map_folder/'native_record.json'))
                 write_full(folder/'latest_completed_full.json',record)
                 score=max(max(map(abs,record['market_residual']))/gates['market_tolerance'],
                           max(map(abs,record['fiscal_residual']))/gates['fiscal_tolerance'])
                 if not best or score<best['score']:
-                    best.update(score=score,map_number=count,record=pin(folder/f'map_{count:03d}'/'native_record.json'))
+                    best.update(score=score,map_number=map_number,record=latest['mapping_pin'])
                     write_full(folder/'best_so_far_full.json',best)
                 return dict(mapping_valid=all(record['gates'].values()),market_residual=record['market_residual'],fiscal_residual=record['fiscal_residual'])
             root = solve_joint_with_acceleration(closure='fixed_tax',initial_prices=q,initial_fiscal_values=b,evaluate=evaluate,
@@ -205,9 +210,11 @@ def candidate_adapter_class(native):
                 stationary_renewal_gap=endpoint['stationary_renewal_gap'],
                 market_maximum_residual=max(map(abs,record['market_residual'])),
                 fiscal_maximum_residual=max(map(abs,record['fiscal_residual'])),
-                replay_maximum_gap=root['final_reproduction_max_abs'] if root['final_reproduction_max_abs'] is not None else float('inf'),
+                replay_maximum_gap=(root['final_reproduction_max_abs']
+                                    if root['final_reproduction_max_abs'] is not None else float('inf')),
                 terminal=terminal_check,rows=record['rows'],fertility=record['fertility'],
-                final_mapping_pin=pin(folder/f'map_{count:03d}'/'native_record.json'),path_evaluations=count,
+                final_mapping_pin=latest['mapping_pin'],path_evaluations=attempted_count,
+                path_mappings_completed=completed_count,latest_completed_map_number=latest['map_number'],
                 native_reply=latest['native'],terminal_packet=terminal,endpoint=endpoint,psi_path=psi_path,root=root)
 
     return CandidateAdapter
@@ -327,8 +334,15 @@ def run(config, output):
             reply=runtime.evaluate_stage(stage=0,psi=float(config['psi']),horizon=config['horizon'],
                           start_year=2007,inherited_state=initial,deadline=candidate_deadline,
                           folder=output/'candidate')
-            require(reply['policy_calls']==runtime.rt.total_native_calls-initial_calls-seed['policy_calls']-
-                    prepared['policy_calls'], 'Native candidate-call ledger differs')
+            actual_candidate_calls=(runtime.rt.total_native_calls-initial_calls-seed['policy_calls']-
+                                    prepared['policy_calls'])
+            completed_candidate_calls=reply['policy_calls']
+            unfinished_candidate_calls=actual_candidate_calls-completed_candidate_calls
+            budget_interrupted=(reply['root'].get('status')=='time_or_evaluation_budget' and
+                                reply['root'].get('converged') is False)
+            require(unfinished_candidate_calls >= 0 and
+                    (unfinished_candidate_calls == 0 or budget_interrupted),
+                    'Native candidate-call ledger differs outside an unfinished budget outcome')
             require(driver.state_hash(runtime.rt.initial_state,runtime.queue_values)==initial_hash and
                     driver.state_hash(initial,runtime.queue_values)==initial_hash,
                     'Original initial state or queues changed during candidate')
@@ -376,15 +390,22 @@ def run(config, output):
                         task_id=config['task_id'],psi=float(config['psi']),horizon=config['horizon'],
                         reference_identity=plan['identity'],fit_manifest=config['fit_manifest'],
                         native_calls=runtime.rt.total_native_calls,seed_native_calls=seed['policy_calls'],
-                        candidate_native_calls=reply['policy_calls'],
+                        candidate_native_calls=actual_candidate_calls,
+                        candidate_completed_operation_calls=completed_candidate_calls,
+                        candidate_unfinished_native_calls=unfinished_candidate_calls,
                         root_pass=reply['root_pass'],replay_pass=reply['replay_pass'],
                         stationary_pass=reply['stationary_pass'],accounting_valid=reply['accounting_valid'],
                         terminal_diagnostic_pass=reply['terminal_pass'],terminal_diagnostic_gating=False,
                         market_maximum_residual=reply['market_maximum_residual'],
                         fiscal_maximum_residual=reply['fiscal_maximum_residual'],
-                        replay_maximum_gap=reply['replay_maximum_gap'],
+                        replay_maximum_gap=(None if reply['root'].get('final_reproduction_max_abs') is None
+                                            else reply['replay_maximum_gap']),
                         stationary_renewal_gap=reply['stationary_renewal_gap'],
                         root=reply['root'],full_dated_rows=reply['rows'],
+                        final_mapping_pin=reply['final_mapping_pin'],
+                        path_evaluations=reply['path_evaluations'],
+                        path_mappings_completed=reply['path_mappings_completed'],
+                        latest_completed_map_number=reply['latest_completed_map_number'],
                         market_residual_trajectory=reply['root']['final']['market_residual'] if reply['root'].get('final') else None,
                         fiscal_residual_trajectory=reply['root']['final']['fiscal_residual'] if reply['root'].get('final') else None,
                         fertility_rows=fertility,first_two_historical_fertility_rows=fertility[:2],

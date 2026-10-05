@@ -1049,24 +1049,27 @@ manuscript wording or certify a new paper calibration.
    Torch configuration checks passed. First scheduling requests were cancelled
    with zero allocation/time/no claims after reserved-host selection; replacement
    requests have known IDs and must never be duplicated. **Verified October 5 at
-   01:18 New York:** five fresh 24-period candidates completed (preferences .14,
-   .145, .14736308634876963, .15, .16), exit 0, with original root/accounting and
-   fresh-replay gates passing. Four used 455 calls/ten maps; .16 used 413/nine.
-   All 1,176 dated audits pass with zero projection and zero replay discrepancy.
-   Terminal diagnostics remain false and nongating. The closest fixed point gives
-   fertility 1.861092771 against 1.861; neither preference is estimated.
-   **c02_h32 / 19195638 failed at 01:17:41**, exit 1:0, on the original 6,000-second
-   path limit during mapping nine. It recorded 527 native entries, versus 501
-   accounted through eight completed maps. Last housing/fiscal maxima were
-   6.1279227e-5 / 5.1678709e-5: housing passed, fiscal failed; no final replay.
-   The underlying TimeoutError was wrapped by Numba, not an OOM or scheduler
-   timeout. Six jobs remain allocated at this snapshot, five with native progress;
-   c03_h32 remains stalled during container verification. Preserve original caps
-   and completed artifacts; no retry or extension. Paired horizon, scalar fit,
-   final reproduction and exact own-2015 prefix gates remain necessary before
-   the second surprise. No accepted first-stage estimate or two-shock 2023 state.
-   [Full tables and completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/completion_review.json).
-   [Bounded path failure](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/failure_review.json).
+   01:42 New York:** all six H24 candidates completed with original root,
+   accounting and fresh-replay gates passing. All 1,416 dated audits pass,
+   projection and replay discrepancy are zero. Terminal diagnostics remain
+   false and nongating. c00_h24 completed at 01:38:50 with 455 calls/ten maps;
+   the closest fixed point remains 1.861092771 versus target 1.861. Neither
+   preference is estimated. All five H32 attempts that entered the model failed
+   the original 6,000-second path cap after seven or eight completed mappings.
+   Their last housing residuals pass, fiscal residuals fail, and no final replay
+   completed. c00's original root returned at 6000.006 seconds before a wrapper
+   missing-map pin error masked the stop. A narrow reporting fix passes seven
+   focused tests without changing native numerics, budgets or deployed packages.
+   c03_h32 / 19195648 is the only remaining allocated job, stalled before native
+   entry; its original deadline remains 02:12:43. No unchanged node-access check
+   or unknown-outcome retry. A fresh six-job H32 follow-up at a 3-hour path cap
+   and 4-hour outer cap is proposed, awaiting explicit author budget approval;
+   no new job is authorized or launched. No completed horizon pair, accepted
+   first-stage estimate, second shock or two-shock 2023 state exists.
+   [Five earlier full tables](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/completion_review.json).
+   [Last completion and full table](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/c00_completion_review.json).
+   [New H32 failure review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/h32_wave_failure_review.json).
+   [Budget decision](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/next_step_proposal.json).
    [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
    [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).
    [Current root submission](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/submission.json).
