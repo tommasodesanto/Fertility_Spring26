@@ -1,0 +1,97 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{footline}{\hfill\scriptsize PREVIEW\quad\insertframenumber/\inserttotalframenumber\hspace{1em}\vspace{0.5em}}
+\setbeamercolor{frametitle}{fg=blue!55!black}
+\linespread{1.2}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\src}[1]{\vfill{\tiny\color{gray}Source: #1}}
+\begin{document}
+
+\begin{frame}{Family space and household choices}
+\small
+Physical rooms $h$ supply housing space; $m$ is the number of children currently at home.
+When $m>0$, the saved working economy requires $h>h_P=2.594$ rooms.
+\par\medskip
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Household & Two-room space admissibility & Smallest admissible owner home\\
+\midrule
+No children at home & Admissible & Two rooms\\
+Children at home & Inadmissible & Four rooms\\
+\bottomrule
+\end{tabular}
+\end{center}
+\par\medskip
+Households choose housing, tenure, consumption and saving within the same budget; rental housing also supplies family space.
+\src{Working chain 13; purchase-access census, October 4, 2026.}
+\end{frame}
+
+\begin{frame}{Housing costs and fertility}
+\small
+In a saved fixed-price lifecycle comparison, imposed house prices and rents rise by 10\%.
+\par\medskip
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Model outcome & Change\\
+\midrule
+Explicit births & $-6.434\%$\\
+Ownership, ages 18--29 & $-3.818$ percentage points\\
+Rooms occupied, ages 18--29 & $-8.605\%$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\par\medskip
+Higher housing costs substantially reduce births in this comparison. The price change also affects collateral and incumbent housing wealth; it does not isolate the physical room floor.
+\src{Matched price diagnostic, October 4, 2026; imposed prices, not a dated transition.}
+\end{frame}
+
+\begin{frame}{Credit and the value of parenthood}
+\small
+The financed share of a house price rises from 80\% to 95\% at imposed prices.
+\par\medskip
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Model outcome & Change\\
+\midrule
+Explicit births & $-0.250\%$\\
+Ownership, ages 18--29 & $+10.112$ percentage points\\
+\bottomrule
+\end{tabular}
+\end{center}
+\par\medskip
+The birth decision depends on the value after a successful birth relative to waiting. In an audited age-22 renter slice covering 21.5\% of first-birth responsiveness, borrowing relief raises the value of waiting more on average; signs differ by income.
+\src{Matched credit diagnostic and joint-budget age-22 renter audit, October 4, 2026.}
+\end{frame}
+
+\begin{frame}{Borrowing without collateral constraints}
+\small
+\textbf{Proposed comparison --- no numerical results yet.}
+\par\medskip
+Remove owner origination and collateral restrictions and renter borrowing limits, while retaining explicit solvency and terminal-debt conditions.
+\par\medskip
+Hold income risk, the parent space floor and rental-size restrictions fixed. Compare births and ownership at common prices and household states first.
+\par\medskip
+Setting the financed share to one removes a nominal down payment; it is not an unconstrained-borrowing economy.
+\src{Proposed design based on the October 4 credit-mechanism memo.}
+\end{frame}
+
+\begin{frame}{Fertility decline with a fixed housing stock}
+\small
+\textbf{Proposed comparison --- no numerical results yet.}
+\par\medskip
+Begin both transitions from the same 2007 state and retain the same fertility-preference shock. Compare elastic housing supply with a constant physical stock $\bar H=H_{2007}$.
+\par\medskip
+The outcomes are fertility and unit housing costs along the dated transition. Fixing a supply coefficient $H_0$ would not hold the physical stock fixed.
+\par\medskip
+A 2023 initial state would be a separate prospective exercise.
+\src{Proposed transition design; no transition or new stationary result is asserted.}
+\end{frame}
+\end{document}
