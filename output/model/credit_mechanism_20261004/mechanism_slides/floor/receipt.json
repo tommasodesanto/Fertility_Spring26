@@ -1,0 +1,50 @@
+{
+  "reference": "post-interest chain 13, no Estate-A; fixed-price lifecycle diagnostic",
+  "baseline": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/price_decomposition/cases/baseline_resolve",
+  "floor_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/price_decomposition/cases/arm_floor_only",
+  "executed_public_input_diff": {
+    "hbar_first_child_jump": [
+      2.593759507364224,
+      2.7814454323543467
+    ]
+  },
+  "floor_multiplier": 1.0723605733134638,
+  "rental_cap_physical_rooms": 6.0,
+  "price": 0.7760569760205563,
+  "first_birth_flow_baseline": 0.05007322691325753,
+  "first_birth_flow_floor": 0.048718040658776045,
+  "first_birth_flow_policy_at_baseline_exposure": -0.004369135214085933,
+  "first_birth_flow_composition": 0.0030139489596044604,
+  "flow_identity_error": -1.3444106938820255e-17,
+  "inversion_checks": [
+    {
+      "minimum_reconstructed_prebirth_mass": -1.1889400802114366e-18,
+      "negative_prebirth_mass": 8.591212184613229e-18,
+      "forward_reconstruction_max_error": 4.336808689942018e-19,
+      "native_flow_max_error": 3.2959746043559335e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    },
+    {
+      "minimum_reconstructed_prebirth_mass": -4.083593840312986e-18,
+      "negative_prebirth_mass": 1.4402979849484125e-17,
+      "forward_reconstruction_max_error": 2.168404344971009e-19,
+      "native_flow_max_error": 1.3877787807814457e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    }
+  ],
+  "earnings_cuts_annual_gross": [
+    0.3383911647779436,
+    0.7326667409040528
+  ],
+  "source_hashes": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/price_decomposition/cases/baseline_resolve": {
+      "executed_P.json": "3e1e3a4658a128b49942d949b7230a113b567333f5749e91bf3c0f639329cfd7",
+      "solution_arrays.npz": "f06915c511fa88fa39052c1a15f8701f041f1b11ad1b4d2e28090d2f78510e1f"
+    },
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/price_decomposition/cases/arm_floor_only": {
+      "executed_P.json": "60dd6a8c63d4c6531a846ac4549fe1e97fc5c0515c11d23e1d2b5bae46bd484c",
+      "solution_arrays.npz": "4163d926e11f553c600cc232892d785de42cc91f63c92a5e60bb3d166da09951"
+    }
+  },
+  "interpretation": "The floor only changes one nonzero public P field. This is not a price effect or market-clearing equilibrium. First-birth probabilities are conditional on exact common beginning states; physical housing and ending assets require the tenure/transaction branch maps and are not inferred from conditional renter arrays."
+}

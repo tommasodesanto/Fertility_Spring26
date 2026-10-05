@@ -1,0 +1,65 @@
+{
+  "reference": "Post-interest soft chain 13, no Estate A, phi=0.8, fixed-price diagnostic",
+  "zero_solves": true,
+  "source_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080",
+  "arrays_sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100",
+  "parameters_sha256": "513d7dd55e1559abf42130c590171515d421f232d1abdec48f329180a3bf2e83",
+  "age_cell_start": 22.0,
+  "age_cell_end": 25.0,
+  "income_state_one_based": 5,
+  "age22_all_tenure_childless_exposure_weighted_median_income_state_one_based": 5,
+  "income_type_multiplier": 0.7775605363025857,
+  "four_year_aftertax_income": 2.0611813071495764,
+  "annual_gross_earnings": 0.5602745665736877,
+  "wealth_figure_normalization": "Both beginning b and ending b-prime divide by this household's current annual gross earnings: (four-year aftertax income minus property-tax transfer)/[period_years*(1-tau_pay)]. Raw model-unit values remain in the CSV.",
+  "earnings_definition": "Executed period after-tax P.income[location, age] * type_values[z] plus property-tax lump-sum transfer",
+  "beginning_state": "Childless renter, location 0, same beginning b, age and Markov earnings state",
+  "branches": {
+    "waiting": "postbirth (n,m)=(0,0)",
+    "successful_first_birth": "postbirth (n,m)=(1,1); constant child-maturation mode"
+  },
+  "controls": "Normalized tenure probabilities and the engine's two-node post-transaction wealth map; renter stay uses saved stayer controls; owner purchases use ordinary controls; renter rooms are included only when renter chosen",
+  "first_birth_probability": "fecundity(age) * saved attempt probability, before tenure choice",
+  "display_quantile": 0.995,
+  "displayed_wealth_min": 0.0,
+  "displayed_wealth_max": 4.524359791007653,
+  "displayed_wealth_max_model_units": 2.5348837209302326,
+  "occupied_nodes": 28,
+  "displayed_nodes": 12,
+  "positive_prebirth_exposure": 0.011546721486971868,
+  "displayed_prebirth_exposure": 0.011508338081502444,
+  "displayed_share_of_selected_age_income_exposure": 0.9966758178490117,
+  "selected_age_income_share_of_all_fertile_childless_renter_exposure": 0.06295493424112185,
+  "excluded_positive_exposure": 0.0,
+  "checks": {
+    "inversion": {
+      "minimum_reconstructed_prebirth_mass": -2.9129769081699176e-18,
+      "negative_prebirth_mass": 1.1019583866363627e-17,
+      "forward_reconstruction_max_error": 2.168404344971009e-19,
+      "native_flow_max_error": 3.9898639947466563e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    },
+    "max_tenure_probability_sum_error": 2.220446049250313e-16,
+    "max_positive_choice_budget_error": 5.329070518200751e-15,
+    "min_positive_choice_consumption_surplus": 0.3882198044788633,
+    "min_positive_choice_housing_surplus": 1.406240492635776,
+    "min_positive_choice_saving_floor_slack": -8.881784197001252e-16,
+    "max_renter_stayer_control_difference": 0.0
+  },
+  "source_hashes": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/mechanism_slides/household/build_household_policies.py": "fd9c0832bd0f4d89b60be3f1538adfc4b34e9c5756f7443940fbc310b008e320",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/diagnostics/extract_common_states.py": "bfe7ce1af1ba64b98657076a197bd05c7ba58439908fbef5ef3ba554237e5289",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/engine/household.py": "b9a94d660258d394b906f8920a6db6a44d2b436d66378ffc7c6aa92ba0c0ed20",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/engine/distribution.py": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/birth_tenure_tabulations/T1_i_matched_state_ownership_rooms.csv": "b521cdfc63f98b21d1d8e3834cda9ddf7f5b6dd73468703e4dc059a9f094e507"
+  },
+  "aggregate_t1": {
+    "weight": "Baseline prebirth childless attempt mass across all fertile ages, all beginning wealth, tenure and earnings states",
+    "attempt_mass": 0.05406975414923268,
+    "physical_rooms_success": 6.761314165471384,
+    "physical_rooms_wait": 5.212517143232122,
+    "ownership_probability_success": 0.4627997976945312,
+    "ownership_probability_wait": 0.4850569956834733,
+    "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/birth_tenure_tabulations/T1_i_matched_state_ownership_rooms.csv"
+  }
+}

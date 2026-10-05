@@ -1,0 +1,67 @@
+{
+  "reference": "Post-interest chain 13, no Estate-A; fixed-price h_P-only diagnostic",
+  "age_cell_start": 22,
+  "earnings_state_index_zero_based": 4,
+  "initial_tenure": "renter",
+  "initial_children_ever_born": 0,
+  "initial_children_at_home": 0,
+  "success_branch": [
+    1,
+    1
+  ],
+  "floor_change": [
+    2.593759507364224,
+    2.7814454323543467
+  ],
+  "four_year_aftertax_income": 2.0611813071495764,
+  "annual_gross_earnings_denominator": 0.5602745665736877,
+  "earnings_denominator_definition": "four-year aftertax income / [period_years * (1 - tau_pay)]; baseline denominator shared across arms",
+  "exact_public_input_diff": [
+    "hbar_first_child_jump"
+  ],
+  "plotted_positive_states": 12,
+  "all_positive_states": 28,
+  "plotted_baseline_prebirth_exposure_share": 0.9966758178490113,
+  "all_positive_exposure_covered": 0.9999999999999999,
+  "case_receipts": {
+    "baseline": {
+      "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/price_decomposition/cases/baseline_resolve",
+      "arrays_sha256": "f06915c511fa88fa39052c1a15f8701f041f1b11ad1b4d2e28090d2f78510e1f",
+      "parameters_sha256": "3e1e3a4658a128b49942d949b7230a113b567333f5749e91bf3c0f639329cfd7",
+      "price": 0.7760569760205563,
+      "h_P": 2.593759507364224,
+      "hR_max": 6.0,
+      "max_budget_error": 3.552713678800501e-15,
+      "min_consumption_surplus": 0.3882198044788633,
+      "min_housing_surplus": 1.406240492635776,
+      "min_saving_floor_slack": -8.881784197001252e-16,
+      "inversion_checks": {
+        "minimum_reconstructed_prebirth_mass": -1.1889400802114366e-18,
+        "negative_prebirth_mass": 8.591212184613229e-18,
+        "forward_reconstruction_max_error": 4.336808689942018e-19,
+        "native_flow_max_error": 3.2959746043559335e-17,
+        "age_mass_max_error": 1.3877787807814457e-17
+      }
+    },
+    "higher_floor": {
+      "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/price_decomposition/cases/arm_floor_only",
+      "arrays_sha256": "4163d926e11f553c600cc232892d785de42cc91f63c92a5e60bb3d166da09951",
+      "parameters_sha256": "60dd6a8c63d4c6531a846ac4549fe1e97fc5c0515c11d23e1d2b5bae46bd484c",
+      "price": 0.7760569760205563,
+      "h_P": 2.7814454323543467,
+      "hR_max": 6.0,
+      "max_budget_error": 5.329070518200751e-15,
+      "min_consumption_surplus": 0.3882198044788633,
+      "min_housing_surplus": 1.2185545676456533,
+      "min_saving_floor_slack": -8.881784197001252e-16,
+      "inversion_checks": {
+        "minimum_reconstructed_prebirth_mass": -4.083593840312986e-18,
+        "negative_prebirth_mass": 1.4402979849484125e-17,
+        "forward_reconstruction_max_error": 2.168404344971009e-19,
+        "native_flow_max_error": 1.3877787807814457e-17,
+        "age_mass_max_error": 1.3877787807814457e-17
+      }
+    }
+  },
+  "interpretation": "All curves evaluate the same baseline-occupied beginning states. Physical rooms and b-prime integrate each arm's tenure probabilities and post-transaction controls conditional on successful first birth. No GE price adjustment or recalibration."
+}
