@@ -1,0 +1,68 @@
+{
+  "bridge_receipt": {
+    "array_comparison": {
+      "derived_alias_arrays": [
+        "market_housing_demand",
+        "market_housing_excess"
+      ],
+      "fixed_h0_solution_arrays": 78,
+      "max_absolute_gap": 0.0,
+      "shared_arrays_inventoried": 20,
+      "source_solution_arrays": 80
+    },
+    "bridge_sha256": "5b37de486ba99a0c26f65724bc5f842108a3b5af8a950fe19e7d0c331cee60b0",
+    "lifecycle_solves": 1,
+    "optimizer_postcheck": false,
+    "provisional_calibration": true,
+    "source_array_archive_sha256": "a056cceb0dfb547891b54e8442c54448f8a007edfd51bfdef7f93902bd66f9a6",
+    "source_case": "/scratch/td2248/projects/estate_birth_overnight_20261004_v1/results/production_binary_chain_11/run/0149_nm",
+    "source_inventory_sha256": "b9ec2094b567139088662d440e3b566099e8e5c943568e004a0272e3a4e8faa9",
+    "source_selected_sha256": "a61285eb8717de87d6f7ec7da77cc279aca081948be743b166e892c0b0c1a580"
+  },
+  "execution_check_status": "not_yet_verified",
+  "job_id": "19239878",
+  "launcher_start": {
+    "blas_threads": 1,
+    "cpus": 1,
+    "deadline_epoch": 1791238908,
+    "external_wall_seconds": 14400,
+    "internal_wall_seconds": 14280,
+    "memory_gib": 24,
+    "no_auto_retry": true,
+    "numba_threads": 1,
+    "original_shared_deadline_epoch": 1791238908,
+    "package_sha256": "70e69d46330d1ba5fa16c3c5926e4c1ece0d16024231b9dc4777f49d627697f0",
+    "prior_actual_native_calls": 2,
+    "prior_attempt_job_ids": [
+      "19238662",
+      "19239226"
+    ],
+    "rough_diagnostic": true,
+    "slurm_job_id": "19239878",
+    "start_epoch": 1791225860,
+    "task_id": "estate_a_lower_wealth_rough_h16_v3"
+  },
+  "native_latest": {
+    "deadline_epoch": 1791227671.524072,
+    "lifecycle_remaining": 0,
+    "lifecycle_used": 1,
+    "phase_a_lifecycle": 0,
+    "status": "completed_case",
+    "summary": {
+      "adult_entry_relative_gap": 1.0159239824686985e-10,
+      "d_bar": 0.0,
+      "elapsed_seconds": 28.639737074030563,
+      "entry_censored_mass": 0.0,
+      "label": "selected_bridge",
+      "native_array_count": 98,
+      "own_rate": 0.6966289412793367,
+      "q": 0.7551066122345627,
+      "stage_arrays": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v3/results/estate_a_lower_wealth_rough_h16_v3/bridge_case/native/phase_b_ge/selected_bridge/stage/solution_arrays.npz",
+      "tfr": 2.1000000002133863
+    },
+    "time_epoch": 1791225940.5641346
+  },
+  "queue": "19239878|RUNNING|2:16|cs648|cs648\n",
+  "transition_fit_status": "not_yet_started",
+  "verified_at_utc": "2026-10-05T18:46:33.589777+00:00"
+}

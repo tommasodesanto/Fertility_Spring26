@@ -2,11 +2,15 @@
 
 ## Current facts and scope
 
-Status: V3 job **19239878** was submitted October 5 at **14:42:31 New York**.
+Status verified October 5 at **14:46:33 New York**: V3 job **19239878** is
+**RUNNING on cs648**, submitted at 14:42:31. The input bridge **passed** with
+one fixed-price call and exactly matching 78 solution arrays. See
+`deployment_v3/bridge_pass_receipt.json`. Preparation is continuing; the small
+native execution check and transition fitting have not yet been verified.
 See `deployment_v3/submission.json` and `lead_execution_review_v3.json` for the
 exact launch pins and review. The user queue was empty before submission.
 Persistent submission receipts and separate task claims prevent an unknown-outcome retry.
-No completed bridge or two-shock fitted result is yet claimed.
+No completed two-shock fitted result is yet claimed.
 
 The first attempt, job **19238662**, failed at 14:25:27 after one successful
 fixed-price solve: the bridge rejected two normalization reporting aliases.
