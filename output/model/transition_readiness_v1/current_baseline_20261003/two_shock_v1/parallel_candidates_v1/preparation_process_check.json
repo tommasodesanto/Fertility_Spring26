@@ -1,0 +1,10 @@
+{
+  "checked_utc": "2026-10-05T04:00:32.977480+00:00",
+  "purpose": "Narrow inspection of already stalled container preparation, using an overlapping read-only ps step after unavailable direct node SSH",
+  "inspection_outcome": "Local SSH wait timed out at40seconds despite remote timeout25seconds; no process data returned. No further node access attempted.",
+  "cleanup_returncode": 0,
+  "cleanup_stdout": "{\"epoch\": 1791172832.831595, \"inspection_clients_cleaned\": [{\"pid\": 1971089, \"command\": \"timeout 25s srun --jobid=19195648 --overlap --nodes=1 --ntasks=1 --cpus-per-task=1 --time=00:01:00 /share/apps/anaconda3/2025.06/bin/python -c import subprocess,json; print(json.dumps({'processes':subprocess.check_output(['ps','-u','td2248','-o','pid,ppid,stat,etimes,time,wchan:30,args'],text=True)}))\"}, {\"pid\": 1971144, \"command\": \"srun --jobid=19195648 --overlap --nodes=1 --ntasks=1 --cpus-per-task=1 --time=00:01:00 /share/apps/anaconda3/2025.06/bin/python -c import subprocess,json; print(json.dumps({'processes':subprocess.check_output(['ps','-u','td2248','-o','pid,ppid,stat,etimes,time,wchan:30,args'],text=True)}))\"}, {\"pid\": 1971339, \"command\": \"srun --jobid=19195648 --overlap --nodes=1 --ntasks=1 --cpus-per-task=1 --time=00:01:00 /share/apps/anaconda3/2025.06/bin/python -c import subprocess,json; print(json.dumps({'processes':subprocess.check_output(['ps','-u','td2248','-o','pid,ppid,stat,etimes,time,wchan:30,args'],text=True)}))\"}], \"scheduler\": \"19195648|RUNNING|cs689|47:49|cs689\\n\"}\n",
+  "cleanup_stderr": "",
+  "no_model_invocation": true,
+  "no_signal_to_original_batch_or_native_process": true
+}

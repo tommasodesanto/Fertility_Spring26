@@ -68,5 +68,10 @@
     "2026-10-05T03:50:59Z: ssh torch queried sacct and refreshed pending-job details."
   ],
   "actions_taken": "Read-only queries only. No cancel, requeue, resubmit, process signal, model invocation, or scheduler mutation.",
-  "lead_review_note": "Corrected three worker file-time labels from Z to -04:00 against lead-observed epochs. The worker CPU accounting shorthand is not a reconciled node resource count; only its dated memory figures support the pending-capacity observation. At a subsequent lead check cs602 was MIXED, CPUAlloc122/CPUTot128 and AllocMem461824/RealMemory513000 MiB, so resources had become available; no job change was made. OS-level blocked state remains unverified."
+  "lead_review_note": "Corrected three worker file-time labels from Z to -04:00 against lead-observed epochs. The worker CPU accounting shorthand is not a reconciled node resource count; only its dated memory figures support the pending-capacity observation. At a subsequent lead check cs602 was MIXED, CPUAlloc122/CPUTot128 and AllocMem461824/RealMemory513000 MiB, so resources had become available; no job change was made. OS-level blocked state remains unverified.",
+  "lead_followup_process_inspection": {
+    "receipt": "preparation_process_check.json",
+    "method": "Bounded read-only ps step via srun --overlap within existing allocation, after direct compute-node SSH was unavailable",
+    "outcome": "No process data within40seconds. Cleaned only three exact matching inspection timeout/srun clients on login host. Original candidate batch remained RUNNING on cs689 at47m49s; no native execution, economic result or confirmed OS process state. Do not repeat unchanged node-access checks."
+  }
 }
