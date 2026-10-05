@@ -125,8 +125,12 @@ def check_arrays(solution, shared, archive: Path, closure: dict) -> dict:
         aliases = {"market_housing_demand", "market_housing_excess"}
         if extra != aliases or missing:
             raise RuntimeError(f"Saved array inventory differs: missing={sorted(missing)}, extra={sorted(extra)}")
-        if len(current) != 76 or len(source_solution) != 78 or not set(shared_arrays).issubset(saved.files):
-            raise RuntimeError("Complete 76-array fixed-H0 solution and 78-array selected source required")
+        if len(current) != 78 or len(source_solution) != 80:
+            raise RuntimeError(f"Selected solution array count differs: fixed-H0={len(current)}, source={len(source_solution)}; expected 78/80")
+        missing_shared = set(shared_arrays) - set(saved.files)
+        source_shared = {key for key in saved.files if key.startswith("shared.")}
+        if missing_shared or source_shared != set(shared_arrays):
+            raise RuntimeError(f"Selected shared-array inventory differs: source_only={sorted(source_shared-set(shared_arrays))}, fixed_only={sorted(missing_shared)}")
         # Population-one normalization appends these two reporting aliases to
         # its solution. They are functions of the observed one-market quantities,
         # and must not be inserted into the fixed-H0 native solution object.

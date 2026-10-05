@@ -1,0 +1,71 @@
+{
+  "accounting": {
+    "batch_exit_code": "1:0",
+    "batch_max_rss_kib": 3746076,
+    "batch_state": "FAILED",
+    "elapsed_seconds": 113,
+    "end": "2026-10-05T14:36:13",
+    "extern_state": "COMPLETED",
+    "start": "2026-10-05T14:34:20"
+  },
+  "bridge_log_sha256": "070f4f1aafdc485600622406c17400568c742756427b7e7f1f369516ad6ba752",
+  "deployed_bridge_sha256": "402c5d89065fe24fcbfaf44f7ede7ac659cf44df9765238d68b3b410fe70c8d5",
+  "failure": {
+    "deployed_guard": "expected 76 native solution arrays and 78 selected source arrays",
+    "full_traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v2/files/lower_wealth_transition_reference.py\", line 272, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v2/files/lower_wealth_transition_reference.py\", line 266, in main\n    path = build(args, proof)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v2/files/lower_wealth_transition_reference.py\", line 198, in build\n    arrays = check_arrays(live[\"sol\"], live[\"sd\"], proof[\"archive\"], closure)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v2/files/lower_wealth_transition_reference.py\", line 129, in check_arrays\n    raise RuntimeError(\"Complete 76-array fixed-H0 solution and 78-array selected source required\")\nRuntimeError: Complete 76-array fixed-H0 solution and 78-array selected source required\n",
+    "model_or_accounting_rejected": false,
+    "observed": "78 native solution arrays and 80 selected source arrays, with 20 shared arrays in each archive",
+    "phase": "bridge_check_arrays"
+  },
+  "job_id": "19239226",
+  "launcher": {
+    "exit_code": 1,
+    "finished_epoch": 1791225372.0320065,
+    "no_auto_retry": true,
+    "original_shared_deadline_epoch": 1791238908,
+    "prior_actual_native_calls": 1,
+    "prior_attempt_job_id": "19238662",
+    "start_epoch": 1791225263
+  },
+  "native": {
+    "cumulative_actual_native_calls": 2,
+    "fresh_archive_ndarrays_total": 98,
+    "fresh_solution_ndarrays_excluding_shared": 78,
+    "lifecycle_remaining": 0,
+    "prior_v1_actual_lifecycle_calls": 1,
+    "shared_arrays_each": 20,
+    "source_archive_ndarrays_total": 102,
+    "source_only_reporting_aliases": [
+      "market_housing_demand",
+      "market_housing_excess"
+    ],
+    "source_price": 0.7551066122345627,
+    "source_solution_ndarrays_excluding_shared_and_normalization": 80,
+    "v2_bridge_actual_lifecycle_calls": 1
+  },
+  "no_v3_package_or_job": true,
+  "observed_closure": {
+    "absolute_housing_residual": 0.0,
+    "actual_paygo_residual": 5.9504167384961644e-15,
+    "normalized_housing_demand": 5.689974599716576,
+    "parameter_rows": 31,
+    "physical_housing_supply": 5.689974599716576,
+    "population_scale": 1.0,
+    "price": 0.7551066122345627,
+    "renewal_residual": 1.0159206809134957e-10,
+    "standard_plot_count": 17,
+    "target_fit_rows": 14
+  },
+  "package_sha256": "91226c368e9dab50a112e6c078eca98c898517b995305ec7cf3352aecda62f07",
+  "remote_evidence": {
+    "bridge_failed": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge_case/bridge_failed.json",
+    "bridge_log": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge.log",
+    "closure": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge_case/native/phase_b_ge/selected_root/closure.json",
+    "launcher_start": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/jobs/estate_a_lower_wealth_rough_h16_v2_19239226/launcher_start.json",
+    "launcher_terminal": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/jobs/estate_a_lower_wealth_rough_h16_v2_19239226/launcher_terminal.json",
+    "native_completed_case": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge_case/native/latest_completed_case.json",
+    "native_latest": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge_case/native/latest.json"
+  },
+  "status": "preserved_failed_before_fit",
+  "task_id": "estate_a_lower_wealth_rough_h16_v2"
+}

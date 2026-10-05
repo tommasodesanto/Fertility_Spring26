@@ -21,7 +21,7 @@ HERE=Path(__file__).resolve().parent
 BOUNDS=[0.001789207206604163,0.35784144132083257]
 BASELINE_EXPECTED=0.176948250201189
 ROUGH_GATES=dict(original.GATES,market_tolerance=.005,fiscal_tolerance=.001)
-ROUGH_BUDGET=dict(total_seconds=14280,maximum_policy_calls=19898,candidate_seconds=7200,path_seconds=6000,
+ROUGH_BUDGET=dict(total_seconds=14280,maximum_policy_calls=19897,candidate_seconds=7200,path_seconds=6000,
                   seed_seconds=1800,mapping_seconds=1800,render_seconds=120,endpoint_seconds=1800)
 SMOKE_BUDGET=dict(total_seconds=900,maximum_policy_calls=100,candidate_seconds=360,path_seconds=240,
                   seed_seconds=360,mapping_seconds=180,render_seconds=120,endpoint_seconds=240)

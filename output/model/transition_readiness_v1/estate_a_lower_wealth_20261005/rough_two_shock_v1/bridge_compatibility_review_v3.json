@@ -1,0 +1,52 @@
+{
+  "schema": "estate_a_lower_wealth_bridge_compatibility_review_v3",
+  "status": "evidence_only_compatibility_review; v3 bridge not executed or completed",
+  "source_selected_repeat_array_archive": "/scratch/td2248/projects/estate_birth_overnight_20261004_v1/results/production_binary_chain_11/run/0149_nm/phase_b_ge/selected_repeat/stage/solution_arrays.npz",
+  "v2_fixed_h0_array_archive": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge_case/native/phase_b_ge/selected_bridge/stage/solution_arrays.npz",
+  "source_selected_report": "/scratch/td2248/projects/estate_birth_overnight_20261004_v1/results/production_binary_chain_11/run/0149_nm/phase_b_ge/selected_root",
+  "v2_fixed_h0_report": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/results/estate_a_lower_wealth_rough_h16_v2/bridge_case/native/phase_b_ge/selected_root",
+  "actual_archive_inventory": {
+    "source_solution_arrays": 80,
+    "v2_fixed_h0_solution_arrays": 78,
+    "source_shared_arrays": 20,
+    "v2_fixed_h0_shared_arrays": 20,
+    "shared_name_sets_equal": true,
+    "source_only_solution_arrays": [
+      "market_housing_demand",
+      "market_housing_excess"
+    ],
+    "v2_fixed_h0_only_solution_arrays": [],
+    "source_normalization_fields": [
+      "parameters.H0",
+      "normalization.population"
+    ]
+  },
+  "actual_numeric_comparison": {
+    "common_solution_arrays_compared": 78,
+    "maximum_absolute_gap": 0.0,
+    "shape_dtype_or_nonfinite_mask_mismatches": 0,
+    "target_fit_rows_compared": 14,
+    "parameter_estimate_rows_compared": 31,
+    "table_numeric_tolerance": 1e-10,
+    "table_mismatches_above_tolerance": 0
+  },
+  "alias_math": {
+    "market_housing_demand_source": [
+      5.689974599716576
+    ],
+    "bridge_closure_normalized_housing_demand": 5.689974599716576,
+    "market_housing_excess_source": [
+      0.0
+    ],
+    "bridge_closure_physical_housing_supply": 5.689974599716576,
+    "derived_excess": 0.0,
+    "status": "both source-only report aliases agree with observed bridge demand and demand minus supply"
+  },
+  "v3_driver_sha256": "5b37de486ba99a0c26f65724bc5f842108a3b5af8a950fe19e7d0c331cee60b0",
+  "zero_model_checks": [
+    "78 native plus 2 derived aliases positive fixture passed",
+    "alias drift negative fixture rejected",
+    "Python syntax compile passed"
+  ],
+  "limitation": "The v2 run stopped at its incorrect array-count check. These comparisons use its saved one-solve arrays and reports; they do not show that the corrected v3 bridge completed or that a dated transition fit passed."
+}

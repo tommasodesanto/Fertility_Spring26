@@ -2,40 +2,42 @@
 
 ## Current facts and scope
 
-Status verified October 5 at 14:34:12 New York: replacement job **19239226**
-was submitted at 14:33:36 and is **PENDING**. See
-`deployment_v2/submission.json`, `deployment_v2/launch_status.json` and
-`lead_execution_review_v2.json`. The user queue was empty before submission.
+Status: V3 job **19239878** was submitted October 5 at **14:42:31 New York**.
+See `deployment_v3/submission.json` and `lead_execution_review_v3.json` for the
+exact launch pins and review. The user queue was empty before submission.
 Persistent submission receipts and separate task claims prevent an unknown-outcome retry.
-No completed bridge or two-shock fitted result is claimed.
+No completed bridge or two-shock fitted result is yet claimed.
 
-The first attempt, job **19238662**, failed at 14:25:27, exit 1:0, after one
-successful fixed-price solve (27.854843792 seconds, zero entry-censored mass).
-The bridge rejected two reporting arrays appended by population-one normalization;
-it did not reach the execution check or transition fit. Preserve the full traceback
-and terminal accounting in `deployment/failure_receipt.json` and the original v1
-package. This is a known input-format failure, not an economic convergence result.
+The first attempt, job **19238662**, failed at 14:25:27 after one successful
+fixed-price solve: the bridge rejected two normalization reporting aliases.
+The second, job **19239226**, failed at 14:36:13 after one further successful
+solve: the repair used incorrect hard-coded array counts (76/78).
+Neither reached the small execution check or transition fit. Full tracebacks,
+accounting and frozen packages remain in `deployment/`, `deployment_v2/` and
+their separate remote roots. These were format-check defects, not convergence results.
 
-V2 checks all 76 native fixed-H0 solution arrays and the two source-only reporting
-aliases against observed housing demand and supply. It does not inject aliases
-into the fixed-H0 native object. Positive and alias-drift fixtures passed; six
-focused fake-loop tests passed. The lead reviewed the changed array comparison,
-call accounting and launcher deadline; numerical acceptance is still outstanding.
+Actual V2 files establish **78 native solution arrays and 80 source solution
+arrays**, with 20 shared-array names in each. All 78 common solution arrays
+match exactly; the 14 target rows and 31 parameter estimates also match.
+The two source-only fields equal observed housing demand and demand minus supply.
+V3 corrects the counts and checks the aliases without inserting them into the
+fixed-H0 native object. See `bridge_compatibility_review_v3.json`. Positive and
+alias-drift fixtures and six focused fake-loop tests passed. The lead reviewed
+the actual evidence, changed guards, call accounting and launcher deadline.
 
 The original shared deadline remains **18:21:48 New York** (epoch 1791238908),
-including time consumed by v1 and between attempts. Aggregate reservation is
-prior attempt 1 + new bridge 1 + execution check at most 100 + fit at most 19,898
-= 20,000 native calls. There is no automatic budget extension.
+including time consumed by previous attempts and between attempts. Aggregate
+reservation is prior attempts 2 + new bridge 1 + execution check at most 100
++ fit at most 19,897 = 20,000 native calls. No automatic budget extension.
 
-Remote v2 root:
-`/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2`.
+Remote V3 root:
+`/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v3`.
 Package SHA-256:
-`91226c368e9dab50a112e6c078eca98c898517b995305ec7cf3352aecda62f07`.
+`70e69d46330d1ba5fa16c3c5926e4c1ece0d16024231b9dc4777f49d627697f0`.
 Launcher SHA-256:
-`6aaf62d74c3d2b0ab7e3fb402319a05480e629cfbd2da47020ef05e125855fb5`.
-V1 stays at `/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v1`;
-its pins and lead review remain in `deployment/` and `lead_execution_review.json`.
-The small native loop check runs inside the bounded job before fitting.
+`157664d07e58985fb66b70a2370157053c4f9c27e4b10463ee78c7b9a01de66a`.
+V1 and V2 roots end in `_v1` and `_v2`; their pins and lead reviews remain
+unchanged. The small native loop check runs inside the bounded job before fitting.
 
 Tommaso's October 5 messages in `Reconcile yesterday’s threads`
 (`01a10804-6aad-7072-bd35-a65fd4f080e3`) prioritize estimating the transition,
@@ -112,7 +114,7 @@ Rebuild the required initial state at the saved price if the array-only search
 archive cannot provide the full native solution object; no new stationary price
 search is needed. This bridge and the small execution check belong to the same
 bounded job. Deployment pins and submission evidence are retained under
-`deployment/` for v1 and `deployment_v2/` for the repaired attempt.
+`deployment/`, `deployment_v2/` and `deployment_v3/` for the respective attempts.
 
 Save compact parameter/loss/status records for every trial, plus full best,
 latest and selected states. Generate the stable 17-plot packet for selected
