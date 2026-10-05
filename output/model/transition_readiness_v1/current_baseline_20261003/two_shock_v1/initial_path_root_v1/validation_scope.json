@@ -1,0 +1,64 @@
+{
+  "schema": "bounded_24_date_joint_root_scope_v1",
+  "created_utc": "2026-10-05T01:14:24.766254+00:00",
+  "status": "preparing_not_submitted",
+  "economic_changes": [],
+  "source_runtime": "execution_smoke_v5 immutable, read-only",
+  "prior_mapping_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/completion_review.json",
+    "sha256": "71d27de506a250dedf7ce761997e93898863b03cb502684c00ccee37a75cbb8a"
+  },
+  "prior_explicit_config": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/config.json",
+    "sha256": "0f3127b692361b45f2f0236cca2fc5bf703cbf69d0187096f525f0b7d413ef85"
+  },
+  "helper": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/diagnose_initial_path.py",
+    "sha256": "1e7ff20f96784383ccdad639ce43b0e7529cc0220742c72cc481f6913427dd5f"
+  },
+  "psi": 0.14736308634876963,
+  "horizon": 24,
+  "fresh_native_seed": {
+    "horizon": 12,
+    "perturbed_date": 5,
+    "log_step": 1e-05,
+    "mapping_count": 5
+  },
+  "root_controls": "Original frozen joint solver, derivative extension, bounds, damping and tolerances. At most three total root evaluations INCLUDING the solver-reserved fresh replay: initial map, one update, replay; no scalar fitting.",
+  "budget": {
+    "cpu": 1,
+    "memory_gib": 24,
+    "internal_seconds": 3000,
+    "external_seconds": 3300,
+    "seed_seconds_maximum": 1800,
+    "per_mapping_seconds_maximum": 1800,
+    "actual_native_call_limit": 320,
+    "root_evaluations_maximum": 3,
+    "root_mapping_callback_limit_including_replay": 3
+  },
+  "cost_basis": {
+    "observed_24_date_map_seconds": 416.43164763296954,
+    "observed_24_date_actual_calls": 41,
+    "previous_fresh_seed_actual_calls": 29,
+    "estimated_actual_calls_if_similar": 152,
+    "conservative_two_solves_per_date_call_count": 264,
+    "uncertainty": "Fresh seed/changed root prices can differ; shared deadline and call cap govern. No extension implied.",
+    "three_similar_root_maps_seconds": 1249.2949428989086
+  },
+  "checkpoint_requirements": [
+    "Every native map/audit/dated packet remains saved",
+    "Fresh seed complete measured receipt and native evidence pins",
+    "Latest completed and best residual score",
+    "Root progress, root result and final physical rows",
+    "Original input population and both queues hash before/after",
+    "Failure traceback and actual call accounting",
+    "Five-minute-or-faster progress"
+  ],
+  "not_certified": [
+    "two-shock scalar estimates",
+    "second-stage handoff",
+    "32-date horizon stability",
+    "terminal convergence",
+    "104/128 production path"
+  ]
+}

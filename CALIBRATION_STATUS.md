@@ -883,7 +883,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 21:10 New York:** the
+   **Current transition direction, verified October 4 at 21:24 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -970,11 +970,14 @@ manuscript wording or certify a new paper calibration.
    feasible prescribed path, not an equilibrium: maximum absolute housing
    and scaled pension residuals are 0.0759918753 and 0.1156396979, against the
    unchanged 0.0002 and 0.00002 tolerances. No empirical estimate or 24/32/terminal
-   certificate is claimed. A bounded original 24-date joint-root diagnostic
-   is being prepared with a fresh 12-date/date-5 seed, at most three root
-   evaluations plus required replay, 320 calls, 3,000 internal/3,300 external
-   seconds, one CPU and 24 GiB. No new job has launched. This does not extend
-   an ended budget or release a full fit. Original economics and all gates
+   certificate is claimed. Bounded original 24-date joint-root diagnostic
+   **19189373** was submitted once at **21:23:25 New York** and is **RUNNING**.
+   It uses a fresh 12-date/date-5 seed, at most three total root evaluations
+   including reserved replay, 320 calls, 3,000 internal/3,300 external seconds,
+   one CPU and 24 GiB. It started at 2026-10-04T21:24:00 on cl017; the hard scheduler deadline is 2026-10-04T22:19:00. Native progress remains to be checked.
+   Five tests, launcher syntax and the actual zero-call input contract check
+   passed. This new bounded diagnostic does not extend an ended budget or
+   release a full fit. Original economics and all gates
    remain fixed. The zero-call first diagnostic failure is preserved separately.
    [Completed mapping evidence and scope](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/completion_review.json).
    [Current failure and lead review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v5_initial_path.json).

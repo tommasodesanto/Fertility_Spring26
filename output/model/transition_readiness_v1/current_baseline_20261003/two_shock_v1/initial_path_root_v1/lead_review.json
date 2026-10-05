@@ -1,0 +1,88 @@
+{
+  "config": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/config.json",
+    "sha256": "9889dd651c877246753e791d16cac1578db601fc367d5fc7ad5d9949df10b77d"
+  },
+  "constructor_executed": false,
+  "driver": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/diagnose_path_root.py",
+    "sha256": "c2c47df5792a507b90090f8cd15db48953fd8f1f41e1b6f865a3d89f66ff7673"
+  },
+  "economic_changes": [],
+  "empirical_fitted": false,
+  "launcher": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/launch_path_root_diagnostic.sh",
+    "sha256": "815a20be3b8518c44dce440196d93c39f6434a49815071df3adb6159abafbba6"
+  },
+  "limitations": [
+    "At most one Newton/Broyden trial after initial map; failure to converge is not economic infeasibility",
+    "No scalar fertility fit, 32-date comparison, terminal certification, stage2 handoff or production acceptance",
+    "Not authorization for measured-output reuse in a new empirical fit"
+  ],
+  "model_solve_executed": false,
+  "native_calls": 0,
+  "original_accelerator": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/frozen/source/code/model/experiments/transition_readiness/pinned_tools/e5f_four_shock_acceleration.py",
+    "sha256": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373"
+  },
+  "original_plan": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/inputs/fit_manifest.json",
+    "sha256": "14c54b9d4fbb4a80ca8c71121268ac0fff8cf79868316cd348c01528782a0f46"
+  },
+  "prior_mapping_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/completion_review.json",
+    "sha256": "71d27de506a250dedf7ce761997e93898863b03cb502684c00ccee37a75cbb8a"
+  },
+  "production_ready": false,
+  "remote_config_check": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/config_check.json",
+    "sha256": "d26366ed5b67b8d7deea037d87eb8f8cef9548d55bb115a8236294cd8514e37d"
+  },
+  "reviewed_operations": [
+    "Original frozen joint solver and measured-Jacobian extension unchanged; fiscal scaling remains the original solver responsibility",
+    "Fresh five-map 12-date/date-5 Jacobian; no saved seed/root/optimizer state loaded",
+    "Three root evaluations total including reserved fresh replay; independently capped at three callbacks",
+    "Original q/b bounds, damping, step cap, condition bound, worsening safeguard, physical gates and replay match StageAdapter.evaluate",
+    "Exact original reference population and both queues; every root map receives a copy of the same inherited state",
+    "Authenticated completed terminal V restored for this standalone diagnostic; no stationary endpoint or scalar solve",
+    "Original native call guard retained; independent global320/deadline checks precede every native entry; nested original budgets all apply",
+    "Native records saved before pinning; full fresh measured receipt and original matrix pinned; latest/best residuals and failures saved",
+    "Full host/container v5 authentication and readonly mounts; fresh mode claim and output refuse duplicates"
+  ],
+  "root_controls": {
+    "damping": 0.7,
+    "final_reproduction_tolerance": 1e-10,
+    "fiscal_tolerance": 2e-05,
+    "market_tolerance": 0.0002,
+    "max_condition_number": 100000000.0,
+    "max_evaluations": 3,
+    "max_log_step": 0.15,
+    "pension_bound_ratios": [
+      0.05,
+      20.0
+    ],
+    "price_bound_ratios": [
+      0.05,
+      20.0
+    ],
+    "worsening_factor": 1.5
+  },
+  "schema": "bounded_joint_root_lead_review_v1",
+  "scientific_validation": false,
+  "scope": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/validation_scope.json",
+    "sha256": "f2513933b85ea426b448adbb78e37b9bb2cbca547af6f0a2c18de974b65edb47"
+  },
+  "source_helper": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/diagnose_initial_path.py",
+    "sha256": "1e7ff20f96784383ccdad639ce43b0e7529cc0220742c72cc481f6913427dd5f"
+  },
+  "status": "reviewed_for_one_bounded_root_diagnostic",
+  "tests": {
+    "actual_pinned_config_load_passed": true,
+    "bash_syntax_passed": true,
+    "focused_unit_tests": 5,
+    "local_check_limitation": "Authentic endpoint point_013 binaries retained only on Torch; config load must be checked there without a constructor or solve"
+  },
+  "verified_utc": "2026-10-05T01:23:04.467940+00:00"
+}
