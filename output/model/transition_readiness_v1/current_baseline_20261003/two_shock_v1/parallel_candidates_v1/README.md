@@ -33,7 +33,7 @@ The 17 standard plot names are preserved when original root gates pass. Diagnost
 
 ## Active scheduling records
 
-As of October 4 at 23:14 New York, **11 new jobs are RUNNING on 11 distinct cs hosts; c00_h24 (19195622) is PENDING**. Including preserved diagnostic 19193055 on cl012, **12 transition jobs are actively allocated on 12 distinct hosts**. Ten new jobs started at 23:12:43 with hard scheduler deadline October 5 02:12:43; c00_h32 started at 23:14:17 with deadline 02:14:17. Nine new jobs have passed both full authentications and entered construction; first native progress is pending verification. No failure/terminal receipt exists. [Actual launch verification](launch_verification.json).
+As of October 4 at 23:14 New York, **11 new jobs are RUNNING on 11 distinct cs hosts; c00_h24 (19195622) is PENDING**. Including preserved diagnostic 19193055 on cl012, **12 transition jobs are actively allocated on 12 distinct hosts**. Ten new jobs started at 23:12:43 with hard scheduler deadline October 5 02:12:43; c00_h32 started at 23:14:17 with deadline 02:14:17. At 23:16, **nine new jobs have verified actual native calls** (one or two each); c00_h32 is in construction and c03_h32 is still preparing. No failure/terminal receipt exists. [First actual native evidence](first_native_progress.json). [Actual launch verification](launch_verification.json).
 
 | Task | Preference | Horizon | Active job | Requested host |
 |---|---:|---:|---:|---|

@@ -1026,8 +1026,8 @@ manuscript wording or certify a new paper calibration.
    requests have known IDs and must never be duplicated. Eleven new jobs are
    RUNNING on eleven distinct cs hosts, with one pending. Including preserved
    19193055 on cl012, twelve transition jobs are actively allocated on twelve hosts.
-   Nine new jobs passed both authentications and entered construction; first native
-   calls remain to verify. No first-stage candidate, second shock or 2023 result is
+   At 23:16 nine new jobs have verified actual native calls (one or two each);
+   two other running jobs are preparing. No new failure exists. No first-stage candidate, second shock or 2023 result is
    accepted. Require the original horizon, fit, fresh-replay and prefix gates.
    [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
    [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).
