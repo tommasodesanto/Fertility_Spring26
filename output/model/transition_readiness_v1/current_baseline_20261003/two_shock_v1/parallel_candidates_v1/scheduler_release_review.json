@@ -1,0 +1,41 @@
+{
+  "schema": "parallel_candidate_scheduler_release_v1",
+  "verified_local": "2026-10-05T02:45:07.509754-04:00",
+  "queried_user": "td2248",
+  "owned_job_ids": [
+    "19195622",
+    "19195626",
+    "19195630",
+    "19195632",
+    "19195636",
+    "19195638",
+    "19195645",
+    "19195648",
+    "19195660",
+    "19195663",
+    "19195664",
+    "19195665"
+  ],
+  "owned_jobs_still_in_squeue": [],
+  "last_job_scheduler_rows": "19195648|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.batch|FAILED|9:0|11234|2026-10-04T23:12:43|2026-10-05T02:19:57|cs689|1|1042256K\n19195648.extern|CANCELLED||12542|2026-10-04T23:12:43|2026-10-05T02:41:45|cs689|1|\n19195648.0|TIMEOUT||9741|2026-10-04T23:59:24|2026-10-05T02:41:45|cs689|1|\n",
+  "allocation_release_confirmed": true,
+  "batch_final_max_rss_kib": 1042256,
+  "batch_final_max_rss_gib": 0.9939727783203125,
+  "parent_outcome": "TIMEOUT,0:0,10819seconds,end02:13:02",
+  "batch_outcome": "FAILED,9:0,11234seconds,end02:19:57",
+  "extern_outcome": "CANCELLED,end02:41:45",
+  "inspection_step_outcome": "TIMEOUT,end02:41:45",
+  "launcher_outcome_unchanged": "failed,exit137,finished02:11:55.258769",
+  "interpretation": "Parent timeout, launcher failure, batch exit and final cleanup are distinct receipts. Queue absence now confirms allocation release. The earlier preparation failure review remains unchanged; no model driver or native calculation began. No inference about OS blocked state or OOM.",
+  "source_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/scheduler_cleanup_collection.json",
+    "sha256": "e96986e4da6ad5f3bf26f9d4f2db2a320052e6939624a54cd97954c184eeafeb"
+  },
+  "prior_preparation_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_terminal_review.json",
+    "sha256": "d2296bfeae4c31337b1497c2321fac7a71767e0bf3862e45b2e4e1e0227c566b"
+  },
+  "jobs_signalled_modified_or_resubmitted": false,
+  "author_budget_approval_received": false,
+  "next_action": "Wait for the already requested author budget decision. Do not poll ended jobs again or repeat approval questions."
+}

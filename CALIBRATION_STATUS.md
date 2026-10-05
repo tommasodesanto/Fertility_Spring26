@@ -1063,9 +1063,11 @@ manuscript wording or certify a new paper calibration.
    **Last job failure, verified October 5 at 02:15:** c03_h32 / 19195648
    returned launcher exit 137 at 02:11:55 during container verification, before
    the driver. Its timestamp matches the original timeout reserve/kill grace.
-   Slurm records TIMEOUT at 02:13:02, but live state remains COMPLETING with
-   reason TimeLimit; allocation release is unconfirmed. No native entry, model
-   result or OOM evidence. Preserve the claim and do not repeat node-access
+   Slurm records TIMEOUT at 02:13:02. **Allocation release is confirmed at
+   02:45 New York:** all twelve transition jobs are absent from the queue;
+   final cleanup ended at 02:41:45. Batch accounting separately records
+   FAILED, 9:0, and 1,042,256-KiB peak RSS. No native entry, model result or OOM
+   evidence. Preserve the claim and do not repeat node-access
    checks or duplicate this attempt. A fresh six-job H32 follow-up at a 3-hour path cap
    and 4-hour outer cap is proposed, awaiting explicit author budget approval;
    no new job is authorized or launched. No completed horizon pair, accepted
@@ -1073,6 +1075,7 @@ manuscript wording or certify a new paper calibration.
    [Five earlier full tables](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/completion_review.json).
    [Last completion and full table](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/c00_completion_review.json).
    [New H32 failure review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/h32_wave_failure_review.json).
+   [Confirmed scheduler release](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/scheduler_release_review.json).
    [Last preparation terminal evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_terminal_review.json).
    [Budget decision](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/next_step_proposal.json).
    [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
