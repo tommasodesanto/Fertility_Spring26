@@ -1,0 +1,378 @@
+{
+  "schema": "fixed_preference_root_completion_review_v2",
+  "verified_utc": "2026-10-05T03:53:38.045067+00:00",
+  "job_id": "19193055",
+  "status": "original_fixed_preference_root_and_fresh_replay_passed",
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit": "0:0",
+  "start_new_york": "2026-10-04T22:15:15-04:00",
+  "end_new_york": "2026-10-04T23:39:53-04:00",
+  "elapsed_scheduler_seconds": 5078,
+  "peak_rss_kib": 24564000,
+  "peak_rss_gib": 23.426055908203125,
+  "actual_native_calls": 439,
+  "seed_native_calls": 29,
+  "root_native_calls": 410,
+  "seed_map_calls": [
+    1,
+    7,
+    7,
+    7,
+    7
+  ],
+  "root_evaluations": 10,
+  "original_root_gates": {
+    "fiscal_replay": true,
+    "housing": true,
+    "mapping": true,
+    "market_replay": true,
+    "social_security": true
+  },
+  "replay_maximum_absolute_discrepancy": 0,
+  "all_240_dated_audits_passed": true,
+  "maximum_mass_error": 1.4432899320127035e-15,
+  "maximum_current_budget_excess": 2.842170943040401e-14,
+  "original_initial_state_and_both_queues_sha256": "c7dea0d896ea140e4c007289ad09be02196d6bb161c88b48028e76de00a51d9a",
+  "terminal_V_sha256": "fbe3eacff8a14d71c663a766fa1a238f350320df215086d874e1c1c6de687d20",
+  "state_assertions": "Pinned driver requires original runtime state and independent initial-state copy, including both queues, to retain exact hash after seed and root; successful result occurs only after these assertions.",
+  "maps": [
+    {
+      "map": 1,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 0.075991875289444,
+      "maximum_scaled_pension_budget_residual": 0.1156396978967876,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 9.992007221626409e-16
+    },
+    {
+      "map": 2,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 0.0343582924578139,
+      "maximum_scaled_pension_budget_residual": 0.052928680440590466,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 1.1102230246251565e-15
+    },
+    {
+      "map": 3,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 0.006157044387472623,
+      "maximum_scaled_pension_budget_residual": 0.01170837130331102,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 9.992007221626409e-16
+    },
+    {
+      "map": 4,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 0.002236861077868924,
+      "maximum_scaled_pension_budget_residual": 0.00377482624917121,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 1.4432899320127035e-15
+    },
+    {
+      "map": 5,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 0.0006087698660278766,
+      "maximum_scaled_pension_budget_residual": 0.0010570191510487546,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 6.661338147750939e-16
+    },
+    {
+      "map": 6,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 0.00019205915657442735,
+      "maximum_scaled_pension_budget_residual": 0.0003272543576717354,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 6.661338147750939e-16
+    },
+    {
+      "map": 7,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 5.558883051601998e-05,
+      "maximum_scaled_pension_budget_residual": 9.641013092623007e-05,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 1.1102230246251565e-15
+    },
+    {
+      "map": 8,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 1.703656043493338e-05,
+      "maximum_scaled_pension_budget_residual": 2.9262795013163536e-05,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 8.881784197001252e-16
+    },
+    {
+      "map": 9,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 5.0505534114975565e-06,
+      "maximum_scaled_pension_budget_residual": 8.718799858813862e-06,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 7.771561172376096e-16
+    },
+    {
+      "map": 10,
+      "native_calls": 41,
+      "maximum_relative_housing_residual": 5.0505534114975565e-06,
+      "maximum_scaled_pension_budget_residual": 8.718799858813862e-06,
+      "all_24_dated_audits_passed": true,
+      "projected_mass": 0,
+      "mass_error": 7.771561172376096e-16
+    }
+  ],
+  "native_packet_pins_verified": 30,
+  "native_packet_bytes": 2723940491,
+  "full_seed_matrix_shape": [
+    24,
+    24
+  ],
+  "lossless_final_jacobian_shape": [
+    48,
+    48
+  ],
+  "fixed_psi_child": 0.14736308634876963,
+  "original_psi_bounds": [
+    0.001789207206604163,
+    0.35784144132083257
+  ],
+  "estimated_parameter": false,
+  "diagnostic_target_rows": [
+    {
+      "window": "2008\u20132011",
+      "target": 1.974875,
+      "weight": 0,
+      "model": 1.846021190637462,
+      "gap": -0.12885380936253799,
+      "loss": 0.0,
+      "status": "fixed_preference_24_date_diagnostic_only"
+    },
+    {
+      "window": "2012\u20132015",
+      "target": 1.861,
+      "weight": 1,
+      "model": 1.8610927709980534,
+      "gap": 9.277099805338196e-05,
+      "loss": 8.6064580798206e-09,
+      "status": "fixed_preference_24_date_diagnostic_only"
+    },
+    {
+      "window": "2016\u20132019",
+      "target": 1.755375,
+      "weight": 0,
+      "model": null,
+      "gap": null,
+      "loss": null,
+      "status": "second_shock_not_run"
+    },
+    {
+      "window": "2020\u20132023",
+      "target": 1.64575,
+      "weight": 1,
+      "model": null,
+      "gap": null,
+      "loss": null,
+      "status": "second_shock_not_run"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/result.json",
+      "sha256": "68d1e8e55126a1c8465b8010bc906d8bab79dd5ccf766b41745652854cbe16a7"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed_full_receipt.json",
+      "sha256": "06d1fff9d4d61149a02a4174767a1f01a160d946a149ac878d6ac48d9cd3f310"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed_receipt.json",
+      "sha256": "ec917a509737f01beabdb8177cbf942cf2c17caac5dae8b305b5776808280710"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/root.json",
+      "sha256": "7866161a4c19f439048329a0e26a5038d62d32f7a2e3b37bc9b87fca27828e06"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/launcher_start.json",
+      "sha256": "b7501529e931229975a97a4c44b565ead57911c3928744abdffa2b792b6bcd6c"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/launcher_terminal.json",
+      "sha256": "9aaa2bf988bd1ec6ed969f9048b78a15cde60cdf7061c43eb22cbe32e8166c9d"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/scheduler_terminal.json",
+      "sha256": "6686304e9e5555f8a45ba3ea02857eafe698d397b2e6a90733d0f42c83749ff0"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/native_packet_verification.json",
+      "sha256": "d03b878c2c9f22625cb70249f16073d4b5de7147eaabc2b6d79a204875c07a32"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/map_001/native_record.json",
+      "sha256": "51bc17549615c302a269f3bd8a194f12127143849a56ac7d02ca3d7319cb09f1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/map_002/native_record.json",
+      "sha256": "eab26e7e49ace5f9ccbfd9115ef810094795701c4b51bba117fbea4324922bf1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/map_003/native_record.json",
+      "sha256": "7f422209ce86df4d02c01935b3cfb080ee19b64b5798a80954136f45af4f05f0"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/map_004/native_record.json",
+      "sha256": "04691dd7273eeb46dd147f54b84d0c4b183f750267e79450f3d929d2f827e3a5"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/map_005/native_record.json",
+      "sha256": "a1c8fd32877c4ca235509aa06f669befbd71450493b7cc6fa603aeb4dc10425d"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/measured/jacobian.npy",
+      "sha256": "2870d3ea3d05dd2a747e93d38c2c1e13bec7d20b144ac594275fe2617593a87e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed/measured/receipt.json",
+      "sha256": "1c8c8128b4686409c45b9b98387dbf7bed310db854ace740090e073e130ffad3"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/fresh_seed_full_receipt.json",
+      "sha256": "06d1fff9d4d61149a02a4174767a1f01a160d946a149ac878d6ac48d9cd3f310"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_001/native_record.json",
+      "sha256": "b8512b0e52ae336e12d6c418d7f5c5809b345962114505a6113210f8b0bebaa1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_001/dated_audits.json",
+      "sha256": "78b5243058e14d9e1eba7d15e12688c845dec0b45327fe24664c490f4c1e46c6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_001/mapping.json",
+      "sha256": "1bd0709c0ba7483d14b60611063b398d96048cde4a9ae3f81bc8b1c6b85eccd6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_002/native_record.json",
+      "sha256": "33231ff9d820c95321cee7bef90d5f4dfe883466ae03da80383ad13a77fe4103"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_002/dated_audits.json",
+      "sha256": "73f9b4be310e091c1f660cec60b32d175faed24bc856306cdcac127fda1a7356"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_002/mapping.json",
+      "sha256": "6a6fd2c72d0fb2def15aa38bda3b889e970af238a4769fbd1155e3d57328e6e3"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_003/native_record.json",
+      "sha256": "1a3f02bb7a0066cb8479c17ef43bd21d215db20a9db2ec816ea083b1ca12fac6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_003/dated_audits.json",
+      "sha256": "3a3982a3f4bf5b7fb7bfa3a113c5cd20026a67eb3f5de8fa22e9e67a335354dd"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_003/mapping.json",
+      "sha256": "ece11e16efa51de1da50d3c3af88068799722424c3f4223aafe5a3e5e38c1715"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_004/native_record.json",
+      "sha256": "6acb29dd545a8beff507b271971447650ba5141e23010fdf67692c794f141af2"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_004/dated_audits.json",
+      "sha256": "0d03c3109eb22c4e74968c4f477b82838f9555bdaae3feedafa98371724f03b7"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_004/mapping.json",
+      "sha256": "98a11b60e7b1c8a4b7a99215abdd165dac4d31c93d021ec306803b5755d3549c"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_005/native_record.json",
+      "sha256": "c45a8da627ed81e59fcf9b3c2e8d9229d3de101bd30ef058e23e553b0e1cf9f2"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_005/dated_audits.json",
+      "sha256": "05be3f18234393f10752b57dff2da303631d8e22510cceb077a2eb37152d6f0e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_005/mapping.json",
+      "sha256": "1eea845b3d422f0a56f018217f81995b2da872fdf25083800393dc250d5d2196"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_006/native_record.json",
+      "sha256": "3c3b8c56c1bd1bd82f7f32835c341423afab31dce932eb71558fb284d9deb5b1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_006/dated_audits.json",
+      "sha256": "51d9675de61bb21d121359f4503f7c3bf8e4a4f5fa1711f0b66ece1cf64f6f26"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_006/mapping.json",
+      "sha256": "01d38330024f5c4f9617a6ac83e83917990d0aed94b2e39b793c825fcc982a83"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_007/native_record.json",
+      "sha256": "9004b5adb4a5e1ebd98293992fd7e8b0848c720b2c66681b3a57c4236e23daaf"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_007/dated_audits.json",
+      "sha256": "f5cf7039f80160d1ec40c3c941952caeaef671230e44ee1cd83d2f760c4646a3"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_007/mapping.json",
+      "sha256": "21713c8b0bb14ac0057259d3a35ea0befad5079d34cc4a272d75a026d8674cc6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_008/native_record.json",
+      "sha256": "9d4c1afd569a0428f603df85ae392098bcd69193b38c7c404b01f4a9cc764fea"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_008/dated_audits.json",
+      "sha256": "44d4e0ca9ec76581209535a5c99f0d07f63bf356086361740483a8c31d87bf95"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_008/mapping.json",
+      "sha256": "deeb6c50771171513dcb1a6492d3acf9db1d2b25beadeacd4ee2b97493d4420a"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_009/native_record.json",
+      "sha256": "381c46706ad5144ef9e511e70cf8253e3f57d41c3f4b05c8e9ecce4b3aa11742"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_009/dated_audits.json",
+      "sha256": "7ecde9cc0df4dcceae87e90a437ae75c6cd9faa780bea71e92dbad48b86eba1b"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_009/mapping.json",
+      "sha256": "6e4209b784c620d6230d5309eed85edd8d4a061ebe41b4305b531d544ead0241"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_010/native_record.json",
+      "sha256": "625ee9e5d911e1f5c76f5451bc035a8c6ad5ae6ee3d864fb32d5743f3c3e53b5"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_010/dated_audits.json",
+      "sha256": "7ecde9cc0df4dcceae87e90a437ae75c6cd9faa780bea71e92dbad48b86eba1b"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/results/root_v2/run/joint_root/map_010/mapping.json",
+      "sha256": "63cae1dc361c577da839f6166e6b5152be3c8b41987c62c0d868c08cd6913fe2"
+    }
+  ],
+  "serialization_note": "Original mapping.json keeps formatted strings for fertility age arrays; new native_record.json preserves those numeric arrays losslessly. All other record fields and scalar fertility statistics match exactly.",
+  "residual_units": "Signed housing (demand-supply)/supply and scaled pension-budget imbalance; report maxima of absolute values. Native row relative_market_residual is already absolute.",
+  "scientific_validation": false,
+  "empirical_fitted": false,
+  "production_ready": false,
+  "terminal_checked": false,
+  "horizon_comparison_performed": false,
+  "next_scoped_check": "Preserve ongoing fresh six-preference 24/32 candidate pairs. Require original paired horizon, target identification, final fitted replay and exact own-vintage 2015 prefix before second shock; this diagnostic restoration is not empirical-fit state reuse authorization."
+}

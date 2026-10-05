@@ -927,7 +927,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 23:14 New York:** the
+   **Current transition direction, verified October 4 at 23:55 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -1024,17 +1024,20 @@ manuscript wording or certify a new paper calibration.
    The old wrapper's text summaries shortened arrays; actual dated records and
    original seed matrix remain intact, and no final-Jacobian reuse is permitted.
    A separate **12-evaluation fixed-preference root diagnostic 19193055** was
-   submitted once at **22:14:27 New York** and is **RUNNING** on cl012 from
-   **22:15:15**. Its hard deadline is **October 5 at 00:15:15 New York**. It measures
+   submitted once at **22:14:27 New York** and ran on cl012 from
+   **22:15:15**. Its hard deadline was **October 5 at 00:15:15 New York**. It measured
    the original five-map seed from the same prescribed initial path, with limits
    of 720 calls, 7,080 internal/7,200 external seconds, one CPU and 24 GiB.
-   Launcher and claim match. Both full authentications passed; actual native
-   progress at 23:12 records 286 calls, six completed root maps and no failure.
-   Map six has housing residual 0.0001920592 and fiscal residual 0.0003272544:
-   housing passes its 0.0002 gate, fiscal remains above 0.00002; final replay is pending. The new wrapper preserves numeric arrays losslessly; six tests, bash syntax and actual pinned
-   inputs passed without a constructor or native call. No economic or gate
-   change, scalar fit, second shock, 32-date comparison or terminal certificate
-   is adopted. Preserve all immutable earlier packages and completed evidence.
+   **Diagnostic 19193055 completed October 4 at 23:39:53**, exit 0:0, after
+   84m38s and 439 actual/controller calls. Its fresh five-map seed used 29
+   calls and ten root maps including fresh replay used 410. Original housing
+   and fiscal gates pass at maxima 5.0505534e-6 and 8.7187999e-6; replay
+   discrepancy is zero. All 240 dated audits and exact initial state/both
+   queues pass, with zero projection. Lead verified 46 evidence pins and
+   all 30 new native packet hashes; full seed and final Jacobian are retained.
+   Peak RSS was 23.426 GiB. This is fixed-preference 24-date root convergence,
+   not scalar estimation, a 32-date comparison, second shock or terminal
+   certification. [Completion review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/completion_review.json).
    Author priority now requests at least twelve concurrent Torch nodes for the 2023
    numbers. Twelve fresh first-stage candidate jobs are submitted at six fixed
    preferences (0.13, 0.14, 0.145, 0.14736308634876963, 0.15, 0.16), each at both
@@ -1045,12 +1048,15 @@ manuscript wording or certify a new paper calibration.
    remain. Five fake-loop tests, numerical-call comparison and twelve zero-call
    Torch configuration checks passed. First scheduling requests were cancelled
    with zero allocation/time/no claims after reserved-host selection; replacement
-   requests have known IDs and must never be duplicated. Eleven new jobs are
-   RUNNING on eleven distinct cs hosts, with one pending. Including preserved
-   19193055 on cl012, twelve transition jobs are actively allocated on twelve hosts.
-   At 23:16 nine new jobs have verified actual native calls (one or two each);
-   two other running jobs are preparing. No new failure exists. No first-stage candidate, second shock or 2023 result is
-   accepted. Require the original horizon, fit, fresh-replay and prefix gates.
+   requests have known IDs and must never be duplicated. At 23:55, all twelve
+   candidate jobs are allocated on distinct cs hosts. c00_h24 started at
+   23:53:41, deadline October 5 02:53:41, and is in construction after authentication.
+   Ten show native progress (115–134 calls); c03_h32 has no native entry after
+   over 30 minutes and is stalled during container verification. Read-only
+   investigation does not establish its OS process state or an economic failure.
+   No job was cancelled or resubmitted. The completed diagnostic no longer
+   occupies a node. No first-stage candidate, second shock or 2023 result is
+   accepted. Require original paired horizon, fit, fresh-replay and prefix gates.
    [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
    [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).
    [Current root submission](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v2/submission.json).

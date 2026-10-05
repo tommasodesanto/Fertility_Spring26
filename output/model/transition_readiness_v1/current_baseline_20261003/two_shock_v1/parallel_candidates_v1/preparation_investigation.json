@@ -1,0 +1,72 @@
+{
+  "investigation": "read-only scheduler/process diagnosis: 19195648 (c03_h32, cs689) and 19195622 (cs602)",
+  "observed_at": "2026-10-05T03:50:59Z",
+  "target_root": "/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1",
+  "corrected_access": {
+    "command": "ssh -o BatchMode=yes -o ConnectTimeout=10 torch ...",
+    "login_host": "torch-login-b-2.hpc-infra.svc.cluster.local",
+    "status": "connected"
+  },
+  "auxiliary_initial_attempt": {
+    "command": "ssh -o BatchMode=yes -o ConnectTimeout=10 fromTorch ...",
+    "error": "Could not resolve hostname fromtorch",
+    "interpretation": "Construction error; this was not a failed SSH attempt to the intended Torch login host."
+  },
+  "job_19195648": {
+    "scheduler_at_2026-10-05T03:49:30Z": {
+      "state": "RUNNING",
+      "elapsed": "00:36:48",
+      "node": "cs689",
+      "cpus": 1,
+      "memory": "24G",
+      "command": "/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1/launch_parallel_transition_candidate.sh",
+      "stdout_stderr": "/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1/logs/estate_parallel_candidate-19195648.out",
+      "start": "2026-10-04T23:12:43",
+      "time_limit": "03:00:00",
+      "exit_code": "0:0 (running)"
+    },
+    "active_stage_evidence": {
+      "results/c03_h32/host_verification.json": "PASS_ZERO_SOLVES_PACKAGE; 4599 files; zero model solves/native calls; file timestamp 2026-10-04T23:13:38.975-04:00",
+      "results/c03_h32/container_verification.json": "0 bytes, last modification 2026-10-04T23:13:39.039-04:00; likely currently running the container verification redirection stage per launcher order, but its completion is not evidenced",
+      "container_addon_verification": "absent",
+      "driver.log": "absent",
+      "results/c03_h32/run": "absent",
+      "launcher heartbeat": "2026-10-05T03:50:46Z, fresh; launcher shell/heartbeat is alive, but this is not model progress",
+      "slurm_batch_stdout": "0 bytes at 2026-10-04T23:12:44.114-04:00"
+    },
+    "accounting": {
+      "sstat_at_2026-10-05T03:49:30Z": "AveCPU 00:00:02; MaxRSS 1042256K; AveRSS 1036108K; MaxDiskRead 2057407923; MaxDiskWrite 19606",
+      "sstat_at_2026-10-05T03:50:59Z": "AveCPU 00:00:02; MaxRSS 1042256K; AveRSS 1036112K; MaxDiskRead 2057436283; MaxDiskWrite 19648",
+      "delta": "Disk read +28,360 bytes and write +42 bytes across 89 seconds; CPU total remained 2 seconds."
+    },
+    "process_state": "Direct ssh torch -> cs689 with BatchMode and ConnectTimeout 8 yielded no output before the 20-second client wait; scontrol listpids reported job does not exist on node (null). Therefore OS process state/argv and /proc I/O could not be inspected.",
+    "assessment": "No candidate/native progress is evidenced for about 37 minutes after host verification. The launcher heartbeat is advancing, while the container-verification output remains zero bytes and later stages are absent. Accounting shows negligible CPU and near-flat I/O over the 89-second sample. This is strong evidence of a stall during container verification, but the process is not demonstrably OS-blocked because node-level process state was unavailable. No economic result or failure is inferred."
+  },
+  "job_19195622": {
+    "scheduler_at_2026-10-05T03:50:59Z": {
+      "state": "PENDING",
+      "reason": "None reported by squeue and scontrol",
+      "requested_node": "cs602",
+      "start": "Unknown",
+      "elapsed": "00:00:00",
+      "request": "1 CPU, 24G memory",
+      "restarts": 0,
+      "requeue": 0
+    },
+    "node_cs602_at_2026-10-05T03:50:59Z": {
+      "state": "ALLOCATED",
+      "cpu": "128 allocated / 2 idle / 128 total",
+      "memory": "513000M configured; 506880M allocated; 107566M OS FreeMem",
+      "interpretation": "Although 2 CPUs are idle and OS FreeMem is 107566M, Slurm reports only 6120M unallocated from configured memory, below the job\u2019s 24G request. This explains why the node does not currently satisfy the request; pending reason remained unreported as None."
+    }
+  },
+  "commands_and_epochs": [
+    "2026-10-05T03:49:30Z: ssh torch ran hostname/date, squeue -j 19195648,19195622, and scontrol show job for both.",
+    "2026-10-05T03:49:30Z: ssh torch queried sstat for 19195648.batch, squeue/sinfo for cs602, listed candidate artifacts, and attempted node process access.",
+    "2026-10-05T03:50:59Z: ssh torch refreshed bounded artifact tree, sstat, and squeue.",
+    "2026-10-05T03:50:59Z: ssh torch read c03_h32 receipts and launcher script, scontrol show node cs602, and scontrol listpids.",
+    "2026-10-05T03:50:59Z: ssh torch queried sacct and refreshed pending-job details."
+  ],
+  "actions_taken": "Read-only queries only. No cancel, requeue, resubmit, process signal, model invocation, or scheduler mutation.",
+  "lead_review_note": "Corrected three worker file-time labels from Z to -04:00 against lead-observed epochs. The worker CPU accounting shorthand is not a reconciled node resource count; only its dated memory figures support the pending-capacity observation. At a subsequent lead check cs602 was MIXED, CPUAlloc122/CPUTot128 and AllocMem461824/RealMemory513000 MiB, so resources had become available; no job change was made. OS-level blocked state remains unverified."
+}

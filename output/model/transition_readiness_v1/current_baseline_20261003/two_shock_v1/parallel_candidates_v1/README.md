@@ -33,7 +33,7 @@ The 17 standard plot names are preserved when original root gates pass. Diagnost
 
 ## Active scheduling records
 
-As of October 4 at 23:14 New York, **11 new jobs are RUNNING on 11 distinct cs hosts; c00_h24 (19195622) is PENDING**. Including preserved diagnostic 19193055 on cl012, **12 transition jobs are actively allocated on 12 distinct hosts**. Ten new jobs started at 23:12:43 with hard scheduler deadline October 5 02:12:43; c00_h32 started at 23:14:17 with deadline 02:14:17. At 23:16, **nine new jobs have verified actual native calls** (one or two each); c00_h32 is in construction and c03_h32 is still preparing. No failure/terminal receipt exists. [First actual native evidence](first_native_progress.json). [Actual launch verification](launch_verification.json).
+At 23:55 New York, all **twelve candidate jobs are allocated on twelve distinct cs hosts**. c00_h24 started at **23:53:41**, with hard scheduler deadline **October 5 02:53:41**, and is in construction after authentication. Ten jobs have genuine native progress (115–134 calls). c03_h32 remains stalled before model execution during container verification; no terminal receipt exists and OS process state is unverified. No job was cancelled, extended or resubmitted. [Current allocation and native progress](current_native_progress.json). The separate fixed-preference diagnostic 19193055 completed successfully at 23:39:53 with all original root gates and exact fresh replay. [Completion review](../initial_path_root_v2/completion_review.json). Ten candidate deadlines remain October 5 02:12:43, and c00_h32 is 02:14:17. [Preparation investigation](preparation_investigation.json).
 
 | Task | Preference | Horizon | Active job | Requested host |
 |---|---:|---:|---:|---|
