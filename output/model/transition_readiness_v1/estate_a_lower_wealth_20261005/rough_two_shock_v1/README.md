@@ -2,11 +2,56 @@
 
 ## Current facts and scope
 
-Status verified October 5 at **14:46:33 New York**: V3 job **19239878** is
-**RUNNING on cs648**, submitted at 14:42:31. The input bridge **passed** with
-one fixed-price call and exactly matching 78 solution arrays. See
-`deployment_v3/bridge_pass_receipt.json`. Preparation is continuing; the small
-native execution check and transition fitting have not yet been verified.
+**Current V4:** fit-only job **19242702** was submitted October 5 at
+**15:20:00 New York**, with 10,907 seconds remaining to the original 18:21:48
+deadline. The launcher now goes directly from zero-solve input/preflight checks
+to the unchanged empirical fitting driver. It has no bridge rebuild or native
+smoke prerequisite. Reused V3 baseline/base-plan inputs are pinned and mounted
+read-only. An actual scalar objective record has not yet been observed.
+See `deployment_v4/submission.json`, `deployment_v4/package.json` and
+`lead_execution_review_v4.json`. Package SHA:
+`dc4c871e147d89bbbfa981362f3d0b9325c434b3bb82a98c8e7dce6562dc67d3`;
+launcher SHA:
+`fbe19ba717370f75b41a19f0c121c88619253ed2e2ced51b1903fc528deabef4`.
+A bounded read-only monitor checks only this new job for the first actual
+objective record or terminal state; it does not perform model validation.
+
+Prior attempt, verified October 5 at **15:03:13 New York**: V3 job **19239878**
+**FAILED at 15:02:09, exit 124:0**, after 17 minutes 52 seconds on Torch.
+The input bridge passed with one fixed-price call and exactly matching 78
+solution arrays (`deployment_v3/bridge_pass_receipt.json`). The subsequent
+small execution check hit its existing 900-second external cap during stage-two
+seed map 2; no smoke completion receipt or transition fit exists. Its first-stage
+fixed-baseline candidate, exact 2015 replay/handoff and first stage-two seed map
+completed. The last heartbeat recorded 29 native calls entered and completed
+operations account for 27; the final entered-call count after that heartbeat is
+not yet established. See `deployment_v3/failure_diagnosis.json` and the terminal
+scheduler/launcher evidence in `deployment_v3/progress_status.json`.
+
+**Immediate direction: fit-only V4.** In response to the author's repeated
+preparation complaints, remove the blocking native execution check entirely;
+do not shrink or rerun it. V4 reuses the already-passed V3 canonical baseline
+and base plan under exact read-only pins. Validate the changed control flow
+with zero-solve tests only; no new bridge rebuild or native prerequisite run.
+The failed full V3 check stays failed, with its partial evidence preserved.
+The unlaunched stage-two-only check implementation was discarded.
+
+The empirical driver and runtime are restored byte-for-byte to V3. Its own
+fresh reference and five-map seed remain part of the estimation algorithm;
+the first scalar objective trial follows them. Do not describe a queued job,
+reference reconstruction or seed measurement as an actual objective evaluation.
+No diagnostic 2015 checkpoint, seed, endpoint or optimizer state enters fitting.
+Six focused fake-loop tests passed with no model calls.
+
+Until the exact final V3 native-entry count is established, conservatively charge
+the whole prior smoke cap: three prior bridge calls + prior smoke reservation
+100 = 103. The V4 fit cap is 19,897, leaving the total within 20,000. This is an
+upper-bound budget charge, not a claim that 100 smoke calls were used. Keep the
+original shared deadline **18:21:48 New York** unchanged.
+
+The transient Torch SSH authentication failure was followed by the author's
+explicit 'torch is back' message and a successful coordinator queue command.
+V4 deployment and submission are complete; the actual fitting phase is monitored separately.
 See `deployment_v3/submission.json` and `lead_execution_review_v3.json` for the
 exact launch pins and review. The user queue was empty before submission.
 Persistent submission receipts and separate task claims prevent an unknown-outcome retry.
@@ -30,9 +75,9 @@ alias-drift fixtures and six focused fake-loop tests passed. The lead reviewed
 the actual evidence, changed guards, call accounting and launcher deadline.
 
 The original shared deadline remains **18:21:48 New York** (epoch 1791238908),
-including time consumed by previous attempts and between attempts. Aggregate
-reservation is prior attempts 2 + new bridge 1 + execution check at most 100
-+ fit at most 19,897 = 20,000 native calls. No automatic budget extension.
+including time consumed by previous attempts and between attempts. V4 charges
+103 conservatively for previous attempts and allows at most 19,897 fresh fit
+calls, keeping the total upper bound at 20,000. No automatic budget extension.
 
 Remote V3 root:
 `/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v3`.
@@ -41,7 +86,7 @@ Package SHA-256:
 Launcher SHA-256:
 `157664d07e58985fb66b70a2370157053c4f9c27e4b10463ee78c7b9a01de66a`.
 V1 and V2 roots end in `_v1` and `_v2`; their pins and lead reviews remain
-unchanged. The small native loop check runs inside the bounded job before fitting.
+unchanged. The V3 native loop check failed its cap; V4 has no such blocking prerequisite.
 
 Tommaso's October 5 messages in `Reconcile yesterday’s threads`
 (`01a10804-6aad-7072-bd35-a65fd4f080e3`) prioritize estimating the transition,
@@ -114,11 +159,11 @@ including replay, 48 endpoint evaluations, 1,800-second seed/endpoint/map caps,
 6,000-second path cap and 7,200-second candidate cap. No automatic extensions
 or unknown-outcome retries. A stopped fit remains incomplete.
 
-Rebuild the required initial state at the saved price if the array-only search
-archive cannot provide the full native solution object; no new stationary price
-search is needed. This bridge and the small execution check belong to the same
-bounded job. Deployment pins and submission evidence are retained under
-`deployment/`, `deployment_v2/` and `deployment_v3/` for the respective attempts.
+The initial native state was reconstructed once successfully in V3 at the saved
+price. V4 reuses that pinned canonical case and base plan read-only; it does not
+rebuild the bridge or reuse diagnostic transition outputs in empirical fitting.
+Deployment pins and submission evidence remain under `deployment/` through
+`deployment_v4/` for the respective attempts.
 
 Save compact parameter/loss/status records for every trial, plus full best,
 latest and selected states. Generate the stable 17-plot packet for selected

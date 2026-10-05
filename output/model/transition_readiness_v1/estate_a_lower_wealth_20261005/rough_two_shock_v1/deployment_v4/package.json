@@ -1,0 +1,38 @@
+{
+  "budget": {
+    "aggregate_native_call_budget": 20000,
+    "cpus": 1,
+    "external_seconds": 14400,
+    "fit_native_calls": 19897,
+    "internal_seconds_at_most": 14280,
+    "memory_gib": 24,
+    "original_shared_deadline_epoch": 1791238908,
+    "own_output_gib_cap": 16,
+    "scratch_headroom_gib_floor": 32
+  },
+  "disclosure": "Fit-only experiment; prior full two-stage smoke failed its 900-second cap; no execution-check certificate. Fit makes fresh reference and seeds from pinned v3 baseline.",
+  "files": {
+    "rough_two_shock.py": "c2cc0b80a766f1c8532a1421456d2c40cf0f8810b4c711c77d7b64faa9d49ed3",
+    "rough_two_shock_runtime.py": "0a68497ea5c364bfed5e9f3315bb121c537c8b991e47ba10f8db2c83121e00a2"
+  },
+  "inputs": {
+    "v3_base_plan": "bc5d2299bb054b73683ecbca30fdb7f29e00295a2cdbc794a400ade9082d0c0e",
+    "v3_bridge_receipt": "d308c27f4dd414637271bea926503b16472be853df33d83bff9915c560147751",
+    "v3_handoff": "852c7f5a936725595ec6de7c0538f8655ed380e314701c62044f23c1f4d66bbe",
+    "v3_input_contract": "981bf969151ba0cfacd0e5967d4d950b5d2516aaeaaddc74cc7edbda81a8f7dd",
+    "v3_metadata": "65468b56bcd3f58c627ab6148cecce24f96c65884308007ba3cbf2b61e0b34a5"
+  },
+  "prior_attempts": {
+    "actual_final_unknown": true,
+    "actual_native_calls_lower_bound": 32,
+    "budget_charge_upper_bound": 103,
+    "job_ids": [
+      "19238662",
+      "19239226",
+      "19239878"
+    ]
+  },
+  "schema": "estate_a_lower_wealth_rough_fit_only_package_v4",
+  "source": "v3_completed_bridge_and_base_plan_read_only",
+  "task_id": "estate_a_lower_wealth_rough_h16_v4"
+}

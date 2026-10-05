@@ -1,0 +1,54 @@
+{
+  "status": "read_only_diagnosis",
+  "job_id": "19239878",
+  "terminal": {
+    "slurm_state": "FAILED",
+    "exit_code": "124:0",
+    "start_new_york": "2026-10-05 14:44:17",
+    "end_new_york": "2026-10-05 15:02:09",
+    "elapsed_seconds": 1072,
+    "smoke_external_cap_seconds": 900,
+    "source": "deployment_v3/progress_status.json and v3 launcher run_bounded 900-second smoke command"
+  },
+  "phase_at_stop": {
+    "phase": "stage 2 inherited-state five-map Jacobian seed; map 2 had begun but has no completed native_record.json",
+    "last_smoke_heartbeat": {"epoch": 1791226921.2910655, "new_york": "2026-10-05 15:02:01", "phase": "native_call", "controller_accounted_calls": 26, "actual_native_calls_entered": 29, "candidate_count": 1},
+    "last_completed_seed_map": "stage2/seed/map_001/native_record.json at 15:01:50, policy_calls 1, baseline_checks valid true",
+    "second_seed_map_evidence": "stage2/seed/map_002/output_override.json at 15:01:50; no map_002/native_record.json or dated policy audit",
+    "smoke_receipt": "absent",
+    "fit": "not started"
+  },
+  "completed_call_ledger": {
+    "fresh_reference": 2,
+    "stage1_five_map_seed": 13,
+    "stage1_fixed_baseline_candidate_endpoint_and_two_path_maps": 9,
+    "exact_two_period_2015_handoff_replay": 2,
+    "stage2_seed_map1": 1,
+    "completed_operation_calls_through_stage2_map1": 27,
+    "actual_native_calls_entered_before_kill": 29,
+    "remaining_two_entered_calls": "inside stage2 seed map2; completion of call 28 is unverified and call 29 was entered by 15:02:01",
+    "controller_heartbeat_26_vs_native_29": "controller counts stage2 seed only after all five maps; the seed had not returned",
+    "prior_attempts_entered_calls": 2,
+    "v3_bridge_call": 1,
+    "cumulative_entered_across_attempts_at_last_heartbeat": 32
+  },
+  "timing_new_york": {
+    "smoke_manifest_written": "14:47:05",
+    "smoke_preflight_passed": "14:47:07",
+    "fresh_reference_completed": "14:50:54",
+    "stage1_seed_completed": "14:55:52",
+    "stage1_candidate_completed": "15:00:25",
+    "2015_handoff_completed": "15:01:05",
+    "stage2_seed_map1_completed": "15:01:50",
+    "last_native_heartbeat": "15:02:01",
+    "external_timeout": "15:02:09"
+  },
+  "numeric_evidence": {
+    "stage1_candidate": {"rough_objective_eligible": true, "model_fertility_at_local_index1": 2.100000000213377, "rough_target": 1.861, "housing_residual": 7.425766678128756e-12, "scaled_pension_residual": 9.165158550094278e-12, "replay_gap": 0.0},
+    "stage2_seed_map1": "accounting valid; no stage2 fitted or fixed-baseline candidate"
+  },
+  "cause_and_uncertainty": "The external 900-second smoke timeout ended the process during stage2 seed map2. Stage1 and its actual two-period handoff passed. There is no failure receipt showing a model numerical rejection, accounting failure, memory failure, or stage2 path result. The smoke's internal 900-second deadline was also imminent, but exit 124:0 and absence of a Python failure receipt identify the external bound as the observed stop. The present H6 path/H4 seed exact loop cannot complete under this 900-second run based on this execution; four stage2 seed maps plus a stage2 candidate remained.",
+  "minimum_next_design_decision": "Do not repeat unchanged H6/H4 two-stage smoke. A genuinely smaller or checkpoint-composed smoke must reduce work while keeping exact two-period state/queue handoff and separately labeled untested empirical H16 behavior; verify its exact loop and source pins before any release. A H4/H2 proposal alone is not certified to fit in 900 seconds by these receipts, and no numerical gate or original global deadline needs relaxation.",
+  "remote_evidence_root": "/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v3/results/estate_a_lower_wealth_rough_h16_v3",
+  "local_terminal_evidence": "output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v3/progress_status.json"
+}
