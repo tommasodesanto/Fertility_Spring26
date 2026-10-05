@@ -1,4 +1,5 @@
 {
+  "accepted_estimates": false,
   "attempted_at": "2026-10-04T23:21:52.645736+00:00",
   "command": [
     "sbatch",
@@ -10,6 +11,10 @@
     "{\"path\":\"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/results/smoke_smoke_v1/run/smoke_receipt.json\",\"sha256\":\"bd99ddfa2224760eb4b816f91f2a435c4bf36c6bb7a2cfacb4ef5fe4db026905\"}"
   ],
   "cpus": 1,
+  "failure_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v5_initial_path.json",
+    "sha256": "e3d7c00728ad8ee819cd9ea2469f2798c814fe4da517a7e6907435e4cfa72dfe"
+  },
   "horizons": [
     24,
     32
@@ -38,17 +43,23 @@
   "scalar_evaluations_per_stage": 12,
   "scheduler_before_submission": "empty",
   "scheduler_deadline": "2026-10-05T01:23:53-04:00",
+  "scheduler_end": "2026-10-04T19:44:46-04:00",
+  "scheduler_exit_code": "1:0",
   "scheduler_node": "cl011",
   "scheduler_reason": "None",
   "scheduler_start": "2026-10-04T19:23:53-04:00",
-  "scheduler_state": "RUNNING",
-  "scheduler_verified_at": "2026-10-04T23:29:39.833477+00:00",
+  "scheduler_state": "FAILED",
+  "scheduler_verified_at": "2026-10-05T00:03:29.081212+00:00",
   "smoke_receipt_pin": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/results/smoke_smoke_v1/run/smoke_receipt.json",
     "sha256": "bd99ddfa2224760eb4b816f91f2a435c4bf36c6bb7a2cfacb4ef5fe4db026905"
   },
-  "status": "SUBMITTED",
+  "status": "FAILED",
   "stderr": "",
   "stdout": "19183608",
+  "terminal": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/results/fit_fit_v1/launcher_terminal.json",
+    "sha256": "30e48947325912b9e5e17ce43c85e628889bc674de4dc0916826a343ce398890"
+  },
   "wall_seconds": 21600
 }
