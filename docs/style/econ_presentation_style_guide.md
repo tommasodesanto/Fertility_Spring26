@@ -97,11 +97,14 @@ the codebase or the sequence of internal experiments.
   plainly, where the path is introduced.
 - Do not call a diagnostic closure a forecast, a finite transition a new steady state, or an
   impact calculation a complete policy experiment.
-- Keep caveats short and economically substantive. Source notes belong in a small footer;
-  code hashes, run identifiers, residual tolerances, and solver details do not belong in the
-  visible main deck.
-- Source footers should be standard citations or dataset names, not explanatory prose. If a
-  measurement mismatch changes the economics, explain it once in the frame body.
+- Keep caveats short and economically substantive. Do not add source footers to the
+  author's own model equations, simulations, or mechanism results; authorship is understood.
+  Keep internal evidence references, code hashes, run identifiers, residual tolerances,
+  and solver details in the accompanying notes, outside the visible main deck.
+- When attribution to another paper or identification of external data is useful, use a
+  standard citation or dataset name in a small footer. This is not a default source line
+  on every slide. If a measurement mismatch changes the economics, explain it once in
+  the frame body.
 
 ## 7. Final check
 
