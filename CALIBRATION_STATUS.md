@@ -883,7 +883,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 21:24 New York:** the
+   **Current transition direction, verified October 4 at 21:27 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -974,7 +974,7 @@ manuscript wording or certify a new paper calibration.
    **19189373** was submitted once at **21:23:25 New York** and is **RUNNING**.
    It uses a fresh 12-date/date-5 seed, at most three total root evaluations
    including reserved replay, 320 calls, 3,000 internal/3,300 external seconds,
-   one CPU and 24 GiB. It started at 2026-10-04T21:24:00 on cl017; the hard scheduler deadline is 2026-10-04T22:19:00. Native progress remains to be checked.
+   one CPU and 24 GiB. It started at 2026-10-04T21:24:00 on cl017; the hard scheduler deadline is 2026-10-04T22:19:00. At 21:27 New York, actual native progress was verified: one native call in the fresh seed, zero completed seed/root maps, and no failure or terminal receipt. Both full package authentications passed.
    Five tests, launcher syntax and the actual zero-call input contract check
    passed. This new bounded diagnostic does not extend an ended budget or
    release a full fit. Original economics and all gates
