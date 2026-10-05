@@ -109,7 +109,7 @@ def preflight(run_root: Path, inventory: Path, source_root: Path) -> dict:
                 array_archive_sha256=digest(archive))
 
 
-def check_arrays(solution, shared, archive: Path) -> dict:
+def check_arrays(solution, shared, archive: Path, closure: dict) -> dict:
     current = {key: value for key, value in vars(solution).items()
                if isinstance(value, np.ndarray) and value.dtype != object}
     shared_arrays = {"shared." + key: value for key, value in vars(shared).items()
@@ -122,12 +122,21 @@ def check_arrays(solution, shared, archive: Path) -> dict:
                            and key not in {"parameters.H0", "normalization.population"}}
         extra = source_solution - expected
         missing = expected - source_solution
-        if extra or missing:
+        aliases = {"market_housing_demand", "market_housing_excess"}
+        if extra != aliases or missing:
             raise RuntimeError(f"Saved array inventory differs: missing={sorted(missing)}, extra={sorted(extra)}")
-        if len(current) != 78 or not set(shared_arrays).issubset(saved.files):
-            raise RuntimeError("Complete 78-array selected solution or shared-array inventory missing")
+        if len(current) != 76 or len(source_solution) != 78 or not set(shared_arrays).issubset(saved.files):
+            raise RuntimeError("Complete 76-array fixed-H0 solution and 78-array selected source required")
+        # Population-one normalization appends these two reporting aliases to
+        # its solution. They are functions of the observed one-market quantities,
+        # and must not be inserted into the fixed-H0 native solution object.
+        alias_values = {
+            "market_housing_demand": np.asarray([closure["normalized_housing_demand"]]),
+            "market_housing_excess": np.asarray([
+                closure["normalized_housing_demand"] - closure["physical_housing_supply"]]),
+        }
         max_gap = 0.
-        for key, value in current.items():
+        for key, value in {**current, **alias_values}.items():
             prior = saved[key]
             if value.shape != prior.shape or value.dtype != prior.dtype:
                 raise RuntimeError(f"Saved array shape/dtype differs: {key}")
@@ -146,7 +155,9 @@ def check_arrays(solution, shared, archive: Path) -> dict:
         if not (np.array_equal(saved["parameters.H0"], np.asarray([H0]))
                 and np.array_equal(saved["normalization.population"], np.asarray([1.]))):
             raise RuntimeError("Saved normalized H0/population differs")
-    return dict(solution_arrays=len(current), shared_arrays=len(shared_arrays), max_absolute_gap=max_gap)
+    return dict(fixed_h0_solution_arrays=len(current), source_solution_arrays=len(source_solution),
+                derived_alias_arrays=sorted(aliases), shared_arrays_inventoried=len(shared_arrays),
+                max_absolute_gap=max_gap)
 
 
 def build(args: argparse.Namespace, proof: dict) -> Path:
@@ -184,7 +195,7 @@ def build(args: argparse.Namespace, proof: dict) -> Path:
         for key in ("renewal_residual", "absolute_housing_residual", "actual_paygo_residual"):
             if abs(float(closure[key])) > 1e-6:
                 raise RuntimeError(f"Stationary accounting fails: {key}")
-        arrays = check_arrays(live["sol"], live["sd"], proof["archive"])
+        arrays = check_arrays(live["sol"], live["sd"], proof["archive"], closure)
         check_rows(report / "target_fit.csv", rows(proof["report"] / "target_fit.csv"),
                    ("moment", "target", "model", "gap", "weight", "loss_contribution"))
         check_rows(report / "parameters.csv", rows(proof["report"] / "parameters.csv"),

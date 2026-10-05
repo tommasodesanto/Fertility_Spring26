@@ -8,18 +8,21 @@
 #SBATCH --signal=B:TERM@30
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v1/logs/%x-%j.out
+#SBATCH --output=/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2/logs/%x-%j.out
 set -euo pipefail
 
 repo=/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26
 local_v5="$repo/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5"
-local_addon="$repo/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment"
+local_addon="$repo/output/model/transition_readiness_v1/estate_a_lower_wealth_20261005/rough_two_shock_v1/deployment_v2"
 remote_v5=/scratch/td2248/projects/current_estate_two_shock_20261004_v5
 remote_overnight=/scratch/td2248/projects/estate_birth_overnight_20261004_v1
-remote_addon=/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v1
+remote_addon=/scratch/td2248/projects/estate_a_lower_wealth_rough_transition_20261005_v2
 python=/share/apps/anaconda3/2025.06/bin/python
 image=/share/apps/images/ubuntu-24.04.4.sif
-task=estate_a_lower_wealth_rough_h16_v1
+task=estate_a_lower_wealth_rough_h16_v2
+prior_job=19238662
+prior_native_calls=1
+original_deadline_epoch=1791238908
 
 [[ "$#" == 1 && "$1" =~ ^[[:xdigit:]]{64}$ ]] || { echo 'Pass exactly the pinned package.json SHA256' >&2; exit 2; }
 expected_package_sha=$1
@@ -47,6 +50,7 @@ visible="$local_addon/results/$task"
 export NUMBA_CACHE_DIR="$visible/numba_cache" MPLCONFIGDIR="$visible/matplotlib"
 start_epoch=$(date +%s)
 deadline_epoch=$((start_epoch+14280))
+if [[ "$deadline_epoch" -gt "$original_deadline_epoch" ]]; then deadline_epoch=$original_deadline_epoch; fi
 child_pid=''
 heartbeat_pid=''
 disk_guard_pid=''
@@ -71,7 +75,7 @@ from pathlib import Path
 path,status,start,deadline=sys.argv[1:]
 Path(path).write_text(json.dumps(dict(status='complete' if int(status)==0 else 'failed',exit_code=int(status),
  start_epoch=int(start),deadline_epoch=int(deadline),finished_epoch=time.time(),slurm_job_id=os.getenv('SLURM_JOB_ID'),
- no_auto_retry=True,task_id='estate_a_lower_wealth_rough_h16_v1',
+ no_auto_retry=True,task_id='estate_a_lower_wealth_rough_h16_v2',prior_attempt_job_id='19238662',prior_actual_native_calls=1,
  failure_reason='own_output_cap_exceeded' if Path(path).parent.joinpath('disk_cap_exceeded.json').exists() else None),
  sort_keys=True,indent=2)+'\n')
 PY
@@ -103,7 +107,7 @@ sha=lambda path:hashlib.sha256(Path(path).read_bytes()).hexdigest()
 if sha(manifest)!=expected:raise SystemExit('Submitted package pin differs')
 package=json.loads(manifest.read_text())
 required={'lower_wealth_transition_reference.py','rough_two_shock.py','rough_two_shock_runtime.py'}
-if package.get('schema')!='estate_a_lower_wealth_rough_package_v1' or set(package['files'])!=required:
+if package.get('schema')!='estate_a_lower_wealth_rough_package_v2' or set(package['files'])!=required:
  raise SystemExit('Wrong package file set')
 for name,digest in package['files'].items():
  if sha(root/name)!=digest:raise SystemExit('Add-on file bytes differ: '+name)
@@ -120,10 +124,11 @@ PY
 import json,os,sys
 from pathlib import Path
 path,start,deadline,pin=sys.argv[1:]
-Path(path).write_text(json.dumps(dict(task_id='estate_a_lower_wealth_rough_h16_v1',start_epoch=int(start),
+Path(path).write_text(json.dumps(dict(task_id='estate_a_lower_wealth_rough_h16_v2',start_epoch=int(start),
  deadline_epoch=int(deadline),external_wall_seconds=14400,internal_wall_seconds=14280,cpus=1,memory_gib=24,
  numba_threads=1,blas_threads=1,package_sha256=pin,slurm_job_id=os.getenv('SLURM_JOB_ID'),
- no_auto_retry=True,rough_diagnostic=True),sort_keys=True,indent=2)+'\n')
+ no_auto_retry=True,rough_diagnostic=True,prior_attempt_job_id='19238662',prior_actual_native_calls=1,
+ original_shared_deadline_epoch=1791238908),sort_keys=True,indent=2)+'\n')
 PY
 cp "$job/launcher_start.json" "$out/launcher_start.json"
 timeout 20s myquota > "$job/initial_quota.txt"
@@ -207,8 +212,9 @@ if smoke.get('status')!='execution_passed' or smoke.get('schema')!=manifest.get(
    smoke.get('source_identity')!=base['identity'] or manifest.get('identity')!=base['identity']:
  raise SystemExit('Exact same-source execution smoke did not pass')
 b=int(bridge['lifecycle_solves']);s=int(smoke['actual_policy_calls'])
-if b!=1 or not 0<=s<=100 or b+s+19899>20000:raise SystemExit('Common native-call cap exceeded')
-print(json.dumps(dict(bridge=b,smoke=s,fit_cap=19899,aggregate_cap=20000,checked=True),sort_keys=True))
+if b!=1 or not 0<=s<=100 or 1+b+s+19898>20000:raise SystemExit('Common native-call cap exceeded')
+print(json.dumps(dict(prior_job_id='19238662',prior_calls=1,bridge=b,smoke=s,
+ fit_cap=19898,aggregate_cap=20000,checked=True),sort_keys=True))
 PY
 run_bounded 120 apptainer exec "${binds[@]}" --pwd "$repo" "$image" "$python" \
  "$local_addon/files/rough_two_shock.py" --prepare --base-plan "$visible/base_plan.json" \
@@ -231,9 +237,9 @@ if fit.get('actual_policy_calls')!=fit.get('native_actual_policy_calls'):
 for key,file in (('rough_driver','rough_two_shock.py'),('rough_runtime','rough_two_shock_runtime.py')):
  if manifest['source_pins'][key]['sha256']!=package['files'][file]:
   raise SystemExit('Final rough source pin differs: '+key)
-calls=int(bridge['lifecycle_solves'])+int(smoke['actual_policy_calls'])+int(fit['native_actual_policy_calls'])
+calls=1+int(bridge['lifecycle_solves'])+int(smoke['actual_policy_calls'])+int(fit['native_actual_policy_calls'])
 if calls>20000:raise SystemExit('Shared actual native-call cap exceeded')
-print(json.dumps(dict(status='PASS',bridge_calls=bridge['lifecycle_solves'],
+print(json.dumps(dict(status='PASS',prior_job_id='19238662',prior_calls=1,bridge_calls=bridge['lifecycle_solves'],
  smoke_calls=smoke['actual_policy_calls'],fit_calls=fit['native_actual_policy_calls'],
  aggregate_actual_calls=calls,aggregate_cap=20000,rough_source_pins=manifest['source_pins']),sort_keys=True))
 PY

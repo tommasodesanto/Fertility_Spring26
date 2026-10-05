@@ -63,6 +63,7 @@ class Tests(unittest.TestCase):
 
     def test_absolute_bounds_and_h16_slice(self):
         self.assertEqual(rough.BOUNDS,[0.001789207206604163,0.35784144132083257])
+        self.assertEqual(rough.ROUGH_BUDGET['maximum_policy_calls'],19898)
         self.assertEqual(len(np.arange(16)[2:14]),12)
         self.assertEqual(len(np.arange(12)[2:14]),10)
         self.assertEqual(len(runtime.no_arbitrage_prices(old_tests.NS(R_gross=1.02,delta=.01,tau_H=.01,
