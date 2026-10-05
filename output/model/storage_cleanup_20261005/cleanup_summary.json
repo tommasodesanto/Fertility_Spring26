@@ -1,9 +1,9 @@
 {
   "status": "completed",
-  "recorded_utc": "2026-10-05T16:37:13.253760+00:00",
-  "scope": "Six executed passes across five named ended historical Fertility experiment families on Torch; generated checkpoint payloads only",
-  "total_removed_files": 2054,
-  "total_removed_allocated_bytes": 356459412480,
+  "recorded_utc": "2026-10-05T18:30:01.936660+00:00",
+  "scope": "Seven executed passes over named ended historical Fertility output scopes on Torch; latest pass retired eight entire bested chain result folders.",
+  "total_removed_files": 57240,
+  "total_removed_allocated_bytes": 357197923840,
   "passes": [
     {
       "name": "nightpair",
@@ -50,6 +50,14 @@
       "removed_allocated_bytes": 26933242880,
       "completion_receipt": "recent_parent/completion.json",
       "completion_sha256": "c78eae3ea56cb58ae297fa41fc76e3dc0fbe183af4198b03b495e7d5f8f52eca"
+    },
+    {
+      "name": "eight bested soft-timing v2 production chains",
+      "removed_files": 55186,
+      "removed_allocated_bytes": 738511360,
+      "completion_receipt": "whole_runs/storage_attribution/code_trace/v2_completion_receipt.json",
+      "completion_sha256": "6a2cf983ea8e80717d9cbee75c9358b4b76fbcbeda31af2c89c5f72a0eb30222",
+      "retention": "Both same-contract v3 winners unchanged; local compact chain collection retained; parent source/input/runtime preserved."
     }
   ],
   "retention": "For tightened completed archives: selected full solutions per distinct contract, explicit pinned inputs and one ambiguous utility case; compact trial parameters/loss/moments/status/provenance, plots/logs/source/inputs/runtime retained. Nightpair still retains its original 40 protected states. Earlier per-pass keeper counts describe that pass, not the current keep set.",
@@ -65,7 +73,7 @@
     "measured_utc": "2026-10-05T16:10:37.561981+00:00",
     "limitation": "Account-wide displayed usage was read before the final September 7 deletion and does not reconcile exactly to the four file-level passes; no derived current account usage is asserted."
   },
-  "execution_notice": "All six cleanup passes executed once. Never rerun their execution commands.",
+  "execution_notice": "Seven cleanup passes executed once; never rerun their execution commands. Separate four-output retirement proposal remains unexecuted.",
   "current_checkpoint_entries": {
     "nightpair": 40,
     "utility": 5,
@@ -93,5 +101,12 @@
     "manifest": "whole_runs/deletion_manifest.json",
     "manifest_sha256": "75efe36e43a3ad7f729070da682660a80c8095b2967013825c546a8034cfd488",
     "reason": "Two distinct bounded scheduler queries timed out; absence of active writers could not be verified. No archive, execution marker or deletion created."
+  },
+  "code_first_diagnosis": {
+    "writer": "code/model/experiments/birth_count_choice/model/native_price.py:54",
+    "call_before_best_comparison": "code/model/experiments/birth_count_choice/cluster_calibrate.py:158",
+    "finding": "Each new guess evaluates and saves selected/repeat solution+shared arrays before calibration loss improvement comparison. Existing Estate samples show about73MB array packets per guess; this establishes retention mechanism, not terabyte total.",
+    "evidence": "whole_runs/storage_attribution/code_trace/large_writer_diagnosis.json",
+    "sha256": "ce2eadf1833d8528dc9e529da17f4da839f269a0767415b140d752c7e53a5275"
   }
 }
