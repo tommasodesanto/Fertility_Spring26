@@ -1,0 +1,492 @@
+{
+  "schema": "current_estate_a_saved_platform_bridge_v1",
+  "status": "passed",
+  "identity": {
+    "reference_sha256": "c29dc624bdcdea22ac5e12d23f915e50bd975c118d2cea51fc9722cdd813fd98",
+    "engine_sha256": "56ebdafe58dc9c8a5722fe6f973a9bc24329ac5c0a124a2286a0ddadc07a51e6",
+    "entry_sha256": "bf976b033678629c4f9e91df4037092d6e35ab113eebaf3fcf63c59510d2ca4f",
+    "grid_sha256": "6df90d2d19cbc914847c88113b7f01ffaf0c29a699054bcd4c182883f87e2e9d",
+    "effective_parameters_sha256": "567df44ebbf583e532dab5a83c8a053eb04bc283a2b32db5b8b2efd9d21e2490",
+    "source_pins": {
+      "code/model/experiments/birth_count_choice/check_cap_one.py": "eb96a4b68bce217b7a7b7600a47d8b83f54b6a808274275bc26709b108d7cb7f",
+      "code/model/experiments/birth_count_choice/cluster_calibrate.py": "9274f854b8207458354c96e7edba3d3fc50b1a375ba16284087e12e69fe0a3a3",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/__init__.py": "e8ffc646d33750e9224702d21278831d59b9856b6941a9e2e05f3c920618106b",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/calibration.py": "75ee53f3b378acde2b5fa49ff0928daa6fb6c0be909f4caf145c3d680ff1f8a9",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/cli.py": "50d35128b652f0521e8dbcf0ed8ea82ff96a3beaf2777a2ec8b0c39d2891ac54",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/diagnostics.py": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/howard_speed_audit.py": "89bc9f519e27229368ef29faeee37094a7cc3411622efb4bc910198f301a32d1",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/kernels.py": "35a846d5d0ab98f18aababdbe065848b44ca85fffa8b85557f1893ebb849be4a",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/local_panel.py": "1486c3375f1ad376b213589916c7e92ec7be05441e3c88748961440463e6c022",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/parameters.py": "487b69ed45fd62a7cdc4802bce5835fa9c9d5290a44f661a111e65a376a67eb4",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/solver.py": "5a965a1d7ddd203579ef2ff0ad076fe62ee62a2d19917d4c63b8f621404704d9",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/utils.py": "bd27d0ae8196d7f0ec99cbfdaeea63a09d7d0a6661ede64bdf34e80a79c9553a",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/__init__.py": "d1120db965291d10fccb3bbb75f8177e68dcfc8c34ece0f0774a387bef8508d6",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/bo.py": "3a82623d35710aa1719915b2a4f9aeb23a27053c89b4fa034ac2616d3cc9f8ef",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/data.py": "9abe3fdc51319032805987041ac1751b1cd6983ca5a32605f519a092a9e08dd5",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/emulator.py": "01f047907f250d31d49b2a825858acc64c09959a2289a3a98aff6e216daf6a98",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/gp.py": "969375cf73de30cacf4e25fe8357cd44bcbd8338485344df389ad7f698612888",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/identification.py": "98a8f9d785dc505b98d3faa7885fd1fae5f4737702b91a293d17b37712b76a12",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/run_surrogate_calibration.py": "637dc04181e1697dd6ca3513d9d6929a4b8e7ff408e1654ff3a7e55b15bbf826",
+      "code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/validate_proposals.py": "9dcdda751d859efc4fd66c6493358f5015a17977dc7b8ba2f8952becb5725356",
+      "code/model/experiments/birth_count_choice/model/__init__.py": "f06337c12a7e759bbabd50f0562932be661fc7ef216cfa7810ac77e0705d9a3c",
+      "code/model/experiments/birth_count_choice/model/calibration.py": "f81ccbf6d7ef522123bc7e91ab082470213bc33a6fa0516b2c6eb8c54f6b6bfd",
+      "code/model/experiments/birth_count_choice/model/credit.py": "0c939767d0fa5fbfc468c47da3dbbb5a3d8c79c3fd7e6b2c6715b11444b0b070",
+      "code/model/experiments/birth_count_choice/model/engine/__init__.py": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67",
+      "code/model/experiments/birth_count_choice/model/engine/adult_entry.py": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+      "code/model/experiments/birth_count_choice/model/engine/birth_count.py": "ad349b259dd3da505bcdc036b9a4696621b3c9062203e9bc8ac40db87761332e",
+      "code/model/experiments/birth_count_choice/model/engine/child_preferences.py": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+      "code/model/experiments/birth_count_choice/model/engine/diagnostics.py": "9d65d92cb80b7a11593b6d1c85b87581d28baeaa320897d7136733be9735adb3",
+      "code/model/experiments/birth_count_choice/model/engine/distribution.py": "6e855e183aa60707cf97d8c12227850ab8c246ab3d9ee75a14aa84aa73189aca",
+      "code/model/experiments/birth_count_choice/model/engine/e5f_social_security.py": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+      "code/model/experiments/birth_count_choice/model/engine/e5f_stationary_paygo.py": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+      "code/model/experiments/birth_count_choice/model/engine/equilibrium.py": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9",
+      "code/model/experiments/birth_count_choice/model/engine/fertility_nested.py": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85",
+      "code/model/experiments/birth_count_choice/model/engine/household.py": "95ecba8a5aa0d6eb28418d64b8f5a81e951ab483deed69c28cc1974d88dba95e",
+      "code/model/experiments/birth_count_choice/model/engine/joint_nested.py": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b",
+      "code/model/experiments/birth_count_choice/model/engine/kernels.py": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279",
+      "code/model/experiments/birth_count_choice/model/engine/parameters.py": "f7cffd220514f6c231a72de7a754e8ca357aeba6e3274b91266576b840ce896f",
+      "code/model/experiments/birth_count_choice/model/engine/shared.py": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+      "code/model/experiments/birth_count_choice/model/engine/solver.py": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+      "code/model/experiments/birth_count_choice/model/engine/two_shock_choice.py": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1",
+      "code/model/experiments/birth_count_choice/model/engine/utils.py": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+      "code/model/experiments/birth_count_choice/model/engine/warm_price.py": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518",
+      "code/model/experiments/birth_count_choice/model/equilibrium.py": "0be7e1f945c77b8d84ec473cdc6a0ff9f35a9f1df5764488f47fff94a53eb5a4",
+      "code/model/experiments/birth_count_choice/model/estate_audit_adapter.py": "0857813dc0a91cdc95ceecd23888336a1885e5d52e561496932e01772fec3b41",
+      "code/model/experiments/birth_count_choice/model/estate_contract.py": "1a4e8ae269bf4a803be48afe0f2f29571a971d3c1ccbc1ec84379d9d529100d0",
+      "code/model/experiments/birth_count_choice/model/estate_observer_adapter.py": "7efd671554de7744dddbab0a0b5edd94b73b01f422079b8839a799e4a39af37e",
+      "code/model/experiments/birth_count_choice/model/frozen_sources.py": "4374264fdcc5e027f533123dc0c3df7f019df7b5011a4b06b691a35af74271fe",
+      "code/model/experiments/birth_count_choice/model/inputs.py": "fef4cc9f85766c8843d62a2257a718d3ed1f9979cdb9e92729b9983527669763",
+      "code/model/experiments/birth_count_choice/model/native_phase_b.py": "b4625c448937f3f0f6f74a257c601434ee4c6d58ac84608b54439036957893c9",
+      "code/model/experiments/birth_count_choice/model/native_price.py": "53e8e83d90f34b64050b7f75dc45a7bd24e8c891b8ab1754d87852d23e9e5450",
+      "code/model/experiments/birth_count_choice/model/observer_adapters.py": "53901dfb017a49bf405aa9d0a8f3341778d0612eb7ac87cd85b85300d69782c1",
+      "code/model/experiments/birth_count_choice/model/parameter_files.py": "e5da9811ae8fefd7be0559ce3ce87e26b7d9c5cfc118822b1164496e81358218",
+      "code/model/experiments/birth_count_choice/model/reference_inputs/export_reference.py": "8048da017253c8b7a54f866862e48cbdc23e27ba6259f8b25b18fefa9f45c5c1",
+      "code/model/experiments/birth_count_choice/model/reporting.py": "306a02bb5a43a0e0819a5392694141075c03607d6bec30828359ca4194859968",
+      "code/model/experiments/birth_count_choice/model/storage.py": "2cdeb5fdb7fd915a309405433467643516cfdfc6246e584a343a3e0a5782df3c",
+      "code/model/experiments/birth_count_choice/model/verification.py": "c5af97acb1156e8f5581bf3e2ed5569ec6579bf73fae72845406156c8fbebe27",
+      "code/model/experiments/birth_count_choice/model/workflow.py": "2e79670c7e20bd4462dd3a41c31f436f4767eee91de4fee82e6954d45824b5d0",
+      "code/model/experiments/birth_count_choice/plot_policies.py": "d20e18e0c7ecb721f649fa07889f5cbadfe02dc07f587cc62d6add196371898d",
+      "code/model/experiments/birth_count_choice/run.py": "50389214e7e23bf052406fe8d9ac2c91801420a4895239f9e9cd006aa1515460",
+      "code/model/experiments/birth_count_choice/run_estate.py": "92cefe80e24342a8144925237e58f30e107bea996a88c9257d5a81338ae43957",
+      "code/model/experiments/birth_count_choice/summarize.py": "6ff0813adaea8c75d336420ffd6469a2583b83174a2f0d03310b83967304e12b",
+      "code/model/experiments/birth_count_choice/summarize_estate.py": "f0e7107dda408621add1b251e895e6020c60591ed03d5f214019ef8b19715def",
+      "code/model/experiments/birth_count_choice/transition.py": "67a6747f00ad229f9117933349dbe2bd6601df60ba205d2d633fcad2a0396cde",
+      "code/model/experiments/birth_count_choice/transition_runtime.py": "6c60f7367774a88205a10eb15ae72736db9803f36c5a3c7bcadae3542cbd901b",
+      "code/model/experiments/transition_readiness/floor_report.py": "a5283f4ef833d22fc39a107663106102376fd767d753297a772f603ada95cddb",
+      "code/model/experiments/transition_readiness/floor_runtime.py": "379a3f31f183cdf01ddb0a7a9f7127662c41f43f7654cc26e7154e49b781d0bb",
+      "code/model/experiments/transition_readiness/joint_six_date.py": "c4b51b7b38f812a572d1ea8b2e6c4341b53b617a3a43d1fe6ea6fc7645bb207e",
+      "code/model/experiments/transition_readiness/legacy_changed_psi.py": "ec9073db9b226fecd5c268aeab7ef5e2a0cfe8371e4f2e66895b7dda651e81d4",
+      "code/model/experiments/transition_readiness/one_shock_floor.py": "a6499da273ff3a607dd741a283e6ba8415e5c9a4c161a18d1b1eab07cce900a0",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_exact_policy_cache.py": "1e8a029247bb80e9a023b11b7eba047402867841e2f99cbf159bbb9f8aa51609",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_four_shock_acceleration.py": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_preference_shock_fit.py": "495b61b0b0aaf577d49ba36d7274c7207c9be546f544113fa30c3c805d46412f",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+      "code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+      "code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_budget_diagnostic.py": "6c32156788043a58218777624d4adf40cd6d206d31b224c2bd0223e31f67e1b7",
+      "code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_estimation.py": "bd93821847439b54667706d17f95ff6e114291c3dc321eb7cb7bf06cb1f3ed1e",
+      "code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_transition.py": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac",
+      "code/model/experiments/transition_readiness/render_saved_residuals.py": "6da03835d43ec79075f7bee80d314fe2a54a5c0fed5a022fbc99b2f77cb6ca3a",
+      "code/model/experiments/transition_readiness/selected_adapter.py": "c5106831877b518e7e616e90bf4eebf4b4b955c0e4e716ffc34af1df0f59f272",
+      "code/model/experiments/transition_readiness/smoke_exact_loop.py": "09abfc76201973ba1b12b71dbc525c544864f7ebb86748292a1946ef3d7d9ddd",
+      "code/model/experiments/transition_readiness/test_floor_report.py": "881bb185fdc939ca6313b7ed9bfcd1e8c7aad813b42163de3fb15e29351520f3",
+      "code/model/experiments/transition_readiness/test_floor_runtime.py": "e1d7bfdc6029a8f61305fef665e93da8bd8f4cbe547d621646c973048c5f584a",
+      "code/model/experiments/transition_readiness/test_one_shock_floor.py": "e617c05c93cb1a04ea421121065e12d85a367d144213fb049781cf6d6ffdee79",
+      "code/model/experiments/transition_readiness/test_readiness.py": "9b22d39b831aaf0ff002592a24afd53ed555f29a5a47ef92a71efe0fdc87a363",
+      "code/model/experiments/transition_readiness/tests_joint_six_date.py": "2e20a1f93dceb5767e17aeb1bd52289b386bd1aa3ce042fba965b429f07aedd3"
+    }
+  },
+  "array_verification": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v5/results/fit_fit_v1/run/reference/repeat_0/saved_array_verification.json",
+    "sha256": "78fa5f291ae30f9b9f62ae24f6fac03bdcd7acb6dfc1a28009aec26b68590dbf"
+  },
+  "absolute_tolerance": 1e-10,
+  "numerical_gates_unchanged": true,
+  "array_comparison_criteria": {
+    "schema": "current_estate_a_platform_array_criteria_v2",
+    "absolute_tolerance": 1e-10,
+    "value_eps_multiplier": 16.0,
+    "value_eps": 2.220446049250313e-16,
+    "living_control_relative_tolerance": 1.4901161193847656e-08,
+    "occupied_mass_cutoff": 1e-12,
+    "total_value_dead_cutoff": -1000000000.0,
+    "float32_probability_ulps": 2.0,
+    "exact_float32_zero_support": true,
+    "dead_control_status": "audited separately; no distance-equivalence claim",
+    "optimizer_identity_certified": false,
+    "native_numerical_gates_unchanged": true
+  },
+  "optimizer_identity_certified": false,
+  "same_host_repeat_remains_exact": true,
+  "derived_numeric_differences": [
+    {
+      "field": "target_fit.csv.0.model",
+      "saved": "2.1000000000175905",
+      "fresh": "2.100000000017591",
+      "absolute_gap": 4.440892098500626e-16
+    },
+    {
+      "field": "target_fit.csv.0.gap",
+      "saved": "1.759037360216098e-11",
+      "fresh": "1.759081769137083e-11",
+      "absolute_gap": 4.440892098500626e-16
+    },
+    {
+      "field": "target_fit.csv.1.model",
+      "saved": "0.19927962124227006",
+      "fresh": "0.1992796212422702",
+      "absolute_gap": 1.3877787807814457e-16
+    },
+    {
+      "field": "target_fit.csv.1.gap",
+      "saved": "0.0010008702354274146",
+      "fresh": "0.0010008702354275534",
+      "absolute_gap": 1.3877787807814457e-16
+    },
+    {
+      "field": "target_fit.csv.1.loss_contribution",
+      "saved": "0.03559417409442429",
+      "fresh": "0.03559417409443416",
+      "absolute_gap": 9.874046025259986e-15
+    },
+    {
+      "field": "target_fit.csv.2.model",
+      "saved": "0.21567449028002675",
+      "fresh": "0.21567449028002686",
+      "absolute_gap": 1.1102230246251565e-16
+    },
+    {
+      "field": "target_fit.csv.2.gap",
+      "saved": "0.0020191650598797295",
+      "fresh": "0.0020191650598798405",
+      "absolute_gap": 1.1102230246251565e-16
+    },
+    {
+      "field": "target_fit.csv.2.loss_contribution",
+      "saved": "0.10988739275550197",
+      "fresh": "0.10988739275551404",
+      "absolute_gap": 1.2073675392798577e-14
+    },
+    {
+      "field": "target_fit.csv.4.model",
+      "saved": "0.23249428926513163",
+      "fresh": "0.23249428926513166",
+      "absolute_gap": 2.7755575615628914e-17
+    },
+    {
+      "field": "target_fit.csv.4.gap",
+      "saved": "-0.016783723775935067",
+      "fresh": "-0.01678372377593504",
+      "absolute_gap": 2.7755575615628914e-17
+    },
+    {
+      "field": "target_fit.csv.5.model",
+      "saved": "6.778038249685948",
+      "fresh": "6.778038249685947",
+      "absolute_gap": 8.881784197001252e-16
+    },
+    {
+      "field": "target_fit.csv.5.gap",
+      "saved": "-0.14854554138704223",
+      "fresh": "-0.14854554138704312",
+      "absolute_gap": 8.881784197001252e-16
+    },
+    {
+      "field": "target_fit.csv.5.loss_contribution",
+      "saved": "0.16759175576509325",
+      "fresh": "0.16759175576509525",
+      "absolute_gap": 1.9984014443252818e-15
+    },
+    {
+      "field": "target_fit.csv.6.model",
+      "saved": "0.006361342219724652",
+      "fresh": "0.006361342219724645",
+      "absolute_gap": 7.806255641895632e-18
+    },
+    {
+      "field": "target_fit.csv.6.gap",
+      "saved": "-0.0009296812528915054",
+      "fresh": "-0.0009296812528915132",
+      "absolute_gap": 7.806255641895632e-18
+    },
+    {
+      "field": "target_fit.csv.6.loss_contribution",
+      "saved": "4.464396859390077",
+      "fresh": "4.464396859390153",
+      "absolute_gap": 7.549516567451064e-14
+    },
+    {
+      "field": "target_fit.csv.10.model",
+      "saved": "1.3782838861110598",
+      "fresh": "1.3782838861110651",
+      "absolute_gap": 5.329070518200751e-15
+    },
+    {
+      "field": "target_fit.csv.10.gap",
+      "saved": "-0.0867161138889403",
+      "fresh": "-0.08671611388893496",
+      "absolute_gap": 5.329070518200751e-15
+    },
+    {
+      "field": "target_fit.csv.10.loss_contribution",
+      "saved": "1.0344474527499463",
+      "fresh": "1.034447452749819",
+      "absolute_gap": 1.2723155862204294e-13
+    },
+    {
+      "field": "target_fit.csv.11.model",
+      "saved": "0.2992369824107879",
+      "fresh": "0.29923698241079144",
+      "absolute_gap": 3.552713678800501e-15
+    },
+    {
+      "field": "target_fit.csv.11.gap",
+      "saved": "-0.08586266728199377",
+      "fresh": "-0.08586266728199021",
+      "absolute_gap": 3.552713678800501e-15
+    },
+    {
+      "field": "target_fit.csv.12.model",
+      "saved": "0.12342542865412831",
+      "fresh": "0.12342542865412809",
+      "absolute_gap": 2.220446049250313e-16
+    },
+    {
+      "field": "target_fit.csv.12.gap",
+      "saved": "-0.004182934912793312",
+      "fresh": "-0.0041829349127935345",
+      "absolute_gap": 2.220446049250313e-16
+    },
+    {
+      "field": "target_fit.csv.12.loss_contribution",
+      "saved": "0.47339423227445226",
+      "fresh": "0.4733942322745025",
+      "absolute_gap": 5.0237591864288333e-14
+    },
+    {
+      "field": "target_fit.csv.13.model",
+      "saved": "0.533756373102058",
+      "fresh": "0.5337563731020583",
+      "absolute_gap": 2.220446049250313e-16
+    },
+    {
+      "field": "target_fit.csv.13.gap",
+      "saved": "-0.27577126532694407",
+      "fresh": "-0.27577126532694385",
+      "absolute_gap": 2.220446049250313e-16
+    },
+    {
+      "field": "target_fit.csv.13.loss_contribution",
+      "saved": "7.604979078002379",
+      "fresh": "7.6049790780023665",
+      "absolute_gap": 1.2434497875801753e-14
+    },
+    {
+      "field": "closure.absolute_housing_demand",
+      "saved": 5.886609007809214,
+      "fresh": 5.886609007809215,
+      "absolute_gap": 8.881784197001252e-16
+    },
+    {
+      "field": "closure.absolute_housing_residual",
+      "saved": -8.881784197001252e-16,
+      "fresh": 0.0,
+      "absolute_gap": 8.881784197001252e-16
+    },
+    {
+      "field": "closure.actual_entry_per_normalized_household",
+      "saved": 0.061733456180751614,
+      "fresh": 0.06173345618075164,
+      "absolute_gap": 2.7755575615628914e-17
+    },
+    {
+      "field": "closure.actual_paygo_residual",
+      "saved": 2.823531079835393e-14,
+      "fresh": 2.8235310798353925e-14,
+      "absolute_gap": 6.310887241768095e-30
+    },
+    {
+      "field": "closure.adjusted_births_per_normalized_household",
+      "saved": 0.1296402579806578,
+      "fresh": 0.12964025798065792,
+      "absolute_gap": 1.1102230246251565e-16
+    },
+    {
+      "field": "closure.native_population_step.actual_birth_derived_entry",
+      "saved": 0.061792037152231444,
+      "fresh": 0.06179203715223146,
+      "absolute_gap": 1.3877787807814457e-17
+    },
+    {
+      "field": "closure.native_population_step.deaths",
+      "saved": 0.061792037151712796,
+      "fresh": 0.061792037151712775,
+      "absolute_gap": 2.0816681711721685e-17
+    },
+    {
+      "field": "closure.native_population_step.entry_gap",
+      "saved": 5.144981662930093e-13,
+      "fresh": 5.145259218686249e-13,
+      "absolute_gap": 2.7755575615628914e-17
+    },
+    {
+      "field": "closure.native_population_step.raw_distribution_l1",
+      "saved": 5.188478525427952e-13,
+      "fresh": 5.188410022628759e-13,
+      "absolute_gap": 6.850279919369395e-18
+    },
+    {
+      "field": "closure.native_population_step.renewal_adjusted_distribution_l1",
+      "saved": 4.362126726329414e-15,
+      "fresh": 4.342841052064628e-15,
+      "absolute_gap": 1.928567426478593e-17
+    },
+    {
+      "field": "closure.native_population_step.required_entry",
+      "saved": 0.061792037151716946,
+      "fresh": 0.06179203715171693,
+      "absolute_gap": 1.3877787807814457e-17
+    },
+    {
+      "field": "closure.normalized_housing_demand",
+      "saved": 5.881028300532578,
+      "fresh": 5.8810283005325825,
+      "absolute_gap": 4.440892098500626e-15
+    },
+    {
+      "field": "closure.occupied_renter_floor.occupied_renter_mass",
+      "saved": 0.323185118617906,
+      "fresh": 0.32318511861790605,
+      "absolute_gap": 5.551115123125783e-17
+    },
+    {
+      "field": "closure.population_scale",
+      "saved": 1.0009489339264241,
+      "fresh": 1.0009489339264235,
+      "absolute_gap": 6.661338147750939e-16
+    },
+    {
+      "field": "closure.renewal_residual",
+      "saved": 8.326228595478824e-12,
+      "fresh": 8.326672684688674e-12,
+      "absolute_gap": 4.440892098500626e-16
+    }
+  ],
+  "render_only_hash_differences": {
+    "fertility_by_age.png": {
+      "saved": "5063615a3c077c008407e554533d50917a033fd2959ef17593c0599c86392e80",
+      "fresh": "b98cb204bb198b6bc84a196bf28356849938e47b05a8923f8b50636928d5bef4"
+    },
+    "fertility_policy_by_age_income_state.png": {
+      "saved": "cff58e1fb1104c94b6b8b5d8a5bcffed445ba733d9c1c9d2b9c6327a98ac6d1b",
+      "fresh": "9b632d151da72b4bba27e1d23cce6cc50145dc8bb2bc6007e2d1730102886cdd"
+    },
+    "housing_by_age_income_state.png": {
+      "saved": "f41695dfee699c4ebb52437acdb49a074f6da5d9765ef8b1af0d6e455415be08",
+      "fresh": "a54a9122778c6030da5c83626cfe774bb7813e6cad421971df54b9e8b84d7a83"
+    },
+    "housing_market.png": {
+      "saved": "88fbb0932de5ad2c86bbc7fca47ffcba20ec2ebe725d1578f9443d66c0fe1295",
+      "fresh": "692ce28438246e54daff13a6cc0f5b7f3b4dbeabdf7670b059b543131486917a"
+    },
+    "housing_prices.png": {
+      "saved": "6676311676735bdf8d0e77e82cf1669dc5d247b7c5f33401f23a0e65dd85d234",
+      "fresh": "639339c803aeb0a044a52e6ec3961cd7fc11181daf561c5a797269761f49e8b1"
+    },
+    "income_state_outcomes.png": {
+      "saved": "df6e1094e9a11dcca235166a2630c1832e14b532016ab3040dc6e21c8a78e1a3",
+      "fresh": "7ecd3fc35212d089d6e7b40a1f614ffab6c55b9cf863a796c7468f3f3bd54adb"
+    },
+    "liquid_wealth_by_age_income_state.png": {
+      "saved": "7c83eafa121d024d8c86b3366eee9e2a5b417484a9eda11d70fdfd42dc96a026",
+      "fresh": "126fa5b4a70d7a5c15a51c0f52051a4e1aaa8d6ea78bfcdcdcca574d4ce1f2bf"
+    },
+    "market_clearing_by_market.png": {
+      "saved": "85f6321dca6eb95a2e29454e2d8d7d6c1573eb2bdca0b8864b925acc930338c3",
+      "fresh": "0f02cf82de7af7fe1f5673f228d86175d4ae5675184a866b54f6bdd6f8cb9adb"
+    },
+    "market_clearing_residuals.png": {
+      "saved": "8138976a5a86524f9c0c579ee66c8539a6ab552bf335a94c7918347bc223fa07",
+      "fresh": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9"
+    },
+    "owner_rungs.png": {
+      "saved": "08fe85625e83ee8d09a44a16e38e721ec46b8e7e37e711bbe82dcb51f7e1dd11",
+      "fresh": "e9d981cb0b4a44d90769ce8d2959c5a98f1b3110e79c69d2c1ce60842c9bfa44"
+    },
+    "ownership_by_age.png": {
+      "saved": "5c04505eac74de44dd514c0855371f0caa6b1e83c20831b51011a9008761150d",
+      "fresh": "348621c8d015bdfccbcd8bf3bd3ffecf61772cfa2b0f252132b423659298f8d5"
+    },
+    "ownership_by_age_income_state.png": {
+      "saved": "5930aa308c7dcb885063ca4b045343b9ab4f3fe1ab9fef37e1d1eeb8722f0019",
+      "fresh": "dc5e461324d9be44ca05874846c76518ce92b4d45442281fbee36da6c103ef54"
+    },
+    "policy_childless_renter_age30.png": {
+      "saved": "a747f59c7990f32c2a11b7d0033ca314c645fb1ad5a8a4ad37aad1f596e82822",
+      "fresh": "e96552d9c985626e969730ad18175299aa2bb5f6c310a6e34662aa0c7699193d"
+    },
+    "policy_childless_renter_age42.png": {
+      "saved": "164031573fdb43229f50376fd2b83cb22d4f9971b925cc6f672f9bbc26ead992",
+      "fresh": "6e4a2571124eb8be03ed959b55a31ae400b2cc53cb8dcc2472c31a79d23a5b41"
+    },
+    "tenure_services.png": {
+      "saved": "30487cc0c3b09047fd8912c74d05f0658eb7d122a5eb428770237114deb87614",
+      "fresh": "c9bb2d43e1d3cafafa707048d95a43e9d902f89d2de8c31812edc9421b379bed"
+    },
+    "wealth_dist_childless_renter_age30.png": {
+      "saved": "4a1a6fd19df869fbbc05ec6726ed8860ff5ed366a522955f590ad6af5cbc4409",
+      "fresh": "074f341f09d2cc2ec12241ed3da13774621354567df5d5600c085f6a321e73e7"
+    },
+    "wealth_dist_childless_renter_age42.png": {
+      "saved": "b2f3892991bef25204b5edb13e9660f05fe06e84c051c045009a02e0066e6dba",
+      "fresh": "0826a000436ad689e4b44bfe39ef0021e4f9dadef793871f4dfb235fbbb9fe47"
+    }
+  },
+  "all_saved_plot_hashes": {
+    "fertility_by_age.png": "5063615a3c077c008407e554533d50917a033fd2959ef17593c0599c86392e80",
+    "fertility_policy_by_age_income_state.png": "cff58e1fb1104c94b6b8b5d8a5bcffed445ba733d9c1c9d2b9c6327a98ac6d1b",
+    "housing_by_age_income_state.png": "f41695dfee699c4ebb52437acdb49a074f6da5d9765ef8b1af0d6e455415be08",
+    "housing_market.png": "88fbb0932de5ad2c86bbc7fca47ffcba20ec2ebe725d1578f9443d66c0fe1295",
+    "housing_prices.png": "6676311676735bdf8d0e77e82cf1669dc5d247b7c5f33401f23a0e65dd85d234",
+    "income_state_outcomes.png": "df6e1094e9a11dcca235166a2630c1832e14b532016ab3040dc6e21c8a78e1a3",
+    "liquid_wealth_by_age_income_state.png": "7c83eafa121d024d8c86b3366eee9e2a5b417484a9eda11d70fdfd42dc96a026",
+    "market_clearing_by_market.png": "85f6321dca6eb95a2e29454e2d8d7d6c1573eb2bdca0b8864b925acc930338c3",
+    "market_clearing_residuals.png": "8138976a5a86524f9c0c579ee66c8539a6ab552bf335a94c7918347bc223fa07",
+    "owner_rungs.png": "08fe85625e83ee8d09a44a16e38e721ec46b8e7e37e711bbe82dcb51f7e1dd11",
+    "ownership_by_age.png": "5c04505eac74de44dd514c0855371f0caa6b1e83c20831b51011a9008761150d",
+    "ownership_by_age_income_state.png": "5930aa308c7dcb885063ca4b045343b9ab4f3fe1ab9fef37e1d1eeb8722f0019",
+    "policy_childless_renter_age30.png": "a747f59c7990f32c2a11b7d0033ca314c645fb1ad5a8a4ad37aad1f596e82822",
+    "policy_childless_renter_age42.png": "164031573fdb43229f50376fd2b83cb22d4f9971b925cc6f672f9bbc26ead992",
+    "tenure_services.png": "30487cc0c3b09047fd8912c74d05f0658eb7d122a5eb428770237114deb87614",
+    "wealth_dist_childless_renter_age30.png": "4a1a6fd19df869fbbc05ec6726ed8860ff5ed366a522955f590ad6af5cbc4409",
+    "wealth_dist_childless_renter_age42.png": "b2f3892991bef25204b5edb13e9660f05fe06e84c051c045009a02e0066e6dba"
+  },
+  "all_fresh_plot_hashes": {
+    "fertility_by_age.png": "b98cb204bb198b6bc84a196bf28356849938e47b05a8923f8b50636928d5bef4",
+    "fertility_policy_by_age_income_state.png": "9b632d151da72b4bba27e1d23cce6cc50145dc8bb2bc6007e2d1730102886cdd",
+    "housing_by_age_income_state.png": "a54a9122778c6030da5c83626cfe774bb7813e6cad421971df54b9e8b84d7a83",
+    "housing_market.png": "692ce28438246e54daff13a6cc0f5b7f3b4dbeabdf7670b059b543131486917a",
+    "housing_prices.png": "639339c803aeb0a044a52e6ec3961cd7fc11181daf561c5a797269761f49e8b1",
+    "income_state_outcomes.png": "7ecd3fc35212d089d6e7b40a1f614ffab6c55b9cf863a796c7468f3f3bd54adb",
+    "liquid_wealth_by_age_income_state.png": "126fa5b4a70d7a5c15a51c0f52051a4e1aaa8d6ea78bfcdcdcca574d4ce1f2bf",
+    "market_clearing_by_market.png": "0f02cf82de7af7fe1f5673f228d86175d4ae5675184a866b54f6bdd6f8cb9adb",
+    "market_clearing_residuals.png": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+    "owner_rungs.png": "e9d981cb0b4a44d90769ce8d2959c5a98f1b3110e79c69d2c1ce60842c9bfa44",
+    "ownership_by_age.png": "348621c8d015bdfccbcd8bf3bd3ffecf61772cfa2b0f252132b423659298f8d5",
+    "ownership_by_age_income_state.png": "dc5e461324d9be44ca05874846c76518ce92b4d45442281fbee36da6c103ef54",
+    "policy_childless_renter_age30.png": "e96552d9c985626e969730ad18175299aa2bb5f6c310a6e34662aa0c7699193d",
+    "policy_childless_renter_age42.png": "6e4a2571124eb8be03ed959b55a31ae400b2cc53cb8dcc2472c31a79d23a5b41",
+    "tenure_services.png": "c9bb2d43e1d3cafafa707048d95a43e9d902f89d2de8c31812edc9421b379bed",
+    "wealth_dist_childless_renter_age30.png": "074f341f09d2cc2ec12241ed3da13774621354567df5d5600c085f6a321e73e7",
+    "wealth_dist_childless_renter_age42.png": "0826a000436ad689e4b44bfe39ef0021e4f9dadef793871f4dfb235fbbb9fe47"
+  },
+  "fresh_render_versions": {
+    "python": "3.13.5",
+    "numpy": "2.1.3",
+    "matplotlib": "3.10.0",
+    "platform": "Linux-6.12.0-211.47.1.el10_2.x86_64-x86_64-with-glibc2.39",
+    "freetype": "2.13.3"
+  },
+  "saved_render_versions": "not recorded by the authenticated saved case; all saved hashes retained"
+}
