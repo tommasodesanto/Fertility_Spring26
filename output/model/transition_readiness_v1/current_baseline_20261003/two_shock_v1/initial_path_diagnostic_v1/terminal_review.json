@@ -1,0 +1,44 @@
+{
+  "schema": "initial_path_diagnostic_terminal_review_v1",
+  "verified_utc": "2026-10-05T00:48:19.459498+00:00",
+  "job_id": "19186217",
+  "scheduler": "19186217|FAILED|1:0|2026-10-04T20:43:39|2026-10-04T20:46:01|00:02:22||cl017\n19186217.batch|FAILED|1:0|2026-10-04T20:43:39|2026-10-04T20:46:01|00:02:22|4092736K|cl017\n19186217.extern|COMPLETED|0:0|2026-10-04T20:43:39|2026-10-04T20:46:01|00:02:22||cl017\n",
+  "classification": "diagnostic_reference_receipt_output_location_failure",
+  "native_calls": 0,
+  "failure_phase": "restore_reference",
+  "mapping_tested": false,
+  "not_economic_failure": true,
+  "not_oom_or_budget_failure": true,
+  "frozen_v5_unchanged": true,
+  "remedy": "Route only the two new saved_platform_bridge.json comparison outputs to the fresh diagnostic output while running all original comparisons unchanged. No evidence or frozen input is rewritten.",
+  "pins": {
+    "launcher_start.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/launcher_start.json",
+      "sha256": "252a6793e36357e31079986a421cf0b818d0a62cd874b440c11b2fc927150e15"
+    },
+    "launcher_terminal.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/launcher_terminal.json",
+      "sha256": "ba192e6a0bc395512063c669b085debbafb190ba42c65c0a1ec2fd1cc9df5da2"
+    },
+    "host_verification.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/host_verification.json",
+      "sha256": "43857de3f5f1c29c559ba383168dba636a042fd65ae830ee3170f8aa5252d3c1"
+    },
+    "container_verification.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/container_verification.json",
+      "sha256": "43857de3f5f1c29c559ba383168dba636a042fd65ae830ee3170f8aa5252d3c1"
+    },
+    "run/failure.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/run/failure.json",
+      "sha256": "18ed4ce12b10d5727a21636c682b27acbddc2a7a3bf31610350d71005db9cb5e"
+    },
+    "run/progress.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/run/progress.json",
+      "sha256": "96d8dc6346cd9fcf33ad89e83811427ae1fccc204896a1141d37e0caa8132a89"
+    },
+    "run/reference_cache_binding.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v1/results/map_v1/run/reference_cache_binding.json",
+      "sha256": "795c9a299dc741d668c026eff5d59987dee76954ba4735f5d5815c7a918abcd9"
+    }
+  }
+}

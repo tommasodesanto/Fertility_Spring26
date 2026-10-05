@@ -883,7 +883,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 20:04 New York:** the
+   **Current transition direction, verified October 4 at 20:50 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -961,10 +961,22 @@ manuscript wording or certify a new paper calibration.
    no candidate completed and neither preference level is estimated. The
    discussed 1e-7 cutoff was not implemented and would not clear this failure;
    rejected mass is about 996 times larger. Preserve immutable v5 and its claim.
-   A reference-anchored alternative initializer remains an unverified proposal;
-   screen renter and owner constraints, then validate one explicit 24-date map
-   before any full retry. All economics, bounds, root/accounting/replay/horizon
-   gates and budgets remain unchanged.
+   One unrooted 24-date mapping diagnostic **19186328** is submitted and pending
+   as of 20:50. It corrects the first diagnostic's receipt-output location failure:
+   **19186217** ended at 20:46:01 after 2m22s with zero native calls. Only the two
+   new bridge receipts are routed to fresh output; original comparisons remain.
+   The new budget is one CPU, 24 GiB, 64 actual calls and 1,200 internal seconds
+   inside 1,800 external seconds from allocation. Its explicit path sets rent 0.1368988125, one percent below the
+   measured renter bound, and initial price 0.7572901438. Exact current-budget
+   witnesses cover all 606,483 occupied initial cells via staying or selling
+   and renting; this does not establish dynamic feasibility. Authenticated
+   reference and endpoint value are restored for this diagnostic only, with
+   no model solve or state advance during restoration. Fifteen focused checks
+   passed. No mapping completion or empirical estimate is claimed. The original
+   1e-12 inherited-state guard and accounting checks remain strict; all empirical
+   economics, bounds, gates and budgets remain unchanged. No full retry is
+   released by current-budget screening alone.
+   [Screen, diagnostic scope and submission](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_diagnostic_v2/lead_review.json).
    [Current failure and lead review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v5_initial_path.json).
    [Exact failure and budget audit](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/failure_review/empirical_v4_initial_path.json).
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
