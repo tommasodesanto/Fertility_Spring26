@@ -84,5 +84,14 @@
     "262 multiply-linked nonselected recent-parent states left untouched; their named-path allocation is not a reclaimable-byte estimate.",
     "No additional plot deletion in the tightened round.",
     "Cleanup is limited to named checkpoint scopes; no claim that all old output is now lean."
-  ]
+  ],
+  "whole_output_retirement_pending": {
+    "status": "not_executed_scheduler_guard_unavailable",
+    "proposed_directories": 4,
+    "proposed_allocated_bytes": 20749452800,
+    "files_deleted": 0,
+    "manifest": "whole_runs/deletion_manifest.json",
+    "manifest_sha256": "75efe36e43a3ad7f729070da682660a80c8095b2967013825c546a8034cfd488",
+    "reason": "Two distinct bounded scheduler queries timed out; absence of active writers could not be verified. No archive, execution marker or deletion created."
+  }
 }
