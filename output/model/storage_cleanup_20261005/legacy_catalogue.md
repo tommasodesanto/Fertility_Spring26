@@ -1,5 +1,9 @@
 # Legacy Fertility retirement catalogue
 
+**Author-approved retirement completed:** all 64 older roots in the first five families are gone. A further 29 obsolete output subtrees were removed, including old transition v6/v7/v9 results. This pass released **328.566 GB**; protected input identities stayed unchanged. The tables below retain historical inventory sizes and original recommendations, not a current directory listing. See [execution receipt](legacy_retirement_v1/93_completion_receipt.json).
+
+Current source/input/runtime and calibration/transition evidence remain. Unlisted mixed candidate-path/native-financing batches, three initial-population output boundaries and empirical room-target results remain for separation from required inputs. CSI was untouched.
+
 This is an author decision catalogue, not a deletion manifest. It uses saved October 5 inventories only; no new remote scan or deletion. Sizes below are decimal GB. The account’s roughly 5 TB has not been attributed to Fertility.
 
 **Reading the sizes:** “attributed” means the earlier multi-root `du` assigned hard-linked blocks to the first root encountered. These are measured historical allocation rows, not independent sizes or reclaimable totals. Coverage is measured/listed members. Standalone measurements apply only to the exact named root/subtree, deduplicate links within it, and still do not prove reclaim. No family or project total is claimed.

@@ -1,5 +1,5 @@
 {
-  "status": "author_retirement_catalogue_read_only",
+  "status": "author_retirement_executed_for_93_exact_targets",
   "basis": "Existing Oct5 inventories/receipts plus bounded local code/doc references only; no new remote access",
   "units": "GB decimal (1e9 bytes)",
   "size_limitations": "No overall sum. Earlier root_inventory du deduplicates hardlinks across argument roots: attributed subtotal depends on traversal order, cannot predict reclaim;78/108prefixroots completed before240s cap. Standalone rows deduplicate within measured root, include mixed source/output, are not deletion estimates. Overlapping parent/subtree sizes must not be added. Post-cleanup changes mean receipts are historical snapshots.",
@@ -1300,5 +1300,13 @@
       ]
     }
   ],
-  "protected": "Current Oct4 calibration, H24/H32 evidence/maps/full tracebacks, immutable smokev5, frozen Sep14tag/tmp reference, currentsource/input/runtime, author manuscript and selected presentation results; CSI excluded."
+  "protected": "Current Oct4 calibration, H24/H32 evidence/maps/full tracebacks, immutable smokev5, frozen Sep14tag/tmp reference, currentsource/input/runtime, author manuscript and selected presentation results; CSI excluded.",
+  "execution": {
+    "receipt": "legacy_retirement_v1/93_completion_receipt.json",
+    "sha256": "9c82d9b783e04f6e25d31d8be3e92bf4a76dfedc8bb08e3c22a906833b9e23a0",
+    "whole_old_roots": 64,
+    "output_subtrees": 29,
+    "reclaimed_regular_bytes": 328566301184,
+    "historical_inventory_rows_are_not_current_presence": true
+  }
 }

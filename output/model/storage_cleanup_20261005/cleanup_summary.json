@@ -1,9 +1,9 @@
 {
   "status": "completed",
-  "recorded_utc": "2026-10-05T18:30:01.936660+00:00",
-  "scope": "Seven executed passes over named ended historical Fertility output scopes on Torch; latest pass retired eight entire bested chain result folders.",
-  "total_removed_files": 57240,
-  "total_removed_allocated_bytes": 357197923840,
+  "recorded_utc": "2026-10-05T19:47:52.446948+00:00",
+  "scope": "Project-only Torch storage cleanup, including 64 whole author-retired old roots and 29 newer obsolete output trees; source/current inputs retained where required.",
+  "total_removed_files": 210731,
+  "total_removed_allocated_bytes": 685764225024,
   "passes": [
     {
       "name": "nightpair",
@@ -58,10 +58,23 @@
       "completion_receipt": "whole_runs/storage_attribution/code_trace/v2_completion_receipt.json",
       "completion_sha256": "6a2cf983ea8e80717d9cbee75c9358b4b76fbcbeda31af2c89c5f72a0eb30222",
       "retention": "Both same-contract v3 winners unchanged; local compact chain collection retained; parent source/input/runtime preserved."
+    },
+    {
+      "name": "author-approved whole legacy retirement and obsolete newer outputs",
+      "removed_files": 153491,
+      "symlinks_unlinked": 1,
+      "removed_allocated_bytes": 328566301184,
+      "whole_old_roots_retired": 64,
+      "newer_output_subtrees_retired": 29,
+      "completion_receipt": "legacy_retirement_v1/93_completion_receipt.json",
+      "completion_sha256": "9c82d9b783e04f6e25d31d8be3e92bf4a76dfedc8bb08e3c22a906833b9e23a0",
+      "shared_link_allocations_unlinked_not_counted_as_freed": 5484383232,
+      "explicit_keepers_unchanged": true,
+      "approved_targets_pending": []
     }
   ],
   "retention": "For tightened completed archives: selected full solutions per distinct contract, explicit pinned inputs and one ambiguous utility case; compact trial parameters/loss/moments/status/provenance, plots/logs/source/inputs/runtime retained. Nightpair still retains its original 40 protected states. Earlier per-pass keeper counts describe that pass, not the current keep set.",
-  "verification": "Exact candidate manifests matched successful per-file unlink receipts; every candidate was regular and single-link with unchanged device/inode/size/mtime/ctime/allocation checks; protected checkpoint metadata matched before and after each pass. Only nightpair also has a measured before/after directory-size delta; later narrow du checks exceeded their 60-second bounds, so later reclaimed bytes are from exact successful unlink receipts. Tightened pass independently reconciled 105 candidate paths to unlink receipts and 12 unchanged keepers. Recent-parent pass independently reconciled 255 unique paths, exact byte sum and manifest/receipt hashes; postcheck confirms all 255 absent and all 10 selected keeper identities intact.",
+  "verification": "Exact candidate manifests matched successful per-file unlink receipts; every candidate was regular and single-link with unchanged device/inode/size/mtime/ctime/allocation checks; protected checkpoint metadata matched before and after each pass. Only nightpair also has a measured before/after directory-size delta; later narrow du checks exceeded their 60-second bounds, so later reclaimed bytes are from exact successful unlink receipts. Tightened pass independently reconciled 105 candidate paths to unlink receipts and 12 unchanged keepers. Recent-parent pass independently reconciled 255 unique paths, exact byte sum and manifest/receipt hashes; postcheck confirms all 255 absent and all 10 selected keeper identities intact. Lead independently reconciled all 93 targets across 11 compressed streams: unique paths, gzip/raw hashes, regular-file blocks counted only at final unlink, all target roots absent and explicit keepers unchanged.",
   "CSI_touched": false,
   "other_projects_touched": false,
   "model_or_pipeline_changed": false,
@@ -73,7 +86,7 @@
     "measured_utc": "2026-10-05T16:10:37.561981+00:00",
     "limitation": "Account-wide displayed usage was read before the final September 7 deletion and does not reconcile exactly to the four file-level passes; no derived current account usage is asserted."
   },
-  "execution_notice": "Seven cleanup passes executed once; never rerun their execution commands. Separate four-output retirement proposal remains unexecuted.",
+  "execution_notice": "All recorded cleanup commands executed once; never rerun. The prior four-output proposal was superseded by author-approved whole-root retirement, not executed separately.",
   "current_checkpoint_entries": {
     "nightpair": 40,
     "utility": 5,
@@ -94,13 +107,14 @@
     "Cleanup is limited to named checkpoint scopes; no claim that all old output is now lean."
   ],
   "whole_output_retirement_pending": {
-    "status": "not_executed_scheduler_guard_unavailable",
+    "status": "superseded_by_completed_author_approved_whole_root_retirement",
     "proposed_directories": 4,
     "proposed_allocated_bytes": 20749452800,
     "files_deleted": 0,
     "manifest": "whole_runs/deletion_manifest.json",
     "manifest_sha256": "75efe36e43a3ad7f729070da682660a80c8095b2967013825c546a8034cfd488",
-    "reason": "Two distinct bounded scheduler queries timed out; absence of active writers could not be verified. No archive, execution marker or deletion created."
+    "reason": "Two distinct bounded scheduler queries timed out; absence of active writers could not be verified. No archive, execution marker or deletion created.",
+    "superseded_by": "legacy_retirement_v1/93_completion_receipt.json"
   },
   "code_first_diagnosis": {
     "writer": "code/model/experiments/birth_count_choice/model/native_price.py:54",
@@ -110,13 +124,19 @@
     "sha256": "ce2eadf1833d8528dc9e529da17f4da839f269a0767415b140d752c7e53a5275"
   },
   "legacy_retirement_catalogue": {
-    "status": "author_review_no_new_deletion",
+    "status": "author_retirement_executed_93_targets",
     "families": 15,
     "unique_members": 141,
     "markdown": "legacy_catalogue.md",
-    "markdown_sha256": "28268ad3efcc82a868521684f887237e12dc515b8fe990f5b0dd3cfb79e053f1",
+    "markdown_sha256": "10d5addeed948858fe4571be1944c240d7ad5f138005e67f232b09cb4e72e8e5",
     "exact_members": "legacy_catalogue.json",
-    "json_sha256": "cdf5746c2cc911e8d17b3b464510995583f2a1c0752a02f65af9f90ed0e9d472",
+    "json_sha256": "e482b7e1a073408895f2ee9d89790d0e3de9a858281a4dfdf81a527e5ad64322",
     "basis": "Existing saved inventory and targeted source references; no new remote scan."
+  },
+  "total_symlinks_removed": 1,
+  "remaining_mixed_boundaries": {
+    "evidence": "legacy_retirement_v1/known_retained_mixed_boundaries.json",
+    "sha256": "9cc482cb4f3658430cdd324222b32b9320009ee7ebf5e1d219b21711fe6def59",
+    "note": "Unlisted candidate-path batches, 43 native-financing mixed directories, three initial-population output boundaries and empirical room-target results remain; no blanket protection of obsolete tests is implied, but current input boundaries require separation."
   }
 }

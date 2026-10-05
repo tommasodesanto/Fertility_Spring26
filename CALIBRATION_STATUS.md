@@ -1102,6 +1102,10 @@ manuscript wording or certify a new paper calibration.
    are not 104/128 production certification, and estate closure remains provisional.
 
    All v6/v7/v9 cluster and original/recovery local searches have stopped.
+   Author-authorized storage retirement on October 5 removed the remote
+   v6/v7/v9 results trees; their parent source/plans remain. Local compact
+   failure/readout receipts remain, but those retired remote arrays are no
+   longer retained. Current H24/H32 and immutable v5 evidence remain protected.
    Never resubmit them. Timeouts, endpoint renewal/replay failures, initial-path
    rejections and the repaired output-routing bug are distinguished in the
    [transition README and receipts](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
