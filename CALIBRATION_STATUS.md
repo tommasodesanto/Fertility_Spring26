@@ -1060,15 +1060,20 @@ manuscript wording or certify a new paper calibration.
    completed. c00's original root returned at 6000.006 seconds before a wrapper
    missing-map pin error masked the stop. A narrow reporting fix passes seven
    focused tests without changing native numerics, budgets or deployed packages.
-   c03_h32 / 19195648 is the only remaining allocated job, stalled before native
-   entry; its original deadline remains 02:12:43. No unchanged node-access check
-   or unknown-outcome retry. A fresh six-job H32 follow-up at a 3-hour path cap
+   **Last job failure, verified October 5 at 02:15:** c03_h32 / 19195648
+   returned launcher exit 137 at 02:11:55 during container verification, before
+   the driver. Its timestamp matches the original timeout reserve/kill grace.
+   Slurm records TIMEOUT at 02:13:02, but live state remains COMPLETING with
+   reason TimeLimit; allocation release is unconfirmed. No native entry, model
+   result or OOM evidence. Preserve the claim and do not repeat node-access
+   checks or duplicate this attempt. A fresh six-job H32 follow-up at a 3-hour path cap
    and 4-hour outer cap is proposed, awaiting explicit author budget approval;
    no new job is authorized or launched. No completed horizon pair, accepted
    first-stage estimate, second shock or two-shock 2023 state exists.
    [Five earlier full tables](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/completion_review.json).
    [Last completion and full table](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/c00_completion_review.json).
    [New H32 failure review](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/h32_wave_failure_review.json).
+   [Last preparation terminal evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_terminal_review.json).
    [Budget decision](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/next_step_proposal.json).
    [Active parallel jobs and contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/README.md).
    [Root completion evidence](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/initial_path_root_v1/completion_review.json).

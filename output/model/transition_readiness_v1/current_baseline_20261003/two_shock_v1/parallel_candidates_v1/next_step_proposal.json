@@ -3,7 +3,7 @@
   "created_utc": "2026-10-05T05:38:31.918404+00:00",
   "status": "requires_explicit_author_budget_decision",
   "launch_authorized": false,
-  "reason": "All five H32 jobs that reached numerical work stopped at the original 6000-second path cap after seven or eight completed root maps; the sixth remains in preparation with unknown terminal outcome. No accepted horizon pair is available.",
+  "reason": "All five H32 numerical jobs stopped at the original6000-second path cap after seven or eight completed mappings. The sixth failed during container verification before driver invocation; scheduler TIMEOUT is recorded but resource cleanup remains unconfirmed. No accepted horizon pair is available.",
   "scope": "A separately named fresh H32 diagnostic follow-up for the six existing fixed preference values, after each corresponding old job is confirmed terminal. Keep completed H24 artifacts for diagnostic comparison; no measured outputs or optimizer state supplied as inputs to fresh solves. This does not accept a scalar fit or authorize second-shock handoff.",
   "preferences": [
     0.13,
@@ -88,5 +88,9 @@
     "sha256": "f830787e3a363b427bf0b8bd532c806246fbdacbf17768cb187e69c553ffb4e8"
   },
   "approval_request_sent": true,
-  "approval_received": false
+  "approval_received": false,
+  "last_preparation_terminal": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_terminal_review.json",
+    "sha256": "d2296bfeae4c31337b1497c2321fac7a71767e0bf3862e45b2e4e1e0227c566b"
+  }
 }

@@ -1,0 +1,62 @@
+{
+  "checked_epoch": 1791180897.7227485,
+  "squeue": "19195648|COMPLETING|cs689|2026-10-04T23:12:43|2026-10-05T02:13:02|3:00:19|cs689\n",
+  "sacct": "19195648|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.batch|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.extern|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.0|TIMEOUT|0:0|8018|2026-10-04T23:59:24|2026-10-05T02:13:02|cs689|1|\n",
+  "files": {
+    "launcher_terminal.json": {
+      "exists": true,
+      "bytes": 220,
+      "mtime": 1791180715.2816963,
+      "receipt": {
+        "deadline_epoch": 1791180765,
+        "exit_code": 137,
+        "finished_epoch": 1791180715.2587688,
+        "no_auto_retry": true,
+        "node": "cs689",
+        "slurm_job_id": "19195648",
+        "start_epoch": 1791169965,
+        "status": "failed"
+      }
+    },
+    "container_verification.json": {
+      "exists": true,
+      "bytes": 0,
+      "mtime": 1791170019.0393085
+    },
+    "driver.log": {
+      "exists": false
+    },
+    "run/progress.json": {
+      "exists": false
+    },
+    "run/result.json": {
+      "exists": false
+    },
+    "run/failure.json": {
+      "exists": false
+    },
+    "launcher_start.json": {
+      "exists": true,
+      "bytes": 383,
+      "mtime": 1791169965.8438258,
+      "receipt": {
+        "blas_threads": 1,
+        "config_sha256": "88a3128cb4735a856da0e4b98a60a00846098720d3b08f7d64d6361d200a015e",
+        "cpus": 1,
+        "deadline_epoch": 1791180765,
+        "memory_gib": 24,
+        "no_auto_retry": true,
+        "node": "cs689",
+        "numba_threads": 1,
+        "openmp_threads": 1,
+        "output": "results/c03_h32/run",
+        "slurm_job_id": "19195648",
+        "start_epoch": 1791169965,
+        "task_id": "c03_h32"
+      }
+    },
+    "slurm.out": {
+      "exists": false
+    }
+  }
+}

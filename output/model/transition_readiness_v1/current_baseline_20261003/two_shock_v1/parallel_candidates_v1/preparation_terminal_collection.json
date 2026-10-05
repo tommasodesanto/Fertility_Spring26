@@ -1,0 +1,41 @@
+{
+  "checked_epoch": 1791180943.3703878,
+  "job": "JobId=19195648 JobName=estate_parallel_candidate\n   UserId=td2248(3653198) GroupId=td2248(3653198) MCS_label=N/A\n   Priority=12015 Nice=0 Account=torch_pr_570_general QOS=cpu48\n   JobState=COMPLETING Reason=TimeLimit Dependency=(null)\n   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=03:00:19 TimeLimit=03:00:00 TimeMin=N/A\n   SubmitTime=2026-10-04T23:11:48 EligibleTime=2026-10-04T23:11:48\n   AccrueTime=2026-10-04T23:11:48\n   StartTime=2026-10-04T23:12:43 EndTime=2026-10-05T02:13:02 Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-10-04T23:12:43 Scheduler=Backfill\n   Partition=cs AllocNode:Sid=torch-login-b-2:1631116\n   ReqNodeList=cs689 ExcNodeList=(null)\n   NodeList=cs689\n   BatchHost=cs689\n   NumNodes=1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:1\n   ReqTRES=cpu=1,mem=24G,node=1,billing=1\n   AllocTRES=cpu=1,mem=24G,node=1,billing=1\n   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*\n   MinCPUsNode=1 MinMemoryNode=24G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1/launch_parallel_transition_candidate.sh\n   WorkDir=/home/td2248\n   StdErr=/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1/logs/estate_parallel_candidate-19195648.out\n   StdIn=/dev/null\n   StdOut=/scratch/td2248/projects/current_estate_parallel_candidates_20261004_v1/logs/estate_parallel_candidate-19195648.out\n   GresEnforceBind=Yes\n   TresPerTask=cpu=1\n   \n\n",
+  "files": {
+    "logs/estate_parallel_candidate-19195648.out": {
+      "exists": true,
+      "bytes": 415,
+      "text": "/opt/slurm/data/slurmd/job19195648/slurm_script: line 134: 3662716 Killed                  setsid timeout --signal=TERM --kill-after=10s \"${remaining}s\" \"$@\" 0<&0\n[2026-10-05T02:12:02.023] error: _handle_signal_container: failed signal 15 pid 3660837 StepId=19195648.batch No such process\n[2026-10-05T02:12:02.023] error: _handle_signal_container: failed signal 18 pid 3660837 StepId=19195648.batch No such process\n"
+    },
+    "results/c03_h32/launcher_terminal.json": {
+      "exists": true,
+      "bytes": 220,
+      "text": "{\n  \"deadline_epoch\": 1791180765,\n  \"exit_code\": 137,\n  \"finished_epoch\": 1791180715.2587688,\n  \"no_auto_retry\": true,\n  \"node\": \"cs689\",\n  \"slurm_job_id\": \"19195648\",\n  \"start_epoch\": 1791169965,\n  \"status\": \"failed\"\n}\n"
+    },
+    "results/c03_h32/launcher_start.json": {
+      "exists": true,
+      "bytes": 383,
+      "text": "{\n  \"blas_threads\": 1,\n  \"config_sha256\": \"88a3128cb4735a856da0e4b98a60a00846098720d3b08f7d64d6361d200a015e\",\n  \"cpus\": 1,\n  \"deadline_epoch\": 1791180765,\n  \"memory_gib\": 24,\n  \"no_auto_retry\": true,\n  \"node\": \"cs689\",\n  \"numba_threads\": 1,\n  \"openmp_threads\": 1,\n  \"output\": \"results/c03_h32/run\",\n  \"slurm_job_id\": \"19195648\",\n  \"start_epoch\": 1791169965,\n  \"task_id\": \"c03_h32\"\n}\n"
+    },
+    "results/c03_h32/host_verification.json": {
+      "exists": true,
+      "bytes": 136,
+      "text": "{\n  \"files\": 4599,\n  \"model_solves\": 0,\n  \"native_calls\": 0,\n  \"scientific_validation\": false,\n  \"status\": \"PASS_ZERO_SOLVES_PACKAGE\"\n}\n"
+    },
+    "results/c03_h32/addon_verification.json": {
+      "exists": true,
+      "bytes": 211,
+      "text": "{\"config_sha256\": \"88a3128cb4735a856da0e4b98a60a00846098720d3b08f7d64d6361d200a015e\", \"driver_sha256\": \"cec925559aec173b18ef35710c3e3e3343ba4da4cbf6edf2fb87b6ad20841318\", \"task_id\": \"c03_h32\", \"verified\": true}\n"
+    },
+    "jobs/c03_h32.claim/slurm_job_id": {
+      "exists": true,
+      "bytes": 9,
+      "text": "19195648\n"
+    },
+    "jobs/c03_h32.claim/config_sha256": {
+      "exists": true,
+      "bytes": 65,
+      "text": "88a3128cb4735a856da0e4b98a60a00846098720d3b08f7d64d6361d200a015e\n"
+    }
+  }
+}

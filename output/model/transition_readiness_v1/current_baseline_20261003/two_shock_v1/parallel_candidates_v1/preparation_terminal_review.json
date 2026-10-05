@@ -1,0 +1,107 @@
+{
+  "schema": "candidate_preparation_terminal_review_v1",
+  "reviewed_utc": "2026-10-05T06:16:37.442638+00:00",
+  "task": "c03_h32",
+  "job_id": "19195648",
+  "node": "cs689",
+  "phase": "container_verification",
+  "classification": "Preparation timeout; launcher failed and Slurm TimeLimit cleanup remains pending.",
+  "scheduler_accounting": "19195648|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.batch|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.extern|TIMEOUT|0:0|10819|2026-10-04T23:12:43|2026-10-05T02:13:02|cs689|1|\n19195648.0|TIMEOUT|0:0|8018|2026-10-04T23:59:24|2026-10-05T02:13:02|cs689|1|\n",
+  "scheduler_live_state": "COMPLETING",
+  "scheduler_live_reason": "TimeLimit",
+  "scheduler_declared_start_local": "2026-10-04T23:12:43-04:00",
+  "scheduler_declared_limit_seconds": 10800,
+  "scheduler_original_deadline_local": "2026-10-05T02:12:43-04:00",
+  "scheduler_reported_end_local": "2026-10-05T02:13:02-04:00",
+  "scheduler_reported_elapsed_seconds": 10819,
+  "scheduler_resource_release_confirmed": false,
+  "launcher_terminal": {
+    "deadline_epoch": 1791180765,
+    "exit_code": 137,
+    "finished_epoch": 1791180715.2587688,
+    "no_auto_retry": true,
+    "node": "cs689",
+    "slurm_job_id": "19195648",
+    "start_epoch": 1791169965,
+    "status": "failed"
+  },
+  "launcher_finished_local": "2026-10-05T02:11:55.258769-04:00",
+  "launcher_timing": {
+    "deadline_local": "2026-10-05T02:12:45-04:00",
+    "run_bounded_reserve_seconds": 60,
+    "timeout_kill_grace_seconds": 10,
+    "expected_timeout_kill_epoch": 1791180715,
+    "observed_finished_minus_expected_seconds": 0.25876879692077637,
+    "interpretation": "Failure timestamp matches the pinned timeout wrapper reserve and kill grace. Slurm separately records TimeLimit. No user or agent extended the cap."
+  },
+  "host_authentication": {
+    "files": 4599,
+    "model_solves": 0,
+    "native_calls": 0,
+    "scientific_validation": false,
+    "status": "PASS_ZERO_SOLVES_PACKAGE"
+  },
+  "container_verification": {
+    "exists": true,
+    "bytes": 0,
+    "mtime": 1791170019.0393085
+  },
+  "model_driver_reached": false,
+  "native_entry_evidenced": false,
+  "model_call_accounting": "No driver/controller counter was created. Sequential launcher stopped during container authentication before its driver invocation; no native model entry, reference, seed or candidate is evidenced.",
+  "result_or_model_failure_receipt_present": false,
+  "log_evidence": "/opt/slurm/data/slurmd/job19195648/slurm_script: line 134: 3662716 Killed                  setsid timeout --signal=TERM --kill-after=10s \"${remaining}s\" \"$@\" 0<&0\n[2026-10-05T02:12:02.023] error: _handle_signal_container: failed signal 15 pid 3660837 StepId=19195648.batch No such process\n[2026-10-05T02:12:02.023] error: _handle_signal_container: failed signal 18 pid 3660837 StepId=19195648.batch No such process\n",
+  "oom_evidence": false,
+  "exit137_alone_does_not_identify_oom": true,
+  "os_blocked_state": "unverified; no repeated node-access inspection",
+  "inspection_step_note": "sacct also lists step19195648.0 starting23:59:24. The earlier bounded read-only inspection clients were cleaned; their receipt does not prove immediate remote-step termination. No claim is made that allocation cleanup has finished.",
+  "new_job_or_retry": false,
+  "economic_changes": [],
+  "pending_decision": "Existing next_step_proposal remains unapproved. No budget change or submission is authorized. c03 counterpart must not be duplicated while scheduler cleanup remains unresolved.",
+  "pins": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_terminal_scheduler.json",
+      "sha256": "ba0b80ff244abe712e7676e74a5695f908fadb88103476ce00f48154eb965588"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_terminal_collection.json",
+      "sha256": "e5a8818a1e13f3171ecb7108c98ef837e27cbdd55a5835c852fe7d107f6a5df9"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/preparation_process_check.json",
+      "sha256": "076147862129727013310cc769f5e2bbfa3b3d505821bb8aa630fce5ed40d055"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/launch_parallel_transition_candidate.sh",
+      "sha256": "556214def5bdad8b069d548fb6213ee44a95ef2d1cdf0d904e916b1b7d4ad05d"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/results/c03_h32/launcher_terminal.json",
+      "sha256": "209c05c36c025fb6d25d405132d5cb727ac338d9a60341c8fdb81b1c9f8e2531"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/results/c03_h32/launcher_start.json",
+      "sha256": "0c1688f02b0fb0a9b4b72de3003b0a75ec643a4ec45762705b7f41730ad94458"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/results/c03_h32/host_verification.json",
+      "sha256": "43857de3f5f1c29c559ba383168dba636a042fd65ae830ee3170f8aa5252d3c1"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/results/c03_h32/addon_verification.json",
+      "sha256": "ee07a752f970f35922a0cc18abe75a7013caa801b9d5f1b803b487d06cf99ce5"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/logs/estate_parallel_candidate-19195648.out",
+      "sha256": "3850c3a4021eaa5fdc41e77d06ba3e5ffdff66cc339dfaaa7a59dfa7e3d5e8f6"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/jobs/c03_h32.claim/slurm_job_id",
+      "sha256": "40c8ade2fa4446d3127168ced2d9ab33f6923806d63e0058f6da3edd487254ab"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/jobs/c03_h32.claim/config_sha256",
+      "sha256": "e8343e6a038190638b1e0feffe6722a7cf576c06dbc6924b4059ae488a55e1d5"
+    }
+  ]
+}
