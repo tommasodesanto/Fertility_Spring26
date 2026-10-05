@@ -1,14 +1,20 @@
-# First storage cleanup — October 5, 2026
+# Fertility storage cleanup — October 5, 2026
 
-Completed the author-authorized fast cleanup of one historical Torch experiment:
-`/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1`.
+The author-authorized cleanup removed **1,694 nonbest generated checkpoint files**, accounting for **309,594,630,656 allocated bytes (309.595 GB)**, from four ended historical Torch experiments.
 
-Removed **680 nonbest `initial_state.pkl.gz` files**, releasing **110,037,324,288 allocated bytes (110.037 GB)**. The directory decreased from **117.940 GB to 7.903 GB**. A 4,096-byte scratch write and fsync passed; the temporary probe was removed. `myquota` has not reflected the deletion in its displayed account total; no updated account-wide usage is asserted.
+| Historical experiment | Files removed | Allocated GB removed | Protected checkpoint entries |
+|---|---:|---:|---:|
+| September 25 nightpair | 680 | 110.037 | 40 |
+| September 23 utility search | 379 | 64.213 | 56 |
+| September 28 gated search | 520 | 111.533 | 23 |
+| September 7 search | 115 | 23.811 | 38 |
 
-Kept all 40 workers’ best cases, including both named selected reference cases; all selected exports, smoke/repeat runs, source, inputs and runtime; and every trial’s receipts, parameter/fit records, tables, plots and logs. All 720 point receipts share one objective fingerprint and report verified experimental points. No model, calibration acceptance gate, active transition evidence or pipeline was changed, and no model job was launched.
+Worker/stage bests (including ties), latest completed checkpoints, selected/reference/final cases, pinned dependencies, repeats/probes, and ambiguous cases remain. Each trial's compact parameters, loss, moments, status and provenance remain, along with plots, logs, source, inputs and runtime. **CSI and unrelated projects were not touched.** Current transition and calibration evidence, the frozen September 14 reference and immutable packages remain protected. No model or pipeline changed; no model job was launched.
 
-The lead independently derived the 40 worker minima from the saved receipt extraction and checked that the manifest is exactly their complement. Every deletion had a unique, single-link regular file and unchanged metadata guards. All 40 retained checkpoint metadata records matched before and after. This was a metadata check, not a new content-hash or scientific audit of retained arrays.
+Every successful unlink matches the exact manifest. Regular single-link files passed metadata and path guards; every protected checkpoint metadata record matched before and after. Nightpair's measured directory-size decrease equals its removal total and a scratch write/fsync passed. Later narrow directory-size commands exceeded their 60-second bounds; those removal totals come from successful per-file unlink receipts, without a separate directory-size claim. This is metadata verification, not a new scientific or large-array content audit.
 
-[Concise completion receipt](cleanup_summary.json) pins the local detailed evidence: proposal, exact path/stat manifest, applied script, actual receipt extraction, streamed deletion receipts, retained-checkpoint metadata and size/quota checks. Large model arrays remain in their original locations. **The cleanup has been applied once; do not rerun the execution command.**
+The last account quota report displayed **4.83 TB / 5.00 TB (96.52%)** before the final September 7 deletion. It does not reconcile exactly to all four file-level passes; no inferred current account total is asserted.
 
-Proposed future calibration retention, not implemented here: compact parameters, loss, model moments, solve status and provenance for every guess; full arrays only for current and previous best per chain plus selected final/reference cases; lightweight optimizer restart checkpoints; publish a new best atomically before retiring the previous saved version. Keep the existing scientific gates. Broader data organization and pipeline work remain a separate discussion.
+[The concise cumulative receipt](cleanup_summary.json) pins each detailed completion receipt and the quota record. Detailed manifests, guard scripts and execution logs remain local under this folder. **All four passes have executed once; do not rerun their execution commands.**
+
+Future retention proposal, not implemented: keep compact parameters/loss/moments/status/provenance for every guess; retain full current and previous best per independent chain plus selected final/reference solutions and lightweight optimizer restart state. Publish the new best atomically before retiring the old version. Broader data engineering and pipeline work remain a separate discussion.
