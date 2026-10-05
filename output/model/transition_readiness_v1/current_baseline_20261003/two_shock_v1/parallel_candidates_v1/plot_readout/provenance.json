@@ -1,0 +1,32 @@
+{
+  "classification": "Diagnostic only: saved first-shock transition; no second shock; root/replay pass; horizon comparison pending; terminal certification pending",
+  "candidate": "c03_h24",
+  "preference": 0.14736308634876963,
+  "horizon": 24,
+  "source_files": [
+    "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/c03_h24_native_dated.json",
+    "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/c03_h24_latest_completed.json"
+  ],
+  "source_sha256": {
+    "c03_h24_native_dated.json": "d6d1930b0f729e2c8b41bf36983e5472413cf291c5800b3a001be544339a80b4",
+    "c03_h24_latest_completed.json": "f7966eb3b38a21b147114fe58e373a608c62d9c2e3252188f2cdbd372e25d4af",
+    "historical_fertility_targets.json": "a2354d3dbcb1910365b477b4a816d9a663b287ec3fe6f62d2e6406d3ee5251f9"
+  },
+  "root_pass": true,
+  "root_gate_passed": true,
+  "replay_pass": true,
+  "pending_horizon_comparison": true,
+  "production_ready": false,
+  "empirical_fitted": false,
+  "two_shock_result": false,
+  "terminal_diagnostic_pass": false,
+  "series_rows": 24,
+  "target_data": {
+    "2011": 1.974875,
+    "2015": 1.861,
+    "2019": 1.755375,
+    "2023": 1.64575
+  },
+  "layout_source": "code/model/tools/build_e5f_saved_transition_panels.py; values and captions replaced for c03_h24",
+  "model_solves": 0
+}

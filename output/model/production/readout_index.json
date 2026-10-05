@@ -1,0 +1,182 @@
+{
+  "purpose": "Explicit, constant-scope pointers to saved readouts; no automatic latest selection or model execution.",
+  "schema": "saved_result_readout_v1",
+  "selection_history": [],
+  "slots": {
+    "base_2007": {
+      "artifacts": {
+        "fit": "output/model/local_solution/cases/20261003T175652812716Z_b1c72f13/target_fit.csv",
+        "parameters": "output/model/local_solution/cases/20261003T175652812716Z_b1c72f13/parameters.csv",
+        "plots": [
+          "output/model/production/2007/model_data_assessment.pdf"
+        ]
+      },
+      "classification": "working snapshot",
+      "contract": "local stationary target_fit.csv; 14 rows; 2007 model-data assessment",
+      "epoch": "2026-10-03",
+      "reference": "2007 saved local stationary GE case 20261003T175652812716Z_b1c72f13",
+      "source": "output/model/local_solution/cases/20261003T175652812716Z_b1c72f13",
+      "source_artifacts": {
+        "metadata": "output/model/local_solution/cases/20261003T175652812716Z_b1c72f13/metadata.json",
+        "production_metadata": "output/model/production/2007/metadata.json",
+        "solution_pointer_resolved": "output/model/local_solution/cases/20261003T175652812716Z_b1c72f13"
+      },
+      "status": "saved solution and assessment; not certified paper baseline",
+      "summary": {
+        "data_year": 2007,
+        "fit_rows": 14,
+        "loss": 13.771131463467412,
+        "parameter_rows": 31
+      },
+      "warnings": [
+        "2007 and 2023 snapshots use different parameter points."
+      ]
+    },
+    "base_2023": {
+      "artifacts": {
+        "fit": "output/model/production/2023/target_fit.csv",
+        "parameters": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/baseline_parameters.csv",
+        "plots": [
+          "output/model/production/2023/model_data_assessment.pdf"
+        ],
+        "supplemental_parameters": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/shock_parameters.csv"
+      },
+      "classification": "historical diagnostic",
+      "contract": "retained NCHS four-window transition fit; 4 rows; distinct from 2007 stationary target system",
+      "epoch": "2026-10-03",
+      "reference": "retained_one_shock_v1 2023 saved assessment",
+      "source": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1",
+      "source_artifacts": {
+        "complete": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/complete.json",
+        "production_metadata": "output/model/production/2023/metadata.json",
+        "saved_solution": "output/model/production/2023/solution.pkl.gz"
+      },
+      "status": "saved one-shock endpoint assessment; transition not production ready",
+      "summary": {
+        "data_year": 2023,
+        "fit_rows": 4,
+        "fitted_psi_child": 0.11999694638724082,
+        "parameter_rows": 31
+      },
+      "warnings": [
+        "Saved 2023 assessment uses one-shock transition parameter point, distinct from base_2007.",
+        "Baseline parameter table supplies the fixed transition base; shock_parameters.csv has only the shock coordinate.",
+        "Full baseline table has 31 rows; supplemental_parameters gives the fitted permanent psi_child used for the one-shock exercise."
+      ]
+    },
+    "base_transition": {
+      "artifacts": {
+        "fit": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/fertility_fit.csv",
+        "parameters": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/baseline_parameters.csv",
+        "plots": [
+          "output/model/production/transition/fertility_path.pdf"
+        ],
+        "supplemental_parameters": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/shock_parameters.csv"
+      },
+      "classification": "historical diagnostic",
+      "contract": "retained NCHS four-window transition fit; 4 rows",
+      "epoch": "2026-10-03",
+      "reference": "retained_one_shock_v1",
+      "source": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1",
+      "source_artifacts": {
+        "complete": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/complete.json",
+        "retention_receipt": "output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/retention_receipt.json"
+      },
+      "status": "one-shock numerical fit retained; production_ready=false",
+      "summary": {
+        "fit_rows": 4,
+        "fitted_psi_child": 0.11999694638724082,
+        "parameter_rows": 31
+      },
+      "warnings": [
+        "This is the retained one-shock exercise, separate from transition_latest.",
+        "Full baseline table has 31 rows; supplemental_parameters gives the fitted permanent psi_child used for the one-shock exercise."
+      ]
+    },
+    "best_estate_a": {
+      "artifacts": {
+        "fit": "output/model/overnight_dual_20261004_v1/terminal_collection/a_provisional/target_fit_new_contract.csv",
+        "parameters": "output/model/overnight_dual_20261004_v1/terminal_collection/a_provisional/parameters_estate_a.csv"
+      },
+      "classification": "provisional",
+      "contract": "one-birth Estate A; wealth/earnings target 4.45838713455674; 14 rows",
+      "epoch": "2026-10-05",
+      "reference": "overnight dual array 19194495 chain 11",
+      "source": "output/model/overnight_dual_20261004_v1/terminal_collection/a_provisional",
+      "source_artifacts": {
+        "collection_readme": "output/model/overnight_dual_20261004_v1/terminal_collection/README.md",
+        "receipts": "output/model/overnight_dual_20261004_v1/terminal_collection/receipts.json"
+      },
+      "status": "saved search best; no final native acceptance",
+      "summary": {
+        "chain": 11,
+        "fit_rows": 14,
+        "loss": 15.021541735257825,
+        "parameter_rows": 31
+      },
+      "warnings": [
+        "Provisional checkpoint; do not compare loss to different target contracts.",
+        "No accepted plot packet indexed."
+      ]
+    },
+    "best_original": {
+      "artifacts": {
+        "fit": "output/model/overnight_dual_20261004_v1/terminal_collection/b_provisional/target_fit.csv",
+        "parameters": "output/model/overnight_dual_20261004_v1/terminal_collection/b_provisional/parameters.csv"
+      },
+      "classification": "provisional",
+      "contract": "original post-interest soft-financing target contract; 14 rows",
+      "epoch": "2026-10-05",
+      "reference": "overnight dual array 19194496 chain 1",
+      "source": "output/model/overnight_dual_20261004_v1/terminal_collection/b_provisional",
+      "source_artifacts": {
+        "collection_readme": "output/model/overnight_dual_20261004_v1/terminal_collection/README.md",
+        "receipts": "output/model/overnight_dual_20261004_v1/terminal_collection/receipts.json"
+      },
+      "status": "saved search best; no final native acceptance",
+      "summary": {
+        "chain": 1,
+        "fit_rows": 14,
+        "loss": 12.799253826128437,
+        "parameter_rows": 31
+      },
+      "warnings": [
+        "Provisional checkpoint; distinct from separate chain 9 verified completion.",
+        "No accepted plot packet indexed."
+      ]
+    },
+    "transition_latest": {
+      "artifacts": {
+        "plots": [
+          "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/fertility_2007_2063.png",
+          "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/fertility_2007_2063.pdf",
+          "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/fertility_demography.png",
+          "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/fertility_demography.pdf",
+          "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/housing.png",
+          "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/housing.pdf"
+        ]
+      },
+      "classification": "provisional diagnostic",
+      "contract": "two-shock candidate with first-shock-only plot readout; no accepted two-shock result",
+      "epoch": "2026-10-05",
+      "reference": "c03_h24 latest completed saved two-shock candidate",
+      "source": "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/c03_h24_latest_completed.json",
+      "source_artifacts": {
+        "latest_completed": "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/c03_h24_latest_completed.json",
+        "native_dated": "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/c03_h24_native_dated.json",
+        "plot_provenance": "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/parallel_candidates_v1/plot_readout/provenance.json"
+      },
+      "status": "root gate passed; horizon comparison pending; accepted_candidate=false",
+      "summary": {
+        "accepted_candidate": false,
+        "horizon": 24,
+        "task_id": "c03_h24"
+      },
+      "warnings": [
+        "Saved plots are first-shock-only diagnostics, not an accepted two-shock transition.",
+        "Full fit and parameter tables are not indexed for this candidate."
+      ]
+    }
+  },
+  "version": 1
+}

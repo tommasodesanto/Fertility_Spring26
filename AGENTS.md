@@ -362,6 +362,18 @@ only when identity has changed, evidence conflicts, or the requested fact is new
 state that specific reason. This fast path takes precedence over default worker
 routing for routine retrieval. Never invent a missing cached fact.
 
+Presentation readouts use the explicit saved-result index under
+`output/model/production/`. Keep selected 2007, 2023 and transition snapshots,
+complete fit/parameter tables and standard plots ready for direct local reads.
+Routine requests for these objects must not trigger delegation, conversation
+retrieval, cluster access, model imports, source reconstruction or new solves.
+Use `code/model/tools/read_results.py` first; report a missing artifact or
+unresolved certification immediately rather than starting a recovery mission.
+Update selected pointers explicitly when a better result is chosen, preserving
+previous identities and verification status. A newer diagnostic or provisional
+best does not silently replace a selected presentation baseline. Cached reads
+should take milliseconds; saved-data plot regeneration should take seconds.
+
 Routing is the lead agent's responsibility. The user should normally state the
 outcome, any deadline or urgency, and any non-negotiable constraints; do not
 ask the user to select a model or worker profile when that choice can be made
