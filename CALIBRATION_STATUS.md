@@ -883,7 +883,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 22:16 New York:** the
+   **Current transition direction, verified October 4 at 22:19 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -984,9 +984,9 @@ manuscript wording or certify a new paper calibration.
    **22:15:15**. Its hard deadline is **October 5 at 00:15:15 New York**. It measures
    the original five-map seed from the same prescribed initial path, with limits
    of 720 calls, 7,080 internal/7,200 external seconds, one CPU and 24 GiB.
-   Launcher and persistent claim match; native progress is not yet verified.
-   The new wrapper
-   preserves numeric arrays losslessly; six tests, bash syntax and actual pinned
+   Launcher and claim match. Both full authentications passed; actual native
+   progress at epoch1791166707.6439238 records one call, zero completed root maps
+   and no failure/terminal receipt. The new wrapper preserves numeric arrays losslessly; six tests, bash syntax and actual pinned
    inputs passed without a constructor or native call. No economic or gate
    change, scalar fit, second shock, 32-date comparison or terminal certificate
    is adopted. Preserve all immutable earlier packages and completed evidence.
