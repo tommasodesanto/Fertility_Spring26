@@ -1,0 +1,86 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.72in,top=0.55in,bottom=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=1.4em}
+\setlength{\parskip}{2pt}
+\setlength{\parindent}{0pt}
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}\setlength{\belowdisplayshortskip}{2pt}
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\hbR}{\bar h^{R}}
+\pagestyle{empty}
+
+\begin{document}
+{\large\bfseries Tenure segmentation, the space floor, and precautionary childlessness}\\
+{\small Theory note, October 7, 2026. Primitives and values are those of the saved 2007 base (Torch chain 17, price $P=0.779$). Every number below is a fixed-price object; the full-model check is the precautionary thread's round 2 at chain 17, fixed price, rebate on, policies read at base childless states.}
+
+\medskip
+\textbf{1. Setup.}
+A household with $m$ children at home has flow utility
+\[
+u(c,s;m)=e(m)^{\sigma-1}\,\frac{\bigl[c^{\alpha}s^{1-\alpha}\bigr]^{1-\sigma}}{1-\sigma}+\psi m^{1-\gamma},
+\qquad
+s=\begin{cases} h^{R}-h_P\1\{m>0\} & \text{renter with } h^{R}\text{ rooms},\\ \chi\,(h-h_P\1\{m>0\}) & \text{owner with } h \text{ rooms},\end{cases}
+\]
+with $\sigma=2$, consumption share $\alpha=0.733$, equivalence scale $e(1)=1.234$, parenthood space floor $h_P=2.6$ rooms (at its search cap) and owner premium $\chi=1.084$. A parent needs $h_P$ rooms before any housing services accrue. Rental rooms are continuous on $(h_P\1\{m>0\},\hbR]$ with $\hbR=6$; owned units come in $h\in\{2,4,6,8,10\}$ rooms. Rent per room is the owner user cost, $r=(R-1+\delta_H+\tau^{p})P=0.141$ per four-year period, so the price of space is tenure-neutral and the tenures differ only in the menu, in $\chi$ and in finance. An owner's end-of-period liquid position satisfies $b'\ge-\phi Ph$ with $\phi=0.8$: the equity $(1-\phi)Ph$ is in place by the end of the purchase period and is built from that period's consumption-savings, out of current income, liquid wealth and any sale proceeds. Renters cannot borrow, $b'\ge0$. Selling costs $6\%$ of value.
+\emph{Tenure segmentation} is the floor together with the cap: space above six rooms exists only in the owner menu, and parents are the households whose desired space reaches it first. Write $x=c+rh^{R}$ for a renter's period expenditure on consumption and space.
+
+\medskip
+\textbf{2. Exact result: rental demand with children.}
+\begin{proposition}[within-period rental demand]
+Given $x$, $m$ and renting, the optimal rental size is
+\[
+h^{R*}_m(x)=\frac{(1-\alpha)\,x}{r}+\alpha\,m\,h_P\quad\text{when this is at most }\hbR,\qquad h^{R*}_m(x)=\hbR\ \text{otherwise.}
+\]
+The cap binds for a parent iff $x>x_1\equiv r(\hbR-\alpha h_P)/(1-\alpha)$ and for a childless household iff $x>x_0\equiv r\hbR/(1-\alpha)>x_1$. On $(x_1,x_0)$ the parent is rationed and the childless household is not.
+\end{proposition}
+\emph{Proof.} The objective is a monotone transform of $c^{\alpha}(h^{R}-mh_P)^{1-\alpha}$, so neither $e(m)$ nor the child benefit enters the allocation. Cobb--Douglas over $(c,\,h^{R}-mh_P)$ with net budget $x-rmh_P$ gives $c=\alpha(x-rmh_P)$ and $h^{R}-mh_P=(1-\alpha)(x-rmh_P)/r$; add $mh_P$. The thresholds solve $h^{R*}_m(x_m)=\hbR$. $\qed$
+
+A child raises desired rental space by $\alpha h_P=1.90$ rooms at every budget. At the base, $x_1=2.16$ and $x_0=3.16$ per period. The result is exact in the model because the engine's within-period allocation is this problem, and it reproduces solved policies: the median renter with income state $z=0.78$, zero liquid wealth and age 26 chooses $c=1.895$ and $h^{R}=4.9$ rooms (precautionary $2\times2$, Table 6), so $x=2.58$ and the formula gives $h^{R*}_0=4.91$; the same household as a parent wants $h^{R*}_1=6.81>6$ and is rationed. After its income falls to $z=0.28$ the parent branch has $c=0.834$, $h^{R}=4.8$: $x=1.51$ and the formula gives $4.77$. The full-model check confirms the set this picks out: among childless renters at $z=0.78$, $98$--$100\%$ at every age 22--33 have a binding parental optimum and a slack childless one; under $2\%$ at $z=0.47$ (below $x_1$); both branches capped at $z\ge1.29$ (above $x_0$). They are $14\%$ of childless households 22--33, hold zero liquid wealth, and attempt a birth with probability $0.31$--$0.46$, the responsive part of the logit.
+
+\medskip
+\textbf{3. Conditional result: how the cap enters the value of a birth.}
+Let $\zeta_m(x)\ge0$ be the multiplier on $h^{R}\le\hbR$ in the renter's within-period problem, zero iff $x\le x_m$; by the envelope theorem $\partial J_m/\partial\hbR=\zeta_m$, with $J_m(x)$ the within-period indirect utility. When both branches are capped they share $c=x-r\hbR$ and
+\[
+\zeta_m=u_c(c,\hbR-mh_P;m)\Bigl[\frac{(1-\alpha)\,c}{\alpha(\hbR-mh_P)}-r\Bigr],
+\]
+so $\zeta_1>\zeta_0$: the parent has less net space, which raises the bracket, and a higher marginal utility of consumption, through $e(1)^{\sigma-1}$ and the smaller composite. With $\zeta_0=0$ on $(x_1,x_0)$, every $x>x_1$ has $\zeta_1>\zeta_0$.
+\begin{proposition}[envelope condition]
+Hold prices fixed and let $G$ be the value gap of attempting a birth (attempt minus wait), with the tenure choice smoothed by its taste shocks so that $p^{R}_t$ is the renter-choice probability at date $t$. Since $\hbR$ enters only the rental branch,
+\[
+\frac{\partial G}{\partial\hbR}=\sum_{t\ge0}\beta^{t}S_t\Bigl(\E^{\mathrm{attempt}}\bigl[p^{R}_t\zeta_t\bigr]-\E^{\mathrm{wait}}\bigl[p^{R}_t\zeta_t\bigr]\Bigr),
+\qquad\text{first term } p^{R}_1\zeta_1-p^{R}_0\zeta_0,
+\]
+where $S_t$ is survival and the expectations run along the two continuation paths from the same state.
+\end{proposition}
+The first term is positive wherever the parental cap binds, the childless cap is slack and the household rents with positive probability. The later terms are not signed: a household on the wait path may have children later and hit the cap then, so what the cap changes is mainly the timing of the gain. \emph{Full-model check} (finite difference, cap $6\to8$, age 26--29, segmented state): the parent-state value rises by $0.0074$ utils per room and the childless-state value by $0.0044$, the latter being exactly this continuation term; the difference, $\partial G/\partial\hbR=+0.004$ per room, is the predicted sign. It moves the attempt probability from $0.435$ to $0.450$ ($+2.9\%$; all childless 22--33, $+1.7\%$), and the logit arithmetic closes: $p(1-p)\,\Delta G/\kappa_F=0.435\cdot0.565\cdot0.0078/0.119=0.016$. The within-period $\zeta_1$ at $x=2.58$ is $0.012$ utils per room, the same order. The effect is small because the shortfall is small: parents at the cap want $6.5$--$7.2$ rooms.
+
+\medskip
+\textbf{4. Local result: rationed space raises the cost of income risk.}
+Hold the rental branch fixed and let a parent face a lottery over next period's $x$. For a renter at $b'=0$ with no unsecured credit this is exactly the income lottery, which is the segmented state; for a household with liquid wealth, self-insurance shrinks the lottery and the result weakens. Let $J^{\infty}_1$ and $J^{\hbR}_1$ be the parent's indirect utility without and with the cap, $L\equiv J^{\infty}_1-J^{\hbR}_1\ge0$ the loss from rationing, and $D^{\hbR}(x)=B+J^{\hbR}_1(x)-J_0(x)$ the birth advantage at $x$, with $B$ the fixed benefit and cost of a child.
+\begin{proposition}[segmentation and risk]
+(i) $L=0$ on $x\le x_1$, $L$ is $C^{1}$ at $x_1$, and with $\lambda=J^{\infty}_{1,x}(x_1)$, $t_1=x_1-rh_P$,
+$L''(x_1^{+})=\frac{1-\alpha}{\alpha}\,\frac{\lambda}{t_1}>0$.
+(ii) For a lottery $X$ with mean $\bar x\le x_1$ and support below $x_0$, the cap adds to the risk penalty in the birth advantage
+\[
+\bigl[D^{\hbR}(\bar x)-\E D^{\hbR}(X)\bigr]-\bigl[D^{\infty}(\bar x)-\E D^{\infty}(X)\bigr]=\E L(X)-L(\bar x)=\E L(X)\ \ge 0,
+\]
+strictly if $\Pr(X>x_1)>0$. For $\bar x=x_1$ and $X=x_1\pm\varepsilon$ it equals $L''(x_1^{+})\varepsilon^{2}/4+o(\varepsilon^{2})$.
+\end{proposition}
+\emph{Proof.} Uncapped, $J^{\infty}_1=e(1)^{\sigma-1}A\,(x-rh_P)^{1-\sigma}/(1-\sigma)$ for a constant $A$, so $J^{\infty}_{1,xx}=-\sigma\lambda/t$. Capped, $c=x-r\hbR$ with net space fixed, so $J^{\hbR}_{1,xx}=-[1+\alpha(\sigma-1)]\,J^{\hbR}_{1,x}/c$. At $x_1^{+}$ the two solutions coincide, $c=\alpha t_1$ and $J^{\hbR}_{1,x}=\lambda$; subtract. For (ii) the childless terms cancel because $J_0$ is uncapped on the support, and $L(\bar x)=0$. $\qed$
+
+Once capped, every extra unit of expenditure goes to consumption alone, so the parent's marginal utility of expenditure falls at rate $[1+\alpha(\sigma-1)]/(\alpha t)$ instead of $\sigma/t$, a ratio of $1.18$ at the base: a good income draw cannot be spent on space, a bad one hurts as before, and the parent loses the upside the childless household keeps. No selling cost and no irreversible tenure choice enter. The floor and the equivalence scale both raise the term, since $\lambda$ carries $e(1)^{\sigma-1}=1.23$ and $t_1$ is shortened by $rh_P=0.36$. Two limits: the convexity in (i) is local (farther above $x_1$ the capped marginal utility decays more slowly and $L''$ can change sign), and (ii) needs the certainty point at or below the onset. The size is set by the shortfall: at the segmented state $x-x_1=0.42$, so $L\approx\tfrac12L''(0.42)^{2}\approx0.007$ utils with $\lambda=0.41$, against a $0.18$-util rise in $G$ when income risk falls (Table 4, renters). \emph{Full-model check:} the risk effect on attempts is $+50.8\%$ with the cap at 6 and $+51.2\%$ with the cap at 8 (renters at $z=0.78$: $+31.6\%$ against $+32.2\%$); zero selling cost changes the risk effect by $-3.8$ pp and the cap effect by $+0.9\%$. Segmentation does not amplify the precautionary channel at this calibration. The owner menu is the escape from $L$ and it is open: the segmented households can finance 2-, 4- and even 8-room units out of one period's income, yet as parents they almost all rent at the cap, a minority buys the 6-room unit and none buy 8 rooms or more. The larger unit is not worth its cost for a one-room shortfall; ownership access is not what stops them.
+
+\medskip
+\textbf{5. What holds, what the model shows, and what would make it bite.}
+Exact in the model: Proposition 1, and the segmented set it predicts is the one found. Conditional and confirmed in sign: Proposition 2 ($+0.004$ utils per room, $+2.9\%$ attempts at the segmented state). Auxiliary and quantitatively second order here: Proposition 3 (common expenditure lottery, rental branch fixed, local; no measurable interaction with income risk). The first-order precautionary force is the space floor $h_P$ with the equivalence scale, operating on young childless renters held at the zero-borrowing floor: lower income risk raises attempts $+51\%$ at matched states ($+76\%$ for renters, $+23\%$ for owners), and transaction costs carry none of it. Segmentation is still where credit enters: at chain 11 (provisional, October 5) removing two-room owned units cuts the births response to LTV $80\to95$ from $-1.56\%$ to $-0.06\%$, and a rental cap of 4 rooms turns it to $+0.26\%$. What would make the cap itself bite follows from Proposition 3: the penalty grows with the square of the shortfall above $x_1$. With $\hbR=4$, $x_1$ falls to $1.10$, the median renter's shortfall is $1.48$ instead of $0.42$ expenditure units, and the penalty is about twelve times larger; a larger parental space demand ($h_P$ above its cap, or a steeper child room requirement) does the same at $\hbR=6$. The honest statement for the paper: the mechanism exists and is populated, its sign is right, and at the calibrated six-room cap it is second order next to the floor and the borrowing constraint.
+
+{\footnotesize Sources: draft Section 3 and \path{CALIBRATION_STATUS.md} (primitives); \path{output/model/production/2007/parameters_estate_a.csv} (chain 17); \path{output/model/precautionary_2x2_20261006/round2_tables_segmentation_nakakuni.md} and \path{readout_fixed/README.md} (full-model check); \path{output/model/credit_mechanism_20261004/thread_credit_null/estate_a_chain11_seg/README.md} (October 5); ChatGPT inputs in \path{chatgpt_inputs/}. Related mechanisms: Sommer (2016, JME); Fisher and Gervais (2011, IER).\par}
+\end{document}
