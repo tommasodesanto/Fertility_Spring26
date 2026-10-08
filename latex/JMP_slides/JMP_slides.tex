@@ -679,42 +679,36 @@ Households (2007 = 1) & 1.000 & 1.000 & 1.000 & 1.000 & 0.997 & 0.939 & 0.832 \\
 \runlabel{Current base (loss \baseloss), GE, rebate rebalanced every date, 100-period horizon per stage.}
 \end{frame}
 
+% Model column: output/model/profile_2023_base14402/moments_2023_base14402.csv (H100 baseline replay, 14.402 base). Sept 14 version in git (e49c148c).
 \begin{frame}{2023 Data and Model}
 \footnotesize
-\renewcommand{\arraystretch}{0.90}
+\renewcommand{\arraystretch}{1.05}
 \begin{tabularx}{\textwidth}{@{}Xrr@{}}
 \toprule
 Moment & Data & Model \\
 \midrule
-Completed fertility, ages 40--44 & 1.92 & 1.70 \\
-Childless, ages 40--44 (\%) & 18.8 & 25.0 \\
-Exactly one child among mothers, 40--44 (\%) & 22.2 & 25.5 \\
-Mean age at first birth (years) & 28.09 & 29.74 \\
-First births at age 30+ (\%) & 37.7 & 44.0 \\
+Period TFR (fitted) & 1.646 & 1.646 \\
+Completed fertility, ages 40--44 (model 42--45) & 1.92 & 1.69 \\
+Childless, ages 40--44 (model 42--45) (\%) & 18.8 & 25.3 \\
+Mean age at first birth (years) & 28.09 & 26.85 \\
 \addlinespace[2pt]
-Mean occupied rooms (capped at 9) & 5.58 & 6.07 \\
-Ownership, heads 30--55 (\%) & 58.7 & 46.9 \\
-First-birth room response, $-$1 to +3 & 0.720 & 1.060 \\
-Rooms: 3+ versus 1--2 resident children & 0.355 & 0.266 \\
-\addlinespace[2pt]
-Wealth / annual gross earnings & 6.87 & 5.64 \\
-Annual bequests / wealth (\%) & 0.88 & 0.70 \\
-Wealth/income p90 / median, ages 76--84 & 3.45 & 3.50 \\
+Mean occupied rooms (capped at 9) & 5.58 & 5.54 \\
+Ownership, heads 30--55 (model 30--53) (\%) & 58.7 & 69.3 \\
 \bottomrule
 \end{tabularx}
-\hole{Sept 14 point and target system. To be redrawn from the 100-period 2023 state at the current base.}
+\runlabel{Current base (loss \baseloss), 2023 on the 100-period two-shock path, GE, rebate balanced every date. Model ages are four-year groups. The one-child share, first births at 30+, room responses and wealth rows of the earlier version are not in this readout.}
 \end{frame}
 
 \begin{frame}{Lifecycle Fit in 2023}
 \centering
-\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio,trim=0 25 0 0,clip]{../output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/profile_2023/figures/lifecycle_2023.pdf}
-\vspace{-0.6em}\hole{Sept 14 point; to be redrawn from the 100-period 2023 state.}
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio,trim=0 25 0 0,clip]{../output/model/profile_2023_base14402/lifecycle_2023.pdf}
+\runlabel{Current base, 2023 on the 100-period two-shock path. Children at home: model dependents; ACS resident own children under 18.}
 \end{frame}
 
 \begin{frame}{Intergenerational Allocation: Model vs Data}
 \centering
-% Bottom strip clipped to remove the figure's internal status caption.
-\includegraphics[width=0.9\linewidth,height=0.5\textheight,keepaspectratio,trim=0 34 0 0,clip]{../output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/profile_2023/figures/intergenerational_allocation_2023.pdf}
+% Current-base figure: output/model/profile_2023_base14402/build_figures.py.
+\includegraphics[width=0.9\linewidth,height=0.5\textheight,keepaspectratio]{../output/model/profile_2023_base14402/intergenerational_allocation_2023.pdf}
 \par\centerline{\scriptsize Share of owner-occupied homes with $6+$ rooms; ACS 2023.}
 \vspace{4pt}
 \raggedright\footnotesize
@@ -723,7 +717,7 @@ Wealth/income p90 / median, ages 76--84 & 3.45 & 3.50 \\
   \item Coven et al.\ (2025): a rebated property tax moves space from old owners to young households.
   \item Those young households are the ones deciding on children, and children need space.
 \end{itemize}
-\hole{Model bars at the Sept 14 point; to be redrawn from the 100-period 2023 state.}
+\runlabel{Model bars: current base, 2023 on the 100-period two-shock path.}
 \end{frame}
 
 \begin{frame}{Policy}
