@@ -1,0 +1,63 @@
+% Shared preamble for JMP_slides.tex and JMP_slides_new_results.tex (compile both from latex/).
+\documentclass[11pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathreplacing,overlay-beamer-styles,shapes.geometric,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{appendixnumberbeamer}
+
+\setbeamercovered{transparent=5}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{block title}{fg=black,bg=white!80!black}
+\setbeamercolor{block body}{fg=black,bg=white!97!black}
+\linespread{1.2}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\E}{\mathbb E}
+\newcommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\definecolor{citecolor}{RGB}{110,110,165}
+\definecolor{sourcegray}{RGB}{95,95,95}
+\newcommand{\cit}[1]{{\color{citecolor}#1}}
+\newcommand{\source}[1]{\par\vspace{0.25em}{\tiny\color{sourcegray}Source: #1}}
+\newcommand{\takeaway}[1]{\vfill{\small\textbf{Takeaway.} #1}}
+
+
+% The complete pre-refocus source is preserved in archive/september_14_before_slide_refocus_20260910.tex.
+% Sequential household exposition; choice-structure comparison and calibration design remain open in CALIBRATION_STATUS.md.
+\pdfstringdefDisableCommands{\def\translate#1{#1}}
+
+% Link button pinned to the top-right corner of the frame.
+\newcommand{\titlelink}[2]{\makebox[0pt][l]{\begin{tikzpicture}[remember picture,overlay]\node[anchor=north east] at ([xshift=-0.35cm,yshift=-0.32cm]current page.north east) {\hyperlink{#1}{\beamergotobutton{#2}}};\end{tikzpicture}}\ignorespaces}
+% Added October 2026 (draft): helpers and paths for the new frames.
+\definecolor{draftred}{RGB}{170,40,40}
+\newcommand{\placeholder}[1]{{\scriptsize\color{draftred}#1}}
+\graphicspath{{../output/model/jmp_draft_deck_20261005/figures/}}
+\newcommand{\tabdir}{../output/model/jmp_draft_deck_20261005/tables}
+% v8 (October 7 2026): calibration tables are generated from the production readout
+% (latex/JMP_slides/build.sh, reads output/model/production/ via read_results.py).
+% Rerun that script after a new base is promoted and recompile; policy numbers below carry source comments.
+\newcommand{\tabdirv}{JMP_slides/prod_tables}
+\input{\tabdirv/base_point.tex}
+\input{\tabdirv/policy.tex}
+% \pol{case.field}: policy number generated from the result files named in policy.tex; fails loudly if missing.
+\newcommand{\pol}[1]{\ifcsname pol:#1\endcsname\csname pol:#1\endcsname\else\errmessage{Missing policy number #1}\fi}
+% \stale{x}: number at an earlier calibration point, not yet re-run at the current base.
+\definecolor{stalegray}{RGB}{130,130,130}
+\newcommand{\stale}[1]{{\color{stalegray}#1\textsuperscript{\dag}}}
+\newcommand{\stalenote}{{\color{stalegray}\textsuperscript{\dag}Earlier calibration point (loss 15.07), not yet re-run at the current base; where re-run, responses moved by less than 0.1 point.}}
+% \hole{text}: open item, marked and deliberately not filled.
+\newcommand{\hole}[1]{\par{\linespread{0.95}\tiny\selectfont\color{draftred}\textbf{Open:} #1\par}}
+\newcommand{\curbase}{current base (loss \baseloss)}
+\newcommand{\runlabel}[1]{\par{\linespread{0.9}\tiny\selectfont\color{sourcegray}#1\par}}

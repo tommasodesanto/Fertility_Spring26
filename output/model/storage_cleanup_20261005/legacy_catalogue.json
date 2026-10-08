@@ -1,5 +1,5 @@
 {
-  "status": "author_retirement_executed_for_93_exact_targets",
+  "status": "author_retirement_executed_for_104_exact_targets",
   "basis": "Existing Oct5 inventories/receipts plus bounded local code/doc references only; no new remote access",
   "units": "GB decimal (1e9 bytes)",
   "size_limitations": "No overall sum. Earlier root_inventory du deduplicates hardlinks across argument roots: attributed subtotal depends on traversal order, cannot predict reclaim;78/108prefixroots completed before240s cap. Standalone rows deduplicate within measured root, include mixed source/output, are not deletion estimates. Overlapping parent/subtree sizes must not be added. Post-cleanup changes mean receipts are historical snapshots.",
@@ -572,7 +572,8 @@
       "unmeasured_members": [
         "/scratch/td2248/projects/Fertility_Spring26_rooms_income_sensitivity_v1_20261001",
         "/scratch/td2248/projects/Fertility_Spring26_specification_20260920"
-      ]
+      ],
+      "current_execution_notice": "Historical members and sizes below are not current presence. Subsequently deleted exact obsolete output subtrees are listed in remaining_retirement_v2/11_completion_receipt.json; parent source/runtime and named input keepers remain."
     },
     {
       "id": "rooms",
@@ -689,7 +690,8 @@
       "standalone_measurements": [],
       "unmeasured_members": [
         "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8"
-      ]
+      ],
+      "current_execution_notice": "Historical members and sizes below are not current presence. Subsequently deleted exact obsolete output subtrees are listed in remaining_retirement_v2/11_completion_receipt.json; parent source/runtime and named input keepers remain."
     },
     {
       "id": "paygo",
@@ -1307,6 +1309,29 @@
     "whole_old_roots": 64,
     "output_subtrees": 29,
     "reclaimed_regular_bytes": 328566301184,
-    "historical_inventory_rows_are_not_current_presence": true
+    "historical_inventory_rows_are_not_current_presence": true,
+    "subsequent_retirements": [
+      {
+        "receipt": "remaining_retirement_v2/11_completion_receipt.json",
+        "sha256": "85f4b8735a3df455f846b3a9253a5fd984e70300e4894890faece2e687da1e1f",
+        "output_subtrees_deleted": 11,
+        "already_absent_targets": 0,
+        "reclaimed_regular_bytes": 11430137856,
+        "deleted_paths": [
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_fit_sensitivity_v1/smoke",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_fit_sensitivity_v1/production",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_smoke",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_income_v2/stationary_new_income_smoke",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_income_v2/stationary_new_income_production",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_smoke",
+          "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production",
+          "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output",
+          "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/output",
+          "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output"
+        ],
+        "pending_targets": []
+      }
+    ]
   }
 }

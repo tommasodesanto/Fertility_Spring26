@@ -1,10 +1,13 @@
 # Legacy Fertility retirement catalogue
 
+> **Additional completed retirement:** Eight financing test/output subtrees and the three initial-population output trees were deleted once, freeing **11,430,137,856 bytes (11.430 GB)**. All 11 exact paths were present before deletion and absent afterward; none were merely missing. Parent code/runtime and named inputs remain. See `remaining_retirement_v2/11_completion_receipt.json`. Historical members and size tables below remain the original inventory, not a current filesystem listing. The completed whole-root/output retirement scopes now total 104 exact targets; checkpoint-only passes are separate.
+
+
 **Author-approved retirement completed:** all 64 older roots in the first five families are gone. A further 29 obsolete output subtrees were removed, including old transition v6/v7/v9 results. This pass released **328.566 GB**; protected input identities stayed unchanged. The tables below retain historical inventory sizes and original recommendations, not a current directory listing. See [execution receipt](legacy_retirement_v1/93_completion_receipt.json).
 
-Current source/input/runtime and calibration/transition evidence remain. Unlisted mixed candidate-path/native-financing batches, three initial-population output boundaries and empirical room-target results remain for separation from required inputs. CSI was untouched.
+Current source/input/runtime and calibration/transition evidence remain. Unlisted mixed candidate-path batches, other native-financing boundaries and empirical room-target results remain for separation from required inputs. The three initial-population output boundaries are now deleted. CSI was untouched.
 
-This is an author decision catalogue, not a deletion manifest. It uses saved October 5 inventories only; no new remote scan or deletion. Sizes below are decimal GB. The account’s roughly 5 TB has not been attributed to Fertility.
+This is an author decision catalogue, not a deletion manifest. The original catalogue used saved October 5 inventories only, without a new remote scan; the execution notices above record later approved deletion. Sizes below are decimal GB. The account’s roughly 5 TB has not been attributed to Fertility.
 
 **Reading the sizes:** “attributed” means the earlier multi-root `du` assigned hard-linked blocks to the first root encountered. These are measured historical allocation rows, not independent sizes or reclaimable totals. Coverage is measured/listed members. Standalone measurements apply only to the exact named root/subtree, deduplicate links within it, and still do not prove reclaim. No family or project total is claimed.
 

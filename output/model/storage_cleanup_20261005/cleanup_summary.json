@@ -1,9 +1,9 @@
 {
   "status": "completed",
-  "recorded_utc": "2026-10-05T19:47:52.446948+00:00",
+  "recorded_utc": "2026-10-05T20:14:34.520798+00:00",
   "scope": "Project-only Torch storage cleanup, including 64 whole author-retired old roots and 29 newer obsolete output trees; source/current inputs retained where required.",
-  "total_removed_files": 210731,
-  "total_removed_allocated_bytes": 685764225024,
+  "total_removed_files": 219175,
+  "total_removed_allocated_bytes": 697194362880,
   "passes": [
     {
       "name": "nightpair",
@@ -69,6 +69,19 @@
       "completion_receipt": "legacy_retirement_v1/93_completion_receipt.json",
       "completion_sha256": "9c82d9b783e04f6e25d31d8be3e92bf4a76dfedc8bb08e3c22a906833b9e23a0",
       "shared_link_allocations_unlinked_not_counted_as_freed": 5484383232,
+      "explicit_keepers_unchanged": true,
+      "approved_targets_pending": []
+    },
+    {
+      "name": "eleven obsolete financing and initial-population output subtrees",
+      "removed_files": 8444,
+      "symlinks_unlinked": 0,
+      "removed_allocated_bytes": 11430137856,
+      "newer_output_subtrees_retired": 11,
+      "already_absent_targets": 0,
+      "completion_receipt": "remaining_retirement_v2/11_completion_receipt.json",
+      "completion_sha256": "85f4b8735a3df455f846b3a9253a5fd984e70300e4894890faece2e687da1e1f",
+      "shared_link_allocations_unlinked_not_counted_as_freed": 0,
       "explicit_keepers_unchanged": true,
       "approved_targets_pending": []
     }
@@ -137,6 +150,8 @@
   "remaining_mixed_boundaries": {
     "evidence": "legacy_retirement_v1/known_retained_mixed_boundaries.json",
     "sha256": "9cc482cb4f3658430cdd324222b32b9320009ee7ebf5e1d219b21711fe6def59",
-    "note": "Unlisted candidate-path batches, 43 native-financing mixed directories, three initial-population output boundaries and empirical room-target results remain; no blanket protection of obsolete tests is implied, but current input boundaries require separation."
+    "note": "Historical boundary list: the three initial-population output trees and eight financing output subtrees were subsequently deleted in remaining_retirement_v2. Unlisted candidate-path batches, other native-financing mixed source/runtime/calibration boundaries and empirical room-target results remain; current presence/size was not rescanned.",
+    "subsequent_retirement_receipt": "remaining_retirement_v2/11_completion_receipt.json",
+    "subsequent_retirement_sha256": "85f4b8735a3df455f846b3a9253a5fd984e70300e4894890faece2e687da1e1f"
   }
 }
