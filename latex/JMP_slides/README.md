@@ -1,7 +1,13 @@
 # JMP Slides
 
-The single continuing deck is `JMP_slides.tex`; its reader PDF is
-`../../output/pdf/JMP_slides.pdf`.
+Two files only (since Oct 8 2026):
+
+- `JMP_slides.tex`: the single continuing deck, reader PDF `../../output/pdf/JMP_slides.pdf`.
+- `JMP_slides_pitch.tex`: everything proposed for, or kept out of, the main deck (pitched frames, wording proposals,
+  the October new-results frames), PDF `../../output/pdf/JMP_slides_pitch.pdf`.
+
+Build both with `sh latex/JMP_slides/build.sh`. `preamble.tex`, `build_prod_tables.py`, `prod_tables/`, `tables/`,
+`assets/` and `mechanisms/` are support files.
 
 The October 3 model exposition matches the canonical stationary production
 engine and its post-interest chain-13 input snapshot: nonlinear child benefit,

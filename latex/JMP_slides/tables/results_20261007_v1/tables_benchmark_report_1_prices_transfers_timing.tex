@@ -1,0 +1,21 @@
+% Generated mechanically; see manifest.json for source cells.
+% Prices, transfers, timing
+\begin{tabular}{lr}
+\toprule
+object & value \\
+\midrule
+model period & 4 years; ages 18-85 (17 periods), retirement at period 13 (age 66) \\
+house price p & 0.779 per room \\
+rent r & 0.141 per room per period (user-cost rate 0.18 x p) \\
+property-tax rebate T & 0.192 per household per period (lump sum, all households) \\
+gross return R & 1.082 per period (2\% a year) \\
+discount factor & 0.779 per period (0.94 a year) \\
+pension & 0.918 per period (z-independent) \\
+owned sizes & \{2, 4, 6, 8, 10\} rooms \\
+rental sizes & continuous, at most 6 rooms \\
+parent space floor parent space floor & 2.596 rooms for any family with a child at home (bound 2.6); 0 when childless \\
+owner service premium chi & 1.084 \\
+selling cost & 6\% of the sale value \\
+first-birth menu & one birth attempt per period (cap 1), attempt succeeds with fecundity pi\_j = 1 - 0.02 exp(0.134 (age - 18)), zero from 45 \\
+\bottomrule
+\end{tabular}

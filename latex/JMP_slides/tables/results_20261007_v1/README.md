@@ -1,0 +1,130 @@
+# October 7 result-table fragments
+
+These are mechanical LaTeX fragments for the rental-menu and cap-five experiments. They are experimental evidence, not an adopted calibration, certification, or production result.
+
+## Generate
+
+From the project root, on a fresh destination:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/build_jmp_result_tables.py --output-dir /absolute/new/destination
+```
+
+To add an explicitly supplied project table (Markdown or CSV), repeat `--project-table PATH`. No additional project-table source was supplied for this run, so that coverage remains pending.
+
+The final development bootstrap used the required preserved scratch marker; ordinary invocations refuse an existing output directory.
+
+## Include
+
+Load `booktabs` in the host deck, then include an individual fragment, for example:
+
+```tex
+\input{tables/results_20261007_v1/calibration_cap5}
+```
+
+Available fragments are listed in `manifest.json`; a complete (usually too long for one slide) include list is:
+
+```tex
+\input{calibration_cap6}
+\input{calibration_cap5}
+\input{calibration_cap5_parent_space_floor_2}
+\input{tables_cap5_2_benchmark_aggregates}
+\input{tables_cap5_2_part_2_benchmark_aggregates}
+\input{tables_cap5_2_part_3_benchmark_aggregates}
+\input{tables_cap5_3_ltv_80_95_each_against_its_own_cap_benchm}
+\input{tables_cap5_3_part_2_ltv_80_95_each_against_its_own_cap}
+\input{tables_cap5_4_income_risk_b_sigma_eps_0_484_0_35_and_in}
+\input{tables_cap5_4_part_2_income_risk_b_sigma_eps_0_484_0_35}
+\input{tables_cap5_5_birth_versus_wait_childless_22_33_at_matc}
+\input{tables_cap5_5_part_2_birth_versus_wait_childless_22_33_}
+\input{tables_amplification_1_cells}
+\input{tables_amplification_1_part_2_cells}
+\input{tables_amplification_2_price_elasticity_of_births_by_fi}
+\input{tables_amplification_3_amplification_a_by_buffer_group}
+\input{tables_amplification_3_part_2_amplification_a_by_buffer}
+\input{tables_amplification_3_part_3_amplification_a_by_buffer}
+\input{tables_amplification_transfer_1_cells}
+\input{tables_amplification_transfer_1_part_2_cells}
+\input{tables_amplification_transfer_2_price_elasticity_of_bir}
+\input{tables_amplification_transfer_3_amplification_a_by_buff}
+\input{tables_amplification_transfer_3_part_2_amplification_a_}
+\input{tables_amplification_transfer_3_part_3_amplification_a_}
+\input{tables_benchmark_report_1_prices_transfers_timing}
+\input{tables_benchmark_report_2_borrowing_rules}
+\input{tables_benchmark_report_3_income_grid_9_state_rouwenhor}
+\input{tables_benchmark_report_3_part_2_income_grid_9_state_ro}
+\input{tables_benchmark_report_4_parameters_output_model_produ}
+\input{tables_benchmark_report_4_part_2_parameters_output_mode}
+\input{calibration_benchmark}
+\input{tables_branches_1_birth_versus_wait_from_the_same_inher}
+\input{tables_branches_1_part_2_birth_versus_wait_from_the_sam}
+\input{tables_branches_2_who_would_use_the_8_and_10_room_renta}
+\input{tables_branches_2_part_2_who_would_use_the_8_and_10_roo}
+\input{tables_branches_2_part_3_who_would_use_the_8_and_10_roo}
+\input{tables_branches_2_part_4_who_would_use_the_8_and_10_roo}
+\input{tables_eps0_05_1_table_a_cells_at_matched_states_a6_wei}
+\input{tables_eps0_05_1_part_2_table_a_cells_at_matched_states}
+\input{tables_eps0_05_1_part_3_table_a_cells_at_matched_states}
+\input{tables_eps0_05_2_table_b1_selling_cost_6_by_tenure}
+\input{tables_eps0_05_2_part_2_table_b1_selling_cost_6_by_tenu}
+\input{tables_eps0_05_2_part_3_table_b1_selling_cost_6_by_tenu}
+\input{tables_eps0_05_3_table_b2_selling_cost_6_by_liquid_weal}
+\input{tables_eps0_05_3_part_2_table_b2_selling_cost_6_by_liqu}
+\input{tables_eps0_05_3_part_3_table_b2_selling_cost_6_by_liqu}
+\input{tables_eps0_05_4_table_b3_selling_cost_6_by_income_stat}
+\input{tables_eps0_05_4_part_2_table_b3_selling_cost_6_by_inco}
+\input{tables_eps0_05_4_part_3_table_b3_selling_cost_6_by_inco}
+\input{tables_eps0_05_5_table_b4_selling_cost_6_round_4_groups}
+\input{tables_eps0_05_5_part_2_table_b4_selling_cost_6_round_4}
+\input{tables_eps0_05_5_part_3_table_b4_selling_cost_6_round_4}
+\input{tables_eps0_05_6_table_c_selling_cost_6_floor_versus_ca}
+\input{tables_eps0_05_6_part_2_table_c_selling_cost_6_floor_ve}
+\input{tables_eps0_05_6_part_3_table_c_selling_cost_6_floor_ve}
+\input{tables_eps0_05_7_table_c2_selling_cost_6_floor_share_in}
+\input{tables_eps0_05_7_part_2_table_c2_selling_cost_6_floor_s}
+\input{tables_eps0_05_7_part_3_table_c2_selling_cost_6_floor_s}
+\input{tables_eps0_05_8_table_b1_selling_cost_0_by_tenure}
+\input{tables_eps0_05_8_part_2_table_b1_selling_cost_0_by_tenu}
+\input{tables_eps0_05_8_part_3_table_b1_selling_cost_0_by_tenu}
+\input{tables_eps0_05_9_table_b2_selling_cost_0_by_liquid_weal}
+\input{tables_eps0_05_9_part_2_table_b2_selling_cost_0_by_liqu}
+\input{tables_eps0_05_9_part_3_table_b2_selling_cost_0_by_liqu}
+\input{tables_eps0_05_10_table_b3_selling_cost_0_by_income_sta}
+\input{tables_eps0_05_10_part_2_table_b3_selling_cost_0_by_inc}
+\input{tables_eps0_05_10_part_3_table_b3_selling_cost_0_by_inc}
+\input{tables_eps0_05_11_table_b4_selling_cost_0_round_4_group}
+\input{tables_eps0_05_11_part_2_table_b4_selling_cost_0_round_}
+\input{tables_eps0_05_11_part_3_table_b4_selling_cost_0_round_}
+\input{tables_eps0_05_12_table_c_selling_cost_0_floor_versus_c}
+\input{tables_eps0_05_12_part_2_table_c_selling_cost_0_floor_v}
+\input{tables_eps0_05_12_part_3_table_c_selling_cost_0_floor_v}
+\input{tables_eps0_05_13_table_c2_selling_cost_0_floor_share_i}
+\input{tables_eps0_05_13_part_2_table_c2_selling_cost_0_floor_}
+\input{tables_eps0_05_13_part_3_table_c2_selling_cost_0_floor_}
+\input{tables_eps0_05_14_table_d_menu_x_income_risk_risk_arm_b}
+\input{tables_eps0_05_14_part_2_table_d_menu_x_income_risk_ris}
+\input{tables_eps0_05_14_part_3_table_d_menu_x_income_risk_ris}
+\input{tables_floor_credit_1_floor_test}
+\input{tables_floor_credit_1_part_2_floor_test}
+\input{tables_floor_credit_2_floor_test}
+\input{tables_floor_credit_2_part_2_floor_test}
+\input{tables_floor_credit_3_credit_transfers_and_price_on_one}
+\input{tables_floor_credit_3_part_2_credit_transfers_and_price}
+\input{tables_floor_credit_3_part_3_credit_transfers_and_price}
+\input{tables_floor_credit_4_first_birth_attempts_at_ages_22_3}
+\input{tables_price_tests_1_test_1_is_precaution_priced_by_ren}
+\input{tables_price_tests_1_part_2_test_1_is_precaution_priced}
+\input{tables_price_tests_1_part_3_test_1_is_precaution_priced}
+\input{tables_price_tests_2_test_1_is_precaution_priced_by_ren}
+\input{tables_price_tests_2_part_2_test_1_is_precaution_priced}
+\input{tables_price_tests_2_part_3_test_1_is_precaution_priced}
+\input{tables_price_tests_3_reconciliation_cell_fp_price110_re}
+\input{tables_price_tests_3_part_2_reconciliation_cell_fp_pric}
+\input{tables_price_tests_4_check_a6_p110_rebate_held_at_0_192}
+\input{tables_price_tests_4_part_2_check_a6_p110_rebate_held_a}
+\input{tables_price_tests_5_completed_fertility_by_current_ten}
+```
+
+## Sources and provenance
+
+`manifest.json` records SHA-256 identities, every raw source cell with source line, every rendered fragment mapping, excluded calibration diagnostics, and unresolved labels. The two experiment READMEs are the source interpretation: `rental_menu_precaution_20261007` studies a rental-menu/precaution experiment at a fixed-price base; `rental_cap5_20261007` changes only the rental room cap from six to five, with no recalibration. Their reported results are not adoption or certification claims.
