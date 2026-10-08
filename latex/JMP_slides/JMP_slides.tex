@@ -607,6 +607,36 @@ Same cost, paid to everyone & $+7.6\%$ & $+6.6\%$ & 14.8 & 44.0 \\
 Renter credit: renters may borrow $D$ = 1 or 2 years of median earnings at 22. Bad-year transfer: 25\% of the gap to median earnings when below it; both transfers cost 0.097 per household per period.}
 \end{frame}
 
+% Sources: output/model/ltv_branch_values_20261008/tables_branch_values.md (fp, rebate re-balanced, omega-weighted marginal households);
+%   output/model/origination_only_mortgage_20261008/tables.md. Base 14.402, fixed price.
+\begin{frame}[t]{Why Credit Barely Moves Births}
+\linespread{1.0}\footnotesize\selectfont
+Rent per room equals the owner's user cost, so the space a child needs costs the same rented or owned, at any loan-to-value.
+Credit changes when a household buys, not what the child's space costs.
+\smallskip
+
+\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+\toprule
+ & Value with & Value & Gain from & Births \\
+ & a birth & waiting & a birth & on impact \\
+\midrule
+Financed share $80\%\to95\%$ & $+0.0081$ & $+0.0068$ & $+0.0014$ & $+0.31\%$ \\
+\quad renters & $+0.0096$ & $+0.0083$ & $+0.0013$ & \\
+\quad owners, 4+ rooms & $+0.0053$ & $+0.0038$ & $+0.0015$ & \\
+Financed share $80\%\to100\%$ & $+0.0180$ & $+0.0123$ & $+0.0057$ & $+1.30\%$ \\
+\bottomrule
+\end{tabularx}
+\smallskip
+
+\footnotesize
+\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{2pt}
+\item Credit is worth about the same to a household whether or not it has the child; the birth-specific part is about a sixth of that, against a taste dispersion $\kappa_1=0.12$.
+\item Without cash-out refinancing (credit only at purchase), the same policy gives births $+0.02\%$ on impact and completed fertility $-1.7\%$.
+\end{itemize}
+\runlabel{Fixed price, rebate re-balanced. Changes in value in utility units, averaged over households at the first- or later-birth margin (weights $\propto$ mass $\times\,\pi_a^2p(1-p)/\kappa$). Gain from a birth: value with a birth minus value of waiting.}
+\end{frame}
+
 % v8: H100 two-shock transition at the 14.402 base (output/model/transition_h100_14402_20261007/, Transition thread, Oct 7).
 \begin{frame}[label=transition-short]{Fertility Transition: 2007--2063}
 \titlelink{algo-ss}{Algorithm}
@@ -712,10 +742,19 @@ Wealth/income p90 / median, ages 76--84 & 3.45 & 3.50 \\
 \end{itemize}
 \end{frame}
 
+% Source: output/model/policy_transition_battery_20261008/h100_torch/ (table_h100.md, tax_vs_credit_h100.pdf), base 14.402, from the 100-period 2023 state.
 \begin{frame}{Policy Results}
 \centering
-\includegraphics[width=.95\textwidth,height=.70\textheight,keepaspectratio]{../output/model/e5f_original_queue_20260913a/inherited_2023_tax/transition_readout/policy_fertility.pdf}
-\hole{Sept 14 result at the earlier calibration; superseded by the GE tax frames above once those are re-run from the 2023 state at the current base.}
+\includegraphics[width=.95\textwidth,height=.74\textheight,keepaspectratio]{../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100.pdf}
+\runlabel{Current base (loss \baseloss), GE from the 2023 state, 100 periods, elastic supply, rebate balanced every date. Property tax 1.06\% to 2\%.}
+\end{frame}
+
+% Source: output/model/policy_transition_battery_20261008/h16_mac/ (table_h16.md, tax_vs_credit_by_supply_h16.pdf), 16-period runs.
+\begin{frame}{Policy Results by Housing Supply}
+\centering
+\includegraphics[width=.92\textwidth,height=.74\textheight,keepaspectratio]{../output/model/policy_transition_battery_20261008/h16_mac/tax_vs_credit_by_supply_h16.pdf}
+\runlabel{Current base, GE from the 2023 state, 16 periods (dates after about 2047 shaped by the terminal condition); rebate balanced every date. Slow stock: $H_t=(1-d)H_{t-1}+dH_{2023}(q_t/q_{2023})^{0.63}$.
+Fixed and slow arms use the inherited-distribution projection; the slow-stock credit run stopped at its 20-map cap (residual $1.5\times10^{-4}$).}
 \end{frame}
 
 % Source: \pol macros, generated from output/model/reconciliation_14p40_20261007 (Blocks 2 and 3), base 14.402.
