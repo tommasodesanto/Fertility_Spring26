@@ -1,0 +1,14 @@
+--- a/code/model/experiments/birth_count_choice/model/engine/household.py
++++ b/code/model/experiments/birth_count_choice/model/engine/household.py
+@@ -527,7 +527,10 @@
+     nt = ctx.hcost.shape[1]
+     purchase_floor = ctx.bmo if bmo_purchase is None else bmo_purchase
+     transaction_support = bool(getattr(P, "native_purchase_income", False))
+-    require_owner_sale_solvency = fixed_unsecured_credit_active(P)
++    # Sale-to-rent screen (Oct 8 2026, author decision B): income arrives before the transaction for sales as for
++    # purchases, so a sale into renting is checked only by the renter budget (b' >= renter floor after R b + S + y).
++    # P.legacy_pre_income_sale_screen = True restores the former pre-income test R b + S >= 0 bit for bit.
++    require_owner_sale_solvency = fixed_unsecured_credit_active(P) and bool(getattr(P, "legacy_pre_income_sale_screen", False))
+     birth_entry_grant = SD.birth_entry_grant
+     tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
+     use_tenure_logit = tenure_choice_kappa > 0.0
