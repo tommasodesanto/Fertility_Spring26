@@ -568,35 +568,45 @@ Dynamic: $H_t=(1-\delta_H)H_{t-1}+\delta_H H_0P_t^{\eta}$, $\eta=0.63$. Long-run
 Dates after about 2047 depend on the terminal condition; a 32-period check at the chain 17 point moves the first forty years by under 0.05 points.}
 \end{frame}
 
-% Source: output/model/fixed_supply_2023/base14402_h16_variant_state_20261007/comparison_table.md (provisional).
-\begin{frame}[t]{Fixed Housing Supply from 2023 \textnormal{\small(provisional)}}
+% Source: output/model/fixed_supply_2023/h100_pair12_v2_20261008/comparison_table.md and README.md (H100, 14.402 base, converged Oct 8).
+\begin{frame}[t]{Fixed Housing Supply from 2023}
 \linespread{1.0}\footnotesize\selectfont
-From the 2023 economy, the housing stock is frozen at its 2023 level instead of following the supply curve. Change against the path with supply responding.
+From 2023, the housing stock is frozen at its 2023 level (unexpected, perfect foresight after). Change against the path with supply responding.
 \smallskip
 
-\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.05}
+\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{0.95}
 \begin{tabularx}{\textwidth}{@{}Xrrrrr@{}}
 \toprule
  & \multicolumn{2}{c}{Period TFR} & Births & House price & Households \\
 \cmidrule(lr){2-3}
  & supply responds & stock fixed & \multicolumn{3}{c}{stock fixed vs supply responds} \\
 \midrule
-2023 & 1.643 & 1.650 & $+0.4\%$ & $-6.9\%$ & $+0.0\%$ \\
-2031 & 1.653 & 1.705 & $+3.1\%$ & $-9.3\%$ & $+0.0\%$ \\
-2043 & 1.686 & 1.803 & $+6.9\%$ & $-13.0\%$ & $+0.1\%$ \\
-2055 & 1.725 & 1.910 & $+12.5\%$ & $-15.6\%$ & $+0.6\%$ \\
-2063 & 1.756 & 1.986 & $+17.1\%$ & $-15.9\%$ & $+1.4\%$ \\
-2075 & 1.879 & 2.080 & $+19.6\%$ & $-10.1\%$ & $+3.2\%$ \\
+2023 & 1.646 & 1.649 & $+0.2\%$ & $-7.9\%$ & $+0.0\%$ \\
+2031 & 1.657 & 1.704 & $+2.8\%$ & $-10.5\%$ & $+0.0\%$ \\
+2043 & 1.695 & 1.797 & $+6.0\%$ & $-15.0\%$ & $+0.0\%$ \\
+2063 & 1.790 & 1.986 & $+14.5\%$ & $-22.0\%$ & $+1.2\%$ \\
+2075 & 1.863 & 2.102 & $+20.7\%$ & $-24.4\%$ & $+2.8\%$ \\
+2103 & 2.010 & 2.225 & $+32.7\%$ & $-19.1\%$ & $+11.0\%$ \\
 \midrule
-Long run & 2.1 & 2.1 & & $-0.1\%$ & $+31\%$ \\
+Long run & 2.100 & 2.100 & $+31.4\%$ & $0.0\%$ & $+31.4\%$ \\
 \bottomrule
 \end{tabularx}
 \smallskip
 
-\footnotesize When the stock cannot shrink with the population, space gets cheaper for each new cohort, and fertility recovers faster.
+\footnotesize
+\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{2pt}
+\item When the stock cannot shrink with the population, space gets cheaper for each new cohort: prices bottom out about 25\% below the baseline around 2080, and fertility overshoots to 2.23 around 2100.
+\item The long-run price is the same, pinned by replacement fertility; all the extra housing ends up as 31\% more households. Ownership runs 3--5 points above the baseline meanwhile.
+\end{itemize}
 
-\runlabel{Current base (loss \baseloss), GE, rebate balanced every date, 16 periods; preference shocks $\psi$ 0.131 (2007) and 0.110 (2015) carried over from the 15.07 fit. Long run: stationary at $\psi=0.110$, births at replacement, so the response is in population.}
-\hole{Provisional: the fixed-stock path stopped at its 12-map cap with residuals above the gates (market $4.9\times10^{-4}$ vs $2\times10^{-4}$; pension and rebate about $1.5\times10^{-4}$ vs $2\times10^{-5}$). To be redone from the 100-period 2023 state. Dates after about 2047 are shaped by the terminal condition.}
+\runlabel{Current base (loss \baseloss), $\psi$ 0.131 (2007), 0.110 (2015); GE, rebate and pension rebalanced every date, 100 periods; residuals $\le1.3\times10^{-5}$.
+Inherited-distribution projection on; dated budget check logged, not enforced (mass $1.6\times10^{-6}$).}
+\end{frame}
+
+\begin{frame}{Fixed Housing Supply from 2023: Paths}
+\centering
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../output/model/fixed_supply_2023/h100_pair12_v2_20261008/fixed_supply_four_panel.pdf}
+\runlabel{Same run as the previous frame.}
 \end{frame}
 
 \section{Backup}
