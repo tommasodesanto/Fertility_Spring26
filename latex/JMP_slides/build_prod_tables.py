@@ -120,8 +120,18 @@ def need(k):
     return P[k]
 L = [r"\begin{tabularx}{\textwidth}{@{}lXr@{}}", r"\toprule",
      r"Parameter & Economic interpretation & Value \\", r"\midrule"]
+# The engine writes supply as H0_code * (u*P/r_bar)^eta, u = q + delta + tau (per period), r_bar = 0.16 (engine default,
+# tmp/sale_screen_fix_20261008/root/.../model/inputs.py:36; a normalization absorbed by H0). The slides use H = H0 * P^eta, so the
+# table reports the equivalent H0 = H0_code * (u/r_bar)^eta. Policy drivers rescale r_bar with u, so this curve in P is unchanged under the tax.
+R_BAR = 0.16
+def slide_value(k):
+    v = float(need(k)['estimate'])
+    if k == "H0":
+        u = (1 + float(need("q_annual")["estimate"])) ** 4 - 1 + float(need("period_depreciation")["estimate"]) + float(need("period_property_tax")["estimate"])
+        v *= (u / R_BAR) ** float(need("housing_supply_elasticity")["estimate"])
+    return v
 for k, sym, desc in PSPEC:
-    L.append(f"{sym} & {desc} & {f(need(k)['estimate'], 3)} \\\\")
+    L.append(f"{sym} & {desc} & {f(slide_value(k), 3)} \\\\")
 L += [r"\bottomrule", r"\end{tabularx}"]
 w("params.tex", "\n".join(L) + "\n")
 
