@@ -140,7 +140,7 @@ EXT = [
     ("Rental size cap $\\bar h^R$", f"{E('rental_cap'):g} rooms", "Greaney et al.\\ (2025)"),
     ("Bequest-utility wealth shift $\\theta_1$", f(E("theta1"), 3), "Greaney et al.\\ (2025)"),
     # Earnings process: single four-year AR(1), Rouwenhorst 9 states; receipt output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/single_process_external_estimate.json
-    ("Earnings persistence, shock s.d.\\ $(\\rho_z,\\sigma_z)$", "0.73, 0.48 per four years", "PSID 1984--97, four-year earnings"),
+    ("Earnings process $(\\rho_z,\\sigma_z)$", "0.73, 0.48 per four years", "PSID 1984--97, four-year earnings"),
     ("Ages", "18, 66, 45", "entry, retirement, last fertile age"),
 ]
 L = [r"\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}"
