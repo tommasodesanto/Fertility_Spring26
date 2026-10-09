@@ -1,0 +1,31 @@
+% Sources, pre-sale-screen-patch unless stated, consistent with the "Credit and Transfers" slide:
+%   LTV 80 -> 95 at fixed price, T held: cap6_vs_cap55_for_chatgpt_with_ces.md (14.402 experiment set, fp cells);
+%   GE path: table_h100.md (saved 100-period elastic run); branch values: tables_branch_values.md (ltv_branch_values_20261008);
+%   induced buyers: tables_induced_buyers.md (fp_baseline vs fp_phi095); second-birth split: second_birth_readout.md.
+%   No-starter row exists only on the corrected sale rule: tmp/no_starter_fixed_price_20261009/RESULTS.md. No re-solve.
+\begin{frame}[t,label=credit-starter-homes]{Mortgage Credit, Starter Homes and Births}
+\titlelink{loan-not-insurance}{Back}
+\scriptsize
+Loan-to-value 80\% $\to$ 95\%, fixed prices, rebate held. Six-room rentals available at the owner user cost.
+\smallskip
+
+{\centering
+\renewcommand{\arraystretch}{1.05}\setlength{\tabcolsep}{7pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Owner menu & Ownership 18--29 & Births, first period & Completed fertility \\
+\midrule
+2, 4, 6, 8, 10 rooms & 44\% $\to$ 69\% & $+0.4\%$ & 1.866 $\to$ 1.840 \quad ($-1.4\%$) \\
+6, 8, 10 rooms (corrected sale rule) & 36\% $\to$ 40\% & $+0.1\%$ & 1.887 $\to$ 1.886 \quad ($-0.05\%$) \\
+\bottomrule
+\end{tabular}
+\par}
+\smallskip
+
+\begin{itemize}\setlength\itemsep{3pt}
+\item No quantum effect. The LTV constraint does not enter the user cost of space; the marginal household rents at $b=0$. Branch values rise by $+0.008$ (child) and $+0.007$ (no child).
+\item Tempo effect only. Liquidity brings forward births of new buyers and leveraged owners in the first period; along the GE path births are $-0.3$ to $-0.8\%$ thereafter.
+\item Composition. One fifth of childless renters become owners of two-room units below the parent floor of 2.6; childlessness at 46--49 rises from 19.0\% to 20.2\%, progression to a second child is unchanged.
+\item Without the two- and four-room rungs the same LTV change leaves completed fertility unchanged. Credit changes tenure, not the price of a child.
+\end{itemize}
+\end{frame}

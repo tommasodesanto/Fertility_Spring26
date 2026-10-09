@@ -1,7 +1,7 @@
 \input{JMP_slides/preamble.tex}
 \title{Fertility and Housing Tenure Choice}
 \author{Tommaso De Santo}
-\date{Draft, October 2026}
+\date{\today}
 \begin{document}
 {
 \setbeamertemplate{footline}{}
@@ -58,15 +58,6 @@ What kind of housing policy is good for natality?
 \end{itemize}
 \end{frame}
 
-% ======== v8: placeholder for the new framing (open) ========
-\begin{frame}{The Argument}
-\hole{Framing being worked out (family-sized rentals separate having children from holding housing equity). This frame and the
-``This Paper'' frame will be rewritten once the argument is settled; nothing here is final.}
-\vfill
-\begin{center}\placeholder{[Placeholder for the argument]}\end{center}
-\vfill
-\end{frame}
-
 \section{Model}
 
 \begin{frame}[plain,c,noframenumbering]{}
@@ -75,115 +66,100 @@ What kind of housing policy is good for natality?
 \end{frame}
 
 \begin{frame}{Environment}
-\begin{itemize}
+\small
+\begin{itemize}\setlength\itemsep{1pt}
   \item Discrete time, overlapping generations of households
-  \item Adult age $a\in[0,J]$ with survival probability $s_a$; working age $a\in[0,a_R]$; fertile window $a\in[a_F^0,a_F^1]$
+  \item Adult age $a\in[0,J]$ with survival probability $s_a$:\\[2pt]
+  \hspace*{-\leftmargini}\hspace*{-2.5mm}\makebox[\textwidth][c]{\begin{tikzpicture}[x=0.95cm,y=0.36cm,font=\scriptsize]
+    \fill[blue!12] (0,0.55) rectangle (4.5,1.15); \node at (2.25,0.85) {fertile};
+    \fill[green!12] (0,-0.15) rectangle (8,0.45); \node at (4,0.15) {working};
+    \fill[gray!18] (8,-0.15) rectangle (11,0.45); \node at (9.5,0.15) {retired};
+    \draw[thick,-Latex] (0,-0.45) -- (11.3,-0.45);
+    \foreach \x/\l in {0/{$0$},4.5/{$a_F^1$},8/{$a_R$},11/{$J$}} {\draw (\x,-0.6) -- (\x,-0.3); \node[below,inner sep=1pt] at (\x,-0.6) {\l};}
+  \end{tikzpicture}}
   \item Children:
   \begin{itemize}
     \item mature stochastically; housing need depends on children at home
     \item are dependents and do not work
   \end{itemize}
-  \item Households differ in financial wealth, inherited housing product, family composition, and persistent idiosyncratic labor efficiency $z_t$
-  \item Households choose:
+  \item Households differ in wealth, housing, family composition, and labor efficiency $z_t$
+  \item Households choose, with type-I extreme-value taste shocks on the discrete choices:
   \begin{itemize}
-    \item \textbf{Fertility}: whether to attempt one additional birth, subject to EV shocks
-    \item \textbf{Tenure}: rent or choose a product from a discrete owner menu, subject to EV shocks
+    \item \textbf{Fertility}: whether to attempt the next birth, taste shock $\varepsilon^F_t$
+    \item \textbf{Tenure}: rent or buy, with tenure segmentation, taste shock $\varepsilon^H_t$
     \item \textbf{Savings}: next-period liquid wealth $b_{t+1}$; mortgages secured by the house
   \end{itemize}
 \end{itemize}
 \end{frame}
 
-% Adopted stationary anchor: production/reference_inputs/bundle.json (sequential_births, n_parity, independent child states).
-% Bequest convention: engine/household.py::bequest_utility_vec; v8 (Oct 7): Estate A (net of selling cost) is the current production contract.
 \begin{frame}{Preferences}
 \footnotesize
 \setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
 $n_t$: children ever born; $m_t$: children currently at home.
 
 \smallskip
-\textbf{Flow utility.} The consumption--space composite is
+\textbf{Flow utility.} CRRA over a consumption aggregator $\mathcal C$ and children at home:
 \[
-\mathcal C_t=\frac{c_t^{\alpha_0}(s_t^{\mathrm{net}})^{1-\alpha_0}}{e(m_t)},\qquad
-u_t=\frac{\mathcal C_t^{1-\sigma}}{1-\sigma}+\psi_t m_t^{1-\gamma},\quad \gamma\in[0,1).
+u_t(c_t,\hat h_t;m_t)=\frac{\mathcal C(c_t,\hat h_t;m_t)^{1-\sigma}}{1-\sigma}+v(m_t),\qquad \sigma>0.
 \]
 \begin{itemize}\setlength\itemsep{1pt}
-  \item $\alpha_0$: consumption share; $\sigma$: utility curvature; $\gamma$: curvature of the child benefit.
-  \item $e(m_t)=((2+\omega m_t)/2)^\nu$; $\omega$ weights children and $\nu$ governs household economies of scale.
-  \item $\psi_t m_t^{1-\gamma}$ is the direct benefit; a successful first birth carries the one-time utility cost $\xi$.
+  \item $\mathcal C_c,\mathcal C_{\hat h}>0$, concave; children raise consumption and housing needs: $\mathcal C_m<0$.
+  \item Children raise the marginal value of space: $\mathcal C_{\hat h m}>0$.
+  \item $v(m_t)$: direct benefit of children at home; starting a family carries a one-time utility cost $\xi$.
 \end{itemize}
 
 \smallskip
-\textbf{Housing services.} With children at home, the floor is $h_P$; $\chi$ scales owners' residual space:
+\textbf{Housing services.} Households own a house of size $h_t$ or rent $h_t^R$ rooms; $\chi$ scales owner services:
 \[
-s_t^{\mathrm{net}}=\mathbf{1}\{\mathrm{own}\}\chi\bigl[h_t-h_P\mathbf{1}\{m_t>0\}\bigr]
-+\mathbf{1}\{\mathrm{rent}\}\bigl[h_t^R-h_P\mathbf{1}\{m_t>0\}\bigr]>0,\qquad \chi>0.
+\hat h_t=\chi\,h_t+h_t^R,\qquad \chi>1.
 \]
 
 \smallskip
-\textbf{Bequests.} Over the estate net of selling costs, $w^e_{t+1}=b_{t+1}+(1-\psi^s)P_t h_t$, normalized to zero at a zero estate:
+\textbf{Bequests.} Terminal utility over the estate net of selling costs, $w^e_{t+1}=b_{t+1}+(1-\psi^s)P_t h_t$:
 \[
-B(w^e_{t+1})=\theta_0\frac{(\theta_1+\max\{w^e_{t+1},0\})^{1-\sigma}-\theta_1^{1-\sigma}}{1-\sigma}.
+B(w_{t+1}^e)=\theta_0\frac{(\theta_1+w_{t+1}^e)^{1-\sigma}}{1-\sigma}.
 \]
 \end{frame}
 
-% Adopted stationary anchor: engine/household.py (_build_housing_stage_ctx, native purchase-income map, native_due_owner_floor); bundle.json (R_gross, phi, psi, unsecured_credit_limit).
-\begin{frame}[label=housing-constraints]{Housing, Tenure, and Budget Constraints}
+\begin{frame}[label=housing-constraints]{Housing, Tenure, and Borrowing}
 \titlelink{big-units-owned}{Data}
 \small
 \setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
 \textbf{Income and saving.}
-\begin{itemize}\setlength\itemsep{1pt}
+\begin{itemize}\setlength\itemsep{2pt}
   \item After-tax earnings $y_t^d(a,z_t)$ and a lump-sum transfer $T_t$.
-  \item One-period bond $b_{t+1}$ at gross rate $R_b$; owners borrow only against the house.
+  \item Bond $b_{t+1}$ at gross rate $R_b$: renters cannot borrow; owners borrow against the house.
 \end{itemize}
 
-\smallskip
-\textbf{Owning.} Choose $h_t$ from a discrete owner-product menu, with largest size $\bar h$, arriving with inherited $h_{t-1}$.
-\begin{itemize}\setlength\itemsep{1pt}
-  \item The house depreciates at rate $\delta_H$ and is taxed at rate $\tau_t^p$.
-  \item Selling costs a fraction $\psi^s$ of the sale value; $\phi$ is the financed share.
-  \item Let $S_t=(1-\psi^s)P_t h_{t-1}$ in a transaction and $S_t=0$ otherwise. A change to an owner product requires
-  \[
-  R_b b_t+S_t+y_t^d+T_t\geq(1-\phi)P_t h_t,\qquad
-  b_{t+1}\geq-\phi P_t h_t.
-  \]
+\medskip
+\textbf{Owning.} Buy a house $h_t\in\mathcal H$, a finite set of sizes, at price $P_t$, arriving with $h_{t-1}$.
+\begin{itemize}\setlength\itemsep{2pt}
+  \item The house depreciates at rate $\delta_H$, is taxed at rate $\tau_t^p$; selling costs a fraction $\psi^s$.
 \end{itemize}
 
-\smallskip
-\textbf{Renting.} Rent $h_t^R\in[0,\bar h^R]$ at rent $r_t$ per unit, with $\bar h^R<\bar h$.
-\begin{itemize}\setlength\itemsep{1pt}
+\medskip
+\textbf{Renting.} Rent $h_t^R\in[0,\bar h^R]$ at rent $r_t$ per unit, with $\bar h^R<\max\mathcal H$.
+\begin{itemize}\setlength\itemsep{2pt}
   \item The largest homes are reachable only through ownership.
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}{Saving and Sale Solvency}
-\small
-Renters have no unsecured credit, and selling to rent must settle inherited debt:
-\[
-b_{t+1}\geq0,\qquad R_b b_t+S_t\geq0\quad\text{when an owner sells to rent}.
-\]
-Current income can finance a purchase; it cannot cover a shortfall when selling to rent.
-
 \medskip
-An owner retaining the same home can roll over debt beyond the collateral limit,
-but cannot increase that excess debt:
-\[
-b_{t+1}\geq\min\{b_t,-\phi P_t h_t\}.
-\]
-When death is possible, the estate after selling costs must be nonnegative:
-\[
-b_{t+1}\geq\max\{\min(b_t,-\phi P_t h_t),-(1-\psi^s)P_t h_t\}.
-\]
+\textbf{Collateral constraint.}
+\begin{itemize}\setlength\itemsep{2pt}
+  \item At origination, buyers put down at least a fraction $1-\phi$ of the price: $b_{t+1}\geq-\phi P_t h_t$.
+  \item Then the house is collateral for owners who stay: $b_{t+1}\geq\min\{b_t,-\phi P_t h_t\}$.
+\end{itemize}
+
 \end{frame}
 
 \begin{frame}{Fertility and Child Aging}
 \small
 \begin{itemize}\setlength\itemsep{0.6em}
-  \item During fertile ages, households choose each period whether to attempt at most one additional birth; children ever born are top-coded at three.
+  \item During fertile ages, households choose each period whether to attempt a birth.
   \item The choice is discrete, with an extreme-value taste shock $\varepsilon_t^F$ of scale $\kappa_1$ for the first birth and $\kappa_C$ for later births.
-  \item An attempt succeeds with age-specific probability $\pi_a$ and adds one child.
-  \item Children mature stochastically: each dependent child leaves the household with a fixed probability each period, independently of the others.
+  \item The first birth and later births have different scales, so childlessness and family size can respond differently.
+  \item An attempt succeeds with age-specific probability $\pi_a$ and adds one child: $n_{t+1}=n_t+1$.
+  \item Each child at home leaves with probability $\lambda$, independently.
 \end{itemize}
 \end{frame}
 
@@ -208,14 +184,13 @@ b_{t+1}\geq\max\{\min(b_t,-\phi P_t h_t),-(1-\psi^s)P_t h_t\}.
 
 \begin{frame}{Housing Supply and Rents}
 \small
-The stationary supply schedule uses the current user cost:
+Housing supply:
 \[
-H^s=H_0\left(\frac{r}{\bar r}\right)^{\eta},\qquad
-r=(R_b-1+\delta_H+\tau^p)P.
+H_t^s=H_0\,P_t^{\eta}.
 \]
 \begin{itemize}
-  \item $H_0$: housing supply at reference rent $\bar r$; $\eta$: supply elasticity.
-  \item More generally, a landlord's user-cost identity is
+  \item $H_0$: supply scale; $\eta$: supply elasticity.
+  \item Rent is the user cost of housing: a competitive landlord who buys at $P_t$, pays depreciation and property tax, and resells at $P_{t+1}$ must earn the bond return,
   \[
   r_t=(R_b+\delta_H+\tau_t^p)P_t-P_{t+1}.
   \]
@@ -254,20 +229,21 @@ r=(R_b-1+\delta_H+\tau^p)P.
 \end{tikzpicture}%
 }
 
-\par\vspace{0.35em}
+\par\vspace{0.15em}
 \raggedright
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 
 \only<1>{%
 {\footnotesize
-\setlength{\abovedisplayskip}{9pt}\setlength{\belowdisplayskip}{9pt}
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
 
-\textbf{Conditional on the realized family size, choose housing and savings:}
+\textbf{After the birth outcome, choose tenure, housing and savings.}\\[2pt]
+Taste shock $\varepsilon_t^H(h_t)$: type-I extreme value, one per option (rent, $h_t=0$, or own each $h\in\mathcal H$), scale $\kappa_T$.
 \[
 \begin{aligned}
-V^H_t(b_t,h_{t-1},z_t,a,n_t,m_t)
+V^H_t(b_t,h_{t-1},z_t,a,n,m)
 ={}&\E_{\varepsilon_t^H}\max_{h_t,h_t^R,b_{t+1}}
-\Bigl\{u_t\big(c_t,s_t^{\mathrm{net}};m_t\big)+\varepsilon_t^H(h_t)\\
+\Bigl\{u_t\big(c_t,\chi h_t+h_t^R;m\big)+\varepsilon_t^H(h_t)\\
 &+\beta\E_t\!\left[s_a V_{t+1}(b_{t+1},h_t,z_{t+1},a+1,n_{t+1},m_{t+1})
 +(1-s_a)B(w^e_{t+1})\right]\Bigr\}.
 \end{aligned}
@@ -276,19 +252,20 @@ V^H_t(b_t,h_{t-1},z_t,a,n_t,m_t)
 subject to
 \[
 c_t+b_{t+1}+r_t h_t^R+(\delta_H+\tau_t^p)P_t h_t
-=R_b b_t+y_t^d(a,z_t)+T_t+S_t-\mathbf{1}\{h_t\neq h_{t-1}\}P_t h_t,
+=R_b b_t+y_t^d(a,z_t)+T_t-\mathbf{1}\{h_t\neq h_{t-1}\}P_t\big[h_t-(1-\psi^s)h_{t-1}\big],
 \]
-\medskip
 \[
-\text{with the financing, solvency, and housing-service constraints above.}
+b_{t+1}\geq-\phi P_t h_t\ \ \text{(buying or renting)},\qquad b_{t+1}\geq\min\{b_t,-\phi P_t h_t\}\ \ \text{(staying)}.
 \]
-$\varepsilon_t^H$: extreme-value tastes over renting and the owner products, scale $\kappa_T$.
 }
 }
 
 \only<2>{%
 {\footnotesize
-\setlength{\abovedisplayskip}{6pt}\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
+
+\textbf{Before the birth outcome, choose whether to attempt a birth.}\\[2pt]
+Taste shock $\varepsilon_t^F$: type-I extreme value, scale $\kappa_1$ for the first birth and $\kappa_C$ after.
 
 Waiting and attempting have values
 \[
@@ -307,9 +284,8 @@ Choice probabilities:
 \[
 \pi^F_{t,a}(b_t,h_{t-1},z_t,n_t,m_t)
 =\frac{\exp\{W_t^A/\kappa(n_t)\}}
-{\exp\{W_t^A/\kappa(n_t)\}+\exp\{W_t^0/\kappa(n_t)\}},
+{\exp\{W_t^A/\kappa(n_t)\}+\exp\{W_t^0/\kappa(n_t)\}}.
 \]
-Here $\kappa(n_t)=\kappa_1$ if $n_t=0$ and $\kappa_C$ otherwise. Expected births equal $\pi_a\pi^F_{t,a}$.
 }
 }
 \end{frame}
@@ -317,19 +293,21 @@ Here $\kappa(n_t)=\kappa_1$ if $n_t=0$ and $\kappa_C$ otherwise. Expected births
 \begin{frame}{Equilibrium}
 \small
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-Given parameters, an initial population $N_0$, and an initial household distribution $G_0$, an equilibrium is a sequence
+Let $G_t$ be the distribution of households over states. Given parameters, an initial population $N_0$, and an initial distribution $G_0$, an equilibrium is a sequence
 \[
 \{V_t,\;g_t,\;G_t,\;N_t,\;P_t,\;r_t,\;T_t,\;\varpi_t\}_{t\ge0}
 \]
 such that, for every $t$:
-\begin{enumerate}\setlength\itemsep{3pt}
-  \item \textbf{Households.} Given $\{P_s,r_s,T_s,\varpi_s\}_{s\ge t}$, $V_t$ solves the household problem with continuation $V_{t+1}$; the policy functions $g_t$ (fertility, housing, savings) attain it.
+\begin{enumerate}\setlength\itemsep{1pt}
+  \item \textbf{Households.} Given $\{P_{t'},r_{t'},T_{t'},\varpi_{t'}\}_{t'\ge t}$, $V_t$ solves the household problem with continuation $V_{t+1}$; the policy functions $g_t$ (fertility, housing, savings) attain it.
   \item \textbf{Markets and government.} Rent is the user cost of housing, the housing market clears, pensions balance payroll taxes, and property-tax revenue is rebated equally.
-  \item \textbf{Population.} Births $B_t=\int\pi_a\pi^F_{t,a}\,dG_t$ enter at age zero and persons age with survival $s_a$: $N_{0,t+1}=B_t$, $N_{a+1,t+1}=s_a N_{a,t}$.
+  \item \textbf{Population.} Births are $B_t=\int\pi_a\pi^F_{t,a}\,dG_t$. Children born form new households when they reach adulthood; households survive to the next age with probability $s_a$: $N_{a+1,t+1}=s_a N_{a,t}$.
   \item \textbf{Consistency.} $G_{t+1}$ follows from $G_t$ under $g_t$ and the idiosyncratic shocks, with entrants making the number of households at each age consistent with $N_{t+1}$.
 \end{enumerate}
-\hole{Entry: the Oct 3 stationary frame has births replacing 2.1 adult entrants through an entry queue (half at 16, half at 20) and no rebate; the current contract rebates the tax. Reconcile the entry statement with the engine.}
 \end{frame}
+
+% ======== October 2026: household choices (the full set of new results is in JMP_slides_new_results.tex) ========
+
 
 \section{Quantification}
 
@@ -342,11 +320,6 @@ such that, for every $t$:
 % Initial tables and fit coordinates: verified_final/selected_target_fit.csv and selected_parameters.csv (2026-09-12).
 % Fingerprint c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2.
 
-\begin{frame}[t]{Fertility in the United States}
-\centering
-% Display copies from the verified WDI/CPS series, plotted from 1990; the completed-fertility continuation is rescaled to end at the constant period TFR (top-code filled by author).
-\alt<2>{\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{figures/fertility_introduction_projection_1990.pdf}}{\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{figures/fertility_introduction_history_1990.pdf}}
-\end{frame}
 
 \begin{frame}[t]{Initial Steady State}
 \begin{minipage}[t][0.06\textheight][t]{\textwidth}
@@ -393,6 +366,12 @@ Smaller entering cohorts reduce housing demand. Lower housing costs partly offse
 \end{minipage}
 \end{frame}
 
+\begin{frame}[t]{Fertility in the United States}
+\centering
+% Display copies from the verified WDI/CPS series, plotted from 1990; the completed-fertility continuation is rescaled to end at the constant period TFR (top-code filled by author).
+\alt<2>{\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{figures/fertility_introduction_projection_1990.pdf}}{\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{figures/fertility_introduction_history_1990.pdf}}
+\end{frame}
+
 \begin{frame}[label=calibration-overview]{Calibration and Historical Transition}
 \titlelink{empirics}{Empirical evidence}
 \begin{enumerate}\setlength\itemsep{1.1em}
@@ -411,67 +390,49 @@ A model period is four calendar years.
 \begin{frame}{Utility Specification}
 \small
 \[
-u_t(c_t,s_t;m_t)=
-\frac{\left[\dfrac{c_t^{\alpha_0}\bigl(\chi_t[h_t-h_P\mathbf{1}\{m_t>0\}]\bigr)^{1-\alpha_0}}{e(m_t)}\right]^{1-\sigma}}{1-\sigma}
-+\psi_tm_t^{1-\gamma}.
+u_t(c_t,\hat h_t;m_t)=
+\frac{\left[\dfrac{c_t^{\alpha_0}\bigl(\chi[h_t-\bar h(m_t)]+[h^R_t-\bar h(m_t)]\bigr)^{1-\alpha_0}}{e(m_t)}\right]^{1-\sigma}}{1-\sigma}
++v(m_t).
 \]
 \[
-e(m_t)=\left(\frac{2+\omega\, m_t}{2}\right)^{\nu}.
+e(m_t)=\left(\frac{2+\omega\, m_t}{2}\right)^{\nu},\qquad
+\bar h(m_t)=h_P\mathbf{1}\{m_t>0\},\qquad
+v(m_t)=\psi_t m_t^{1-\gamma}.
 \]
 \smallskip
-$h_t$: rooms occupied; $\chi_t=\chi$ for owners and $1$ for renters.
 Equivalence scale $e(m_t)$ as in Scholz, Seshadri \& Khitatrakun (2006).
 \end{frame}
 
 
 \begin{frame}{Identification}
 \footnotesize
-Ten parameters and the supply scale $H_0$ are chosen jointly to match ten moments and the completed-fertility normalization; three further moments are validation only.
+Eleven parameters are chosen jointly to match eleven moments.
 
-\smallskip
-\textbf{Fertility}
-\vspace{-3pt}\begin{itemize}\setlength\itemsep{0pt}
-  \item $\psi_0$, preference for children $\to$ completed fertility of 2.1
-  \item $\xi$, first-birth cost $\to$ childlessness
-  \item $\kappa_1$, first-birth taste dispersion $\to$ mean age at first birth, children ever born by 25
-  \item $\kappa_C$, later-birth taste dispersion, and $\gamma$, curvature of the benefit of children $\to$ one-child families
-\end{itemize}
-\vspace{-2pt}
-\textbf{Housing}
-\vspace{-3pt}\begin{itemize}\setlength\itemsep{0pt}
-  \item $h_P$, space requirement of parents $\to$ rooms added at first birth
-  \item $\chi$, owner premium $\to$ ownership rate
-  \item $\kappa_T$, tenure taste dispersion $\to$ ownership gap of recent parents
-  \item $H_0$, supply scale $\to$ mean rooms
-\end{itemize}
-\vspace{-2pt}
-\textbf{Saving and bequests}
-\vspace{-3pt}\begin{itemize}\setlength\itemsep{0pt}
-  \item $\beta$, discount factor $\to$ wealth over earnings
-  \item $\theta_0$, bequest scale $\to$ bequest flow ($\theta_1$ fixed externally)
-\end{itemize}
-\hole{Moment-to-parameter pairing is the intended one; informative rank is not yet checked.}
+\medskip
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{@{}lp{0.32\textwidth}X@{}}
+\toprule
+Block & Parameters & Moments \\
+\midrule
+Fertility & $\psi_0$, $\xi$, $\kappa_1$, $\kappa_C$, $\gamma$ & completed fertility, childlessness, one-child families, mean age at first birth, children ever born by 25 \\
+Housing & $h_P$, $\chi$, $\kappa_T$, $H_0$ & rooms added at first birth, ownership rate, ownership gap of recent parents, mean rooms \\
+Saving and bequests & $\beta$, $\theta_0$ & wealth over earnings, bequest flow \\
+\bottomrule
+\end{tabularx}
 \end{frame}
 
 \begin{frame}{Calibration: Targets and Model}
 \footnotesize
 \linespread{1}\selectfont
-\renewcommand{\arraystretch}{1.12}
-\renewcommand{\arraystretch}{0.9}
+\renewcommand{\arraystretch}{0.95}
 \input{\tabdirv/fit.tex}\par
 \smallskip
-\tiny $^{v}$ Validation moment, not targeted. Weighted loss \baseloss; full table with weights in the appendix.\\
-Sources: CPS June 2004/2006 (children ever born, women 40--44 and at 25); NCHS natality 2003--2006 (first-birth timing); AHS 2007 (rooms);
-ACS 2005/2006 (ownership, recent parents, family rooms); PSID 2005/2007 (wealth over earnings); SCF 2007 (bequests);
-PSID event study, years $+3/+4$ versus $-3/-2$ (rooms added at first birth).
 \end{frame}
 \begin{frame}{Internally Calibrated Parameters}
 \footnotesize
 
-\renewcommand{\arraystretch}{1.08}
+\renewcommand{\arraystretch}{1.12}
 \input{\tabdirv/params.tex}
-\par\smallskip
-\scriptsize $^{*}$ Flagged near a search bound in the saved parameter table. Optimization convergence is not certified.
 \end{frame}
 
 \begin{frame}{Externally Calibrated Parameters}
@@ -480,230 +441,118 @@ PSID event study, years $+3/+4$ versus $-3/-2$ (rooms added at first birth).
 \input{\tabdirv/external.tex}
 \end{frame}
 
-% ======== October 2026: household choices (the full set of new results is in JMP_slides_new_results.tex) ========
-\section{How Households Decide}
-\begin{frame}[plain,c,noframenumbering]{}
-\centering
-{\Large\textbf{How Households Decide}}
-\end{frame}
 
-% Source: output/model/jmp_slides_policy_functions_20261007/ (code/model/tools/build_jmp_policy_function_figure.py), saved 14.402 solution, no re-solve.
-\begin{frame}[t]{Who Has a First Child: Policy Functions}
-\linespread{1.0}\footnotesize\selectfont
-Probability that a childless renter has a first birth in the period, as chosen by the household.
-\begin{center}
-\includegraphics[width=\textwidth,height=0.50\textheight,keepaspectratio]{../output/model/jmp_slides_policy_functions_20261007/first_birth_policy.pdf}
-\end{center}
-\vspace{-0.6em}
-\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{2pt}
-\item Births rise steeply with liquid wealth near the borrowing limit and flatten once a household holds a buffer.
-\item Higher earnings shift the curve left: the same child is affordable with less saved. Births peak at 26--33.
-\end{itemize}
-\runlabel{Fixed price, 2007 steady state. Attempt probability times conception probability; earnings states 0.47, 0.78, 1.29 of mean. Right panel at zero liquid wealth.}
-\end{frame}
-
-
+% Sources: output/model/reconciliation_14p40_20261007/precautionary/README.md (headline cells, risk A);
 % Source: output/model/jmp_slides_policy_functions_20261007/child_policy.pdf
 %   (code/model/tools/build_jmp_child_policy_figure.py --expected), saved 14.402 solution, no re-solve.
-\begin{frame}[t]{What a First Child Changes: Policy Functions}
-\linespread{1.0}\footnotesize\selectfont
-Childless renter, age 26--29, middle earnings: choices this period with no child and with a first child just born.
+\begin{frame}[t]{Policy Functions at Childbirth}
+\footnotesize
+Choices this period with no child and with a first child just born; childless renter, age 26--29, middle earnings.
 \smallskip
 
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.64\textwidth}
-\includegraphics[width=\textwidth,height=0.66\textheight,keepaspectratio]{../output/model/jmp_slides_policy_functions_20261007/child_policy.pdf}
+\includegraphics[width=\textwidth,height=0.70\textheight,keepaspectratio]{../output/model/jmp_slides_policy_functions_20261007/child_policy.pdf}
 \end{column}
 \begin{column}{0.33\textwidth}
-\begin{itemize}\setlength\itemsep{6pt}
-\item With little wealth, a child means renting at the 6-room cap: the household delays buying.
-\item With a buffer, a child means buying a bigger home.
-\item Trying for a child pays only once the household holds a small buffer; below it, waiting is worth more.
+\begin{itemize}\setlength\itemsep{8pt}
+\item Low wealth: a child pushes the household to the 6-room rental cap and delays buying
+\item With savings: the household buys a larger home when the child arrives
+\item The value of trying is negative near the borrowing limit and turns positive with a small buffer
 \end{itemize}
 \end{column}
 \end{columns}
-\runlabel{Fixed price, 2007 steady state. Rooms and consumption averaged over the tenure choice; earnings state 0.78 of mean. Value of trying minus waiting:
-$\pi_a[V^H(\text{child})-\xi-V^H(\text{no child})]$, utility units; its logit over $\kappa_1$ is the attempt probability on the previous slide.}
 \end{frame}
 
-% Sources: output/model/reconciliation_14p40_20261007/precautionary/README.md (headline cells, risk A);
+% Mechanism frame, kept as one included file so a replacement drops in (from the mechanism thread).
+\input{../output/model/jmp_slides_mechanism_proposal_20261009/frame_housing_cost_of_a_first_child.tex}
+
 %   output/model/rental_menu_precaution_20261007/tables_price_tests.md (Test 1, risk A column, states 3-8). Base 14.402.
-\begin{frame}[t]{Income Risk and the Rent of Family Space}
-\linespread{1.0}\footnotesize\selectfont
-A first child commits the household to more space, the floor $h_P$, for as long as the child is at home. With risky income and no savings,
-that commitment is risky. Experiment: lower the standard deviation of income shocks from 0.48 to 0.35, nothing else.
-\smallskip
-
-\begin{columns}[T,onlytextwidth]
-\begin{column}{0.48\textwidth}
-\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.05}
-\begin{tabular}{@{}lrr@{}}
-\toprule
- & Baseline risk & Lower risk \\
-\midrule
-First-birth attempts, 22--33 & 0.185 & $+39\%$ \\
-\quad renters & 0.119 & $+57\%$ \\
-\quad owners & 0.357 & $+23\%$ \\
-Childless at 45 (\%) & 19.0 & 7.4 \\
-\bottomrule
-\end{tabular}
-\end{column}
-\begin{column}{0.48\textwidth}
-\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.05}
-\begin{tabular}{@{}lrrr@{}}
-\toprule
-House prices and rents & $-10\%$ & base & $+10\%$ \\
-\midrule
-Effect of lower risk & $+33\%$ & $+39\%$ & $+44\%$ \\
-\bottomrule
-\end{tabular}
-\end{column}
-\end{columns}
-\smallskip
-
+%   Completed fertility 1.866 -> 2.220 (+19.0%), childless 0.190 -> 0.074: cells A6 vs A6_riskA, outcomes() of analyze_floor_credit.py.
+\begin{frame}[t]{Income Risk and First Births}
 \footnotesize
-\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{2pt}
-\item Lower risk cuts childlessness at 45 from 19.0\% to 7.4\%; renters with no savings respond most.
-\item The more family space costs, the more income risk deters a first birth.
+\begin{itemize}\setlength\itemsep{1pt}
+\item Lower the standard deviation of income shocks from 0.48 to 0.35
+\item First-birth probability of a childless renter, age 26--29, middle earnings
 \end{itemize}
-
-\runlabel{Fixed price, rebate on and held at its baseline value. Attempts: first-birth attempt probability of childless households at income states 3--8, same states and weights.
-Lower risk: same persistence (0.73), income grid renormalized to mean one. Right: prices and rents moved together.}
-\end{frame}
-
-% Source: output/model/rental_menu_precaution_20261007/tables_floor_credit.md ("Credit, transfers and price on one calibration"), base 14.402.
-\begin{frame}[t,label=loan-not-insurance]{A Loan Is Not Insurance}
-\titlelink{ces-appendix}{CES}
-\linespread{1.0}\footnotesize\selectfont
-Same households and parameters, house prices fixed. Each row changes one thing.
-\smallskip
-
-\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.05}
-\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
-\toprule
- & Births & Completed & Childless & Own \\
- & on impact & fertility & 46--49 (\%) & 18--29 (\%) \\
-\midrule
-Benchmark & & & 19.0 & 43.8 \\
-\addlinespace[2pt]
-House prices and rents $+10\%$ & $-4.4\%$ & $-5.3\%$ & 22.3 & 40.9 \\
-Financed share $80\%\to95\%$ & $+0.4\%$ & $-1.4\%$ & 20.2 & 69.0 \\
-Renter credit, 1 year of earnings & $+5.1\%$ & $+0.7\%$ & 19.0 & 37.1 \\
-Renter credit, 2 years of earnings & $+8.5\%$ & $+0.6\%$ & 19.4 & 34.4 \\
-\addlinespace[2pt]
-Transfer paid in bad years & $+17.3\%$ & $+14.7\%$ & 9.7 & 40.8 \\
-Same cost, paid to everyone & $+7.6\%$ & $+6.6\%$ & 14.8 & 44.0 \\
-\bottomrule
-\end{tabularx}
-\smallskip
-
-\footnotesize
-\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{2pt}
-\item Mortgage credit moves ownership, not family size. Renter credit moves births earlier, not more.
-\item A transfer of the same cost raises completed fertility twice as much when it pays in bad years.
+\begin{center}
+\includegraphics[width=0.62\textwidth,height=0.47\textheight,keepaspectratio]{../output/model/jmp_slides_policy_functions_20261007/income_risk_policy.pdf}
+\end{center}
+\vspace{-0.6em}
+\begin{itemize}\setlength\itemsep{1pt}
+\item Without savings, the first-birth probability rises from 0.41 to 0.58
+\item With a buffer the two curves meet: risk deters births mainly among households without savings
+\item Across all households, completed fertility rises 19\% (childlessness at 45: 19.0\% to 7.4\%)
 \end{itemize}
-
-\runlabel{Fixed price, property-tax rebate on and held at its baseline value. Impact: births on the baseline distribution of states. Completed fertility: children ever born at 46--49, stationary cohort.
-Renter credit: renters may borrow $D$ = 1 or 2 years of median earnings at 22. Bad-year transfer: 25\% of the gap to median earnings when below it; both transfers cost 0.097 per household per period.}
-\end{frame}
-
-% Sources: output/model/ltv_branch_values_20261008/tables_branch_values.md (fp, rebate re-balanced, omega-weighted marginal households);
-%   output/model/origination_only_mortgage_20261008/tables.md; price row: project file tables_capitalization.md (ordinary +10%, [0,6]). Base 14.402, fixed price.
-\begin{frame}[t]{Why Credit Barely Moves Births}
-\linespread{1.0}\footnotesize\selectfont
-Rent per room equals the owner's user cost, so the space a child needs costs the same rented or owned, at any loan-to-value.
-Credit changes when a household buys, not what the child's space costs.
-\smallskip
-
-\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.05}
-\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
-\toprule
- & Value with & Value & Gain from & Births \\
- & a birth & waiting & a birth & on impact \\
-\midrule
-Financed share $80\%\to95\%$ & $+0.0081$ & $+0.0068$ & $+0.0014$ & $+0.31\%$ \\
-\quad renters & $+0.0096$ & $+0.0083$ & $+0.0013$ & \\
-\quad owners, 4+ rooms & $+0.0053$ & $+0.0038$ & $+0.0015$ & \\
-Financed share $80\%\to100\%$ & $+0.0180$ & $+0.0123$ & $+0.0057$ & $+1.30\%$ \\
-\addlinespace[2pt]
-House prices and rents $+10\%$ & & & $-0.111^{a}$ & $-4.41\%$ \\
-\bottomrule
-\end{tabularx}
-\smallskip
-
-\footnotesize
-\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{2pt}
-\item Credit is worth about the same to a household whether or not it has the child; the birth-specific part is about a sixth of that, against a taste dispersion $\kappa_1=0.12$.
-\item Without cash-out refinancing (credit only at purchase), the same policy gives births $+0.02\%$ on impact and completed fertility $-1.7\%$.
-\end{itemize}
-\runlabel{Fixed price, rebate re-balanced (the previous slide holds the rebate fixed, hence $+0.4\%$ there for the same policy). Changes in value in utility units, averaged over households at the first- or later-birth margin (weights $\propto$ mass $\times\,\pi_a^2p(1-p)/\kappa$). Gain from a birth: value with a birth minus value of waiting. $^{a}$Ages 22--33 only.}
 \end{frame}
 
 % v8: H100 two-shock transition at the 14.402 base (output/model/transition_h100_14402_20261007/, Transition thread, Oct 7).
 \begin{frame}[label=transition-short]{Fertility Transition: 2007--2063}
 \titlelink{algo-ss}{Algorithm}
 \centering
-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../output/model/transition_h100_14402_20261007/pair_0.1311_0.110/fertility_fit_2007_2063.pdf}
-\runlabel{Current base (loss \baseloss), GE, rebate rebalanced every date, 100-period horizon per stage. Shocks fitted to the 2011--14 and 2019--22 period TFR.}
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../output/model/jmp_slides_transition_figures_20261009/fertility_fit_2007_2063.pdf}
 \end{frame}
 
-% Source: output/model/transition_h100_14402_20261007/path_table_0.1311_0.110.md (H100, 14.402 base).
-\begin{frame}[t]{Two Preference Shocks: 2007--2067}
-\footnotesize
-The preference for children falls twice, unanticipated and permanent each time, with perfect foresight in between:
-$\psi$ from 0.156 to 0.131 in 2007 and to 0.110 in 2015. Each shock is set to hit one period fertility target.
-\smallskip
 
-\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.05}
-\begin{tabularx}{\textwidth}{@{}Xrrrrrrr@{}}
-\toprule
- & 2007 & 2011 & 2015 & 2019 & 2023 & 2043 & 2067 \\
-\midrule
-Period TFR, model & 1.863 & 1.862 & 1.658 & 1.650 & 1.646 & 1.695 & 1.813 \\
-Period TFR, target & & 1.861 & & 1.646 & & & \\
-House price (2007 steady state 0.779) & 0.772 & 0.769 & 0.760 & 0.754 & 0.748 & 0.696 & 0.615 \\
-Households (2007 = 1) & 1.000 & 1.000 & 1.000 & 1.000 & 0.997 & 0.939 & 0.832 \\
-\bottomrule
-\end{tabularx}
-\smallskip
-
-\footnotesize Fertility falls on impact; the house price falls slowly, as smaller cohorts reach the housing market. The economy reaches its new steady state
-(price 0.485, population 0.59 of 2007) by about 2400.
-
-\runlabel{Current base (loss \baseloss), GE, instantaneous supply, rebate balanced every date, 100-period horizon per stage; stage-2 residuals below $1.1\times10^{-5}$, terminal check passed.}
-\end{frame}
-
-\begin{frame}{Full Transition: 2007--2403}
+\begin{frame}[label=transition-full]{Full Transition: 2007--2403}
+\titlelink{app-slow-stock}{Slow stock}
 \centering
-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../output/model/transition_h100_14402_20261007/pair_0.1311_0.110/full_transition_four_panel.pdf}
-\runlabel{Current base (loss \baseloss), GE, rebate rebalanced every date, 100-period horizon per stage.}
+\only<1>{\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../output/model/jmp_slides_transition_figures_20261009/full_transition_four_panel.pdf}}%
+\only<2>{\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{../output/model/jmp_slides_transition_figures_20261009/full_transition_four_panel_fixed.pdf}}
 \end{frame}
 
 % Model column: output/model/profile_2023_base14402/moments_2023_base14402.csv (H100 baseline replay, 14.402 base). Sept 14 version in git (e49c148c).
 \begin{frame}{2023 Data and Model}
+% Model column: output/model/profile_2023_base14402/moments_2023_full_base14402.csv (H100 two-shock path, 14.402 base); data column as on Sept 14.
 \footnotesize
-\renewcommand{\arraystretch}{1.05}
+\renewcommand{\arraystretch}{0.90}
 \begin{tabularx}{\textwidth}{@{}Xrr@{}}
 \toprule
 Moment & Data & Model \\
 \midrule
-Period TFR (fitted) & 1.646 & 1.646 \\
-Completed fertility, ages 40--44 (model 42--45) & 1.92 & 1.69 \\
-Childless, ages 40--44 (model 42--45) (\%) & 18.8 & 25.3 \\
+Completed fertility, ages 40--44 & 1.92 & 1.71 \\
+Childless, ages 40--44 (\%) & 18.8 & 27.4 \\
+Exactly one child among mothers, 40--44 (\%) & 22.2 & 23.4 \\
 Mean age at first birth (years) & 28.09 & 26.85 \\
+First births at age 30+ (\%) & 37.7 & 28.2 \\
 \addlinespace[2pt]
 Mean occupied rooms (capped at 9) & 5.58 & 5.54 \\
-Ownership, heads 30--55 (model 30--53) (\%) & 58.7 & 69.3 \\
+Ownership, heads 30--55 (\%) & 58.7 & 69.6 \\
+First-birth room response & 1.465 & 1.289 \\
+Rooms: 3+ versus 1--2 resident children & 0.355 & 0.286 \\
+\addlinespace[2pt]
+Wealth / annual gross earnings & 4.46 & 4.58 \\
+Annual bequests / wealth (\%) & 0.88 & 0.80 \\
+Wealth/income p90 / median, ages 76--84 & 3.45 & 3.31 \\
 \bottomrule
 \end{tabularx}
-\runlabel{Current base (loss \baseloss), 2023 on the 100-period two-shock path, GE, rebate balanced every date. Model ages are four-year groups. The one-child share, first births at 30+, room responses and wealth rows of the earlier version are not in this readout.}
 \end{frame}
 
 \begin{frame}{Lifecycle Fit in 2023}
 \centering
 \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio,trim=0 25 0 0,clip]{../output/model/profile_2023_base14402/lifecycle_2023.pdf}
-\runlabel{Current base, 2023 on the 100-period two-shock path. Children at home: model dependents; ACS resident own children under 18.}
 \end{frame}
+
+
+% Source: output/model/rental_menu_precaution_20261007/tables_floor_credit.md ("Credit, transfers and price on one calibration"), base 14.402.
+\begin{frame}[t,label=loan-not-insurance]{Credit and Transfers}
+\makebox[0pt][l]{\begin{tikzpicture}[remember picture,overlay]\node[anchor=north east] at ([xshift=-0.35cm,yshift=-0.32cm]current page.north east) {\hyperlink{policy-results}{\beamergotobutton{GE path}}\ \hyperlink{credit-starter-homes}{\beamergotobutton{why credit turns negative}}\ \hyperlink{ces-appendix}{\beamergotobutton{CES}}};\end{tikzpicture}}\ignorespaces
+\footnotesize
+At the 2007 benchmark with house prices and rents held fixed; one policy per row.
+\begin{center}
+\includegraphics[width=\textwidth,height=0.44\textheight,keepaspectratio]{../output/model/jmp_slides_policy_functions_20261007/loan_vs_insurance_bars.pdf}
+\end{center}
+\vspace{-0.6em}
+\begin{itemize}\setlength\itemsep{1pt}
+\item Lower house prices and rents raise completed fertility by 5.3\%
+\item Mortgage credit raises young ownership by 25 points but lowers completed fertility by 1.4\%
+\item Renter credit moves births earlier; completed fertility barely changes
+\item A transfer paid when earnings are low raises completed fertility by 14.7\%, twice a same-cost transfer to everyone
+\end{itemize}
+\end{frame}
+
+% Sources: output/model/ltv_branch_values_20261008/tables_branch_values.md (fp, rebate re-balanced, omega-weighted marginal households);
+%   output/model/origination_only_mortgage_20261008/tables.md; price row: project file tables_capitalization.md (ordinary +10%, [0,6]). Base 14.402, fixed price.
 
 \begin{frame}{Intergenerational Allocation: Model vs Data}
 \centering
@@ -717,7 +566,6 @@ Ownership, heads 30--55 (model 30--53) (\%) & 58.7 & 69.3 \\
   \item Coven et al.\ (2025): a rebated property tax moves space from old owners to young households.
   \item Those young households are the ones deciding on children, and children need space.
 \end{itemize}
-\runlabel{Model bars: current base, 2023 on the 100-period two-shock path.}
 \end{frame}
 
 \begin{frame}{Policy}
@@ -739,46 +587,51 @@ Ownership, heads 30--55 (model 30--53) (\%) & 58.7 & 69.3 \\
 \end{frame}
 
 % Source: output/model/policy_transition_battery_20261008/h100_torch/ (table_h100.md, tax_vs_credit_h100.pdf), base 14.402, from the 100-period 2023 state.
-\begin{frame}{Policy Results}
+\begin{frame}[label=policy-results]{Policy Results}
 \centering
 \includegraphics[width=.95\textwidth,height=.74\textheight,keepaspectratio]{../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100.pdf}
-\runlabel{Current base (loss \baseloss), GE from the 2023 state, 100 periods, elastic supply, rebate balanced every date. Property tax 1.06\% to 2\%.}
 \end{frame}
 
 % Source: output/model/policy_transition_battery_20261008/h16_mac/ (table_h16.md, tax_vs_credit_by_supply_h16.pdf), 16-period runs.
-\begin{frame}{Policy Results by Housing Supply \textnormal{\small(16-period runs)}}
-\centering
-\includegraphics[width=.92\textwidth,height=.74\textheight,keepaspectratio]{../output/model/policy_transition_battery_20261008/h16_mac/tax_vs_credit_by_supply_h16.pdf}
-\runlabel{Current base, GE from the 2023 state, 16 periods (dates after about 2047 shaped by the terminal condition); rebate balanced every date. Slow stock: $H_t=(1-d)H_{t-1}+dH_{2023}(q_t/q_{2023})^{0.63}$.
-Fixed and slow arms use the inherited-distribution projection; the slow-stock credit run stopped at its 20-map cap (residual $1.5\times10^{-4}$).}
+\begin{frame}{A Slowly Adjusting Housing Stock (preliminary)}
+\small
+\begin{itemize}\setlength\itemsep{6pt}
+\item Builders replace depreciated rooms each period, more when prices are high:
+\[
+I_t=\delta_H\,H_0\,P_t^{\eta},\qquad H_t=(1-\delta_H)H_{t-1}+I_t.
+\]
+\item Same long-run supply curve as the baseline, $H=H_0P^{\eta}$: the steady state and the calibration are unchanged, only the speed of adjustment differs
+\item Only the depreciated part of the stock is rebuilt each period (1.4\% a year), so the stock moves slowly: after a price change, half of the adjustment takes about 50 years
+\item We compare it with two extremes: the baseline, where the stock moves to the supply curve at once, and a stock frozen at its 2023 level
+\end{itemize}
 \end{frame}
 
+% Source: output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100_slow_stock.pdf, slow-adjusting stock, 100-period runs.
+\begin{frame}[label=app-policy-slow]{Policy Results with a Slow-Adjusting Stock}
+\titlelink{policy-supply}{By supply}
+\centering
+\includegraphics[width=.95\textwidth,height=.80\textheight,keepaspectratio]{../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100_slow_stock.pdf}
+\end{frame}
+
+
 % Source: \pol macros, generated from output/model/reconciliation_14p40_20261007 (Blocks 2 and 3), base 14.402.
-\begin{frame}[t]{Property Tax versus Mortgage Credit in the Long Run}
-\linespread{1.0}\footnotesize\selectfont
-Stationary equilibrium at the 2023 preference for children, with and without each policy. Births are pinned at replacement, so the response shows in population and prices.
-\medskip
-
-\small\setlength{\tabcolsep}{6pt}\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
-\toprule
- & House price & Population & Own 18--29 \\
-\midrule
-Property tax $1.06\%\to2\%$, rebated & $\pol{end_ptax2.price_pct.1}\%$ & $\pol{end_ptax2.pop_pct.1}\%$ & $\pol{end_ptax2.own_18_29_pp.1}$ pp \\
-Financed share $80\%\to95\%$ & $\pol{end_phi095.price_pct.1}\%$ & $\pol{end_phi095.pop_pct.1}\%$ & $\pol{end_phi095.own_18_29_pp.1}$ pp \\
-\bottomrule
-\end{tabularx}
-\medskip
-
+\begin{frame}[t]{Property Tax and Mortgage Credit: Long Run}
+\titlelink{app-slow-policies}{Slow stock}
+% Figure: code/model/tools/build_jmp_longrun_bars.py (stationary GE at psi 0.110, output/model/reconciliation_14p40_20261007/psi2023/results.json).
 \footnotesize
-\begin{itemize}\setlength\itemsep{2pt}
-\item At fixed prices the tax lowers births ($\pol{ptax2_fp.births_pct}\%$, 2007 economy): the whole tax passes into rents.
-In equilibrium the house price falls, and the tax supports a larger population.
-\item Credit raises young ownership by 26 points and supports a smaller population.
+\begin{itemize}\setlength\itemsep{1pt}
+\item Stationary equilibrium at the 2023 preference for children, with and without each policy
+\item Births return to replacement in both cases, so the effects show up in population and prices
 \end{itemize}
-
-\runlabel{General equilibrium: house price, pensions and the rebate solved; housing supply responds to price. 2023 preference for children $\psi=0.110$ from the two-shock fit.}
-\runlabel{Transition paths from the 2023 state: the two Policy Results slides.}
+\begin{center}
+\includegraphics[width=\textwidth,height=0.42\textheight,keepaspectratio]{../output/model/jmp_slides_policy_functions_20261007/longrun_bars.pdf}
+\end{center}
+\vspace{-0.6em}
+\begin{itemize}\setlength\itemsep{1pt}
+\item The property tax lowers the house price ($\pol{end_ptax2.price_pct.1}\%$) and supports a larger population ($\pol{end_ptax2.pop_pct.1}\%$)
+\item Mortgage credit raises young ownership ($\pol{end_phi095.own_18_29_pp.1}$ pp) and leaves a smaller population ($\pol{end_phi095.pop_pct.1}\%$)
+\item At fixed prices the tax would lower births ($\pol{ptax2_fp.births_pct}\%$): the price fall is what makes it pro-natal
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Conclusion}
@@ -801,23 +654,49 @@ In equilibrium the house price falls, and the tax supports a larger population.
 \end{frame}
 
 
+% Housing-supply arms (Transition thread, output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/; convergence notes there).
+\begin{frame}[t,label=policy-supply]{Policy Results by Housing Supply}
+\titlelink{app-slow-policies}{Paths}
+% Figure: code/model/tools/plot_jmp_slides_transition_figures_20261009.py (16-period runs, ~/fertility_runs/policy_battery_h16_20261008).
+\footnotesize
+Property tax from 1.06\% to 2\%, rebated, from 2023; change relative to the no-tax path.
+\begin{center}
+\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{../output/model/jmp_slides_transition_figures_20261009/ptax_by_supply_regime.pdf}
+\end{center}
+\vspace{-0.8em}
+\begin{itemize}\setlength\itemsep{1pt}
+\item The tax raises the cost of holding a room
+\item Supply responds: rooms are withdrawn, rents rise by 13\%, births barely move
+\item Slow or fixed stock: the rooms stay, the house price falls instead, rents barely rise, and births rise by 3 to 4\%
+\end{itemize}
+{\scriptsize\color{draftred} To do: refit the 2007--2023 transition under the slow-adjusting stock.\par}
+\end{frame}
+
+\begin{frame}[label=app-slow-stock]{Estimated Transition with a Slow-Adjusting Stock}
+\titlelink{transition-full}{Back}
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio,trim=0 0 0 50,clip]{../output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/slow_stock_vs_estimated.pdf}
+\end{frame}
+\begin{frame}[label=app-slow-policies]{Policies with a Slow-Adjusting Stock}
+\titlelink{policy-supply}{Back}
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio,trim=0 0 0 50,clip]{../output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/slow_stock_policies.pdf}
+\end{frame}
+\begin{frame}[label=app-frozen-policies]{Policies with a Fixed Stock}
+\titlelink{policy-supply}{Back}
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio,trim=0 0 0 50,clip]{../output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/frozen_stock_policies.pdf}
+\end{frame}
+
+% Starter-homes frame (argument thread); kept as one included file so a replacement drops in.
+\input{JMP_slides/frames/frame_mortgage_credit_starter_homes.tex}
 
 \begin{frame}{The 2023 Equilibrium}
 \centering
 % Display copy of the price and children panels of patch_readout_fit/figures/equilibrium_2023.pdf, drawn from figure_verification.json.
 \includegraphics[width=0.9\textwidth,height=0.8\textheight,keepaspectratio]{figures/equilibrium_2023_prices_children.pdf}
-\vspace{-0.6em}\hole{Sept 14 point; to be redrawn from the 100-period 2023 state.}
-\end{frame}
+\vspace{-0.6em}\end{frame}
 
-
-\begin{frame}{Calibration: Full Fit with Weights}
-\scriptsize
-\renewcommand{\arraystretch}{0.88}
-\input{\tabdirv/fit_full.tex}\par
-\smallskip
-\scriptsize norm.: normalization, matched exactly; val.: validation, weight zero. Loss contributions sum to the weighted loss \baseloss.
-Current base: Mac round 3, chain \basechain; house price \baseprice, $H_0=\baseHzero$.
-\end{frame}
 
 \begin{frame}[label=large-homes-data]{Who Owns the Large Homes}
 \titlelink{intro-channels}{Back}
@@ -946,33 +825,31 @@ Cobb--Douglas, no floor & 1 & no & 1.5 & $+1.03\%$ & $+0.23\%$ & $+8.3\%$ & $+2.
 \item Mortgage credit moves completed fertility by $-2\%$ to $+0.3\%$ in all thirteen specifications that reach 19\% childlessness; the negative sign comes mostly from the floor.
 \item Renter credit raises births on impact by 6--9\%; completed fertility, $-0.6\%$ to $+2.4\%$ in the cases shown.
 \end{itemize}
-\runlabel{Fixed price, rebate held. Impact: births on the baseline distribution of states. Completed: children ever born at 46--49. $k$: rooms-needed factor with a child at home.}
 \end{frame}
 
 \begin{frame}[t]{CES Variant: Calibrated Fit}
 \titlelink{loan-not-insurance}{Back}
+\input{JMP_slides/ces_tables/numbers.tex}
 \footnotesize
-\begin{center}
-\placeholder{[Placeholder: target-fit table (13 moments: target, model, weight) and the 12 parameter estimates,\\
-from the overnight multistart calibration, to be filled once it is selected.]}
-\end{center}
-\vfill
-At a starting point of the search (not a fit), completed fertility responds:
+Twelve parameters re-estimated; the benchmark measured on the same thirteen moments.
 \smallskip
 
-\begin{center}\scriptsize
-\begin{tabular}{@{}lr@{}}
-\toprule
-Experiment & Completed fertility \\
-\midrule
-Financed share $80\%\to100\%$ & $-0.4\%$ \\
-Lower earnings risk, mean-preserving & $+13.1\%$ \\
-Same, with 100\% financing & $+13.8\%$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-\vfill
-\hole{Calibration running overnight (12 parameters, 13 moments, $\varepsilon=0.67$); replace the placeholder and the starting-point table with the selected fit and its experiments.}
+{\scriptsize\linespread{0.9}\selectfont\renewcommand{\arraystretch}{0.85}\setlength{\tabcolsep}{3pt}%
+\begin{columns}[T]
+\begin{column}{0.68\textwidth}
+\input{JMP_slides/ces_tables/fit.tex}
+\end{column}
+\begin{column}{0.27\textwidth}
+\input{JMP_slides/ces_tables/params.tex}
+\end{column}
+\end{columns}}
+\smallskip
+
+{\linespread{1}\selectfont
+\begin{itemize}\setlength\itemsep{1pt}\setlength\topsep{0pt}
+\item Fit is worse than the benchmark: slightly better on childlessness, family size, rooms and first-birth rooms; worse on timing, ownership, the rent share, the family room gap, wealth and bequests.
+\item Completed fertility responds as in the benchmark: \cesLTVhundred{} with 100\% financing, \cesLowerRisk{} with lower earnings risk, \cesCapTen{} with a 10-room rental cap.
+\end{itemize}}
 \end{frame}
 
 
