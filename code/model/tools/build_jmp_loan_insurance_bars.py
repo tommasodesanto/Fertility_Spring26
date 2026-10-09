@@ -68,7 +68,7 @@ def main():
         ax.barh(y, vals, color=cols, height=0.62)
         span = max(abs(v) for v in vals)
         for yy, v in zip(y, vals):
-            ax.text(v + (0.02 * span if v >= 0 else -0.02 * span), yy, f"{v:+.1f}", va="center",
+            ax.text(v + (0.02 * span if v >= 0 else -0.02 * span), yy, f"{v:+.1f}".replace("-", "\u2212"), va="center",
                     ha="left" if v >= 0 else "right", fontsize=10)
         lo, hi = min(0, min(vals)), max(0, max(vals))
         ax.set_xlim(lo - 0.18 * span, hi + 0.18 * span)

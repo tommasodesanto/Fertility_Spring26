@@ -156,8 +156,7 @@ B(w_{t+1}^e)=\theta_0\frac{(\theta_1+w_{t+1}^e)^{1-\sigma}}{1-\sigma}.
 \small
 \begin{itemize}\setlength\itemsep{0.6em}
   \item During fertile ages, households choose each period whether to attempt a birth.
-  \item The choice is discrete, with an extreme-value taste shock $\varepsilon_t^F$ of scale $\kappa_1$ for the first birth and $\kappa_C$ for later births.
-  \item The first birth and later births have different scales, so childlessness and family size can respond differently.
+  \item The choice is discrete, with an extreme-value taste shock $\varepsilon_t^F$. Its scale is $\kappa_1$ for the first birth and $\kappa_C$ for later births, so childlessness and family size can respond differently.
   \item An attempt succeeds with age-specific probability $\pi_a$ and adds one child: $n_{t+1}=n_t+1$.
   \item Each child at home leaves with probability $\lambda$, independently.
 \end{itemize}
@@ -516,12 +515,12 @@ Exactly one child among mothers, 40--44 (\%) & 22.2 & 23.4 \\
 Mean age at first birth (years) & 28.09 & 26.85 \\
 First births at age 30+ (\%) & 37.7 & 28.2 \\
 \addlinespace[2pt]
-Mean rooms & 5.58 & 5.54 \\
+Mean occupied rooms & 5.58 & 5.54 \\
 Ownership, heads 30--55 (\%) & 58.7 & 69.6 \\
 First-birth room response & 1.465 & 1.289 \\
 Rooms: 3+ versus 1--2 resident children & 0.355 & 0.286 \\
 \addlinespace[2pt]
-Wealth / annual gross earnings & 4.46 & 4.58 \\
+Wealth / annual gross earnings & {\color{draftred}4.46} & 4.58 \\
 Annual bequests / wealth (\%) & 0.88 & 0.80 \\
 Wealth/income p90 / median, ages 76--84 & 3.45 & 3.31 \\
 \bottomrule
@@ -589,7 +588,7 @@ At the 2007 benchmark with house prices and rents held fixed; one policy per row
 % Source: output/model/policy_transition_battery_20261008/h100_torch/ (table_h100.md, tax_vs_credit_h100.pdf), base 14.402, from the 100-period 2023 state.
 \begin{frame}[label=policy-results]{Policy Results}
 \centering
-\includegraphics[width=.95\textwidth,height=.74\textheight,keepaspectratio]{../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100.pdf}
+\includegraphics[width=.95\textwidth,height=.74\textheight,keepaspectratio,trim=0 13 0 0,clip]{../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100.pdf}
 \end{frame}
 
 % Source: output/model/policy_transition_battery_20261008/h16_mac/ (table_h16.md, tax_vs_credit_by_supply_h16.pdf), 16-period runs.
@@ -630,7 +629,7 @@ I_t=\delta_H\,H_0\,P_t^{\eta},\qquad H_t=(1-\delta_H)H_{t-1}+I_t.
 \begin{itemize}\setlength\itemsep{1pt}
 \item The property tax lowers the house price ($\pol{end_ptax2.price_pct.1}\%$) and supports a larger population ($\pol{end_ptax2.pop_pct.1}\%$)
 \item Mortgage credit raises young ownership ($\pol{end_phi095.own_18_29_pp.1}$ pp) and leaves a smaller population ($\pol{end_phi095.pop_pct.1}\%$)
-\item At fixed prices the tax would lower births ($\pol{ptax2_fp.births_pct}\%$): the price fall is what makes it pro-natal
+\item At fixed prices the tax would lower births ($\pol{ptax2_fp.births_pct.1}\%$): the price fall is what makes it pro-natal
 \end{itemize}
 \end{frame}
 
@@ -745,7 +744,6 @@ Cross-sectional housing patterns discipline access to space; longitudinal data d
 \end{columns}
 
 \medskip
-\small Original May event-study coefficients; measurement revisions under review.
 \source{PSID; original May event-study estimates.}
 \end{frame}
 
@@ -768,7 +766,6 @@ Cross-sectional housing patterns discipline access to space; longitudinal data d
 \end{columns}
 
 \medskip
-\small Original May event-study coefficients; measurement revisions under review.
 \source{PSID; original May event-study estimates.}
 \end{frame}
 
