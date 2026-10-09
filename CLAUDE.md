@@ -283,6 +283,8 @@ take more than 30 minutes:
    best-so-far summary.
 7. If no checkpoint or heartbeat appears for 30 minutes, treat the run as
    unhealthy and investigate.
+8. Follow `docs/workflow/run_storage_policy.md` for what a run may write,
+   the free-space budget, and cleanup on completion.
 
 
 Smoke tests must be genuinely small on both local machines and clusters. Use
