@@ -43,7 +43,11 @@ Measured 2026-10-08 (repo total 358 GB on a 926 GB disk):
    the final size in the experiment README.
 10. **Git**: never `git add -A`, `git add .` or `git stash -u` in this repo;
     add files by path. `tmp/` and `output/` hold no tracked files.
-    Run `git prune --expire=1.day.ago` after any accidental large add.
+    Never run `git prune`, `git gc` or `git stash drop` to free space: deleted
+    objects are unrecoverable. A prune needs a verified external copy of
+    `.git` and Tommaso's word first (Oct 9 2026: an emergency prune removed
+    82 GB before the agreed Torch backup finished, including three unmerged
+    stashes). In a disk emergency, pause new writers instead.
 
 ## Outside the repo
 
@@ -51,3 +55,7 @@ Measured 2026-10-08 (repo total 358 GB on a 926 GB disk):
 (WhatsApp backup tars, about 24 GB rewritten nightly) is outside the
 project's control; turning on "Optimize Mac Storage" for iCloud Drive keeps
 it in the cloud.
+
+The whole Desktop, including this repo, is under iCloud Desktop sync
+(`com.apple.icloud.desktop`). iCloud churn can take tens of GB overnight and
+leaves `<name> 2` conflict copies inside `.git/objects`.
