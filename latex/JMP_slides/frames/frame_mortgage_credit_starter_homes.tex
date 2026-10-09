@@ -1,33 +1,33 @@
 % Sources, pre-sale-screen-patch unless stated, consistent with the "Credit and Transfers" slide:
 %   LTV 80 -> 95 at fixed price, T held: cap6_vs_cap55_for_chatgpt_with_ces.md (14.402 experiment set, fp cells);
-%   GE path: table_h100.md; branch values: tables_branch_values.md (ltv_branch_values_20261008);
-%   induced buyers: tables_induced_buyers.md; second-birth split: second_birth_readout.md.
-%   No-starter row exists only on the corrected sale rule: tmp/no_starter_fixed_price_20261009/RESULTS.md.
-%   PSID: notes/size_transitions_at_birth_20261009.md, notes/starter_home_trap_empirics_20261009.md. No re-solve.
-\begin{frame}[t,label=credit-starter-homes]{Mortgage Credit, Starter Homes and Births}
+%   GE path: table_h100.md; no-starter row (corrected sale rule): tmp/no_starter_fixed_price_20261009/RESULTS.md;
+%   parents-only cell: RESULTS.md; PSID shares: notes/size_transitions_at_birth_20261009.md. No re-solve.
+\begin{frame}[t,label=credit-starter-homes]{Mortgage Credit and Births}
 \titlelink{loan-not-insurance}{Back}
 \scriptsize
-Loan-to-value 80\% $\to$ 95\%, fixed prices, rebate held. Six-room rentals available at the owner user cost.
-\vspace{1pt}
+Loan-to-value 80\% $\to$ 95\%, fixed prices. Families can rent up to six rooms.
+\vspace{2pt}
 
 {\centering
 \renewcommand{\arraystretch}{1.05}\setlength{\tabcolsep}{7pt}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-Owner menu & Ownership 18--29 & Births, first period & Completed fertility \\
+Homes for sale & Ownership 18--29 & Births, first period & Completed fertility \\
 \midrule
-2, 4, 6, 8, 10 rooms & 44\% $\to$ 69\% & $+0.4\%$ & 1.866 $\to$ 1.840 \quad ($-1.4\%$) \\
-6, 8, 10 rooms (corrected sale rule) & 36\% $\to$ 40\% & $+0.1\%$ & 1.887 $\to$ 1.886 \quad ($-0.05\%$) \\
+6, 8, 10 rooms & 36\% $\to$ 40\% & $+0.1\%$ & 1.887 $\to$ 1.886 \quad ($-0.05\%$) \\
+2, 4, 6, 8, 10 rooms (upper bound) & 44\% $\to$ 69\% & $+0.4\%$ & 1.866 $\to$ 1.840 \quad ($-1.4\%$) \\
 \bottomrule
 \end{tabular}
 \par}
-\vspace{1pt}
+\vspace{2pt}
 
-\begin{itemize}\setlength\itemsep{-1pt}
-\item No quantum effect. The LTV constraint does not enter the user cost of space; the marginal household rents at $b=0$. Branch values rise by $+0.008$ (child) and $+0.007$ (no child).
-\item Tempo effect only. Liquidity brings forward births of new buyers and leveraged owners in the first period; along the GE path births are $-0.3$ to $-0.8\%$ thereafter.
-\item Model mechanism: a starter detour. One fifth of childless renters become owners of two-room units below the parent floor of 2.6; childlessness at 46--49 rises from 19.0\% to 20.2\%, progression to a second child is unchanged. Without the two- and four-room rungs completed fertility is unchanged.
-\item Data (PSID). Childless owners aged 22--37 in four rooms or fewer: 23\% against 68\% in the model; in two rooms, 3\% against 28--31\%. Buyers of 2003--07 bought the same space as 1997--2001 buyers at 2.24 times income against 1.77; small owners upsize and have second births at the same rates as others.
-\item Credit does not raise completed fertility. The model's small negative effect comes from a mass of two-room owners that the PSID does not show; with the US size distribution, credit changes tenure and price, not births.
+\begin{itemize}\setlength\itemsep{1pt}
+\item Credit does not raise completed fertility. It brings some births forward: $+0.4$ to $+0.6\%$ in the first period, fewer afterwards.
+\item The negative effect in the second row needs many childless owners in two-room homes: 30\% in the model, 3\% in the PSID.
+\item With the US size distribution the effect is zero.
+\item Credit for parents only flips the sign, to $+1.2\%$, still small: parents can already rent family-sized homes.
+\item In the data the null is timing plus higher prices (boom buyers paid 2.24 times income for the same space, against 1.77); the model's extra channel, the starter-home trap, is not in the data.
 \end{itemize}
+\vspace{2pt}
+Credit changes when households buy and when they have children, not how many.
 \end{frame}
