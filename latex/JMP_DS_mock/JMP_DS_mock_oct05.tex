@@ -1,0 +1,72 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[round]{natbib}
+\usepackage{microtype}
+\usepackage{titlesec}
+
+% Compact run-in headings within each numbered subsection.
+\titleformat{\subsubsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.6em}
+\usepackage{hyperref}
+
+\graphicspath{{../figures/}{figures/}}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.12em,topsep=0.12em}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=0.12em,topsep=0.12em}
+\allowdisplaybreaks
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+
+\title{Intergenerational Housing Misallocation and Fertility}
+\author{Tommaso De Santo}
+\date{}
+
+\begin{document}
+
+\maketitle
+\input{sections/00_abstract}
+\pagebreak
+\input{sections/01_introduction}
+% October 5, 2026 build: same preamble and structure as JMP_DS_mock.tex,
+% with the new empirical subsection and the new model section. Agent draft.
+\newcommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+\input{sections/02c_motivating_evidence}
+\input{sections/03b_model}
+\input{sections/04b_quantification}
+\input{sections/05b_results}
+\clearpage
+\input{data_appendix}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{../references,../main_bib,../lit_review_extra}
+
+\end{document}

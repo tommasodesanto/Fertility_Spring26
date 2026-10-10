@@ -1,0 +1,211 @@
+% ============================================================================
+% NEW MATERIAL, October 5, 2026 (agent draft for Tommaso; not in JMP_DS_draft).
+% Continues sections/02_empirical_evidence.tex, which is left unchanged.
+% Register follows Boar, Gorea and Midrigan (RES 2022), Section 2: a short
+% "Data" subsection that defines every variable, then facts stated one at a
+% time, each tied to the model object or target it disciplines.
+% Every number carries its source in a comment: [DATA] = measured moment,
+% with builder; [MODEL] = model output, with run.
+% ============================================================================
+\providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\subsection{Fertility: level, timing and income}
+\label{sec:emp-fertility}
+
+The facts above describe how housing adjusts once a child arrives. The model
+also has to reproduce when children arrive and who has them. This subsection
+documents three facts about fertility itself: completed fertility is close to
+two children with one woman in five childless, first births are concentrated
+in the mid twenties, and early childbearing is concentrated in lower-income
+families, while completed fertility is nearly flat in income.
+
+\subsubsection*{Data.}
+Fertility levels and timing come from two sources. The June Fertility
+Supplement of the Current Population Survey (CPS) records the number of
+children ever born to each woman. I use the 2004 and 2006
+supplements for the calibration targets, so that they refer to the same years
+as the wealth and housing targets, and the 2024 supplement for the income
+gradient, because it is the most recent.\mocktodo{the gradient and the
+targets come from different CPS years; recompute the gradient on 2004 and 2006
+if the paper keeps both.} Completed
+fertility refers to women aged 40 to 44. The timing of first births comes from
+the National Center for Health Statistics (NCHS) natality files, which record
+every live birth in the United States with the mother's age and the birth
+order; I pool first births in 2003 to 2006. Family income in the CPS is the
+combined money income of the family over the previous twelve months, reported
+in brackets. All CPS statistics use the person weights and cap children ever
+born at three, the largest number the model distinguishes.%
+\footnote{Capping matters for levels: among women aged 40 to 44 in the 2024
+CPS, capping at five instead of three raises mean children ever born by 0.13
+to 0.23 across income groups. \mocktodo{add the uncapped values and the CPS builders to the data
+appendix: code/data/cps\_fertility/build\_early\_fertility\_target.py,
+output/model/credit\_mechanism\_20261004/measurement/recompute.py.}}
+
+\subsubsection*{Completed fertility and childlessness.}
+Among women aged 40 to 44 in the 2004 and 2006 CPS, 19.8 percent have no
+children, and 21.4 percent of mothers have exactly one.
+% [DATA] cps_childlessness 0.19828, cps_exactly_one 0.21366; CPS June 2004/06,
+% women 40-44, FREVER 0-20, supplement weight. Chain 11 target rows 2-3.
+In the 2024 supplement, mean children ever born is 1.92 and 18.8 percent are
+childless.
+% [DATA] CPS June 2024, women 40-44, n = 3,278; 1.9184 (SE 0.027), 0.1882
+% (SE 0.008); code/data/cps_fertility/build_cps_fertility_targets.py.
+The two margins matter separately in the model: childlessness is the extensive
+margin, governed by the first birth, and the share with exactly one child is
+the first intensive margin, governed by whether parents continue.
+
+\subsubsection*{Timing.}
+First births are concentrated in the mid twenties. The mean age of mothers at
+first birth is 26.0 years in the 2003--2006 natality files, and 24.9 percent
+of first births occur at age 30 or later.
+% [DATA] nchs_mean_age 25.976 (SE 0.15 declared), nchs_share30 0.249;
+% code/data/nchs_natality_timing/build_first_birth_timing.R; age cells mapped
+% to four-year midpoints. Chain 11 rows 4 (target) and 5 (validation).
+A woman aged 25 in the 2004 and 2006 CPS has had 0.81 children on average.
+% [DATA] early_fertility 0.80953, SE 0.028, n = 1,774; CPS June 2004/06,
+% women at exact age 25, capped at 3. Chain 11 row 14.
+The age at which childbearing starts matters here because it coincides with
+the ages at which households form, accumulate their first savings, and buy
+their first home.\mocktodo{a sentence comparing the wealth of childless
+renters at 25 and at 32 (PSID) would make this concrete; not yet measured.}
+
+\subsubsection*{Income.}
+Early childbearing is concentrated in lower-income families.
+Table~\ref{tab:emp-fertility-income} groups women by family income into thirds.
+Among women aged 24 to 26, those in the bottom third have had 0.60 children,
+those in the top third 0.23. Among women aged 40 to 44 the gradient has
+nearly disappeared: 1.78 children in the bottom third and 1.73 in the top,
+a difference of $-0.05$ with a standard error of $0.05$. Lower-income women
+therefore do not have many more children over their lives; they have them
+earlier.
+
+\begin{table}[t]
+\centering
+\caption{Children ever born by family income (CPS, 2024)}
+\label{tab:emp-fertility-income}
+\begin{tabular}{lcccc}
+\toprule
+ & Bottom third & Middle third & Top third & Top minus bottom \\
+\midrule
+Women aged 24--26 & 0.596 & 0.448 & 0.226 & $-0.369$ \\
+ & & & & $(0.052)$ \\
+Women aged 40--44 & 1.784 & 1.702 & 1.733 & $-0.051$ \\
+ & & & & $(0.050)$ \\
+\addlinespace
+\multicolumn{5}{l}{\emph{Reference person or spouse only}}\\
+Women aged 24--26 & 1.214 & 0.923 & 0.569 & $-0.645$ \\
+ & & & & $(0.096)$ \\
+Women aged 40--44 & 2.093 & 1.911 & 1.875 & $-0.217$ \\
+ & & & & $(0.048)$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} June 2024 CPS Fertility Supplement. Mean number
+of children ever born, capped at three, weighted by the CPS person weight.
+Thirds are equal-weight groups of family money income in the previous twelve
+months; women in an income bracket that straddles a cut-off are split across
+groups in proportion to the bracket's mass. Standard errors in parentheses are
+approximate, clustered by household, and ignore the CPS sample design. 1,673
+women aged 24--26 and 3,278 aged 40--44.
+% [DATA] output/model/credit_mechanism_20261004/measurement/tables.json,
+% keys age24_26_all_women_fractional_weighted_thirds etc.; AUDIT.md there.
+% Status: "cached_only_diagnostic_not_calibration". Not a calibration target.
+\end{minipage}
+\end{table}
+
+Two features of the measurement limit how far this fact can be pushed. First,
+a woman of 25 who lives with her parents reports her parents' family income,
+which overstates the resources of young childless women. Restricting to women
+who head a household or are married to its head, as in the second panel,
+raises fertility at every income level and makes the young gradient steeper,
+not flatter. Second, a birth lowers a mother's earnings, so part of the
+gradient at young ages runs from children to income. The fact is therefore a
+description of who has children early, not an estimate of how income affects
+fertility, and I use it to evaluate the model rather than to calibrate it.
+% NOTE for Tommaso: chain 13 gives 0.124/0.508/0.973 (24-26) and
+% 1.318/1.782/2.104 (40-44) by thirds of the persistent earnings state
+% [MODEL, chain 13, fixed price; thread_credit_null/README.md]. The model
+% ranks by current earnings state z, the CPS by family income. This is the
+% largest untargeted miss; it belongs in the quantification, not here.
+
+\subsubsection*{Ownership around parenthood.}
+The PSID event study above shows ownership rising by 11 percentage points in
+the two years around the first birth and by 16 points three to four years
+later, on a base of 41 percent. The cross-section shows the same gap among
+established households. In the 2005--2006 American Community Survey (ACS),
+household heads aged 30 to 55 whose oldest child is under four are 12.8
+percentage points more likely to own than heads with no children, and 67.6
+percent of all heads in this age range own their home.
+% [DATA] recent_parent_ownership 0.12761, ownership_30_55 0.67626; ACS
+% 2005-06, HHWT; code/empirical/housing/build_initial_housing_profile_diagnostic.py.
+% Chain 11 rows 10 and 13.
+\mocktodo{state the dwelling-structure restriction used in both ACS ownership
+moments (UNITSSTR codes 3--10 in the builder) in words, and say whether it is
+also imposed on the model observer.}
+
+\subsubsection*{Facts used in the quantification.}
+Table~\ref{tab:emp-targets} collects the measured moments the model is asked
+to match, with their sources and samples. The quantification
+explains which parameter each one disciplines. Two of them are new relative to
+the housing evidence above: the number of children by age 25, which
+summarizes how early families form, and the room response to the first birth,
+measured in the sample that fixes household position before the birth.
+
+\begin{table}[t]
+\centering
+\caption{Measured moments}
+\label{tab:emp-targets}
+\small
+\begin{tabularx}{\linewidth}{Xccl}
+\toprule
+Moment & Value & Data & Sample \\
+\midrule
+\multicolumn{4}{l}{\emph{Fertility}}\\
+Childless, women 40--44 & 0.198 & CPS 2004, 2006 & women 40--44 \\
+Exactly one child, among mothers 40--44 & 0.214 & CPS 2004, 2006 & women 40--44 \\
+Children ever born at age 25 & 0.810 & CPS 2004, 2006 & women aged 25 \\
+Mean age at first birth & 25.98 & NCHS 2003--2006 & all first births \\
+Share of first births at 30 or later$^{\dagger}$ & 0.249 & NCHS 2003--2006 & all first births \\
+\addlinespace
+\multicolumn{4}{l}{\emph{Housing}}\\
+Mean rooms & 5.73 & AHS 2007 & heads 18--85 \\
+Ownership rate & 0.676 & ACS 2005--2006 & heads 30--55 \\
+Ownership gap, recent parents minus childless & 0.128 & ACS 2005--2006 & heads 30--55 \\
+Rooms added three to four years after first birth & 1.465 & PSID 1968--2019 & see notes \\
+Rooms, three or more children minus one or two$^{\dagger}$ & 0.385 & ACS 2005--2006 & heads 30--55 \\
+\addlinespace
+\multicolumn{4}{l}{\emph{Wealth}}\\
+Net worth over gross labor earnings & 4.46 & PSID 2005, 2007 & heads 18--85 \\
+Bequest flow over net worth & 0.0073 & SCF 2007 & all households \\
+Wealth-to-income, p90 over median, ages 76--84$^{\dagger}$ & 3.52 & PSID 2003--2005 & heads 76--84 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} $^{\dagger}$ Not targeted; used to evaluate the
+model. Children ever born are capped at three. The room response is the
+Sun--Abraham event-study estimate for calendar years three and four after the
+first biological birth relative to years two and three before it, in the
+sample of adults who were reference person or spouse two to three years before
+the birth (117,853 person-years; standard error 0.050); the household sample
+of Figure~\ref{fig:emp-rooms-path} gives 1.03. Net worth excludes business and
+farm equity and other real estate. The bequest flow is the estate flow
+directed to children.
+\mocktodo{confirm the wealth numerator and the 1.465 sample with Tommaso before
+this table leaves the mock; both changed in the last two weeks.}
+% [DATA] all values are the chain 11 target contract (target fingerprint
+% c7a3d185...), from CALIBRATION_STATUS.md and
+% output/model/overnight_dual_20261004_v1/terminal_collection/a_provisional/
+% target_fit_new_contract.csv. Builders: AHS code/data/ahs_supply_snapshot/
+% build_ahs_2007_room_target.py; PSID rooms code/data/psid_followup_mar2026/
+% sa_rooms_first_birth_v2.do (arm A2h); SCF code/data/scf/build_bequest_flow_2007.py.
+\end{minipage}
+\end{table}
+
+\subsubsection*{Summary.}
+Children arrive early, mostly in the mid twenties, and earliest in
+lower-income families. Their arrival coincides with a move into a larger
+dwelling and, for many families, into ownership. The model in the next
+section is built so that both decisions are made by the same household, at the
+same ages, out of the same limited savings.

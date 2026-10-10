@@ -1,0 +1,219 @@
+% ============================================================================
+% NEW MATERIAL, October 6, 2026 (agent draft; not in JMP_DS_draft).
+% Motivating-evidence section for the oct05 build. It reorganizes, without
+% editing them, sections/02_empirical_evidence.tex (housing around the first
+% birth, Sept 24), the fertility facts of 02b, and the "Who holds the large
+% homes" subsection of the Oct 4 sandbox paper
+% (tmp/jmp_paper_sandbox_20261004/paper/sections/02_empirical_evidence.tex,
+% reviewed there against primary sources). Calibration data and targets now
+% live in Section 4. Register: Boar, Gorea and Midrigan, Section 2.
+% ============================================================================
+\providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\section{Motivating Evidence}
+\label{sec:empirical-evidence}
+
+This section documents four facts that shape the model. First, children
+arrive early in adult life, and earliest in lower-income families. Second,
+large homes are mostly owned. Third, most large owner-occupied homes are held
+by older households without children at home, while young families hold few.
+Fourth, households enlarge their dwelling and move into ownership within a few
+years of the first birth, and then move less. Together these facts describe
+how a young family obtains space for children: it needs a larger home at the
+start of adult life, when its savings are smallest, and the large homes are
+mostly sold rather than rented and mostly held by an older generation. None
+of the facts isolates an exogenous change in fertility, and I do not use them
+to argue that housing costs lower fertility. Appendix~\ref{app:empirical-data}
+describes the data.
+
+\subsection{Children arrive early}
+
+First births are concentrated in the mid twenties. In the 2003--2006 natality
+records the mean age of mothers at first birth is 26.0 years, and a woman aged
+25 in the 2004 and 2006 Current Population Survey (CPS) has had 0.81 children.
+% [DATA] NCHS 2003-06, 25.976; CPS June 2004/06 women aged 25, 0.810 (capped at 3).
+Early childbearing is concentrated in lower-income families.
+Table~\ref{tab:emp-fertility-income} groups women in the 2024 CPS fertility
+supplement into thirds of family income. Among women aged 24 to 26, those in
+the bottom third have had 0.60 children and those in the top third 0.23. By
+ages 40 to 44 the gradient has nearly disappeared: 1.78 children in the bottom
+third and 1.73 in the top. Lower-income women do not have many more children
+over their lives; they have them earlier, at the ages at which households
+have the least wealth. The fact describes who has children early, not how
+income affects fertility: young women who live with their parents report
+their parents' income, and a birth itself lowers a mother's earnings.
+Restricting the sample to women who head a household or are married to its
+head makes the young gradient steeper, not flatter.
+
+\begin{table}[t]
+\centering
+\caption{Children ever born by family income (CPS, 2024)}
+\label{tab:emp-fertility-income}
+\begin{tabular}{lcccc}
+\toprule
+ & Bottom third & Middle third & Top third & Top minus bottom \\
+\midrule
+Women aged 24--26 & 0.596 & 0.448 & 0.226 & $-0.369$ \ $(0.052)$ \\
+Women aged 40--44 & 1.784 & 1.702 & 1.733 & $-0.051$ \ $(0.050)$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} June 2024 CPS Fertility Supplement. Mean
+children ever born, capped at three, weighted by the person weight. Thirds
+are equal-weight groups of family money income in the previous twelve months.
+Approximate standard errors in parentheses, clustered by household. 1,673
+women aged 24--26 and 3,278 aged 40--44.
+% [DATA] output/model/credit_mechanism_20261004/measurement/tables.json.
+\end{minipage}
+\end{table}
+
+\subsection{Large homes are owned}
+
+Figure~\ref{fig:tenure-by-size} divides the homes of each size in the 2023
+American Housing Survey (AHS) by tenure. Of the homes with four or more
+bedrooms, 87 percent are owner-occupied and 9 percent are rented; of the homes
+with at most one bedroom, 13 percent are owner-occupied and 74 percent are
+rented. Measured in rooms, the unit used in the rest of the paper, 43.0
+percent of owner-occupied homes have seven or more rooms, against 7.5 percent
+of rented homes. The gap persists among families: in households with children,
+owners occupy 6.8 rooms on average and renters 5.2. Nearly half of renter households
+with children, 48.7 percent, live in homes with at most two bedrooms,
+against 7.4 percent of owner households with children.
+% [DATA] AHS 2023 ahs_children_space_mismatch.csv (code/data/ahs_supply_snapshot/
+% output_ahs_family_unit_menu_national/). These shares describe the
+homes households occupy, not the homes offered for rent. They show that, in
+the existing stock, a family that wants a large dwelling typically buys one.
+% [DATA] AHS 2023 national PUF; code/data/ahs_supply_snapshot/ (sandbox
+% FIGURES.md maps the figure to its source).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.62\linewidth]{ahs_tenure_share_within_size}
+\caption{Tenure of the housing stock by number of bedrooms (AHS 2023)}
+\label{fig:tenure-by-size}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Each bar divides the housing units with the
+stated number of bedrooms into owner-occupied units, units rented for cash,
+and vacant units. Units occupied without payment of cash rent and units whose
+occupants have a usual residence elsewhere are excluded. Weighted by the
+housing-unit weight. Source: American Housing Survey 2023, national
+public-use file.
+\end{minipage}
+\end{figure}
+
+\subsection{Who holds the large homes}
+
+Most large owner-occupied homes are held by households without children at
+home, and the largest group among them is old. Figure~\ref{fig:large-homes}
+divides the owner-occupied homes with six or more rooms in 42 large
+metropolitan areas in the 2023 American Community Survey (ACS) among six groups
+of households, defined by the age of the householder and by whether a child of
+the householder younger than 18 lives in the home. Households aged 60 to 85
+without children at home hold 40.0 percent of these homes, and households
+aged 40 to 59 without children at home another 21.8 percent. Households aged
+22 to 39 with children hold 10.6 percent. Across all ages, 68.3 percent of the
+large owner-occupied homes house no child of the householder, close to the
+72.9 percent of all households in these areas without a child at home. What
+the figure shows is therefore where the large homes sit by age, not that
+childless households hold more than their share. I call the concentration of
+large owner-occupied homes among older households the intergenerational
+allocation of housing. The figure does not show that older households would
+sell at some price, or that young families would have more children if they
+held these homes.
+% [DATA] ACS 2023 one-year, 42 metros, householders 22-85, 289,109 households;
+% numbers as in the Oct 4 sandbox paper (reviewed there).
+\mocktodo{name the builder of the large-homes figure in the data appendix
+(not found in code/ by the Oct 4 sandbox review); the sandbox calls this
+"intergenerational misallocation", which the title uses; choose the term.}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\linewidth]{large_homes_by_age_children_acs2023}
+\caption{Who holds the large owner-occupied homes (ACS 2023)}
+\label{fig:large-homes}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Each bar is the share of owner-occupied homes
+with six or more rooms held by households in the group; the six shares sum to
+100 percent. Groups are defined by the age of the householder and by whether
+an own child of the householder younger than 18 lives in the household.
+Householders aged 22 to 85 in 42 large metropolitan areas, weighted by the
+household weight; 289,109 households.
+\end{minipage}
+\end{figure}
+
+\subsection{Housing around the first birth}
+
+The Panel Study of Income Dynamics (PSID) follows the same families from 1968
+to 2019. I date each woman's first birth from her full history of biological
+children and estimate event studies of her household's housing around it,
+comparing first-time mothers with women who never have children, with the
+estimator of Sun and Abraham (2021) and person and year
+fixed effects. The reference window is two to three years before the birth,
+so that moves made while expecting a child count as responses. The sample
+keeps one woman per household and year who is its reference person or spouse.
+% [DATA] mock 02_empirical_evidence.tex and data_appendix.tex; 63,338
+% person-years, 3,655 first-time mothers, 1,654 childless women.
+
+Households add about one room within four years of the first birth.
+Figure~\ref{fig:emp-rooms-path} reports the path. The dwelling is 0.41 rooms
+larger than in the reference window in the year of the birth, 0.82 rooms one
+to two years later, and 1.03 rooms (standard error 0.07) three to four years
+after it, on a base of 4.7 rooms. Fixing household position before the birth,
+which removes a pre-trend that reflects who heads a household, the increase at
+three to four years is 1.47 rooms (0.05). The added space comes with a move
+into ownership, after which families move less (Figure~\ref{fig:emp-tenure-moves}).
+The ownership rate is 11 percentage points higher in the birth window and 16
+points higher three to four years later, on a base of 41 percent. The
+probability of having moved since the previous interview falls by 16 to 21
+points after the birth and stays lower for a decade, and among those who do
+move, the share moving for more space doubles, from 12 to about 25 percent.
+The ACS shows the same pattern at a point in time: among household heads aged
+30 to 55, those whose oldest child is under four are 12.8 percentage points
+more likely to own than heads without children.
+% [DATA] ACS 2005-06 recent-parent gap 0.12761 (same as Section 4 target).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\linewidth]{first_birth_rooms_psid}
+\caption{Rooms around the first birth (PSID)}
+\label{fig:emp-rooms-path}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Interaction-weighted event-study estimates in
+two-year windows of event time, with 95 percent confidence intervals from
+standard errors clustered by person. One woman per household-year who is the
+reference person or spouse; 63,338 person-years, 3,655 first-time parents and
+1,654 childless women. The hollow marker is the omitted reference window,
+years $-3$ and $-2$. Mean rooms in the reference window: 4.70.
+\end{minipage}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\linewidth]{first_birth_tenure_moves_psid}
+\caption{Ownership and moving around the first birth (PSID)}
+\label{fig:emp-tenure-moves}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Same sample, estimator and reference window as
+Figure~\ref{fig:emp-rooms-path}. ``Moved for more space'' equals one if the
+household moved since the previous interview and gave more space as the first
+reason. Means in the reference window: ownership 0.41, moved 0.58.
+\end{minipage}
+\end{figure}
+
+\subsection{Implications for the model}
+
+These facts motivate the main features of the model. Because children arrive
+early and need space, fertility and housing are chosen jointly over the life
+cycle, with a minimum of space for parents. Because large homes are mostly
+owned, the size of dwelling a family can occupy depends on its tenure; the
+model limits the size of rental units, so a family that wants a large home
+must buy it, with a down payment it accumulates by saving. Because the large
+homes sit with older households, the price of space for young families depends
+on the whole age distribution of households; the model is an
+overlapping-generations economy in which the house price clears one market
+shared by all ages.

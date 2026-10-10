@@ -1,0 +1,175 @@
+% ============================================================================
+% NEW MATERIAL, October 6, 2026 (agent draft; not in JMP_DS_draft).
+% Results section skeleton. Every number is from the base point
+% output/model/production/2007 (Oct 6 refit, loss 15.07, provisional) unless a
+% comment says otherwise:
+%   untargeted moments: output/model/production/2007/plotted_long.csv
+%   price and credit arms: output/model/jmp_draft_deck_20261005/
+%     refit_best_15p07_credit/results.csv (fixed price fp_*, stationary GE ge_*)
+% Results that exist only at chain 11, chain 13 or the Sept 14 point are
+% NOT typeset; they are listed in comments as the rerun queue.
+% ============================================================================
+\providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\section{Results}
+\label{sec:results}
+
+This section uses the calibrated economy to ask how housing costs and access
+to credit shape fertility. I first evaluate the model on moments it was not
+asked to match. I then raise the price of housing and, separately, relax the
+down-payment requirement, and trace each change to births, ownership and the
+size of homes. Finally, I describe the historical exercise, in which the
+economy moves from 2007 to 2023.
+
+\subsection{Moments not targeted}
+
+The model reproduces the distribution of first births by age, although only
+the mean age was targeted: in the model 34.6 percent of first births occur
+before age 22 and 11.9 percent at ages 30 to 33, against 34.2 and 14.3 percent
+in the data. It misses in three places, each informative about the mechanism.
+% [MODEL] plotted_long.csv first_birth_age, cells 18,22,...; data NCHS.
+
+First, young households own too much. At age 24, 42.9 percent of households
+in the model own their home, against 23.5 percent in the data; by age 40 the
+two agree, at 67.2 and 66.5 percent. The model matches ownership at ages 30
+to 55 by having households buy earlier than they do in the data.
+\mocktodo{name the data source of the ownership-by-age profile in the
+assessment packet (model\_data\_assessment.pdf).}
+
+Second, the first child raises space too much. Households with one child
+occupy 7.3 rooms in the model and 5.9 in the data, against 5.0 and 5.1
+without children. This is the other side of the miss on the first-birth room
+response in Table~\ref{tab:quant-fit-oct06}: the model adds too few rooms
+around the birth itself but ends up with too many once the child is there.
+\mocktodo{these two statements are hard to reconcile without the event-time
+paths; check the rooms-by-children observer (cross-section, all ages) against
+the event-study observer before keeping the sentence.}
+
+Third, and most important, the model gets the income gradient of fertility
+wrong. Among households aged 24 to 26, those in the bottom third of income
+have 0.15 children in the model and 0.61 in the data, and those in the top
+third 0.94 and 0.23. By ages 40 to 44 the model's gradient is still positive,
+1.50 against 2.31, while the data's is slightly negative. In the model, the
+cost of the parent floor is a large share of income for the poorest
+households, so they postpone or forgo children; in the data they have them
+earliest. Section~\ref{sec:results-price} shows why this matters for the
+response of births to housing costs.
+% [MODEL] plotted_long.csv income_24_26 (Model .149/.554/.943; Data
+% .608/.453/.226), income_40_44 (Model 1.498/1.969/2.311; Data
+% 2.013/1.891/1.851). The data columns differ from Table 1 (0.596/.../1.784):
+% different grouping (assessment packet vs measurement/tables.json).
+\mocktodo{use one definition of the CPS income thirds in Table~\ref{tab:emp-fertility-income}
+and here; the assessment packet and the Section 2 table differ by up to 0.28
+children at 40--44.}
+
+\subsection{Housing costs and births}
+\label{sec:results-price}
+
+The cost of a child in the model has two parts. The equivalence scale raises
+the spending needed to keep consumption per person constant, and the parent
+floor requires $h_P$ rooms before housing yields any services. The second part
+is large. At the calibrated price, a room rents for 0.141 per period, so the
+floor costs $0.141\times2.585=0.363$ per period, or 9.1 percent of mean annual
+earnings each year. For a household entering at 18 with average productivity
+it is 12.6 percent of its gross earnings.
+% [MODEL] r = user_cost_rate 0.18028 x P 0.77952 = 0.14053 per room per
+% period; h_P 2.58534; annual 0.0908; entrant annual gross 0.72055.
+
+I raise the house price and the rent by 10 percent and hold all other prices
+and policies fixed. Births fall by 4.9 percent. Ownership at ages 18 to 29
+falls by 2.8 percentage points, and young households occupy 6.6 percent fewer
+rooms. Table~\ref{tab:results-experiments} reports the full set of
+responses.
+% [MODEL] fp_price110: births -4.8828%, own 18-29 -2.7936 pp, rooms 18-29
+% -6.5557%, mean rooms -5.9773%.
+\mocktodo{split the price effect into an income effect and the cost of the
+floor at the base point (rerun the Shapley split; it exists only at chain 11,
+where the floor accounts for 60 percent and income for 45 percent).}
+\mocktodo{add the stationary general-equilibrium version of the price
+experiment; only the fixed-price arm exists at the base point.}
+
+\subsection{Credit and births}
+\label{sec:results-credit}
+
+Because rent equals the user cost of an owner and households and landlords
+face the same interest rate, a room costs the same per period whether it is
+rented or owned. The down-payment requirement therefore governs when a
+household can buy, not what its space costs over the life cycle. I raise the
+financed share $\phi$ from 0.80 to 0.95, holding prices fixed. Ownership at
+ages 18 to 29 rises by 25 percentage points, from 43 to 68 percent, and
+births fall by 1.4 percent. With $\phi=1$, ownership rises by 29 points and
+births fall by 1.3 percent.
+% [MODEL] fp_phi095: births -1.4400%, own 18-29 +25.10 pp (0.4335 -> 0.6845);
+% fp_phi100: births -1.3480%, own 18-29 +28.82 pp.
+
+The fall in births comes from the homes that newly eligible buyers choose.
+Among childless households aged 18 to 37, the share that owns a two-room home
+rises from 6.7 to 42.2 percent. Two rooms are below the parent floor, so a
+household in such a home must move before it can have a child, and moving
+costs 6 percent of the home's value out of little equity.
+% [MODEL] refit_best_15p07_credit/README.md starter-home check: renter /
+% 2-room owner / larger owner 74.1/6.7/19.3 -> 28.4/42.2/29.4 at phi .95.
+\mocktodo{decompose the credit effect at the base point into the change in
+decisions at a given state and the change in the distribution of states
+(exists only at chains 11 and 13; at chain 11 the distribution term dominates).}
+
+In a stationary equilibrium, completed fertility must equal replacement, so a
+change in credit cannot change births per household in the long run; it
+changes the price at which the population replaces itself, and the size of the
+population. With $\phi=0.95$, the stationary price is 2.9 percent lower and
+the number of households 3.0 percent lower.
+% [MODEL] ge_phi095: price -2.936%, population_scale 0.97053, births
+% per household -0.08% (closure); ge_phi100: price -1.978%, scale 0.98365.
+\mocktodo{check the sign and wording of the population result with Tommaso
+before keeping it; it is a stationary comparison, not a transition.}
+
+\begin{table}[t]
+\centering
+\caption{Responses to housing costs and credit, 2007 steady state}
+\label{tab:results-experiments}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+ & Births (\%) & Ownership 18--29 (pp) & Rooms 18--29 (\%) & Price (\%) \\
+\midrule
+\emph{Fixed prices} & & & & \\
+House price and rent $+10\%$ & $-4.88$ & $-2.79$ & $-6.56$ & $+10.0$ \\
+Financed share $0.80\to0.95$ & $-1.44$ & $+25.10$ & $-0.84$ & 0 \\
+Financed share $0.80\to1.00$ & $-1.35$ & $+28.82$ & $-0.71$ & 0 \\
+\addlinespace
+\emph{Stationary equilibrium} & & & & \\
+Financed share $0.80\to0.95$ & $-0.08$ & $+27.03$ & $+1.32$ & $-2.94$ \\
+Financed share $0.80\to1.00$ & $-0.10$ & $+28.92$ & $+0.97$ & $-1.98$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Changes relative to the 2007 steady state.
+Births are births per household per period. In the stationary equilibrium the
+price solves the replacement condition, so births per household change only
+through numerical tolerance. The property-tax rebate is rebalanced in every
+case.
+% [MODEL] results.csv rows fp_price110, fp_phi095, fp_phi100, ge_phi095,
+% ge_phi100.
+\end{minipage}
+\end{table}
+
+\subsection{The fertility decline, 2007--2023}
+\label{sec:results-transition}
+
+\mocktodo{Not yet run at the base point. The planned exercise starts from the
+2007 steady state and lowers the child benefit $\psi$ by two unanticipated
+permanent changes, in 2007 and 2015, fitting completed fertility of 1.861 in
+2012--2015 and 1.646 in 2020--2023 (CALIBRATION\_STATUS.md, outstanding item
+1). Figures to report, following the September 14 presentation: the fit of
+fertility to the data, and the four-panel path of fertility, households,
+housing and the house price. The existing transition figures come from an
+earlier, unconverged calibration point and are not used here.}
+
+\subsection{A housing policy}
+\label{sec:results-policy}
+
+\mocktodo{The property-tax experiment of the September 14 presentation
+(doubling the tax with an equal rebate, from the 2023 economy) exists only at
+the earlier point: births $+1.0$ percent after forty years. Rerun from the
+base point's 2023 economy once the transition is accepted.}

@@ -1,0 +1,315 @@
+\appendix
+\section{Data and Empirical Measurement}
+\label{app:empirical-data}
+
+\subsection{Housing stock}
+
+The stock facts use the national public-use household file of the 2023
+American Housing Survey, weighted by the housing-unit weight. Tenure has three
+occupied categories: owned, rented for cash, and occupied without payment of
+cash rent. Shares within a tenure use all units of that tenure as the
+denominator; the share of seven-plus-room homes that are rented instead uses
+all occupied units of that size. It is 8.2 percent when the denominator
+contains owned and cash-rented units and 8.1 percent when it also contains
+units occupied without cash rent and units with unreported tenure. Bedrooms and
+total rooms are different measures. I report bedrooms for comparison with
+other work and rooms because rooms are the PSID and ACS outcome and the unit of
+the model. Mean rooms among households with children are computed over
+households with at least one child present. A cross-section of occupied homes
+does not identify the units offered for rent or the choices families would
+make at other prices.
+
+\subsection{PSID first-birth event studies}
+
+\subsubsection*{Sample.}
+The PSID data are the family and individual files for 1968--2019. An
+observation is a person-year in which the person is a current member of a
+family unit and at least 18 years old. The year of first birth is the earliest
+birth year of a biological child in the person's relationship-to-child
+history, which records up to twenty children. The comparison group consists of
+persons whose full history reports no children; persons with incomplete or
+unknown histories are dropped. A parent enters only if the first birth
+occurs no earlier than the first year in which the person is observed as an
+adult in the PSID. All estimates use the PSID longitudinal individual weight
+and so include only sample persons with a positive weight.
+
+The household sample keeps women who are the reference person or spouse of a
+household containing a single current family unit, and keeps one woman per
+household and year, the reference person first. The sample of adults heading a
+household at baseline keeps all adults, women and men, who were reference
+person or spouse in the window two to three years before the first birth, and
+retains all of their person-years. The complementary sample keeps adults who
+were in the PSID but not reference person or spouse in that window. Each
+sample uses the same comparison group, weights and entry rule.
+
+\subsubsection*{Housing measures.}
+All four housing items are taken from the official year-specific PSID family
+variables and merged to the interview year in which they were reported. Rooms
+are the total rooms in the dwelling. Codes that do not denote a count (9
+through 1984; 99 in 1985--1993; 98 and 99 from 1994) are set to missing, and a
+reported zero is retained. Ownership equals one if the family owns the
+dwelling and zero if it rents; other arrangements are missing. The mobility
+item asks whether the family moved since a fixed date: the spring of the
+previous survey year in the annual waves, and January 1 of the previous survey
+year in recent waves. It therefore records a move within an interval of about
+one year in the annual waves and about two years in the biennial waves. The reason for a move is the first-mentioned
+reason. ``More space'' is the PSID category for expansion of housing (more
+space, more rent, a better place); ``neighborhood'' is the category for
+neighborhood-related reasons (a better neighborhood, schooling, proximity to
+friends or relatives). Unknown or unreported answers are missing, and code 9
+of the reason item (unknown before 2019, homelessness in 2019) is treated as
+missing throughout. An observation contributes to an outcome only when that
+outcome is reported; unreported outcomes are never coded as zero.
+
+A merged PSID panel used in earlier versions of this analysis stored rooms,
+the mobility item and the reason for moving on the row of the interview
+before the one at which they were reported, one year earlier through 1997 and
+two years earlier afterwards. All 811,486 room values in that panel that
+overlap the official variables equal the official value from the following
+interview. An earlier estimate of 0.77 rooms three years after the birth
+therefore compared rooms four to five years after the birth with rooms in the
+year before or the year of the birth; the estimates in the text supersede it.
+
+\subsubsection*{Estimator.}
+Event time is the survey year minus the year of first birth, grouped into the
+windows $\le-8$, $-7/{-6}$, $-5/{-4}$, $-3/{-2}$, $-1/0$, $+1/{+2}$,
+$+3/{+4}$, $+5/{+6}$, $+7/{+8}$, $+9/{+10}$ and $\ge+11$. Two-year windows
+are needed because the PSID became biennial after 1997: from the 1999 birth
+cohort on, no cohort is observed at both single years $-2$ and $+3$, so a
+single-year reference period is observed for only part of the cohorts. The
+omitted window is $-3/{-2}$, and each birth cohort must be observed in it;
+cohorts without an observation in the reference window are excluded (first
+births in 1968--1970 and 1985--1986 in the household sample, none in the
+sample fixed at baseline). I estimate cohort-specific event paths relative to
+the comparison group and average them with cohort-share weights, following Sun
+and Abraham (2021). The regressions include person and survey-year fixed
+effects and complete sets of indicators for age and years of education.
+Standard errors are clustered by person and account for the estimation of the
+cohort shares.
+
+\subsubsection*{Robustness.}
+Table~\ref{tab:app-rooms-robust} collects alternative rooms estimates for the
+household sample. With the year before the birth in the reference window
+($-2/{-1}$), rooms are 0.76 higher two to three years after the birth. Moving
+the reference window earlier raises the estimate at three to four years
+because it counts the pre-birth rise in this sample; the increase measured from
+years $-3/{-2}$ is 1.03, 1.00 and 0.94 across the three reference windows.
+Taking rooms from the merged panel, re-dated to the
+interview at which they were reported, instead of from the official variables
+changes the estimate by 0.02. Using the latest birth cohort instead of the
+childless as comparison group leaves it unchanged. Requiring the first birth
+to follow the woman's first observation as reference person or spouse, rather
+than her first observation as an adult, lowers it by 0.05 and removes 24
+percent of the observations.
+
+\begin{table}[H]
+\centering
+\caption{Rooms around the first birth: alternative samples and reference windows (PSID)}
+\label{tab:app-rooms-robust}
+\small
+\begin{tabularx}{\textwidth}{@{}X l l c r@{}}
+\toprule
+Sample & Reference & Window & Rooms (SE) & Person-years \\
+\midrule
+Women reference person or spouse, each year & $-3/{-2}$ & $+3/{+4}$ & 1.03 (0.07) & 63,338 \\
+\quad same & $-2/{-1}$ & $+2/{+3}$ & 0.76 (0.06) & 65,053 \\
+\quad same & $-5/{-4}$ & $+3/{+4}$ & 1.30 (0.10) & 59,623 \\
+\quad same & $-7/{-6}$ & $+3/{+4}$ & 1.43 (0.13) & 56,749 \\
+\quad same, first birth after first year as reference person or spouse & $-3/{-2}$ & $+3/{+4}$ & 0.97 (0.07) & 48,225 \\
+\addlinespace
+Adults reference person or spouse in $-3/{-2}$ & $-3/{-2}$ & $+3/{+4}$ & 1.47 (0.05) & 117,853 \\
+Adults not reference person or spouse in $-3/{-2}$ & $-3/{-2}$ & $+3/{+4}$ & $-0.38$ (0.08) & 87,239 \\
+All adults & $-3/{-2}$ & $+3/{+4}$ & 0.97 (0.05) & 187,873 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Same estimator, comparison group, controls and
+weights as Table~\ref{tab:app-rooms-path}. ``Reference'' is the omitted window
+and ``Window'' the reported one, both in years relative to the first birth.
+Rows with an earlier reference window measure the change from that window, so
+they include the pre-birth rise of the household sample.
+\end{minipage}
+\end{table}
+
+\subsection{ACS matched pseudo-panel}
+
+The ACS exercise uses the one-year samples for 2005--2019 in all states and
+the District of Columbia. The sample consists of women aged 25 to 45. Because
+the ACS contains no birth histories, the year of first birth is inferred from
+the age of the oldest child linked to the woman in the household roster, and a
+woman's housing before that year is represented by childless women surveyed in
+the corresponding earlier years who share her demographic matching cell.
+Housing outcomes do not enter the matching. Rooms are capped at nine, and codes
+that do not denote a count are missing; bedrooms are capped at five; ownership
+equals one for owned units and zero for rented ones. The regression includes
+event-time indicators from $-5$ to $+10$ with year $-2$ omitted, and state, age
+and survey-year fixed effects; it is weighted by the matching weights, with
+standard errors clustered by source household because a household can supply
+several matched records. The estimation sample has 14.2 million matched
+records from 2.8 million source households.
+
+Between one year before and three years after the birth, rooms rise by 0.49
+(0.01), bedrooms by 0.34 (0.004), and the ownership rate by 3.3 percentage
+points (0.2). Dropping the age fixed effects, or all fixed effects, raises the
+room estimate to 0.70 and 0.71 and the ownership estimate to 10.6 and 10.7
+points; dropping the state and survey-year effects gives 0.53 rooms and 4.3
+points. The pre-birth observations are constructed from other
+women, so the design assumes that matched childless women represent the
+housing future mothers would have had before the birth. The roster does not
+record children living elsewhere or distinguish biological from other
+children.
+
+\subsection{Sibling-composition designs}
+
+The ACS sibling designs use women aged 21 to 35 in the 2005--2019 one-year
+samples whose oldest linked child, if any, is younger than 18. Children are
+linked to mothers through the household roster, which records children living
+with the mother, not all children borne, and does not separate biological from
+step or adoptive children. The regressions control for complete sets of
+indicators for the mother's age at the event, her race, the survey year and
+the event age, are weighted by the person weight, and cluster standard errors
+by household.
+
+In the first design, the sample is mothers whose oldest linked child is aged 0
+to 5 (857,607 mothers). The instrument indicates that the two oldest children
+are recorded at the same age, and the treatment is a second resident child.
+Ages are recorded in whole years without quarter of birth, so the instrument
+is an age-only proxy for a twin birth. The first stage is 0.66 ($F$ statistic
+above 77,000). The reduced form is 0.33 rooms (0.02), and the implied effect of
+a second child is 0.50 rooms (95 percent interval 0.45 to 0.55), 0.33 bedrooms
+(0.31 to 0.36), and 4.7 percentage points in ownership (3.3 to 6.1).
+
+In the second design, the sample is mothers whose two oldest linked children
+differ in age and whose second child is aged 0 to 5 (656,986 mothers); it is
+not restricted to mothers with exactly two children. The instrument indicates
+that the two oldest children have the same sex, and the treatment is a third
+resident child. The first stage is 0.033 ($F=715$). Mothers of same-sex pairs
+live in 0.038 fewer rooms (0.005) and 0.034 fewer bedrooms (0.003), and their
+ownership rate does not differ. Scaled by the first stage, a third child would
+reduce the dwelling by 1.15 rooms (95 percent interval 0.83 to 1.47). Children of the same sex can
+share a bedroom, so sibling sex composition may change the space a family
+needs without changing its size. That possibility would violate the exclusion
+restriction for housing outcomes. The data cannot test it formally, and I do
+not interpret this estimate as the effect of a third child. The same two designs are too imprecise in the PSID to add
+information: same-age births are rare in its smaller sample, and the
+sex-composition first stage is weak.
+
+\subsection{Estimates and the second sample}
+\label{app:empirical-two-samples}
+
+Tables~\ref{tab:app-rooms-path} and \ref{tab:app-tenure-moves} report the
+estimates behind Figures~\ref{fig:emp-rooms-path} and
+\ref{fig:emp-tenure-moves}, for the household sample of the main text and for
+a second sample that fixes household position before the birth. The second
+sample keeps every adult, woman or man, who was a reference person or spouse
+two to three years before the birth, and follows that person in every year.
+Both partners of a couple can appear in it, so its person-clustered standard
+errors are somewhat too small. Figures~\ref{fig:app-rooms-samples} and
+\ref{fig:app-tenure-samples} plot the two samples together. Fixing household
+position before the birth, the pre-birth path is flat; the household sample's
+rise in the four years before the reference window reflects who is in the
+sample at that point.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.9\linewidth]{first_birth_rooms_psid_samples}
+\caption{Rooms around the first birth, two samples (PSID)}
+\label{fig:app-rooms-samples}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.95\linewidth]{first_birth_tenure_moves_psid_samples}
+\caption{Ownership and moving around the first birth, two samples (PSID)}
+\label{fig:app-tenure-samples}
+\end{figure}
+
+\begin{table}[p]
+\centering
+\caption{Rooms around the first birth (PSID)}
+\label{tab:app-rooms-path}
+\small
+\begin{tabular}{@{}l c c@{}}
+\toprule
+ & Women who are reference & Adults who were reference \\
+ & person or spouse & person or spouse two to \\
+ & in each year & three years before the birth \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{Years relative to first birth: change in rooms relative to years $-3$ and $-2$}} \\
+$-8$ or earlier & $-0.50$ (0.12) & $\phantom{-}0.15$ (0.08) \\
+$-7$ and $-6$ & $-0.50$ (0.10) & $\phantom{-}0.04$ (0.06) \\
+$-5$ and $-4$ & $-0.34$ (0.06) & $-0.03$ (0.04) \\
+$-3$ and $-2$ & 0 & 0 \\
+$-1$ and $0$ & $\phantom{-}0.41$ (0.05) & $\phantom{-}0.61$ (0.04) \\
+$+1$ and $+2$ & $\phantom{-}0.82$ (0.06) & $\phantom{-}1.19$ (0.04) \\
+$+3$ and $+4$ & $\phantom{-}1.03$ (0.07) & $\phantom{-}1.47$ (0.05) \\
+$+5$ and $+6$ & $\phantom{-}1.17$ (0.08) & $\phantom{-}1.62$ (0.06) \\
+$+7$ and $+8$ & $\phantom{-}1.20$ (0.09) & $\phantom{-}1.64$ (0.07) \\
+$+9$ and $+10$ & $\phantom{-}1.25$ (0.10) & $\phantom{-}1.83$ (0.08) \\
+$+11$ or later & $\phantom{-}1.16$ (0.13) & $\phantom{-}1.85$ (0.09) \\
+\midrule
+Mean rooms, years $-3$ and $-2$ & 4.70 & 4.69 \\
+Person-years & 63,338 & 117,853 \\
+Persons: first-time parents / childless & 3,655 / 1,654 & 3,302 / 6,008 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Interaction-weighted event-study estimates
+(Sun and Abraham, 2021) in two-year windows of event time, with standard errors
+clustered by person in parentheses. The comparison group consists of adults
+with no children in their full relationship history. All regressions include
+person and survey-year fixed effects and indicators for age and years of
+education, and use PSID longitudinal weights. Rooms are the total rooms in the
+dwelling reported at the interview. The first column excludes first births in
+1968--1970 and 1985--1986, which have no observation in the reference window.
+\end{minipage}
+\end{table}
+
+\begin{table}[p]
+\centering
+\caption{Ownership and moving around the first birth (PSID)}
+\label{tab:app-tenure-moves}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l c c c c c r@{}}
+\toprule
+ & Mean, & \multicolumn{4}{c}{Change relative to years $-3$ and $-2$} & Person- \\
+\cmidrule(lr){3-6}
+ & $-3/{-2}$ & $-1/0$ & $+1/{+2}$ & $+3/{+4}$ & $+5/{+6}$ & years \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{A. Women who are reference person or spouse in each year}} \\
+Owns the dwelling & 0.41 & $\phantom{-}0.11$ (0.01) & $\phantom{-}0.16$ (0.02) & $\phantom{-}0.16$ (0.02) & $\phantom{-}0.14$ (0.02) & 61,229 \\
+Moved since last interview & 0.58 & $-0.04$ (0.02) & $-0.12$ (0.02) & $-0.16$ (0.02) & $-0.16$ (0.02) & 63,817 \\
+Moved for more space & 0.070 & $\phantom{-}0.014$ (0.009) & $\phantom{-}0.034$ (0.009) & $\phantom{-}0.020$ (0.010) & $\phantom{-}0.007$ (0.010) & 62,813 \\
+Moved for neighborhood & 0.032 & $-0.004$ (0.006) & $-0.005$ (0.006) & $-0.010$ (0.005) & $\phantom{-}0.002$ (0.006) & 62,813 \\
+\multicolumn{7}{@{}l}{\quad\textit{Share of moves, households that moved:}} \\
+\quad Share for more space & 0.122 & $\phantom{-}0.054$ (0.017) & $\phantom{-}0.140$ (0.021) & $\phantom{-}0.133$ (0.023) & $\phantom{-}0.108$ (0.026) & 19,456 \\
+\quad Share for neighborhood & 0.054 & $-0.017$ (0.012) & $-0.011$ (0.014) & $-0.017$ (0.014) & $\phantom{-}0.022$ (0.018) & 19,456 \\
+\addlinespace
+\multicolumn{7}{@{}l}{\textit{B. Adults who were reference person or spouse two to three years before the birth}} \\
+Owns the dwelling & 0.43 & $\phantom{-}0.16$ (0.01) & $\phantom{-}0.25$ (0.01) & $\phantom{-}0.27$ (0.01) & $\phantom{-}0.26$ (0.01) & 111,272 \\
+Moved since last interview & 0.54 & $-0.08$ (0.01) & $-0.17$ (0.01) & $-0.21$ (0.01) & $-0.21$ (0.01) & 118,875 \\
+Moved for more space & 0.064 & $\phantom{-}0.015$ (0.006) & $\phantom{-}0.021$ (0.006) & $\phantom{-}0.010$ (0.006) & $\phantom{-}0.009$ (0.006) & 116,697 \\
+Moved for neighborhood & 0.030 & $-0.009$ (0.004) & $-0.008$ (0.004) & $-0.009$ (0.004) & $-0.003$ (0.004) & 116,697 \\
+\multicolumn{7}{@{}l}{\quad\textit{Share of moves, households that moved:}} \\
+\quad Share for more space & 0.123 & $\phantom{-}0.050$ (0.013) & $\phantom{-}0.114$ (0.017) & $\phantom{-}0.142$ (0.020) & $\phantom{-}0.147$ (0.022) & 27,462 \\
+\quad Share for neighborhood & 0.058 & $-0.022$ (0.009) & $\phantom{-}0.005$ (0.011) & $-0.002$ (0.013) & $\phantom{-}0.012$ (0.015) & 27,462 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Same estimator, comparison group, controls,
+weights and reference window as Table~\ref{tab:app-rooms-path}. Columns are
+windows of years relative to the first birth. Entries are changes relative to
+years $-3$ and $-2$, with person-clustered standard errors
+in parentheses; the first column is the weighted mean in the reference window.
+Each outcome uses its own sample of non-missing observations. ``Moved for more
+space'' equals one if the household moved since the previous interview and
+gave expansion of housing (more space, a better place) as the first reason,
+and zero otherwise; ``moved for neighborhood'' is defined in the same way. The
+rows for households that moved restrict the sample to household-years with a
+move and therefore condition on an outcome of the birth.
+\end{minipage}
+\end{table}

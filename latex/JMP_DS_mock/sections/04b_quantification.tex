@@ -1,0 +1,387 @@
+% ============================================================================
+% NEW MATERIAL, October 6, 2026 (agent draft; not in JMP_DS_draft).
+% Adapted from sections/04_quantification.tex (Sept 23, organized after
+% Boar, Gorea and Midrigan), which is left unchanged. Numbers are the base
+% point promoted Oct 6: output/model/production/2007 (Oct 6 refit, Mac chain 7,
+% case 0129_nm; one-birth Estate A + net-estate floor, balanced property-tax
+% rebate, PSID levels entry; loss 15.0712 on the 14-row contract; provisional,
+% fresh native postcheck passed). Read with
+%   python3 code/model/tools/read_results.py fit base_2007
+% Conversions traced in tmp/rebate_entry_impl_20261006/closure_root/code/model
+% (inputs.py:76 beta; e5f_social_security.py:41 income; parameters.py:1237
+% child departure; tools/e5f_initial_fertility_observer.py age windows;
+% engine/distribution.py:2435 bequest annualization).
+% ============================================================================
+\providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\section{Quantification}
+\label{sec:quant-oct06}
+
+I calibrate a stationary economy representing 2007, before the subsequent
+decline in fertility. I use observations from the surrounding years to
+discipline fertility, housing, and household wealth. Fertility moments come
+from the 2004 and 2006 CPS and the 2003--2006 natality records, housing moments
+from the 2005--2006 ACS, the 2007 AHS and the PSID, and wealth from the 2005
+and 2007 PSID and the 2007 SCF. This steady state is the starting point for the
+historical transition.
+
+I organize the parameters into two groups. The first is set outside the
+estimation, from external evidence or direct measurement. The second is
+estimated by matching model moments to their empirical counterparts. I first
+describe the data behind the targets. Before describing either group of
+parameters, I then explain how annual data map into the model's
+four-year period, because almost every parameter and moment passes through
+that mapping.
+
+\subsection{Data}
+\label{sec:quant-data}
+
+The targets combine five data sets, each chosen for the object it measures
+best. Table~\ref{tab:quant-fit-oct06} lists every moment with its source.
+
+\paragraph{Fertility.} The June Fertility Supplement of the CPS records the
+number of children ever born to each woman. I pool the 2004 and 2006
+supplements and measure childlessness and the share of mothers with exactly
+one child among women aged 40 to 44, and the mean number of children ever born
+among women aged 25. Children ever born are capped at three, the largest
+number the model distinguishes. The timing of first births comes from the
+NCHS natality files, which record every birth with the mother's age and the
+birth order; I pool first births in 2003 to 2006.
+
+\paragraph{Housing.} Mean rooms come from the 2007 AHS, for household heads
+aged 18 to 85, without top-coding. Ownership among household heads aged 30 to
+55 and the ownership gap between recent parents, whose oldest child is under
+four, and heads without children come from the 2005--2006 ACS.
+\mocktodo{state the dwelling-structure restriction used in both ACS ownership
+moments (UNITSSTR codes 3--10 in the builder) and whether the model imposes it.}
+The room response to the first birth is the PSID event-study estimate of
+Section~\ref{sec:empirical-evidence} in the sample that fixes household
+position before the birth: 1.465 rooms three to four years after the birth
+(standard error 0.050). I use this sample rather than the household sample of
+Figure~\ref{fig:emp-rooms-path}, which gives 1.03, because the model follows
+the same households before and after the birth.
+
+\paragraph{Wealth.} Aggregate net worth relative to aggregate annual gross
+labor earnings comes from the 2005 and 2007 PSID: net worth of all household
+heads aged 18 to 85, excluding business and farm equity and other real
+estate, over gross labor earnings of heads aged 18 to 65. The bequest flow is
+the annual flow of estates directed to children relative to aggregate net
+worth in the 2007 Survey of Consumer Finances.
+% [DATA] builders: CPS code/data/cps_fertility/; NCHS
+% code/data/nchs_natality_timing/build_first_birth_timing.R; AHS
+% code/data/ahs_supply_snapshot/build_ahs_2007_room_target.py; ACS
+% code/empirical/housing/build_initial_housing_profile_diagnostic.py; PSID rooms
+% code/data/psid_followup_mar2026/sa_rooms_first_birth_v2.do (A2h); SCF
+% code/data/scf/build_bequest_flow_2007.py. Target fingerprint c7a3d185...
+
+\subsection{From annual data to four-year periods}
+\label{sec:quant-period}
+
+A model period lasts four years. The unit of account is mean annual gross
+labor earnings of working-age households, so a model value of one corresponds
+to \$82,882 in the 2005 and 2007 PSID (2022 dollars).
+% [DATA] metadata.json normalizers: psid_annual_gross_labor_age18_65 82881.95;
+% model_annual_gross_labor_before_retirement 1.0522.
+The mapping follows three rules.
+
+\paragraph{Stocks are measured in annual units; flows are four years long.}
+Wealth, house prices and the bequest shifter $\theta_1$ are stocks and are not
+rescaled. Income, consumption, rent and every other flow accrue over the whole
+period, so a flow in the model is four times its annual counterpart. For
+example, an entrant at age 18 with average productivity earns
+$4\times(1-0.080)\times0.721=2.65$ per period after the payroll tax, which is
+0.72 times mean annual gross earnings.
+% [MODEL] e5f_social_security.py:41: income = period_years*(1-tax)*wage*profile;
+% first profile cell 0.72055. Annual gross recovered as income/4/(1-tau).
+A moment that relates a stock to a flow is computed against the annual flow,
+as in the data: the wealth target divides net worth by annual gross earnings,
+and the bequest target divides the estate flow over a period by four before
+dividing it by aggregate wealth.
+
+\paragraph{Rates compound; hazards come from durations.}
+Interest, discounting and depreciation compound over the four years. The gross
+return is $R=1.02^4=1.082$, the period discount factor is $\beta=\beta_{\text{ann}}^4$,
+and the period depreciation rate is $1-(1-\delta_{\text{ann}})^4$. With
+$\beta_{\text{ann}}=0.940$, the period discount factor is $0.780$. The property
+tax is the exception: it is a tax on value levied each year, and I set the
+period rate to four times the annual rate.%
+\footnote{Compounding instead would give a period rate of 4.17 rather than
+4.24 percent of value.}
+\mocktodo{confirm the linear property-tax convention; the code calls it
+explicit and not interchangeable with compounding.}
+Probabilities of events are period probabilities. Children leave home after
+18 years on average, which I implement as a constant departure probability of
+$\lambda=1/4.5=2/9$ per period for each child. Survival probabilities are
+four-year probabilities between successive age cells. The probability $\pi_j$
+that an attempt to have a child succeeds is the probability of a conception
+within four years at that age.
+% [MODEL] parameters.py:68,76,1237 (A_m = 18, stage duration 4.5 periods);
+% fecundity pi = 1 - 0.02 exp(0.134 (age-18)); docs/model/
+% fecundity_schedule_note_20260720.tex fits within-four-year conception
+% probabilities (91/84/64% at 30/35/40).
+\mocktodo{cite the source of the four-year conception probabilities named in
+docs/model/fecundity\_schedule\_note\_20260720.tex, and the life table behind
+the survival probabilities.}
+The earnings process is estimated directly at the four-year frequency rather
+than converted from an annual process. I take non-overlapping four-year means
+of household gross labor earnings in the annual PSID waves of 1984--1997,
+remove age and year effects, and estimate $\rho=\gamma_1/\gamma_0=0.735$ from
+the first two autocovariances of their logarithm. The implied annual
+persistence is $0.735^{1/4}=0.926$.
+% [DATA] single_process_external_estimate.json: gamma0 0.5085, gamma1 0.3735,
+% sigma_eta 0.484, bootstrap rho [0.692, 0.769]; EARNINDRRC.
+
+\paragraph{Age-specific moments use the overlap of data ages with model cells.}
+A model household of age $j$ occupies the four-year cell $[a_j,a_j+4)$. A data
+statistic for an age window weights each cell by the fraction of the cell that
+falls in the window. Within a cell, a household's number of children is
+interpolated linearly between its value at the start and at the end of the
+cell, which is exact if births are spread uniformly over the four years. Two
+examples show how this works. Women aged 40 to 44 overlap the cell
+$[38,42)$ for half its length and the cell $[42,46)$ for three-quarters of its
+length, and in each cell the stock of children is read at the midpoint of the
+overlap. Children ever born at age 25 are read from the cell $[22,26)$,
+seven-eighths of the way from its start to its end. For the mean age at first
+birth, I date a first birth in the model at the midpoint of its cell (20, 24,
+\ldots, 44) and group the natality data into the same four-year cells, so that
+both sides use the same representative ages.
+% [MODEL] tools/e5f_initial_fertility_observer.py:154 (midpoints), 163-182
+% (40-44 overlap weights 0.5 and 0.75; post shares 0.75 and 0.375),
+% 185-218 (age 25: post share (25.5-22)/4 = 0.875).
+
+The room response to the first birth is the one moment for which the period
+length bounds how closely the model can mimic the data. In the model, I
+compare households that have a first birth with otherwise identical
+households that do not, one period, or four years, after the birth. The data
+compare years three and four after the birth with years two and three before
+it. The model's contrast is therefore a four-year response with no
+pre-period, while the data's spans about six years.
+\mocktodo{decide whether to state the six-year versus four-year difference this
+plainly; the measurement review (docs/model/e5f\_target\_measurement\_review\_20260927.md)
+calls the model observer an approximation, not the same estimator.}
+
+\subsection{Parameters set outside the estimation}
+
+Table~\ref{tab:quant-assigned-oct06} summarizes the parameters assigned
+outside the estimation.
+
+\paragraph{Demographics and preferences.}
+Households enter at age 18, retire at 66, and live at most through age 85.
+Survival is certain before retirement. Children remain at home for 18 years
+on average. Births are possible through age 45, with the success probability
+of an attempt falling from 0.98 at 18 to 0.50 at 42. I set risk aversion to
+$\sigma=2$ and use the power equivalence scale with child weight $\omega=0.7$
+and exponent $\nu=0.7$. The consumption weight $\alpha=0.733$ is the
+expenditure share of nonhousing consumption among childless renters in the
+2019--2023 CEX. A birth into the state of three or more children counts as
+3.60 children when computing completed fertility: the mean number of
+children, capped at five, among women aged 40 to 44 with three or more in the
+2024 CPS.
+% [MODEL INPUT] tfr_top_bin_weight 3.602359 (provisional; author review).
+
+\paragraph{Housing finance and transaction costs.}
+The annual real return on the bond is 2 percent, and selling a home costs 6
+percent of its value \citep{greaneyDynamicUrbanEconomics2025}. Annual
+depreciation is 1.416 percent and the annual property tax is 1.060 percent of
+value. Mortgage debt cannot exceed $\phi=0.80$ of the value of the home, so an
+owner must hold at least 20 percent equity at the end of the period in which
+it buys. There is no payment-to-income limit.
+\mocktodo{name the sources of the depreciation and property-tax rates (recorded
+as "adopted national inputs").}
+
+\paragraph{Income and pensions.}
+The deterministic age profile of earnings is normalized to average one over
+working ages. Productivity follows the four-year process described above, with
+$\rho=0.735$ and innovation standard deviation $0.484$, approximated with nine
+states. Entrants draw productivity from its stationary distribution. Every
+retiree receives the same pension. I set the payroll tax so that the pension
+equals 22.9 percent of mean annual gross earnings, the ratio of pension
+income to gross earnings in the CPS ASEC; the stationary pension budget then
+implies a payroll tax of 8.0 percent.
+% [MODEL INPUT] pension_period 0.91778 = 4 x 0.22945; tau_pay 0.080281.
+\mocktodo{confirm the pension/earnings ratio's CPS ASEC year and definition.}
+
+\paragraph{Housing products and supply.}
+Owners choose among homes of $\{2,4,6,8,10\}$ rooms. Renters choose any size
+up to $\bar h^R=6$ rooms. The supply of housing has an elasticity of
+$\zeta=0.63$ with respect to rent. The supply scale $H_0$ is not a free
+parameter: given the other parameters, it is the value at which the housing
+market clears at the price consistent with a constant population.
+% [MODEL INPUT] xi_supply 0.63 ("fixed provisional external mapping");
+% H0 derived = 6.3117 at N0 = 1.
+\mocktodo{cite the source of $\zeta=0.63$ (the September deck cites
+Baum-Snow and Han (2024); check before citing).}
+
+\paragraph{Entry wealth and bequests.}
+Entrants' wealth follows the PSID rule of Section~\ref{sec:model-oct05}:
+net worth of childless renters aged 18 to 24, censored at zero and assigned to
+productivity states by income rank. Under Estate A the bequest motive does not
+depend on the number of children. I fix the bequest shifter $\theta_1$ at 1
+percent of median annual gross earnings, $\theta_1=0.008$.
+
+\begin{table}[H]
+\centering
+\caption{Parameters set outside the estimation}
+\label{tab:quant-assigned-oct06}
+\small
+\begin{tabularx}{\textwidth}{@{}X l X@{}}
+\toprule
+Parameter & Value & Evidence or restriction \\
+\midrule
+Model period & 4 years & Model timing \\
+Entry, retirement, maximum ages & 18, 66, 85 & Life-cycle specification \\
+Child departure per period $\lambda$ & $2/9$ & Mean stay of 18 years \\
+Success of a birth attempt $\pi_j$ & 0.98 (18) to 0.50 (42) & Four-year conception probabilities \\
+Risk aversion $\sigma$ & 2 & Maintained \\
+Equivalence scale $(\omega,\nu)$ & $(0.7,0.7)$ & Maintained power scale \\
+Consumption weight $\alpha$ & 0.733 & CEX 2019--2023, childless renters \\
+Annual real return & 2\% & \citet{greaneyDynamicUrbanEconomics2025} \\
+Annual depreciation; property tax & 1.416\%; 1.060\% & National inputs \\
+Financed share $\phi$ & 0.80 & 20\% equity requirement \\
+Selling cost $\varsigma$ & 6\% & \citet{greaneyDynamicUrbanEconomics2025} \\
+Pension / mean annual earnings & 0.229 & CPS ASEC; implies payroll tax 8.0\% \\
+Persistence $\rho$ (four-year) & 0.735 & PSID 1984--1997 \\
+Innovation SD $\sigma_\eta$ (four-year) & 0.484 & PSID 1984--1997 \\
+Owner house sizes & 2, 4, 6, 8, 10 rooms & \\
+Largest rental unit $\bar h^R$ & 6 rooms & \\
+Housing-supply elasticity $\zeta$ & 0.63 & \\
+Entry wealth & PSID levels & Childless renters 18--24, censored at zero \\
+Bequest shifter $\theta_1$ & 0.008 & 1\% of median annual earnings \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Internally estimated parameters}
+
+I estimate ten parameters jointly to match ten moments, listed in
+Table~\ref{tab:quant-fit-oct06}. In addition, the stationary population
+requires mean completed fertility of 2.1, which the house price delivers in
+equilibrium. Although all parameters are identified jointly, I organize the
+discussion by economic block and describe which moments are most informative
+about each.
+
+\paragraph{Saving.}
+The annual discount factor governs how much households carry across ages.
+Aggregate net worth relative to aggregate annual gross earnings is the most
+informative moment. The target is a ratio of totals, not an average of
+household ratios.
+
+\paragraph{Housing demand and tenure.}
+The room response around the first birth is the most informative moment for
+the parent floor $h_P$: the larger the floor, the more rooms a household must
+add when its first child arrives. Mean rooms disciplines housing demand more
+broadly. The ownership rate and the ownership gap between recent parents and
+childless households are most informative about the ownership premium $\chi$
+and the dispersion $\kappa_H$ of tenure taste shocks.
+
+\paragraph{Fertility.}
+Childlessness is most informative about the first-birth cost $\xi$. The mean
+age at first birth and the number of children by age 25 discipline the timing
+of first births, and with it the dispersion $\kappa_1$ of first-birth taste
+shocks. The share of mothers with exactly one child is most informative about
+the dispersion $\kappa_C$ for later births and the curvature $\gamma$ of the
+child benefit. The level of the child benefit $\psi$ moves all fertility
+moments together.
+
+\paragraph{Bequests.}
+With $\theta_1$ fixed, the bequest flow relative to aggregate wealth is most
+informative about $\theta_0$.
+
+\begin{table}[H]
+\centering
+\caption{Internally estimated parameters}
+\label{tab:quant-parameters-oct06}
+\small
+\begin{tabularx}{\textwidth}{@{}l X r X@{}}
+\toprule
+Parameter & Interpretation & Value & Most informative moments \\
+\midrule
+$\beta_{\text{ann}}$ & Annual discount factor & 0.940 & Wealth / earnings \\
+$\xi$ & First-birth utility cost & 0.309 & Childlessness \\
+$\kappa_1$ & First-birth taste dispersion & 0.121 & First-birth age; children by 25 \\
+$\kappa_C$ & Later-birth taste dispersion & 0.356 & Exactly one child \\
+$\psi$ & Child benefit, level & 0.157 & All fertility moments \\
+$\gamma$ & Child benefit, curvature & 0.098 & Exactly one child \\
+$h_P$ & Parent floor (rooms) & 2.585 & First-birth room response; mean rooms \\
+$\chi$ & Ownership premium & 1.081 & Ownership; recent-parent gap \\
+$\kappa_H$ & Tenure taste dispersion & 0.018 & Ownership; recent-parent gap \\
+$\theta_0$ & Bequest strength & 0.212 & Bequests / wealth \\
+\addlinespace
+$H_0$ & Supply scale (derived) & 6.312 & Market clearing at constant population \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Search bounds: $\beta_{\text{ann}}\in[0.93,0.99]$,
+$h_P\in[0.1,2.6]$, $\kappa_1,\kappa_C\in[0.02,50]$.
+\mocktodo{$h_P$ is within 0.015 of its upper bound and the search flags
+$\kappa_1$ and $\kappa_C$ as near their bounds; decide how to report this.
+$\beta_{\text{ann}}=0.9397$ is below the 0.94 floor recorded as an external
+restriction in July; confirm which restriction applies.}
+% [MODEL] output/model/production/2007/parameters_estate_a.csv.
+\end{minipage}
+\end{table}
+
+\subsection{Target moments and fit}
+
+Table~\ref{tab:quant-fit-oct06} reports the targets and the model's values.
+The model matches childlessness, the share with exactly one child, the timing
+of first births, ownership, the recent-parent ownership gap and the wealth and
+bequest ratios closely. It misses two moments. Households in the model have
+0.55 children by age 25 against 0.81 in the data, so first births start too
+late even though their mean age is matched. And the model's family adds 1.26
+rooms around the first birth against 1.47 in the data, with the floor $h_P$
+near its upper bound.
+
+\begin{table}[t]
+\centering
+\caption{Targets and model moments, 2007 steady state}
+\label{tab:quant-fit-oct06}
+\small
+\begin{tabularx}{\textwidth}{@{}X l r r@{}}
+\toprule
+Moment & Data & Target & Model \\
+\midrule
+\multicolumn{4}{@{}l}{\emph{Fertility}}\\
+Childlessness, women 40--44 (\%) & CPS 2004, 2006 & 19.83 & 20.20 \\
+Exactly one child among mothers 40--44 (\%) & CPS 2004, 2006 & 21.37 & 21.76 \\
+Mean age at first birth (years) & NCHS 2003--2006 & 25.98 & 25.99 \\
+Children ever born at age 25 & CPS 2004, 2006 & 0.810 & 0.551 \\
+First births at age 30+ (\%)$^{\dagger}$ & NCHS 2003--2006 & 24.93 & 23.88 \\
+\addlinespace
+\multicolumn{4}{@{}l}{\emph{Housing}}\\
+Mean rooms, heads 18--85 & AHS 2007 & 5.729 & 5.816 \\
+Ownership, heads 30--55 (\%) & ACS 2005--2006 & 67.63 & 66.68 \\
+Recent-parent ownership gap (pp) & ACS 2005--2006 & 12.76 & 12.72 \\
+Rooms added around the first birth & PSID 1968--2019 & 1.465 & 1.260 \\
+Rooms, 3+ minus 1--2 children$^{\dagger}$ & ACS 2005--2006 & 0.385 & 0.295 \\
+\addlinespace
+\multicolumn{4}{@{}l}{\emph{Wealth}}\\
+Net worth / annual gross earnings & PSID 2005, 2007 & 4.458 & 4.576 \\
+Bequests / wealth (\%) & SCF 2007 & 0.729 & 0.702 \\
+p90/p50 wealth-to-income, ages 76--84$^{\dagger}$ & PSID 2003--2005 & 3.516 & 3.307 \\
+\addlinespace
+Mean completed fertility (equilibrium condition) & --- & 2.10 & 2.10 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} $^{\dagger}$ Not targeted. Samples and definitions in
+Section~\ref{sec:quant-data}.
+\end{minipage}
+\end{table}
+% Full fit (base_2007, loss 15.0712): moment | target | model | gap | weight | loss
+% cps_childlessness .198279 .202033 +.003755 35532.3 0.5009
+% cps_exactly_one .213655 .217574 +.003919 26952.8 0.4139
+% nchs_mean_age 25.97626 25.98889 +.012624 139.828 0.0223
+% nchs_share30 .249278 .238803 -.010475 0 0 (validation)
+% wealth_earnings 4.458387 4.576325 +.117938 7.5951 0.1056
+% bequest_wealth .0072910 .0070194 -.000272 5165289.3 0.3811
+% old_dispersion 3.515935 3.306923 -.209012 0 0 (validation)
+% mean_rooms 5.729434 5.816323 +.086888 128.021 0.9665
+% ownership_30_55 .676260 .666805 -.009455 2339.36 0.2091
+% first_birth_rooms 1.465 1.259836 -.205164 137.565 5.7904
+% family_rooms .385100 .295259 -.089841 0 0 (validation)
+% recent_parent_ownership .127608 .127185 -.000423 27055.8 0.0048
+% early_fertility .809528 .551139 -.258389 100 6.6765
+% initial_normalization 2.1 2.1000001 (normalization, unscored)
