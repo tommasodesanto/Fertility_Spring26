@@ -169,10 +169,14 @@ The deterministic age profile of earnings is normalized to average one over
 working ages. Efficiency follows the four-year process described above, with
 $\rho_z=0.735$ and innovation standard deviation $\sigma_z=0.484$,
 approximated with nine states. Entrants draw efficiency from its stationary
-distribution. Every retiree receives the same pension. I set the pension to
-22.9 percent of mean annual gross earnings, the ratio of pension income to
-gross earnings in the CPS ASEC; the balanced pension budget then implies a
-payroll tax of 8.0 percent.
+distribution. Every retiree receives the same pension. The payroll tax is 8.0
+percent, and the pension is the one that balances the pension budget given
+the age distribution of earnings: 22.9 percent of mean annual gross earnings,
+which matches the ratio of pension income to gross earnings in the CPS ASEC.
+% [CODE] e5f_stationary_paygo.py 47-62: the flat pension is solved from the
+% payroll tax and the exogenous age-income mass (pension 0.9178 per period =
+% 22.9% of mean annual earnings); e5f_social_security.py 50-96 certifies the
+% balance.
 \mocktodo{confirm the pension/earnings ratio's CPS ASEC year and definition.}
 
 \paragraph{Housing products and supply.}
@@ -390,7 +394,7 @@ equilibrium. Appendix~\ref{app:algorithms} describes the solution method.
 Figure~\ref{fig:quant-transition-fit} compares the model's period fertility
 with the data. The two shocks bring fertility to 1.86 in 2011--2014 and 1.65
 in 2019--2022. After 2023, with the preference fixed, period fertility rises
-slowly, to 1.79 by 2063. The recovery comes from the housing market: as the
+slowly, to 1.79 by 2063. The recovery runs through the housing market: as the
 smaller cohorts born after 2007 enter adulthood, the demand for rooms falls
 and so does the price of space.
 
@@ -408,8 +412,9 @@ fertility and its four-year averages.
 \end{figure}
 
 Figure~\ref{fig:quant-full-transition} shows the whole transition, to 2403.
-Period fertility returns to replacement after about a century and a half,
-briefly overshooting it. The number of households falls by about 40 percent,
+Period fertility returns to replacement after about a century and a half and
+stays slightly above it for about a century before settling at replacement.
+The number of households falls by about 40 percent,
 to 0.594 of its 2007 level, total housing by about a quarter, and the house
 price by 38 percent, to 0.485. Because the stock stays on the supply curve,
 the fall in housing demand is split between a smaller stock and a lower price
@@ -437,14 +442,19 @@ The durability of the stock matters for this recovery.
 Figure~\ref{fig:quant-full-transition-fixed} adds a path along which the
 housing stock is frozen at its 2023 level. Because the rooms stay while the
 population shrinks, the price falls faster and further before recovering
-part of the fall, and period fertility rises above replacement in the second
-half of the century before settling back. The
-population then stabilizes about 20 percent below its 2007 level rather than
+part of the fall, and period fertility rises above replacement from about
+the 2070s, peaks near 2.2 around 2100, and settles back. The number of
+households then stabilizes about 20 percent below its 2007 level rather than
 40 percent. Space that cannot be withdrawn is passed on to smaller cohorts as
 cheaper space, and cheaper space raises their fertility: completed fertility
-of the cohort entering in 2029 is 1.72 rather than 1.58, and of the cohort
-entering in 2057 1.93 rather than 1.72.
-% [MODEL] cohort_table.md (frozen stock vs stock that follows the price).
+of the cohort born in 2029 is 1.72 rather than 1.58, and of the cohort born
+in 2057 1.93 rather than 1.72. Most of the gain is composition: fewer
+households of these cohorts are still renting at ages 30 to 33, and renters
+have the fewest children, although the renters who remain also gain.
+% [MODEL] cohort_table.md (frozen stock vs stock that follows the price);
+% "Born" in that table is the birth year of the cohort. Composition:
+% notes/argument_for_corina_20261008.md step 17 (renters at 30-33 fall from
+% a third to a fifth of a cohort; renters who remain 0.92 -> 1.01 for 2009).
 \mocktodo{the cohort numbers come from the frozen-stock comparison of Oct 8
 (cohort\_table.md); confirm they are on the same two-shock path as the
 figure.}
@@ -553,6 +563,9 @@ model against about 10 percent in the data, and almost all of the oldest heads
 own against three quarters. Housing size peaks too early and falls too much
 after 60, and children stay at home longer than in the data, because each
 child leaves with a constant probability.
+% [REVIEW Oct 10] lifecycle_2023.pdf and the deck do not state these numbers
+% (40 percent, about 10 percent, three quarters); the figure file was not
+% available to the review, so they are taken from the draft unverified.
 
 \begin{figure}[t]
 \centering
@@ -579,6 +592,9 @@ child leaves with a constant probability. The model therefore understates the
 intergenerational concentration of large homes. Any reallocation of space
 from old to young that it predicts starts from a distribution in which the
 young already hold more than they do in the data.
+% [REVIEW Oct 10] 22.5 vs 10.6 and 21.6 vs 40.0 confirmed in
+% notes/argument_for_corina_20261008.md (step 17 flag); 9.3 vs 0.7 not found
+% in the notes and the figure file was not available to the review.
 
 \begin{figure}[t]
 \centering

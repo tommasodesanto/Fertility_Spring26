@@ -24,9 +24,9 @@ raise the household's needs for consumption and, above all, for space. Space
 can be rented or bought. A room costs the same per period whether it is
 rented or owned, but the largest dwellings are available only to owners,
 owners enjoy their home somewhat more, selling a home is costly, and buying
-one requires a down payment that must be accumulated by saving. House prices
-and rents are determined in equilibrium by an upward-sloping supply of
-housing. The government runs a pay-as-you-go pension system and taxes
+one requires a down payment, which the household pays out of its wealth and
+the income of the period. House prices and rents are determined in
+equilibrium by an upward-sloping supply of housing. The government runs a pay-as-you-go pension system and taxes
 property, and it returns the property-tax revenue to households as an equal
 transfer.
 
@@ -76,11 +76,17 @@ equivalent adult. The equivalence scale
  e(m_t)=\left(\frac{2+\omega\, m_t}{2}\right)^{\nu}
  \label{eq:m-escale}
 \end{equation}
-measures how many adult equivalents the household contains, so that the same
-spending buys less utility per person in a larger family
-(as in Scholz, Seshadri and Khitatrakun, 2006). The second term, $v(m_t)$, is the direct benefit
-of children at home, with $\psi_t>0$ its level and $\gamma\in[0,1)$ the rate
-at which the benefit of an additional child declines. The level $\psi_t$
+measures how many adult equivalents the household contains relative to a
+childless couple, so that the same spending buys less utility per person in a
+larger family (as in Scholz, Seshadri and Khitatrakun, 2006); it depends on
+the children at home, $m_t$, not on the children ever born. The second term,
+$v(m_t)$, is the direct benefit of children at home, with $\psi_t>0$ its
+level and $\gamma\in[0,1)$ the rate at which the benefit of an additional
+child declines.
+% [CODE] shared.py 290-312: c_bar = 0 under eqscale, escale =
+% (((2+0.7 m)/2)^0.7)^(sigma-1) with m = children at home (cs), which is
+% e(m)^(sigma-1), the multiplier that makes u(x/e) = e^(sigma-1) x^(1-sigma)/(1-sigma);
+% child_preferences.py 31-33: benefit = psi_child m^(1-curvature) for m >= 1. The level $\psi_t$
 carries a time subscript because it is the object that changes in the
 historical exercise of Section~\ref{sec:quant-transition}. Becoming a parent
 carries, in addition, a one-time utility cost $\xi$ at the first birth.
@@ -101,10 +107,19 @@ additional rooms add to its welfare. It is measured in rooms and does not
 depend on the number of children, so it is the first child that creates the
 need for space. The owner multiplier $\chi$ captures the additional services
 an owner obtains from a dwelling of a given size, for example from the
-ability to adapt it, and applies only to the rooms above the requirement.
-% [CODE] owner composite chi*(h - h_P) (kernels.py 858-871). The deck's
-% "Utility Specification" frame writes chi[h - hbar(m)] + [h^R - hbar(m)] as
-% one expression; read tenure by tenure, it is (eq:m-services).
+ability to adapt it, and applies only to the rooms above the requirement. A
+household with children in a dwelling of $h_P$ rooms or fewer obtains
+essentially no housing services, so in practice parents occupy more than
+$h_P$ rooms, whether they rent or own.
+% [CODE] owner services chi*(h - h_P) (kernels.py 922-931: ht_c = hsv -
+% owner_h_bar_scale*hbc, clamped at 1e-10 when h <= h_P, then times
+% owner_service_premium; strict_hbar_feasibility is never passed, so the
+% option is dominated, not infeasible). Renter: rent on h_P is paid first,
+% dc = cbc + ri*hbc, and ht_unc = (1-al)*surplus/ri (kernels.py 726-729,
+% 833-855). h_bar = hbar_first_child_jump + hbar_child_rooms*m (shared.py
+% 291-296). The deck's "Utility Specification" frame writes
+% chi[h - hbar(m)] + [h^R - hbar(m)] as one expression; read tenure by tenure,
+% it is (eq:m-services).
 Together, \eqref{eq:m-utility} and \eqref{eq:m-services} define what a child
 costs. At given prices, a first child raises the spending needed to reach a
 given utility in two ways: through the equivalence scale, which scales up all
@@ -123,7 +138,14 @@ incentives. After the outcome of the attempt is known, the household chooses
 its housing and saving for the period. Housing can therefore adjust to a
 birth within the same period, which matches the timing of the room response
 in Section~\ref{sec:empirical-evidence}.
-% [MODEL INPUT] pi_a = 1 - 0.02 exp(0.134 (age - 18)), zero from 45.
+% [MODEL INPUT] pi_a = 1 - 0.02 exp(0.134 (age - 18)), zero from 45
+% (parameters.py 21-45).
+% [CODE] household.py 1000-1016: V = birth_count_menu(VI, n, m, pi_j,
+% kappa_fert if n == 0 else kappa_fert_continuation, first_birth_fixed_cost,
+% cap = 1), where VI is the housing/saving value after the birth outcome;
+% birth_count.py 46-84: with cap 1 the menu is {wait, attempt} and the
+% attempt value is pi*(VI[n+1,m+1] - xi*1{n=0}) + (1-pi)*VI[n,m], which is
+% (eq:m-wait-attempt) and (eq:m-attempt).
 
 \subsubsection*{Firms and earnings.}
 Competitive firms produce with effective labor, $Y_t=A L_t$, where
@@ -147,6 +169,10 @@ source of income uncertainty. From $a_R$ on, every retiree receives the same
 pension $\varpi_t$.
 % [MODEL INPUT] rho_z = 0.735, sigma_z = 0.484 per four-year period; nine
 % states; pension flat.
+% [CODE] e5f_social_security.py 40-41: income[:, :J_R] = (1-tax)*wage*profile,
+% retirees receive the pension; shared.py 114-131: income_at_state = y*z before
+% retirement, the flat pension after (retirement_income_z_scale = 0), plus the
+% rebate at every age.
 \mocktodo{name the data source of the age profile $e_a$ (not documented in
 the files read).}
 
@@ -163,6 +189,10 @@ buying costs nothing beyond the price. The tenure and dwelling choice is
 subject to type-I extreme-value taste shocks $\varepsilon^H_t$ with scale
 $\kappa_T$, one for each option: renting, keeping the current home, or buying
 each size in $\mathcal H$.
+% [CODE] household.py 194-206: hcost = P h, heq = (1-psi) P h, ocst =
+% (delta + tau_H) P h, dp = (1-phi) P h, bmo = -phi P h; kernels.py 383-474
+% (tenure_logit_kernel): options tn = 0 rent, tn >= 1 own size tn, with the
+% stay value used when tn equals the current size.
 
 \subsubsection*{Rents and housing supply.}
 Competitive landlords own the rental stock. A landlord buys a room at $P_t$,
@@ -183,6 +213,10 @@ cost of selling $\psi^s$, and the down payment described next. Along a
 transition, \eqref{eq:m-rent} prices rent net of the expected capital gain,
 so when the price is expected to recover, rent lies below the static user
 cost.
+% [CODE] steady state: inputs.py 159, user_cost_rate = (R_gross - 1) + delta
+% + tau_H = 0.18028 per period; equilibrium.py 641, r = user_cost_rate * p.
+% The dated rule along a transition is implemented in the transition runner,
+% which is not in the engine files reviewed; it is stated as in the deck.
 
 Housing is supplied by a competitive construction sector with a constant
 elasticity with respect to the price,
@@ -196,24 +230,54 @@ price within a period. Section~\ref{sec:policy-slow} replaces this with a
 stock that adjusts slowly toward the same curve.
 % [MODEL INPUT] eta = 0.63; H0 = 6.805 on this scale (engine: H0_code 6.312
 % on the scale (u P / 0.16)^eta).
+% [CODE] distribution.py 3213-3223 and 3256-3257, native_phase_b.py 97-99:
+% supply = H0 * (user_cost_rate * p / r_bar) ** xi_supply, xi_supply = 0.63,
+% r_bar = 0.16; demand = renter rooms + owner rooms. H0 = 6.312 *
+% (0.18028/0.16)^0.63 = 6.805. inputs.py: eta_supply = 1.75 is an unused
+% field; the elasticity in the law is xi_supply.
 
 \subsubsection*{Saving and mortgages.}
 Households save in a one-period bond $b_{t+1}$ with gross return $R_b$, fixed
 in the world market; $b_{t+1}<0$ is mortgage debt. Borrowing must be secured
-by a home: renters cannot borrow. At origination, a buyer must put down at
-least a fraction $1-\phi$ of the price,
+by a home: a renter cannot borrow, $b_{t+1}\geq0$. At origination, a buyer
+must put down at least a fraction $1-\phi$ of the price,
 \begin{equation}
  b_{t+1}\geq-\phi\,P_t h_t ,
  \label{eq:m-ltv}
 \end{equation}
 and afterwards the house is collateral for an owner who stays,
-$b_{t+1}\geq\min\{b_t,-\phi P_t h_t\}$. An owner whose debt exceeds
+$b_{t+1}\geq\min\{b_t,-\phi P_t h_t\}$: a stayer pays the interest on its
+mortgage and does not borrow more. An owner whose debt exceeds
 $\phi P_t h_t$ after a fall in the price is therefore not forced to repay,
-but cannot borrow more. Since $b_{t+1}$ is the outcome of the household's
-consumption--saving choice, the down payment is accumulated through saving;
-there is no separate rule for how it is financed. Mortgages carry no
-amortization schedule and no limit on payments relative to income.
-% [CODE] stayer floor min(b, -phi P h); no amortization; no PTI; phi = 0.80.
+but cannot borrow more. The down payment is paid out of the wealth the
+household brings into the period and the income it earns during it. With the
+budget constraint below, \eqref{eq:m-ltv} makes a purchase feasible when
+$R_b b_t+y^d_t+T_t\geq(1-\phi)P_t h_t$, so a household with little wealth
+can buy out of a period's income, and there is no separate rule for how the
+down payment is financed. Two further restrictions keep estates
+nonnegative. From retirement on, when the household may die, its debt may not
+exceed the sale value of its home net of the selling cost,
+$b_{t+1}\geq-(1-\psi^s)P_t h_t$. An owner may sell and return to renting only
+if the net proceeds repay the mortgage, $R_b b_t+(1-\psi^s)P_t h_{t-1}\geq0$.
+Mortgages carry no amortization schedule and no limit on payments relative
+to income.
+% [CODE] renter floor: household.py 47-58 (unsecured_credit_limit = 0, so
+% b' >= 0). Origination: household.py 205-206 (dp = (1-phi) P h, bmo =
+% -phi P h), kernels.py 955-959 (total_floor = bf + unsecured_floor, with the
+% unsecured part zero); phi = 0.80. Down payment from post-interest wealth
+% plus income: household.py 926-931, dp_choice = (dp_arr - income)/R and
+% bmo_purchase = (bmo - income)/R; kernels.py 433-445, a buyer from renting
+% is infeasible if b < dp_choice or b - P h/R < bmo_purchase, both of which
+% read R b + y >= (1-phi) P h (income includes the rebate, shared.py
+% 114-131). Stayer: kernels.py 976-979, total_floor = max(min(b, -phi P h),
+% due_death_floor); household.py 61-72. Net-estate floor: household.py
+% 40-44, -(1-psi) P h when death_possible_at_age (household.py 33-38: last
+% cell or survival < 1, so from the retirement cell on); kernels.py 980-983
+% applied to buyers and stayers. Sale solvency: kernels.py 417-420, selling to
+% rent is infeasible if R b + (1-psi) P h < 0 (require_owner_sale_solvency;
+% credit.py 5-19). A seller who rebuys needs R b + (1-psi) P h_old + y >=
+% (1-phi) P h_new (kernels.py 447-451). No amortization, no PTI
+% (household.py 729-742 forbid them with native_purchase_income).
 
 \subsubsection*{Budget constraint.}
 Transactions in housing take place after interest accrues on the bond carried
@@ -230,7 +294,12 @@ $h^R_t=0$, and a household that keeps its home pays no transaction. The sale
 proceeds and the purchase price are not compounded: a household that sells
 and buys within a period carries only the difference into next period's
 interest.
-% [CODE] post-interest timing (author-adopted Oct 3).
+% [CODE] post-interest timing (author-adopted Oct 3): household.py 317,
+% Rv = R b + y with y including the rebate; kernels.py 417 (sale to rent, b +
+% (1-psi) P h/R), 433 (purchase, b - P h/R), 447 (sell and rebuy, b +
+% ((1-psi) P h_old - P h_new)/R), so transactions are added to the bond after
+% interest and carried into next period's interest only as a net amount.
+% Owner cost (delta + tau_H) P h each period: household.py 200.
 
 \subsubsection*{Bequests.}
 A household that dies leaves its estate net of the selling cost,
@@ -241,19 +310,35 @@ $w^e_{t+1}=b_{t+1}+(1-\psi^s)P_t h_t$, and values it according to
 \end{equation}
 where $\theta_0$ governs the strength of the bequest motive and $\theta_1$
 the extent to which bequests are a luxury.%
-\footnote{The engine subtracts the constant
-$\theta_0\theta_1^{1-\sigma}/(1-\sigma)$, which does not affect any choice.}
+\footnote{The estate enters $B$ as $\max\{w^e_{t+1},0\}$. Under the
+borrowing constraints above it is nonnegative at every age at which death is
+possible, so the truncation never binds.}
 Estates are not received by other households; entrants' wealth is drawn from
 the data instead, as described below.
-% [CODE] Estate A: bequest over b + (1-psi) P h, no recipient, no estate tax.
+% [CODE] Estate A: household.py 845-856, Vbq = bequest_utility_vec(b' + hv)
+% with hv = (1-psi) P h (bequest_utility_net_active); household.py 1548-1582,
+% b = max(b, 0), scale theta0*(1 + theta_n nk) with theta_n = 0, utility
+% (theta1 + b)^(1-sigma)/(1-sigma), the zero-estate normalization only if
+% normalize_bequest_utility (default False; the earlier footnote claiming the
+% engine subtracts theta0 theta1^(1-sigma)/(1-sigma) could not be verified
+% and was removed). No estate tax, estate_receiver = 'none'. Death branch:
+% household.py 868-869 (last cell) and 879-881, Vnr = s*Vnr + (1-s)*Vbq.
 
 \subsubsection*{Government.}
 The government runs two programs, each with a balanced budget in every
 period. The pension system pays every retiree the same pension $\varpi_t$,
 financed by the payroll tax $\tau^w$ on earnings. The property tax raises
-$\tau^p_t$ times the value of the entire housing stock, owned and rented, and
-its revenue is returned to all households as an equal lump-sum transfer
-$T_t$, the rebate.
+$\tau^p_t$ times the value of the entire housing stock, owned and rented:
+owners pay it directly, and renters pay it through the rent, into which the
+landlord passes it by \eqref{eq:m-rent}. Its revenue is returned to all
+households, of every age and tenure, as an equal lump-sum transfer $T_t$, the
+rebate.
+% [CODE] shared.py 595-610: revenue = tau_H * price * (rental rooms + owner
+% rooms); fiscal_closure.py 59-69: T*N = revenue - grants, equal lump sum at
+% all ages (property_tax_rebate_closure = 'balanced'); shared.py 114-131 adds
+% T to income at every age. Pension: e5f_stationary_paygo.py 47-62 solves the
+% flat pension that balances the payroll tax given the exogenous age-income
+% mass; e5f_social_security.py 50-96 certifies the balance (PAYGO_TOL 1e-6).
 
 \subsubsection*{Entry.}
 Households enter at age 18 as childless renters. Each entrant draws its
@@ -266,10 +351,17 @@ model, and observations are assigned to efficiency states by income rank, so
 that the poorest entrants in the data become the least productive entrants in
 the model. The children born in the model form the entering households: the
 number of entrants in each period equals the number of children born sixteen
-to twenty years earlier divided by 2.1, so that the population is constant
-when each household has 2.1 children on average.
-% [CODE] adult_entry.py: entry = adjusted births / 2.1, half entering 16
-% years after birth and half 20; a birth into the top state counts 3.602.
+and twenty years earlier, half from each cohort, divided by 2.1, so that the
+population is constant when each household has 2.1 children on average.
+% [CODE] adult_entry.py 14-32: entry = adjusted births / 2.1, where a birth
+% into the top state n = 3 counts tfr_top_bin_weight = 3.602 children;
+% native_phase_b.py 265-270 and distribution.py 1446-1457: split queue, half
+% due 16 years after birth (4 periods) and half 20 (5 periods).
+% distribution.py 597-613: entrants are childless renters at the first cell,
+% z drawn from z_weights, wealth from the PSID law. entry_wealth.py 197-293:
+% levels_rank law, negative net worth censored at zero, one scale lambda =
+% model mean annual gross entry earnings (transfers excluded) / weighted mean
+% sample family income, exact weighted income-rank allocation to z states.
 
 \subsection{The household's problem}
 \label{sec:m-household}
@@ -294,11 +386,13 @@ After the birth outcome, the value of the household is
 \end{multline}
 subject to the budget constraint \eqref{eq:m-budget}, the services
 \eqref{eq:m-services}, and the borrowing constraints: $b_{t+1}\geq-\phi
-P_th_t$ for a household that buys or rents, and $b_{t+1}\geq\min\{b_t,-\phi
-P_th_t\}$ for an owner who stays. The expectation is over next period's
+P_th_t$ for a household that buys or rents, $b_{t+1}\geq\min\{b_t,-\phi
+P_th_t\}$ for an owner who stays, and, when death is possible,
+$b_{t+1}\geq-(1-\psi^s)P_th_t$. The expectation is over next period's
 efficiency $z_{t+1}$ and the number of children $m_{t+1}$ still at home. An
 option is available only if it leaves room for a saving choice that
-satisfies the borrowing constraint. Given the option $o$ (renting, keeping
+satisfies the borrowing constraints, and a sale only if the net proceeds
+repay the mortgage. Given the option $o$ (renting, keeping
 the home, or buying each size), let $V^o_t$ denote the value of the best
 choice of $c_t$, $h^R_t$ and $b_{t+1}$. With the extreme-value shocks,
 \begin{equation}
@@ -310,6 +404,10 @@ choice of $c_t$, $h^R_t$ and $b_{t+1}$. With the extreme-value shocks,
 Because the composite in \eqref{eq:m-utility} is Cobb--Douglas, a renter not
 at the size limit spends a share $1-\alpha_0$ of its outlay net of the space
 requirement on rooms above $h_P$.
+% [CODE] kernels.py 383-474 (tenure_logit_kernel): VH = best_v +
+% kappa*log(sum exp((V^o - best_v)/kappa)) over the feasible options, which is
+% (eq:m-tenure); kernels.py 833-855: renter ht_unc = (1-al)*surplus/ri, capped
+% at hR_max - h_bar.
 
 \subsubsection*{Fertility.}
 Before the birth outcome, a household with $n_t<3$ in a fertile period
@@ -387,6 +485,12 @@ $H_0$ so that the market clears at the price consistent with replacement. In
 every counterfactual $H_0$ is held fixed and the population adjusts.}
 % [CODE] production/README.md: price root = birth-renewal residual; H0
 % derived under population_one, held fixed (fixed_h0) in counterfactuals.
+% equilibrium.py (model) 84-96: renewal_root = adjusted_births/(2.1*entry)
+% - 1, implied H0 = demand/(u P/r_bar)^xi; native_phase_b.py 25-26, 126-127:
+% RENEWAL_TOL 1e-6, population = supply/demand under fixed_h0;
+% distribution.py 1101-1102 (survival), 1219-1264 (child departure via
+% Pi_child and entrants maturing), 1419-1430 (property-tax revenue and rebate
+% outlays on the current distribution).
 
 \subsection{A graphical illustration}
 \label{sec:m-illustration}
