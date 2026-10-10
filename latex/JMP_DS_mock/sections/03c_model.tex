@@ -1,0 +1,426 @@
+% ============================================================================
+% October 9, 2026 build (agent draft). Model section rewritten from
+% 03b_model.tex in the notation of the JMP deck of Oct 9
+% (latex/JMP_slides/JMP_slides.tex, frames "Environment" to "Equilibrium" and
+% "Utility Specification"). Economic content is the engine of the 14.402
+% base point (one-birth Estate A + net-estate floor, balanced property-tax
+% rebate, PSID wealth-levels entry, post-interest transaction timing). The
+% supply curve is written as in the deck, H = H0 P^eta, with H0 = 6.805: the
+% engine writes H0_code (u P / r_bar)^eta with u the per-period user-cost
+% rate and r_bar = 0.16, so H0 = H0_code (u / r_bar)^eta (commit feaacb00);
+% the policy drivers rescale r_bar with u, so the curve in P is unchanged
+% when the property tax changes.
+% ============================================================================
+\providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\section{Model}
+\label{sec:model}
+
+Motivated by these observations, I build a life-cycle model in which the same
+households choose when to have children, how much housing to occupy, and
+whether to rent or own it. Households live in an overlapping-generations
+economy, face persistent earnings risk, and save in a single bond. Children
+raise the household's needs for consumption and, above all, for space. Space
+can be rented or bought. A room costs the same per period whether it is
+rented or owned, but the largest dwellings are available only to owners,
+owners enjoy their home somewhat more, selling a home is costly, and buying
+one requires a down payment that must be accumulated by saving. House prices
+and rents are determined in equilibrium by an upward-sloping supply of
+housing. The government runs a pay-as-you-go pension system and taxes
+property, and it returns the property-tax revenue to households as an equal
+transfer.
+
+\subsection{Environment}
+
+Time is discrete and a period lasts four years. I describe the households,
+their preferences, earnings, housing, the financial market and the
+government in turn.
+
+\subsubsection*{Demographics.}
+A household enters the economy at age 18 and lives at most through age 85.
+Let $a$ index its age, $a_R$ the age of retirement, 66, and $J$ the last age.
+It works until $a_R$ and then receives a pension. From retirement on, it
+survives from one period to the next with probability $s_a<1$; before
+retirement $s_a=1$.
+% [MODEL INPUT] ages 18,22,...,82 (17 cells), retirement at cell 12 (age 66),
+% survival 0.9391, 0.9185, 0.8850, 0.8300 for cells 12-15, certain death after
+% age 82.
+\mocktodo{name the source of the survival probabilities (not documented in the
+repository).}
+Each household is one decision unit; I do not model the formation or
+dissolution of couples.
+
+Let $n_t$ denote the number of children ever born to the household and $m_t$
+the number currently living at home. Births are possible from 18 through
+age 45, at most one per period. Each child at home leaves independently with
+probability $\lambda$ per period, so that a child stays on average
+$1/\lambda$ periods; departure lowers $m_t$ but not $n_t$. I keep track of
+$n_t$ up to three, with the last state standing for three or more. Children
+are dependents: they do not work and do not make decisions.
+% [MODEL INPUT] fertile cells ages 18-42 (decision at the start of each
+% four-year period, so births up to age 45); lambda = 2/9 per period, mean stay
+% 18 years; top state n = 3 = "3+".
+
+\subsubsection*{Preferences.}
+A household values consumption $c_t$, housing services $\hat h_t$, and
+children at home. Its flow utility is
+\begin{equation}
+ u_t(c_t,\hat h_t;m_t)
+ =\frac{1}{1-\sigma}\left(\frac{c_t^{\alpha_0}\,\hat h_t^{\,1-\alpha_0}}{e(m_t)}\right)^{1-\sigma}
+ +v(m_t),\qquad v(m_t)=\psi_t\, m_t^{1-\gamma}.
+ \label{eq:m-utility}
+\end{equation}
+The first term is utility from the consumption--housing composite per
+equivalent adult. The equivalence scale
+\begin{equation}
+ e(m_t)=\left(\frac{2+\omega\, m_t}{2}\right)^{\nu}
+ \label{eq:m-escale}
+\end{equation}
+measures how many adult equivalents the household contains, so that the same
+spending buys less utility per person in a larger family
+(as in Scholz, Seshadri and Khitatrakun, 2006). The second term, $v(m_t)$, is the direct benefit
+of children at home, with $\psi_t>0$ its level and $\gamma\in[0,1)$ the rate
+at which the benefit of an additional child declines. The level $\psi_t$
+carries a time subscript because it is the object that changes in the
+historical exercise of Section~\ref{sec:quant-transition}. Becoming a parent
+carries, in addition, a one-time utility cost $\xi$ at the first birth.
+
+Children need room. A household with children at home obtains services only
+from the space in excess of a minimum $\bar h(m_t)=h_P\,\1\{m_t>0\}$:
+\begin{equation}
+ \hat h_t=
+ \begin{cases}
+ h^R_t-\bar h(m_t), & \text{renter of } h^R_t \text{ rooms},\\[2pt]
+ \chi\bigl[h_t-\bar h(m_t)\bigr], & \text{owner of } h_t \text{ rooms},
+ \end{cases}
+ \qquad \chi>1 .
+ \label{eq:m-services}
+\end{equation}
+The parenthood space requirement $h_P$ is the space a family needs before
+additional rooms add to its welfare. It is measured in rooms and does not
+depend on the number of children, so it is the first child that creates the
+need for space. The owner multiplier $\chi$ captures the additional services
+an owner obtains from a dwelling of a given size, for example from the
+ability to adapt it, and applies only to the rooms above the requirement.
+% [CODE] owner composite chi*(h - h_P) (kernels.py 858-871). The deck's
+% "Utility Specification" frame writes chi[h - hbar(m)] + [h^R - hbar(m)] as
+% one expression; read tenure by tenure, it is (eq:m-services).
+Together, \eqref{eq:m-utility} and \eqref{eq:m-services} define what a child
+costs. At given prices, a first child raises the spending needed to reach a
+given utility in two ways: through the equivalence scale, which scales up all
+spending, and through the space requirement, which must be paid at the rent
+of a room before any housing yields services. The second part is paid every
+period the child is at home, by renters and owners alike.
+
+\subsubsection*{Fertility.}
+At the start of each fertile period, a household chooses whether to try for a
+child. An attempt succeeds with probability $\pi_a$, which declines with age,
+and adds one child: $n_{t+1}=n_t+1$. The decision is subject to type-I
+extreme-value taste shocks $\varepsilon^F_t$ with scale $\kappa_1$ when the
+household is childless and $\kappa_C$ when it already has children, so that
+childlessness and family size can respond differently to the same change in
+incentives. After the outcome of the attempt is known, the household chooses
+its housing and saving for the period. Housing can therefore adjust to a
+birth within the same period, which matches the timing of the room response
+in Section~\ref{sec:empirical-evidence}.
+% [MODEL INPUT] pi_a = 1 - 0.02 exp(0.134 (age - 18)), zero from 45.
+
+\subsubsection*{Firms and earnings.}
+Competitive firms produce with effective labor, $Y_t=A L_t$, where
+$L_t=\int_{a<a_R} e_a z_t\,\dd G_t$ and $G_t$ is the distribution of
+households over states, so the wage per efficiency unit is $w=A$, which I
+normalize to one. Before retirement, a household of age $a$ earns, after the
+payroll tax,
+\begin{equation}
+ y^d_t(a,z_t)=(1-\tau^w)\,w\,e_a\,z_t ,
+ \label{eq:m-earnings}
+\end{equation}
+where $e_a$ is a deterministic age profile and $z_t$ an idiosyncratic labor
+efficiency. Efficiency follows a first-order autoregressive process in logs,
+\begin{equation}
+ \log z_{t+1}=(1-\rho_z)\mu_z+\rho_z\log z_t+\epsilon_{t+1},\qquad
+ \epsilon_{t+1}\sim N(0,\sigma_z^2),
+ \label{eq:m-ar1}
+\end{equation}
+where $\mu_z$ normalizes mean efficiency to one. Earnings risk is the only
+source of income uncertainty. From $a_R$ on, every retiree receives the same
+pension $\varpi_t$.
+% [MODEL INPUT] rho_z = 0.735, sigma_z = 0.484 per four-year period; nine
+% states; pension flat.
+\mocktodo{name the data source of the age profile $e_a$ (not documented in
+the files read).}
+
+\subsubsection*{Housing and tenure.}
+Housing is measured in rooms and trades at price $P_t$ per room. An owner
+lives in a house of $h_t\in\mathcal H=\{2,4,6,8,10\}$ rooms. A renter rents
+any $h^R_t\in[0,\bar h^R]$ rooms at rent $r_t$ per room, with
+$\bar h^R<\max\mathcal H$, so the largest dwellings are reachable only
+through ownership, as in the American Housing Survey facts of
+Section~\ref{sec:empirical-evidence}. I call this tenure segmentation. Owners
+pay depreciation $\delta_H$ and property tax $\tau^p_t$ on the value of their
+home each period. Selling a home costs a fraction $\psi^s$ of its value;
+buying costs nothing beyond the price. The tenure and dwelling choice is
+subject to type-I extreme-value taste shocks $\varepsilon^H_t$ with scale
+$\kappa_T$, one for each option: renting, keeping the current home, or buying
+each size in $\mathcal H$.
+
+\subsubsection*{Rents and housing supply.}
+Competitive landlords own the rental stock. A landlord buys a room at $P_t$,
+pays depreciation and property tax, rents it out at $r_t$, and sells it at
+$P_{t+1}$. Landlords finance themselves at the household bond return $R_b$,
+so zero profits require that rent equal the user cost of housing,
+\begin{equation}
+ r_t=(R_b+\delta_H+\tau^p_t)P_t-P_{t+1},
+ \qquad\text{and in a steady state}\qquad
+ r=(R_b-1+\delta_H+\tau^p)P .
+ \label{eq:m-rent}
+\end{equation}
+Because rent equals the user cost and households and landlords borrow and
+save at the same rate, a room costs the same per period whether it is rented
+or owned. Tenure matters for the cost of a family through four features
+only: the size limit on rentals $\bar h^R$, the owner multiplier $\chi$, the
+cost of selling $\psi^s$, and the down payment described next. Along a
+transition, \eqref{eq:m-rent} prices rent net of the expected capital gain,
+so when the price is expected to recover, rent lies below the static user
+cost.
+
+Housing is supplied by a competitive construction sector with a constant
+elasticity with respect to the price,
+\begin{equation}
+ H^s_t=H_0\,P_t^{\eta},
+ \label{eq:m-supply}
+\end{equation}
+where $H_0$ sets the scale of the stock and $\eta$ is the supply elasticity.
+In the baseline, the stock is on this curve at every date: it adjusts to the
+price within a period. Section~\ref{sec:policy-slow} replaces this with a
+stock that adjusts slowly toward the same curve.
+% [MODEL INPUT] eta = 0.63; H0 = 6.805 on this scale (engine: H0_code 6.312
+% on the scale (u P / 0.16)^eta).
+
+\subsubsection*{Saving and mortgages.}
+Households save in a one-period bond $b_{t+1}$ with gross return $R_b$, fixed
+in the world market; $b_{t+1}<0$ is mortgage debt. Borrowing must be secured
+by a home: renters cannot borrow. At origination, a buyer must put down at
+least a fraction $1-\phi$ of the price,
+\begin{equation}
+ b_{t+1}\geq-\phi\,P_t h_t ,
+ \label{eq:m-ltv}
+\end{equation}
+and afterwards the house is collateral for an owner who stays,
+$b_{t+1}\geq\min\{b_t,-\phi P_t h_t\}$. An owner whose debt exceeds
+$\phi P_t h_t$ after a fall in the price is therefore not forced to repay,
+but cannot borrow more. Since $b_{t+1}$ is the outcome of the household's
+consumption--saving choice, the down payment is accumulated through saving;
+there is no separate rule for how it is financed. Mortgages carry no
+amortization schedule and no limit on payments relative to income.
+% [CODE] stayer floor min(b, -phi P h); no amortization; no PTI; phi = 0.80.
+
+\subsubsection*{Budget constraint.}
+Transactions in housing take place after interest accrues on the bond carried
+into the period. A household that enters with $h_{t-1}$ owned rooms (zero for
+a renter) and leaves with $h_t$ owned rooms and $h^R_t$ rented rooms faces
+\begin{equation}
+ c_t+b_{t+1}+r_t h_t^R+(\delta_H+\tau_t^p)P_t h_t
+ =R_b b_t+y_t^d(a,z_t)+T_t-\1\{h_t\neq h_{t-1}\}\,P_t\bigl[h_t-(1-\psi^s)h_{t-1}\bigr],
+ \label{eq:m-budget}
+\end{equation}
+where $y^d_t$ is earnings after the payroll tax or the pension and $T_t$ is
+the lump-sum transfer from the government. A renter has $h_t=0$, an owner
+$h^R_t=0$, and a household that keeps its home pays no transaction. The sale
+proceeds and the purchase price are not compounded: a household that sells
+and buys within a period carries only the difference into next period's
+interest.
+% [CODE] post-interest timing (author-adopted Oct 3).
+
+\subsubsection*{Bequests.}
+A household that dies leaves its estate net of the selling cost,
+$w^e_{t+1}=b_{t+1}+(1-\psi^s)P_t h_t$, and values it according to
+\begin{equation}
+ B(w^e_{t+1})=\theta_0\,\frac{(\theta_1+w^e_{t+1})^{1-\sigma}}{1-\sigma},
+ \label{eq:m-bequest}
+\end{equation}
+where $\theta_0$ governs the strength of the bequest motive and $\theta_1$
+the extent to which bequests are a luxury.%
+\footnote{The engine subtracts the constant
+$\theta_0\theta_1^{1-\sigma}/(1-\sigma)$, which does not affect any choice.}
+Estates are not received by other households; entrants' wealth is drawn from
+the data instead, as described below.
+% [CODE] Estate A: bequest over b + (1-psi) P h, no recipient, no estate tax.
+
+\subsubsection*{Government.}
+The government runs two programs, each with a balanced budget in every
+period. The pension system pays every retiree the same pension $\varpi_t$,
+financed by the payroll tax $\tau^w$ on earnings. The property tax raises
+$\tau^p_t$ times the value of the entire housing stock, owned and rented, and
+its revenue is returned to all households as an equal lump-sum transfer
+$T_t$, the rebate.
+
+\subsubsection*{Entry.}
+Households enter at age 18 as childless renters. Each entrant draws its
+efficiency from the stationary distribution of $z$. Its wealth comes from the
+distribution of net worth among childless renters aged 18 to 24 who head their
+household in the PSID, 1984 to 2019, with negative net worth set to zero.
+Dollar amounts are converted to model units with one common scale, chosen so
+that mean income in this sample equals mean earnings of entrants in the
+model, and observations are assigned to efficiency states by income rank, so
+that the poorest entrants in the data become the least productive entrants in
+the model. The children born in the model form the entering households: the
+number of entrants in each period equals the number of children born sixteen
+to twenty years earlier divided by 2.1, so that the population is constant
+when each household has 2.1 children on average.
+% [CODE] adult_entry.py: entry = adjusted births / 2.1, half entering 16
+% years after birth and half 20; a birth into the top state counts 3.602.
+
+\subsection{The household's problem}
+\label{sec:m-household}
+
+The state of a household at the start of a period is its age $a$, bond
+position $b_t$, housing $h_{t-1}$, efficiency $z_t$, and children $n_t$ and
+$m_t$. A period has two stages. The household first sees its fertility taste
+shocks and decides whether to attempt a birth. It then learns whether the
+attempt succeeded, sees its tenure taste shocks, and chooses tenure,
+dwelling, consumption and saving. Children leave home and efficiency is drawn
+between periods.
+
+\subsubsection*{Housing and saving.}
+After the birth outcome, the value of the household is
+\begin{multline}
+ V^H_t(b_t,h_{t-1},z_t,a,n,m)
+ =\E_{\varepsilon_t^H}\max_{h_t,h_t^R,b_{t+1}}
+ \Bigl\{u_t\big(c_t,\hat h_t;m\big)+\varepsilon_t^H(h_t)\\
+ +\beta\,\E_t\Bigl[s_a V_{t+1}(b_{t+1},h_t,z_{t+1},a+1,n,m_{t+1})
+ +(1-s_a)B(w^e_{t+1})\Bigr]\Bigr\}
+ \label{eq:m-vh}
+\end{multline}
+subject to the budget constraint \eqref{eq:m-budget}, the services
+\eqref{eq:m-services}, and the borrowing constraints: $b_{t+1}\geq-\phi
+P_th_t$ for a household that buys or rents, and $b_{t+1}\geq\min\{b_t,-\phi
+P_th_t\}$ for an owner who stays. The expectation is over next period's
+efficiency $z_{t+1}$ and the number of children $m_{t+1}$ still at home. An
+option is available only if it leaves room for a saving choice that
+satisfies the borrowing constraint. Given the option $o$ (renting, keeping
+the home, or buying each size), let $V^o_t$ denote the value of the best
+choice of $c_t$, $h^R_t$ and $b_{t+1}$. With the extreme-value shocks,
+\begin{equation}
+ V^H_t=\kappa_T\log\sum_{o}\exp\bigl(V^o_t/\kappa_T\bigr),
+ \qquad
+ \pi^H_{t,a}(o)=\frac{\exp(V^o_t/\kappa_T)}{\sum_{o'}\exp(V^{o'}_t/\kappa_T)} .
+ \label{eq:m-tenure}
+\end{equation}
+Because the composite in \eqref{eq:m-utility} is Cobb--Douglas, a renter not
+at the size limit spends a share $1-\alpha_0$ of its outlay net of the space
+requirement on rooms above $h_P$.
+
+\subsubsection*{Fertility.}
+Before the birth outcome, a household with $n_t<3$ in a fertile period
+compares waiting and attempting, with values
+\begin{equation}
+\begin{aligned}
+ W_t^0&=V^H_t(b_t,h_{t-1},z_t,a,n_t,m_t),\\
+ W_t^A&=\pi_a\Bigl[V^H_t(b_t,h_{t-1},z_t,a,n_t+1,m_t+1)-\xi\,\1\{n_t=0\}\Bigr]
+ +(1-\pi_a)\,V^H_t(b_t,h_{t-1},z_t,a,n_t,m_t).
+\end{aligned}
+ \label{eq:m-wait-attempt}
+\end{equation}
+With scale $\kappa(n_t)=\kappa_1$ if $n_t=0$ and $\kappa_C$ otherwise, the
+value at the start of the period is
+\begin{equation}
+ V_t(b_t,h_{t-1},z_t,a,n_t,m_t)
+ =\E_{\varepsilon_t^F}\max\bigl\{W_t^0+\varepsilon^F_{t,0},\;W_t^A+\varepsilon^F_{t,A}\bigr\},
+ \label{eq:m-fertility}
+\end{equation}
+and the probability of attempting a birth is
+\begin{equation}
+ \pi^F_{t,a}(b_t,h_{t-1},z_t,n_t,m_t)
+ =\frac{\exp\{W_t^A/\kappa(n_t)\}}{\exp\{W_t^A/\kappa(n_t)\}+\exp\{W_t^0/\kappa(n_t)\}} .
+ \label{eq:m-attempt}
+\end{equation}
+Outside the fertile ages, or with $n_t=3$, $V_t=V^H_t$. A birth is therefore
+attempted when the value of the household with one more child, net of the
+cost of becoming a parent, exceeds the value of waiting by enough to overcome
+the taste shocks. Anything that changes the resources a household can devote
+to the space a child requires, or the risk around them, changes the gap
+$W^A_t-W^0_t$ and with it the probability of a birth.
+
+\subsection{Equilibrium}
+\label{sec:m-equilibrium}
+
+Let $G_t$ be the distribution of households over states and $N_t$ the number
+of households. Given parameters, an initial population $N_0$ and an initial
+distribution $G_0$, an equilibrium is a sequence
+$\{V_t,g_t,G_t,N_t,P_t,r_t,T_t,\varpi_t\}_{t\geq0}$ such that, at every date:
+\begin{enumerate}
+\item \emph{Households.} Given $\{P_{t'},r_{t'},T_{t'},\varpi_{t'}\}_{t'\geq
+t}$, $V_t$ solves the household problem of Section~\ref{sec:m-household}
+with continuation $V_{t+1}$, and the policy functions $g_t$ (fertility,
+tenure, dwelling, consumption and saving) attain it.
+\item \emph{Rents.} The rent satisfies the landlord's zero-profit condition
+\eqref{eq:m-rent}.
+\item \emph{Housing market.} The rooms occupied by owners and renters equal
+the supply \eqref{eq:m-supply},
+\[
+ N_t\int\bigl[h_t+h^R_t\bigr]\dd G_t=H_0\,P_t^{\eta}.
+\]
+\item \emph{Government.} The pension system balances,
+$\tau^w w\int_{a<a_R}e_az_t\,\dd G_t=\varpi_t\int_{a\geq a_R}\dd G_t$, and the
+rebate returns the property-tax revenue,
+$T_t=\tau^p_tP_t\int\bigl[h_t+h^R_t\bigr]\dd G_t$.
+\item \emph{Population.} Births are $N_t\int\pi_a\pi^F_{t,a}\,\dd G_t$.
+Households survive to the next age with probability $s_a$, and the children
+born form new households when they reach adulthood, as described under Entry.
+\item \emph{Consistency.} $G_{t+1}$ and $N_{t+1}$ follow from $G_t$ and $N_t$
+under $g_t$, the shocks, survival, the departure of children and entry.
+\end{enumerate}
+A stationary equilibrium is an equilibrium in which prices, the pension, the
+rebate and $G_t$ are constant. In a stationary equilibrium the population is
+constant only if households have 2.1 children on average, so the house price
+is the one at which the population reproduces itself, and the population is
+the one that clears the housing market at that price. Two features of the
+equilibrium are worth stating. First, the price of housing links fertility to
+housing supply: more births raise the demand for rooms by families, which
+raises $P_t$ and $r_t$ and with them the cost of the space a child requires.
+Second, because the housing stock is durable and the population responds to
+fertility only with a lag of a generation, a change in fertility moves the
+price of space for decades.%
+\footnote{In the calibration I normalize the 2007 population to one and set
+$H_0$ so that the market clears at the price consistent with replacement. In
+every counterfactual $H_0$ is held fixed and the population adjusts.}
+% [CODE] production/README.md: price root = birth-renewal residual; H0
+% derived under population_one, held fixed (fixed_h0) in counterfactuals.
+
+\subsection{A graphical illustration}
+\label{sec:m-illustration}
+
+Figure~\ref{fig:m-illustration} summarizes how the equilibrium responds to a
+fall in the preference for children. Summarize housing costs by $p$ and
+fertility by $n(p;\psi)$, decreasing in $p$. Panel~(a) of the top row shows
+the housing market: given the adult population $S$, the housing cost
+$P(S;\psi)$ clears the market. Panel~(b) shows fertility as a function of the
+housing cost. At $A$, housing clears at $(S_0,p_0)$ and fertility is at the
+replacement rate $\bar n$. A fall in the preference from $\psi_0$ to $\psi_1$
+first lowers fertility at the unchanged housing cost, from $A$ to $A'$
+(middle row). With fewer children at home, housing demand falls and the
+housing cost adjusts at the inherited population $S_0$, from $A'$ to $B$.
+Over the following generations, smaller entering cohorts reduce housing
+demand further (bottom row). Lower housing costs partly offset the decline in
+the preference, and $C$ marks the new stationary outcome, at which fertility
+is again at replacement with a smaller population and cheaper housing. The
+quantitative transition of Section~\ref{sec:quant-transition} follows these
+steps.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.86\linewidth]{september_housing_fertility_stage_initial}\\[0.4em]
+\includegraphics[width=0.86\linewidth]{september_housing_fertility_stage_impact}\\[0.4em]
+\includegraphics[width=0.86\linewidth]{september_housing_fertility_stage_adjustment}
+\caption{Fertility, housing costs and population: initial steady state,
+impact, and demographic adjustment}
+\label{fig:m-illustration}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Schematic. Panel (a) of each row: housing-market
+clearing; panel (b): housing cost and fertility. Top: the initial steady
+state $A$. Middle: a fall from $\psi_0$ to $\psi_1$ ($A\to A'\to B$). Bottom:
+demographic adjustment to the new stationary outcome $C$.
+\end{minipage}
+\end{figure}

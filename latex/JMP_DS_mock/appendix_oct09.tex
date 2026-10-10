@@ -1,0 +1,154 @@
+% October 9, 2026 build (agent draft): model appendices following the deck's
+% appendix (supply arms, CES variant, solution algorithms). Tables for the CES
+% variant are the deck's generated files (latex/JMP_slides/ces_tables/).
+\section{Housing Supply Arms}
+\label{app:supply}
+
+Figure~\ref{fig:app-slow-transition} compares the estimated transition of
+Section~\ref{sec:quant-transition}, in which the stock stays on the supply
+curve, with the same path when the stock adjusts slowly from 2023, as in
+\eqref{eq:policy-slow}. With the slow stock, households fall less in the
+first century, total housing falls more slowly, and the price falls faster at
+first; the two paths reach the same stationary equilibrium.
+Figures~\ref{fig:app-slow-policies} and~\ref{fig:app-frozen-policies} show the
+paths of the policies of Section~\ref{sec:policy} with the slowly adjusting
+and the frozen stock.
+\mocktodo{the deck's own note: refit the 2007--2023 transition under the
+slowly adjusting stock for these figures (the re-estimated pair of
+Table~\ref{tab:policy-channels} exists for the tax arms only).}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth,trim=0 0 0 50,clip]{../../output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/slow_stock_vs_estimated.pdf}
+\caption{Estimated transition and a slowly adjusting stock from 2023}
+\label{fig:app-slow-transition}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth,trim=0 0 0 50,clip]{../../output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/slow_stock_policies.pdf}
+\caption{Policies from 2023 with a slowly adjusting stock}
+\label{fig:app-slow-policies}
+\par\medskip
+\includegraphics[width=\linewidth,trim=0 0 0 50,clip]{../../output/model/transition_h100_14402_20261007/appendix_supply_arms_20261009/frozen_stock_policies.pdf}
+\caption{Policies from 2023 with the stock frozen at its 2023 level}
+\label{fig:app-frozen-policies}
+\end{figure}
+
+\section{A CES Housing Composite}
+\label{app:ces}
+
+The baseline combines a Cobb--Douglas composite with the space requirement
+$h_P$. As a robustness check I replace both with a CES composite in which
+children raise the rooms needed for given housing services:
+\begin{equation}
+ u_t=\frac{1}{1-\sigma}\left(\frac{Q_t}{e(m_t)}\right)^{1-\sigma}+\psi_t m_t^{1-\gamma},\qquad
+ Q_t=\Bigl[\alpha_0\,c_t^{\rho}+(1-\alpha_0)\Bigl(\frac{\chi^{\1\{\mathrm{own}\}}\,h_t}{k(m_t)}\Bigr)^{\rho}\Bigr]^{1/\rho},
+\end{equation}
+with $\rho=(\varepsilon-1)/\varepsilon$, $\varepsilon=0.67$, and
+$k(m_t)=\exp\bigl[\eta_1\1\{m_t\ge1\}+\eta_2\max(m_t-1,0)\bigr]$. Housing and
+consumption are complements, and without a floor space is not a fixed entry
+cost of a child. I estimate $\eta_1$ and $\eta_2$, the rooms needed by the
+first and each later child at home, and $\alpha_0$, so twelve parameters are
+chosen to match thirteen moments. The new moments are the rent share of
+renters aged 30--55 with no child at home (0.360, CE), the probability of
+moving from renting to owning within four years at ages 22--41 (0.281, PSID),
+and the share of mothers with three or more children (0.357, CPS). The rooms
+added at the first birth are re-measured (1.025, PSID), the room gap between
+larger and smaller families becomes a target, and the recent-parent
+ownership gap becomes a validation moment.
+
+\input{../JMP_slides/ces_tables/numbers.tex}
+Table~\ref{tab:app-ces-fit} reports the fit. It is worse than the
+benchmark's: slightly better on childlessness, family size, rooms and the
+rooms at first birth, and worse on timing, ownership, the rent share, the
+family room gap, wealth and bequests. The responses of completed fertility
+are as in the benchmark: \cesLTVhundred{} with 100 percent financing,
+\cesLowerRisk{} with lower earnings risk, and \cesCapTen{} with a ten-room
+rental cap.
+
+\begin{table}[t]
+\centering
+\caption{CES variant: targets and fit}
+\label{tab:app-ces-fit}
+\small
+\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
+\input{../JMP_slides/ces_tables/fit.tex}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.3\linewidth}\vspace{0pt}
+\input{../JMP_slides/ces_tables/params.tex}
+\end{minipage}
+\end{table}
+
+Before recalibration, Table~\ref{tab:app-ces-credit} re-fits only $\psi$ to
+19 percent childlessness under each specification, at fixed prices and the
+six-room rental cap. Mortgage credit moves completed fertility by between $-2$
+and $+0.3$ percent in all thirteen specifications that reach 19 percent
+childlessness, and the negative sign comes mostly from the floor. Credit to
+renters raises births on impact by 6 to 9 percent and completed fertility by
+between $-0.6$ and $+2.4$ percent in the cases shown.
+
+\begin{table}[t]
+\centering
+\caption{CES variant: credit across specifications}
+\label{tab:app-ces-credit}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}Xccc rr rr@{}}
+\toprule
+ & & & & \multicolumn{2}{c}{Financed share $80\%\to95\%$} & \multicolumn{2}{c}{Renter credit, 2 years} \\
+\cmidrule(lr){5-6}\cmidrule(l){7-8}
+ & $\varepsilon$ & Floor & Need $k$ & Impact & Completed & Impact & Completed \\
+\midrule
+Cobb--Douglas (benchmark) & 1 & yes & 1 & $+0.42\%$ & $-1.35\%$ & $+8.5\%$ & $+0.62\%$ \\
+CES & 0.5 & yes & 1 & $-0.16\%$ & $-1.40\%$ & $+8.0\%$ & $+0.22\%$ \\
+CES & 0.25 & yes & 1 & $-0.06\%$ & $-0.87\%$ & $+7.3\%$ & $-0.25\%$ \\
+CES & 0.5 & yes & 1.5 & $+0.05\%$ & $-1.10\%$ & $+7.0\%$ & $-0.63\%$ \\
+CES, no floor & 0.5 & no & 1 & $+0.44\%$ & $-0.03\%$ & $+6.9\%$ & $+2.25\%$ \\
+CES, no floor & 0.5 & no & 1.5 & $+0.51\%$ & $-0.18\%$ & $+8.3\%$ & $+2.39\%$ \\
+Cobb--Douglas, no floor & 1 & no & 1.5 & $+1.03\%$ & $+0.23\%$ & $+8.3\%$ & $+2.42\%$ \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Each row re-fits only $\psi$ to 19 percent
+childlessness; house prices fixed, rental cap of six rooms.
+\end{minipage}
+\end{table}
+
+\section{Solution Algorithms}
+\label{app:algorithms}
+
+\paragraph{Stationary equilibrium.} I solve for the house price $P$, the
+pension $\varpi$ and the rebate $T$, given parameters and a fixed preference
+for children.
+\begin{enumerate}
+\item Guess $(P,\varpi,T)$ and derive the rent $r$ from the user cost.
+\item Solve the household problem backward over age and compute the choice
+probabilities.
+\item Construct the stationary distribution of households. Set the mass of
+households equal to housing supply divided by mean housing per household.
+\item Compute three residuals: excess demand for housing, the pension budget
+and the rebate budget. The loss is the largest residual in absolute value.
+\item Update $(P,\varpi,T)$ and repeat until the loss is below tolerance.
+Then apply the population law for one period and verify that the
+distribution reproduces itself.
+\end{enumerate}
+
+\paragraph{Transition.} I solve for the paths $(P_t,\varpi_t,T_t)_{t\geq t_0}$,
+given the inherited households and a preference believed permanent.
+\begin{enumerate}
+\item Solve the new stationary equilibrium; it supplies the terminal value
+function.
+\item Guess the three paths and derive rents from \eqref{eq:m-rent}.
+\item Solve the household problem backward in calendar time from the terminal
+value.
+\item Advance households and the queue of entrants forward from the inherited
+state, and aggregate housing demand and taxes at each date.
+\item Compute the three residuals at every date. The loss is the largest
+residual across dates.
+\item Update the paths jointly and repeat until the loss is below tolerance.
+Extend the horizon to check that early responses are stable.
+\end{enumerate}
+The transitions in the paper use 100 four-year periods, with tolerances of
+$2\times10^{-4}$ on the housing market and $2\times10^{-5}$ on the pension and
+the rebate.

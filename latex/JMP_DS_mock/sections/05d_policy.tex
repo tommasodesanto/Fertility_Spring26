@@ -1,0 +1,263 @@
+% ============================================================================
+% October 9, 2026 build (agent draft). Policy section, new. Sources:
+%   elastic stock (the deck's "Policy Results"):
+%     output/model/policy_transition_battery_20261008/h100_torch/
+%     (table_h100.md, tax_vs_credit_h100.pdf), base 14.402, from the 2023 state;
+%   slow stock (deck): tax_vs_credit_h100_slow_stock.pdf;
+%   by supply regime (deck appendix): ptax_by_supply_regime.pdf, h16 runs
+%     (table_h16-20261008T153908-0eb8.md);
+%   slow-stock refit and today's arms: output/model/slow_stock_h100_20261009/
+%     README.md (project copy README-20261009T203735-9f66.md), EXPERIMENTAL;
+%   channel reading: notes/ptax_vs_credit_channels_20261009.md;
+%   long run: \pol macros from latex/JMP_slides/prod_tables/policy.tex
+%     (reconciliation_14p40_20261007, stationary GE at psi 0.110).
+% ============================================================================
+\providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\section{A Housing Policy}
+\label{sec:policy}
+
+Section~\ref{sec:quant-2023} showed that large homes sit with older
+households, and Section~\ref{sec:results} that the per-period cost of space is
+what moves the number of children. A natural policy question follows: can a
+policy that changes who holds housing, and at what price, raise births? I
+study the experiment of \citet{coven2024}. They tax housing by value and
+rebate the revenue equally to all households. Older owners, who hold the most
+housing, pay more than they get back, and young renters get back more than
+they pay. House prices fall, and constrained young households buy sooner or
+buy bigger. I run the same experiment from the 2023 economy: the property tax
+rises unexpectedly and permanently from 1.06 to 2 percent of value a year, and
+its revenue is rebated equally to all households at every date. I follow
+prices, rents, ownership and births along the path, and compare the tax with
+the mortgage credit of Section~\ref{sec:results-2023}, raising the financed
+share from 80 to 95 percent, also in general equilibrium. In both cases the
+preference for children stays at its 2023 value, and every change is measured
+against the baseline path from the same 2023 state.
+
+\subsection{Results with the baseline housing supply}
+\label{sec:policy-baseline}
+
+Figure~\ref{fig:policy-baseline} reports the two policies when the housing
+stock moves along the supply curve at every date. The tax lowers the house
+price by about 6.5 percent on impact, a gap that narrows slowly over the
+century. Births fall by 0.7 percent in 2023 and are 0.3 to 0.7 percent above
+the baseline from the 2030s on. Ownership of the young rises by about 2 to 3
+percentage points at first and by about 1 point later. The adult population
+is 0.4 percent larger by 2100. Mortgage credit raises the ownership of the
+young by 20 to 25 percentage points throughout and barely moves the price.
+Births rise by 0.6 percent on impact, are below the baseline from the late
+2020s, and are 2 percent lower by 2100, and the population is 0.7 percent
+smaller.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth,trim=0 13 0 0,clip]{../../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100.pdf}
+\caption{Property tax and mortgage credit from 2023}
+\label{fig:policy-baseline}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Change relative to the baseline path from 2023
+in births, the house price, ownership at ages 18--29 and the adult population.
+Property tax from 1.06 to 2 percent a year with an equal rebate; mortgage
+credit: financed share from 80 to 95 percent. Housing stock on the supply
+curve at every date.
+\end{minipage}
+\end{figure}
+
+Why is the effect of the tax so small? A tax on value raises the cost of
+holding a room. When the stock can shrink within a period, builders withdraw
+rooms, so the price falls by less than the tax and the rent of a room rises:
+by 13.5 percent on impact and by 10 to 12 percent later. The rebate is then
+largely offset by a higher rent on the space a family needs, and births rise
+by about half a percent. At fixed prices, the same tax raises rent by 19.6
+percent and lowers births by 2.9 percent on impact. What makes the tax
+pro-natal, to the extent it is, is the fall in the price.
+
+\subsection{A slowly adjusting housing stock}
+\label{sec:policy-slow}
+
+Housing is durable, and the stock cannot shrink by four percent in four
+years. I therefore replace the baseline supply with a stock that adjusts
+slowly. Builders replace depreciated rooms each period, and build more when
+prices are high:
+\begin{equation}
+ I_t=\delta_H\,H_0\,P_t^{\eta},\qquad H_t=(1-\delta_H)H_{t-1}+I_t .
+ \label{eq:policy-slow}
+\end{equation}
+In a steady state $I=\delta_H H$, so $H=H_0P^{\eta}$: the long-run supply
+curve, the 2007 steady state and the calibration are unchanged, and only the
+speed of adjustment differs. The stock moves toward the supply curve, closing
+a fraction $\delta_H$ of the gap each year. I compare it with two extremes:
+the baseline, in which the stock moves to the supply curve at once, and a
+stock frozen at its 2023 level.
+
+Figure~\ref{fig:policy-slow} repeats the two experiments with the slowly
+adjusting stock. The tax now lowers the price by 11 percent on impact, and
+the price gap closes over the century as the stock shrinks. Births rise by
+about 2.5 percent on impact and by 3.5 to 4 percent through the middle of the
+century, and the adult population is 3.5 percent larger by 2100. The
+ownership of the young rises by 5 points on impact and is back to the
+baseline by the 2040s. Mortgage credit is almost unaffected by the speed of
+supply: young ownership rises by 19 to 27 points, births rise by less than
+one percent at first and fall by 1.5 percent by 2100.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{../../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100_slow_stock.pdf}
+\caption{Property tax and mortgage credit with a slowly adjusting stock}
+\label{fig:policy-slow}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} As Figure~\ref{fig:policy-baseline}, with the
+housing stock following \eqref{eq:policy-slow} from 2023.
+\end{minipage}
+\end{figure}
+
+Figure~\ref{fig:policy-supply} isolates the role of supply for the tax. With
+the baseline supply, rooms are withdrawn, the rent of a room rises by 13
+percent, and births barely move. With a slow or a fixed stock, the rooms
+stay, the house price falls instead, the rent barely rises on impact, and
+births rise by 3 to 4 percent. The tax is pro-natal when the price absorbs it,
+and nearly neutral when supply passes it into rents.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../../output/model/jmp_slides_transition_figures_20261009/ptax_by_supply_regime.pdf}
+\caption{The property tax under three housing supplies}
+\label{fig:policy-supply}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Property tax from 1.06 to 2 percent a year,
+rebated, from 2023: change relative to the no-tax path in births, the house
+price, rent per room and the population, with the stock on the supply curve
+at every date, adjusting slowly as in \eqref{eq:policy-slow}, or fixed at its
+2023 level. Sixteen-period runs.
+\end{minipage}
+\end{figure}
+
+\subsection{Where the effect of the tax comes from}
+\label{sec:policy-channels}
+
+The slowly adjusting stock changes the transition of
+Section~\ref{sec:quant-transition}, so I re-estimate the two preference
+shocks under it, matching the same two fertility rates, and run the tax from
+the 2023 state of the re-estimated path.%
+\footnote{The re-estimated shocks are $\psi_1=0.1295$ and $\psi_2=0.1062$,
+which match period fertility of 1.861 and 1.646 to within 0.0004. The 2023
+price is 10 percent below its 2007 level.}
+Table~\ref{tab:policy-channels} reports the tax under four variants, against
+the no-policy path from the same state. Births are reported in 2023, as the
+mean over 2031--2035, and in 2067; completed fertility is that of the cohort
+aged 18 to 21 in 2023.
+
+\begin{table}[t]
+\centering
+\caption{Where the effect of the property tax comes from}
+\label{tab:policy-channels}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{Births (\%)} & Completed & Price & Rent per \\
+\cmidrule(lr){2-4}
+ & 2023 & 2031--35 & 2067 & fertility (\%) & 2023 (\%) & room 2023 (\%) \\
+\midrule
+\emph{Slow stock, $\eta=0.63$} &&&&&& \\
+\quad Tax, rebated & $+2.4$ & $+3.3$ & $+3.4$ & $+3.9$ & $-11.1$ & $+1.6$ \\
+\quad Tax, rebate held at its base path & $-2.2$ & $-1.1$ & $-4.1$ & $-0.5$ & $-15.8$ & $-5.4$ \\
+\quad Financed share $80\%\to95\%$ & $+0.9$ & $+0.2$ & $-1.1$ & $-0.6$ & $+0.1$ & $+1.8$ \\
+\addlinespace
+\emph{Slow stock, $\eta=1.5$} &&&&&& \\
+\quad Tax, rebated & $+2.0$ & $+2.4$ & $+1.3$ & $+3.0$ & $-9.8$ & $+2.7$ \\
+\addlinespace
+\emph{Stock on the supply curve, $\eta=1.5$} &&&&&& \\
+\quad Tax, rebated & $-2.0$ & $-1.7$ & $-3.1$ & $-1.8$ & $-3.6$ & $+18.0$ \\
+\quad Financed share $80\%\to95\%$ & $+0.4$ & $-0.6$ & $-1.0$ & $-1.4$ & $+0.0$ & $+1.0$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Each row: change relative to the no-policy path
+from the 2023 state of the transition re-estimated under the stated supply.
+Tax: property tax from 1.06 to 2 percent a year. Completed fertility: sum of
+the age-specific birth rates of the cohort aged 18--21 in 2023. With $\eta=1.5$
+the supply scale is renormalized so that the 2007 steady state is unchanged.
+\mocktodo{these runs are experimental (Oct 9): the slow-stock rule and
+$\eta=1.5$ are not part of the calibrated model, the terminal check fails near
+2400, and the $\eta=1.5$ stock-on-curve row starts from the closest grid pair
+rather than the exact fit. The $\eta=1.5$ slow-stock credit arm is still
+running.}
+\end{minipage}
+\end{table}
+
+Three results stand out. First, the rebate carries the effect. When the
+rebate is held at its base path, so that the extra revenue is not returned,
+the same tax lowers births by 1.1 percent in 2031--2035 and completed
+fertility by 0.5 percent, even though the price falls by 16 percent and the
+rent of a room falls by 5 percent. The difference between the rebated and the
+held tax is 4.4 points of births. Second, the sign of the effect follows how
+much of the tax reaches the rent of a room. With a slow stock, the price
+absorbs the tax and the rent rises by 1.6 to 2.7 percent on impact; births
+rise by 2 to 3 percent. With a stock that can shrink quickly and an elastic
+supply, the price falls by only 3.6 percent, the rent rises by 18 percent, and
+births fall by about 2 percent, as at fixed prices. Third, mortgage credit
+raises the ownership of the young by 19 to 21 percentage points on impact and
+keeps births within about one percent of the baseline at every date under
+every supply.
+
+These results give the property tax a precise reading. When the price absorbs
+it, the rebated tax is a transfer to every household, paid for by a one-time
+capital loss on the households that own in 2023, at an almost unchanged rent
+per room. The transfer raises the buffer of the households that decide on a
+first child without savings, the margin on which Section~\ref{sec:results}
+found births most responsive; the price fall itself, which lowers the
+one-time cost of buying, moves timing. When the price does not absorb it, the
+tax is a tax on rooms, partly offset by a flat rebate, and a tax on rooms is a
+tax on the space children need. The durability of the stock decides which
+case applies, and it also decides who gains. The cohort young at the
+announcement receives the rebate at an almost unchanged rent and has 3.9
+percent more children; later cohorts gain less as the stock shrinks and rents
+rise, 2.8 percent for the cohort aged 18 to 21 in 2031. The burden falls on
+the owners of 2023, who in the model are mostly old.
+
+Two qualifications matter for how far this reading goes. The tax does not
+move space to young families. Rent per room does not fall in any rebated arm,
+and the gain in young ownership is small and fades. What reaches young
+families is income, not rooms. And it remains open whether the housing
+market matters for delivering that income. A transfer of the same size
+financed by a payroll tax would show whether it matters that the rebate is
+funded by a tax on housing, which falls largely on retired owners and on a
+capitalized price rather than on the earnings of would-be parents.
+\mocktodo{the payroll-financed arm is specified
+(notes/ptax\_vs\_credit\_channels\_20261009.md) and waits on approval of the
+earnings-tax patch.}
+
+\subsection{The long run}
+\label{sec:policy-longrun}
+
+Because the population replaces itself only at 2.1 children per household,
+each policy returns births per household to replacement in the long run; its
+lasting effects appear in the population and in prices.
+Figure~\ref{fig:policy-longrun} compares stationary equilibria at the 2023
+preference for children, with and without each policy, under the baseline
+supply. Relative to the stationary equilibrium without it, the property tax
+changes the house price by $\pol{end_ptax2.price_pct.1}$ percent, the
+population by $\pol{end_ptax2.pop_pct.1}$ percent and young ownership by
+$\pol{end_ptax2.own_18_29_pp.1}$ points. Mortgage credit changes young
+ownership by $\pol{end_phi095.own_18_29_pp.1}$ points, the price by
+$\pol{end_phi095.price_pct.1}$ percent and the population by
+$\pol{end_phi095.pop_pct.1}$ percent. At fixed prices, the tax would change
+births by $\pol{ptax2_fp.births_pct.1}$ percent: the price fall is what makes
+it pro-natal.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../../output/model/jmp_slides_policy_functions_20261007/longrun_bars.pdf}
+\caption{Property tax and mortgage credit in the long run}
+\label{fig:policy-longrun}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Stationary equilibrium at $\psi_2=0.110$ with
+each policy, relative to the stationary equilibrium without it: house price,
+population and ownership at ages 18--29. Baseline housing supply.
+\end{minipage}
+\end{figure}

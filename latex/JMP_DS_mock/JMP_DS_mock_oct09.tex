@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[round]{natbib}
+\usepackage[expansion=false]{microtype}
+\usepackage{titlesec}
+
+% Compact run-in headings within each numbered subsection.
+\titleformat{\subsubsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.6em}
+\usepackage{hyperref}
+
+\graphicspath{{../figures/}{figures/}}
+% Oct 9 build: policy numbers generated for the deck (\pol{case.field}).
+\input{../JMP_slides/prod_tables/policy.tex}
+\newcommand{\pol}[1]{\ifcsname pol:#1\endcsname\csname pol:#1\endcsname\else\errmessage{Missing policy number #1}\fi}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.12em,topsep=0.12em}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=0.12em,topsep=0.12em}
+\allowdisplaybreaks
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+
+\title{Fertility and Housing Tenure Choice}
+\author{Tommaso De Santo}
+\date{}
+
+\begin{document}
+
+\maketitle
+\input{sections/00_abstract}
+\pagebreak
+\input{sections/01_introduction}
+% October 9, 2026 build: same preamble and structure as the October 5 build,
+% brought in line with the JMP deck of Oct 9 (latex/JMP_slides/JMP_slides.tex,
+% 14.402 base). Agent draft.
+\newcommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+\input{sections/02d_motivating_evidence}
+\input{sections/03c_model}
+\input{sections/04c_quantification}
+\input{sections/05c_results}
+\input{sections/05d_policy}
+\input{sections/06b_conclusion}
+\clearpage
+\input{data_appendix}
+\input{appendix_oct09}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{../references,../main_bib,../lit_review_extra}
+
+\end{document}
