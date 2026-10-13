@@ -9,9 +9,12 @@
 % Transition: two-shock H100 path psi 0.1460 / 0.1325, Torch pair_10
 % (production_runs/2026-10-11_transition_7p917/state_2023/README.md;
 % fitted_path_figure/stage2_final_native_record.json, read Oct 13).
-% 2023 table: 7p9167_v6/moments_2023.csv (4 moments at 7.9); the other rows
-% are the 14.402 placeholder column of the deck until the 7.9 table replay
-% lands.
+% 2023 table: production_runs/2026-10-11_transition_7p917/table_2023/
+% moments_2023_7p917.csv (7.9 PRODUCTION, read Oct 13; 11 of 12 rows certified
+% by Experiments). The first-birth room response (0.605 at 7.9) is not
+% certified: observer check pending, cell left blank. Data column kept as in
+% the deck; the CSV's data column differs on two rows (room response 0.72 on
+% the Sept 14 definition; wealth/earnings 6.87, PSID 2005-19).
 % ============================================================================
 \providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
 
@@ -462,45 +465,46 @@ against 58.7 percent: in the data ownership fell after 2007, while in the
 model, where housing became cheaper, it rose. The model misses the
 postponement of first births: the mean age at first birth is 26.8 against
 28.1, and 28 percent of first births are at 30 or later against 38 percent.
+Households with three or more children occupy 0.40 more rooms than those with
+one or two, against 0.36 in the data, and wealth is 4.4 times annual earnings
+against 5.4.
 
 \begin{table}[t]
 \centering
 \caption{The 2023 economy: data and model}
 \label{tab:quant-2023}
 \small
-\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+\begin{tabularx}{\textwidth}{@{}Xrr@{}}
 \toprule
-Moment & Data & Model & Previous calibration \\
+Moment & Data & Model \\
 \midrule
-Completed fertility, ages 40--44 & 1.92 & & 1.71 \\
-Childless, ages 40--44 (\%) & 18.8 & & 27.4 \\
-Exactly one child among mothers, 40--44 (\%) & 22.2 & & 23.4 \\
-Mean age at first birth (years) & 28.09 & 26.85 & 26.85 \\
-First births at age 30+ (\%) & 37.7 & 28.4 & 28.2 \\
+Completed fertility, ages 40--44 & 1.92 & 1.70 \\
+Childless, ages 40--44 (\%) & 18.8 & 28.2 \\
+Exactly one child among mothers, 40--44 (\%) & 22.2 & 22.5 \\
+Mean age at first birth (years) & 28.09 & 26.85 \\
+First births at age 30+ (\%) & 37.7 & 28.4 \\
 \addlinespace
-Mean occupied rooms & 5.58 & 5.55 & 5.54 \\
-Ownership, heads 30--55 (\%) & 58.7 & 69.7 & 69.6 \\
-First-birth room response & 1.465 & & 1.289 \\
-Rooms: 3+ versus 1--2 resident children & 0.355 & & 0.286 \\
+Mean occupied rooms (capped at 9) & 5.58 & 5.55 \\
+Ownership, heads 30--55 (\%) & 58.7 & 69.7 \\
+First-birth room response & 1.465 & \textcolor{red}{\footnotesize observer check pending} \\
+Rooms: 3+ versus 1--2 resident children & 0.355 & 0.405 \\
 \addlinespace
-Wealth / annual gross earnings (PSID 2017/19) & 5.36 & & 4.58 \\
-Annual bequests / wealth (\%) & 0.88 & & 0.80 \\
-Wealth/income p90 / median, ages 76--84 & 3.45 & & 3.31 \\
+Wealth / annual gross earnings (PSID 2017/19) & 5.36 & 4.41 \\
+Annual bequests / wealth (\%) & 0.88 & 0.82 \\
+Wealth/income p90 / median, ages 76--84 & 3.45 & 3.32 \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} Model: the 2023 period of the two-shock
-transition at the current calibration; blank rows require the full 2023
-distribution, which is being computed. Previous calibration: the same exercise
-at the earlier calibration point (loss 14.40 on a different room target),
-shown only as a placeholder for the blank rows. Data: the sources of
+transition at the current calibration, computed on the full 2023
+distribution. The model's first-birth room response is withheld while its
+measurement is checked. Data: the sources of
 Table~\ref{tab:quant-fit} in their most recent waves; wealth over earnings
 from the PSID 2017 and 2019.
 \end{minipage}
 \end{table}
-\mocktodo{fill the model column from the 2023 table replay at 7.9 (submitted
-on the author's word, Oct 12); drop the previous-calibration column then.}
+\mocktodo{first-birth room response at 7.9: observer check pending.}
 
 The fertility rows are the model's largest miss, and they are informative
 about what the preference shock can and cannot do. In the data, the decline
@@ -508,8 +512,9 @@ in period fertility since 2007 came with almost unchanged childlessness among
 women aged 40 to 44 (19.8 percent in 2004--2006, 18.8 percent in 2024) and
 with later first births: the mean age at first birth rose from 26.0 to 28.1
 and the share of first births at 30 or later from 25 to 38 percent. In the
-model, a lower $\psi_t$ works on every cohort alive, so at the previous
-calibration 27 percent of women aged 40 to 44 in 2023 were childless. The data
+model, a lower $\psi_t$ works on every cohort alive, so 28 percent of women
+aged 40 to 44 in 2023 are childless and their completed fertility is 1.70,
+against 1.92 in the data. The data
 read the decline as postponement among younger cohorts; the model reads it as
 a fall in the number of children of every cohort alive. A gradual decline in
 the preference, which the next version of this exercise estimates, spreads
