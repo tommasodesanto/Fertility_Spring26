@@ -12,8 +12,9 @@
 % 2023 table: production_runs/2026-10-11_transition_7p917/table_2023/
 % moments_2023_7p917.csv (7.9 PRODUCTION, read Oct 13; 11 of 12 rows certified
 % by Experiments). The first-birth room response (0.605 at 7.9) is not
-% certified: observer check pending, cell left blank. Wealth/earnings model
-% cell (4.41) also held until the data definition is confirmed. Data column kept as in
+% certified: observer check pending, cell left blank. Wealth/earnings 4.41 is
+% aggregate wealth over aggregate annual gross labor earnings, the narrow PSID
+% definition of the 5.36 data cell (Experiments, Oct 13). Data column kept as in
 % the deck; the CSV's data column differs on two rows (room response 0.72 on
 % the Sept 14 definition; wealth/earnings 6.87, PSID 2005-19).
 % ============================================================================
@@ -467,7 +468,8 @@ model, where housing became cheaper, it rose. The model misses the
 postponement of first births: the mean age at first birth is 26.8 against
 28.1, and 28 percent of first births are at 30 or later against 38 percent.
 Households with three or more children occupy 0.40 more rooms than those with
-one or two, against 0.36 in the data.
+one or two, against 0.36 in the data, and wealth is 4.4 times annual earnings
+against 5.4.
 
 \begin{table}[t]
 \centering
@@ -489,7 +491,7 @@ Ownership, heads 30--55 (\%) & 58.7 & 69.7 \\
 First-birth room response & 1.465 & \textcolor{red}{\footnotesize observer check pending} \\
 Rooms: 3+ versus 1--2 resident children & 0.355 & 0.405 \\
 \addlinespace
-Wealth / annual gross earnings (PSID 2017/19) & 5.36 & \textcolor{red}{\footnotesize definition check pending} \\
+Wealth / annual gross earnings (PSID 2017/19) & 5.36 & 4.41 \\
 Annual bequests / wealth (\%) & 0.88 & 0.82 \\
 Wealth/income p90 / median, ages 76--84 & 3.45 & 3.32 \\
 \bottomrule
@@ -498,14 +500,13 @@ Wealth/income p90 / median, ages 76--84 & 3.45 & 3.32 \\
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} Model: the 2023 period of the two-shock
 transition at the current calibration, computed on the full 2023
-distribution. The model's first-birth room response and wealth over earnings
-are withheld while their definitions are matched to the data column. Data: the sources of
+distribution. The model's first-birth room response is withheld while its
+measurement is checked. Data: the sources of
 Table~\ref{tab:quant-fit} in their most recent waves; wealth over earnings
 from the PSID 2017 and 2019.
 \end{minipage}
 \end{table}
-\mocktodo{first-birth room response and wealth/earnings at 7.9: definition
-check pending.}
+\mocktodo{first-birth room response at 7.9: observer check pending.}
 
 The fertility rows are the model's largest miss, and they are informative
 about what the preference shock can and cannot do. In the data, the decline
