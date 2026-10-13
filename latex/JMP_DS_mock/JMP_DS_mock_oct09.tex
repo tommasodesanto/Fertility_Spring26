@@ -19,9 +19,26 @@
 \usepackage{hyperref}
 
 \graphicspath{{../figures/}{figures/}}
-% Oct 9 build: policy numbers generated for the deck (\pol{case.field}).
-\input{../JMP_slides/prod_tables/policy.tex}
-\newcommand{\pol}[1]{\ifcsname pol:#1\endcsname\csname pol:#1\endcsname\else\errmessage{Missing policy number #1}\fi}
+% October 13, 2026 build: every number is at the 7.9167 production point
+% (output/model/production/2007/PROMOTION_RECEIPT_20261011_7p917.md), the
+% fitted two-shock path psi 0.1460 / 0.1325
+% (output/model/production_runs/2026-10-11_transition_7p917/), and the
+% from-2023 policy transitions in
+% output/model/experiments/transitions_2023/7p9167_v6/table.md. Figures are
+% the tag-free copies used in the Oct 12 deck
+% (latex/JMP_slides/JMP_slides_monday_12_7p9.tex).
+\newcommand{\NT}{../../output/model/experiments/transitions_2023/notag_7p9/output/model/experiments/transitions_2023/7p9167_v6}
+\newcommand{\EXP}{../../output/model/experiments/transitions_2023/7p9167_v6}
+\newcommand{\MECH}{../../output/model/production_runs/2026-10-12_comparison_7p917}
+\newcommand{\TRANS}{../../output/model/production_runs/2026-10-11_transition_7p917/fitted_path_figure}
+% Status of the numbers: shown once on the title page and at the head of the
+% quantitative sections.
+\newcommand{\refreshnote}{\begin{center}\fcolorbox{red!60!black}{red!4}{\parbox{0.92\linewidth}{\small\textbf{Numbers to be refreshed.}
+All quantitative results are at the 7.9 production calibration. The
+2007--2023 preference path is being re-estimated as a gradual decline
+(constant-decay $\psi_t$, perfect foresight). That changes the 2023 economy
+from which every policy starts, so every policy number in this draft will
+move.}}\end{center}}
 \hypersetup{
   colorlinks=true,
   linkcolor=blue!50!black,
@@ -48,20 +65,18 @@
 \newcommand{\E}{\mathbb E}
 \newcommand{\1}{\mathbf 1}
 
-\title{Fertility and Housing Tenure Choice}
+\title{Fertility and Housing Costs}
 \author{Tommaso De Santo}
-\date{}
+\date{Draft, October 13, 2026}
 
 \begin{document}
 
 \maketitle
 \input{sections/00_abstract}
+\refreshnote
 \pagebreak
-\input{sections/01_introduction}
-% October 9, 2026 build: same preamble and structure as the October 5 build,
-% brought in line with the JMP deck of Oct 9 (latex/JMP_slides/JMP_slides.tex,
-% 14.402 base). Agent draft.
 \newcommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
+\input{sections/01_introduction}
 \input{sections/02d_motivating_evidence}
 \input{sections/03c_model}
 \input{sections/04c_quantification}

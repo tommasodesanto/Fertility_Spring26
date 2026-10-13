@@ -1,4 +1,144 @@
+% October 13, 2026 build (agent draft): introduction written from the Oct 12
+% 7.9 deck (frames Motivation, This Paper, Findings, Related Literature) in
+% the register of Boar, Gorea and Midrigan (2022). Literature descriptions
+% follow notes/literature_slide_20261011/paper_notes_for_tommaso.md; where
+% that note says only the abstract was read, the description here is limited
+% to the abstract's claim. Numbers: 7p9167_v6/table.md (7.9, production).
 \section{Introduction}
-\label{sec:introduction}
+\label{sec:intro}
 
-% Author text.
+Fertility in the United States has fallen from about 2.1 births per woman in
+2007 to 1.62 in 2023. Housing costs are often blamed, and the remedies proposed
+range from easier mortgage credit to building more homes. Both remedies rest
+on the observation that children need space. Families with children live in
+larger homes, and most large homes are sold rather than rented, so a growing
+family that wants more space must usually buy it, with a down payment, at an
+age when its savings are smallest and its earnings most uncertain. Whether
+cheaper credit or more housing raises fertility, and by how much, depends on
+which part of this cost holds families back: the one-time cost of getting
+into a larger home, or the recurring cost of occupying it.
+
+This paper answers the question with a life-cycle model in which households
+choose when to have children, how much space to occupy, and whether to rent or
+own it. Three features of the environment carry the analysis. First, a child
+raises the space a household needs, so a birth commits the household to
+paying for more space in every period the child is at home. Second, rental
+units are capped in size: the largest homes can only be bought, and buying
+requires a down payment. Third, earnings are subject to uninsurable
+idiosyncratic risk, so the commitment a child entails is costly to bear for a
+household without savings. The house price clears a single market for owned
+and rented rooms, competitive landlords set rents equal to the user cost of
+housing, and housing supply responds to the price. The economy is an
+overlapping-generations economy whose population is determined by fertility,
+so the price of space today depends on how many children were born a
+generation ago.
+
+I calibrate the model to the United States in 2007, when fertility was at
+replacement, to match fertility, housing and wealth moments: childlessness,
+family size and the timing of first births, mean rooms, the ownership rate,
+the gap in ownership between recent parents and households without children,
+the rooms households add around the first birth, and the ratios of wealth and
+bequests to earnings. I then hold the household parameters fixed and
+attribute the decline in fertility since 2007 to changes in the preference for
+children, chosen to match period fertility through 2023. The 2023 economy is
+thus a point on a transition to a smaller population, along which smaller
+cohorts enter adulthood and the demand for space falls. Every policy I
+consider starts from that economy and is compared with the path the economy
+would follow without it.
+
+The main results are as follows. Earnings risk matters for fertility. A
+mean-preserving reduction in the standard deviation of earnings shocks from
+0.48 to 0.35 per four years raises the completed fertility of the cohort
+entering adulthood in 2023 by 16 percent. Housing costs also matter. An
+outward shift of the housing supply curve by 10 percent lowers the house price
+by 8.9 percent on impact and raises the completed fertility of the same cohort
+by 4.8 percent, and of the cohort entering adulthood twenty years later by 3.8
+percent. Easier mortgage credit mainly changes the timing of births. Allowing
+households to borrow the full value of the home raises births by 1.9 percent
+in 2023--2026, but leaves the completed fertility of the 2023 cohort 0.6
+percent lower: credit lets young households buy earlier, and the homes they
+buy are small. The same credit restricted to households with a child at home
+raises completed fertility by 6.3 percent, and by 11.5 percent when earnings
+risk is lower.
+
+These results have a common explanation. Because rent equals the user cost of
+owning and households and landlords borrow at the same rate, a room costs the
+same each period whether it is rented or owned. Mortgage credit changes the
+equity a household needs to buy, not the per-period cost of the space a child
+requires. A larger housing supply lowers that cost for every family and every
+period; lower earnings risk makes it easier to bear. A comparison makes the
+point sharply. A supply expansion of 6.3 percent, sized so that it raises
+births on impact as much as full mortgage credit does, raises the completed
+fertility of the 2023 cohort by 3.1 percent, against $-0.6$ percent for
+credit. Credit tied to children is the exception that proves the rule: it
+rewards the birth itself with access to ownership.
+
+The results come with three qualifications that the paper discusses in
+detail. First, the reduction in earnings risk also compresses the distribution
+of earnings over time, and births rise steeply with earnings at the bottom, so
+part of the 16 percent may reflect less inequality rather than less
+uncertainty. Second, credit restricted to parents is modelled without default
+or mortgage insurance, so its cost is not priced. Third, the 2007--2023
+transition is driven only by preference shocks: the model overstates
+childlessness in 2023, misses the rise in the age at first birth, and
+predicts a falling house price where the data show a rising one. The
+quantitative results in this draft are at the current calibration and will be
+refreshed when the 2007--2023 preference path is re-estimated as a gradual
+decline.
+
+\paragraph{Related literature.} This paper contributes to three strands of
+work. The first studies how housing costs affect fertility.
+\citet{simonTamuraHigherRents2009} show that rent per room is negatively
+related to fertility across US cities, and \citet{stromHousingFirstBirths2010}
+that dwelling size is the housing feature most strongly tied to first births
+in Sweden. Dettling and Kearney (2014) find that higher house prices raise
+births among owners and lower them among renters, and Lovenheim and Mumford
+(2013) that housing wealth raises owners' births. On credit,
+\citet{hacamoBabiesMortgageDeregulation2021} finds that young households
+exposed to mortgage deregulation became more likely to buy a home and have a
+child, \citet{dettlingKearneyModernMortgage2025} attribute part of the baby
+boom to federal mortgage programs that lowered down payments, and
+\citet{vandoornikFazioRamadoraiSkrastinsHousingFertility2025} find that
+winning a Brazilian housing-credit lottery raises births. Cumming and Dettling
+(2024) show that lower mortgage payments raise births among existing owners.
+Structural work includes Khorunzhina and Miller (2022), who estimate a model of
+births and the first home purchase with exogenous prices, and
+\citet{couillardBuildBabyBuild2025}, who studies rents, living arrangements and
+fertility in a sorting model. Relative to this work, I study fertility in an
+equilibrium model with saving, earnings risk, mortgage finance, tenure and a
+house price, which separates the recurring cost of space from the cost of
+buying. The model reconciles the evidence on credit with a small effect of
+untargeted credit on completed fertility: credit raises births where it is
+tied to children or reaches a market whose supply expands, as in the episode
+studied by \citet{dettlingKearneyModernMortgage2025}.
+
+The second strand studies how earnings risk affects fertility. Fraser (2001)
+shows that prudent parents facing an irreversible commitment want fewer
+children under more risk. Sommer (2016) quantifies the effect in a life-cycle
+model in which children require a minimum of spending, and de la Croix and
+Pommeret (2021) model the first birth as an irreversible investment set
+against a biological clock. Ejrn\ae s and J\o rgensen (2020) and Nakakuni (2026)
+find that removing earnings risk raises fertility by 6 to 16 percent;
+empirical work links job loss and job insecurity to lower fertility (Del Bono,
+Weber and Winter-Ebmer, 2012; Clark and Lepinteur, 2022). I make housing the
+commitment, so that earnings risk and the cost of space interact, and compare
+risk with housing policies in the same equilibrium.
+
+The third strand builds quantitative models of housing over the life cycle,
+with tenure choice, down payments, earnings risk and equilibrium prices
+(Fisher and Gervais, 2011; Halket and Vasudev, 2014; Kaplan, Mitman and
+Violante, 2020; Boar, Gorea and Midrigan, 2022; Paz-Pardo, 2024; Greaney et al.,
+2025; Greenwald and Guren, 2025). In these models household size is
+exogenous. I make it a choice and tie the demand for space to children. Fisher
+and Gervais (2011) find that earnings risk, not the down payment, explains the
+fall in young ownership; the analogue here is that earnings risk, not the down
+payment, governs completed fertility.
+
+The rest of the paper is organized as follows. Section~\ref{sec:empirical-evidence}
+documents facts about housing and the first birth that shape the model.
+Section~\ref{sec:model} presents the model, and Section~\ref{sec:quant} its
+quantification and the transition from 2007 to 2023.
+Section~\ref{sec:results} describes how a first child changes household
+choices and why earnings risk matters. Section~\ref{sec:policy} studies
+housing supply, mortgage credit and credit for parents from the 2023 economy.
+Section~\ref{sec:conclusion} concludes.

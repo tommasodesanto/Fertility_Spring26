@@ -1,32 +1,35 @@
 % ============================================================================
-% October 9, 2026 build (agent draft). Adapted from 04b_quantification.tex
-% (Oct 6, base 15.07) to the 14.402 base point of the JMP deck of Oct 9.
-% Fit, parameters and external inputs: latex/JMP_slides/prod_tables/
-% (fit_full.tex, params.tex, external.tex; build_prod_tables.py, reading
-% output/model/production/2007, promoted Oct 7: Mac round 3, chain 0, case
-% 0010_nm, loss 14.402423836558775, selected_numerically_verified; receipt
-% output/model/production/2007/PROMOTION_RECEIPT_20261007_mac_r3_chain0.md).
-% Transition: H100 two-shock path, pair psi 0.1311 / 0.110
-% (path_table_0.1311_0.110.md; figures
-% output/model/jmp_slides_transition_figures_20261009/). 2023 table: deck frame
-% "2023 Data and Model" (moments_2023_full_base14402.csv).
+% October 13, 2026 build (agent draft). Quantification at the 7.9167
+% production point (promoted Oct 11; receipt
+% output/model/production/2007/PROMOTION_RECEIPT_20261011_7p917.md).
+% Fit and parameters: packet
+% output/model/production_runs/2026-10-11_production_7p917/packet/cases_v2/
+% baseline/packet/ (target_fit_event_contract.csv, parameters_estate_a.csv,
+% event_observer.json); deck tables latex/JMP_slides/prod_tables_7p9/.
+% Transition: two-shock H100 path psi 0.1460 / 0.1325, Torch pair_10
+% (production_runs/2026-10-11_transition_7p917/state_2023/README.md;
+% fitted_path_figure/stage2_final_native_record.json, read Oct 13).
+% 2023 table: 7p9167_v6/moments_2023.csv (4 moments at 7.9); the other rows
+% are the 14.402 placeholder column of the deck until the 7.9 table replay
+% lands.
 % ============================================================================
 \providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
 
 \section{Quantification}
 \label{sec:quant}
 
+\refreshnote
+
 I treat the United States as an economy in transition to a smaller
 population. The quantification has three steps. First, I calibrate a
 stationary economy representing 2007, before the subsequent decline in
 fertility, to match fertility, housing and wealth moments. Second, I hold
-those parameters fixed and estimate a sequence of fertility shocks: two
-unanticipated changes in the preference for children $\psi_t$ that match the
-period fertility rate through 2023, carrying households and population
-forward between the shocks. Third, I treat 2023 as a point on this
-transition and project the economy forward, holding the preference for
-children fixed after 2023. The policy experiments of
-Section~\ref{sec:policy} all start from the same 2023 economy.
+those parameters fixed and estimate a sequence of fertility shocks: changes in
+the preference for children $\psi_t$ that match the period fertility rate
+through 2023, carrying households and population forward between the shocks.
+Third, I treat 2023 as a point on this transition and project the economy
+forward, holding the preference for children fixed after 2023. The policy
+experiments of Section~\ref{sec:policy} all start from the same 2023 economy.
 
 I organize the parameters into two groups. The first is set outside the
 estimation, from external evidence or direct measurement. The second is
@@ -61,10 +64,11 @@ four, and heads without children come from the 2005--2006 ACS.
 moments (UNITSSTR codes 3--10 in the builder) and whether the model imposes it.}
 The room response to the first birth is the PSID event-study estimate of
 Section~\ref{sec:empirical-evidence} in the sample that fixes household
-position before the birth: 1.465 rooms three to four years after the birth
-(standard error 0.050). I use this sample rather than the household sample of
-Figure~\ref{fig:emp-rooms-path}, which gives 1.03, because the model follows
-the same households before and after the birth.
+position before the birth, with event time dated from the birth: 1.44 rooms
+three to four years after the birth relative to two to three years before it.
+I measure the same object in the model by running the same event-study design
+on simulated households, so that the model and the data are compared on
+identical definitions.
 
 \paragraph{Wealth.} Aggregate net worth relative to aggregate annual gross
 labor earnings comes from the 2005 and 2007 PSID: net worth of all household
@@ -84,59 +88,42 @@ three rules.
 \paragraph{Stocks are measured in annual units; flows are four years long.}
 Wealth, house prices and the bequest shifter $\theta_1$ are stocks and are not
 rescaled. Income, consumption, rent and every other flow accrue over the whole
-period, so a flow in the model is four times its annual counterpart. For
-example, an entrant at age 18 with average efficiency earns
-$4\times(1-0.080)\times0.721=2.65$ per period after the payroll tax, which is
-0.72 times mean annual gross earnings. A moment that relates a stock to a flow
-is computed against the annual flow, as in the data: the wealth target
-divides net worth by annual gross earnings, and the bequest target divides the
-estate flow over a period by four before dividing it by aggregate wealth.
+period, so a flow in the model is four times its annual counterpart. A moment
+that relates a stock to a flow is computed against the annual flow, as in the
+data: the wealth target divides net worth by annual gross earnings, and the
+bequest target divides the estate flow over a period by four before dividing
+it by aggregate wealth.
 
 \paragraph{Rates compound; hazards come from durations.}
 Interest, discounting and depreciation compound over the four years. The gross
 return is $R_b=1.02^4=1.082$, the period discount factor is
 $\beta=\beta_{\text{ann}}^4$, and the period depreciation rate is
-$1-(1-\delta_{\text{ann}})^4$. With $\beta_{\text{ann}}=0.940$, the period
-discount factor is $0.781$. The property tax is the exception: it is a tax on
+$1-(1-\delta_{\text{ann}})^4$. With $\beta_{\text{ann}}=0.939$, the period
+discount factor is $0.776$. The property tax is the exception: it is a tax on
 value levied each year, and I set the period rate to four times the annual
-rate.%
-\footnote{Compounding instead would give a period rate of 4.17 rather than
-4.24 percent of value.}
-Probabilities of events are period probabilities. Children leave home after
-18 years on average, which I implement as a constant departure probability of
-$\lambda=1/4.5=2/9$ per period for each child. Survival probabilities are
-four-year probabilities between successive age cells. The probability $\pi_a$
-that an attempt to have a child succeeds is the probability of a conception
-within four years at that age.
+rate. Together, the per-period user cost of a room is $18.0$ percent of its
+price, about 4.5 percent a year. Probabilities of events are period
+probabilities. Children leave home after 18 years on average, which I
+implement as a constant departure probability of $\lambda=2/9$ per period for
+each child. Survival probabilities are four-year probabilities between
+successive age cells. The probability $\pi_a$ that an attempt to have a child
+succeeds is the probability of a conception within four years at that age.
 \mocktodo{cite the source of the four-year conception probabilities and the
 life table behind the survival probabilities.}
-The earnings process is estimated directly at the four-year frequency rather
-than converted from an annual process. I take non-overlapping four-year means
-of household gross labor earnings in the annual PSID waves of 1984--1997,
-remove age and year effects, and estimate $\rho_z=0.735$ from the first two
-autocovariances of their logarithm. The implied annual persistence is
-$0.735^{1/4}=0.926$.
+The earnings process is estimated directly at the four-year frequency. I take
+non-overlapping four-year means of household gross labor earnings in the
+annual PSID waves of 1984--1997, remove age and year effects, and estimate
+$\rho_z=0.735$ from the first two autocovariances of their logarithm.
+\mocktodo{re-estimate the earnings process on recent PSID waves (author,
+Oct 12).}
 
 \paragraph{Age-specific moments use the overlap of data ages with model cells.}
 A model household of age $a$ occupies a four-year cell. A data statistic for
 an age window weights each cell by the fraction of the cell that falls in the
-window. Within a cell, a household's number of children is interpolated
-linearly between its value at the start and at the end of the cell, which is
-exact if births are spread uniformly over the four years. Women aged 40 to 44,
-for example, overlap the cell $[38,42)$ for half its length and the cell
-$[42,46)$ for three-quarters of its length, and children ever born at age 25
-are read from the cell $[22,26)$, seven-eighths of the way from its start to
-its end. For the mean age at first birth, I date a first birth in the model at
+window, and a household's number of children is interpolated linearly within
+the cell. For the mean age at first birth, I date a first birth in the model at
 the midpoint of its cell and group the natality data into the same four-year
-cells, so that both sides use the same representative ages.
-
-The room response to the first birth is the one moment for which the period
-length bounds how closely the model can mimic the data. In the model, I
-compare households that have a first birth with otherwise identical
-households that do not, one period, or four years, after the birth. The data
-compare years three and four after the birth with years two and three before
-it. The model's contrast is therefore a four-year response with no
-pre-period, while the data's spans about six years.
+cells.
 
 \subsection{Parameters set outside the estimation}
 
@@ -145,24 +132,22 @@ estimation.
 
 \paragraph{Demographics and preferences.}
 Households enter at age 18, retire at 66, and live at most through age 85.
-Survival is certain before retirement. Children remain at home for 18 years
-on average. Births are possible through age 45, with the success probability
-of an attempt falling from 0.98 at 18 to 0.50 at 42. I set risk aversion to
-$\sigma=2$ and use the power equivalence scale of Scholz, Seshadri and Khitatrakun (2006) with
-child weight $\omega=0.7$ and exponent $\nu=0.7$. The consumption weight
-$\alpha_0=0.733$ is the expenditure share of nonhousing consumption among
-childless renters in the 2019--2023 CEX. A birth into the state of three or
-more children counts as 3.60 children when computing completed fertility: the
-mean number of children, capped at five, among women aged 40 to 44 with three
-or more in the 2024 CPS.
+Survival is certain before retirement. Births are possible through age 45,
+with the success probability of an attempt falling from 0.98 at 18 to 0.50 at
+42. I set risk aversion to $\sigma=2$ and use the power equivalence scale of
+Scholz, Seshadri and Khitatrakun (2006) with child weight $\omega=0.7$ and
+exponent $\nu=0.7$. The consumption weight $\alpha_0=0.733$ is the expenditure
+share of nonhousing consumption among childless renters in the 2019--2023
+CEX. A birth into the state of three or more children counts as 3.60 children
+when computing completed fertility.
 
 \paragraph{Housing finance and transaction costs.}
 The annual real return on the bond is 2 percent, and selling a home costs 6
-percent of its value (Greaney et al., 2025). Annual
-depreciation is 1.4 percent (BEA and Federal Reserve, 2007) and the annual
-property tax is 1.06 percent of value (ACS 2007--2011). The financed share is
-$\phi=0.80$, so a buyer must hold at least 20 percent equity at the end of the
-period in which it buys. There is no payment-to-income limit.
+percent of its value (Greaney et al., 2025). Annual depreciation is 1.4
+percent (BEA and Federal Reserve, 2007) and the annual property tax is 1.06
+percent of value (ACS 2007--2011). The financed share is $\phi=0.80$, so a
+buyer must hold at least 20 percent equity. There is no payment-to-income
+limit.
 
 \paragraph{Income and pensions.}
 The deterministic age profile of earnings is normalized to average one over
@@ -171,31 +156,22 @@ $\rho_z=0.735$ and innovation standard deviation $\sigma_z=0.484$,
 approximated with nine states. Entrants draw efficiency from its stationary
 distribution. Every retiree receives the same pension. The payroll tax is 8.0
 percent, and the pension is the one that balances the pension budget given
-the age distribution of earnings: 22.9 percent of mean annual gross earnings,
-which matches the ratio of pension income to gross earnings in the CPS ASEC.
-% [CODE] e5f_stationary_paygo.py 47-62: the flat pension is solved from the
-% payroll tax and the exogenous age-income mass (pension 0.9178 per period =
-% 22.9% of mean annual earnings); e5f_social_security.py 50-96 certifies the
-% balance.
-\mocktodo{confirm the pension/earnings ratio's CPS ASEC year and definition.}
+the age distribution of earnings, 0.918 per period.
 
 \paragraph{Housing products and supply.}
 Owners choose among homes of $\{2,4,6,8,10\}$ rooms. Renters choose any size
-up to $\bar h^R=6$ rooms, following Greaney et al.\ (2025).
-The elasticity of housing supply with respect to the price is $\eta=0.63$,
-from Baum-Snow and Han (2024).
-\mocktodo{the deck cites Baum-Snow and Han (2024) for $\eta=0.63$; the
-project notes record that no primary source for 0.63 has been confirmed
-(supply\_elasticity\_history\_20261009.md). Check before submission; the
-policy results of Section~\ref{sec:policy} depend more on the speed of
-adjustment than on $\eta$.}
+up to $\bar h^R=6$ rooms, following Greaney et al.\ (2025). The elasticity of
+housing supply with respect to the price is $\eta=0.63$, from Baum-Snow and
+Han (2024).
+\mocktodo{Baum-Snow and Han (2024) report 0.61--0.63 for metro floor space in
+the linear IV and a headline of 0.5; state which estimate 0.63 is.
+Section~\ref{sec:policy} reports results at $\eta=1.5$ in the appendix.}
 
 \paragraph{Entry wealth and bequests.}
 Entrants' wealth follows the PSID rule of Section~\ref{sec:model}: net worth
 of childless renters aged 18 to 24, censored at zero and assigned to
-efficiency states by income rank. The bequest motive does not depend on the
-number of children. I fix the bequest shifter at $\theta_1=0.008$, following
-Greaney et al.\ (2025).
+efficiency states by income rank. I fix the bequest shifter at
+$\theta_1=0.008$, following Greaney et al.\ (2025).
 
 \begin{table}[t]
 \centering
@@ -222,7 +198,7 @@ Selling cost $\psi^s$ & 6\% & Greaney et al.\ (2025) \\
 Owner house sizes $\mathcal H$ & 2, 4, 6, 8, 10 rooms & \\
 Rental size cap $\bar h^R$ & 6 rooms & Greaney et al.\ (2025) \\
 Bequest shifter $\theta_1$ & 0.008 & Greaney et al.\ (2025) \\
-Earnings process $(\rho_z,\sigma_z)$ & 0.73, 0.48 per four years & PSID 1984--97, four-year earnings \\
+Earnings process $(\rho_z,\sigma_z)$ & 0.735, 0.484 per four years & PSID 1984--97, four-year earnings \\
 Entry wealth & PSID levels & Childless renters 18--24, censored at zero \\
 \bottomrule
 \end{tabularx}
@@ -261,11 +237,16 @@ households are most informative about the owner multiplier $\chi$ and the
 dispersion $\kappa_T$ of tenure taste shocks.
 
 \paragraph{Saving and bequests.}
-The annual discount factor governs how much households carry across ages, and
-aggregate net worth relative to aggregate annual gross earnings is the most
-informative moment; the target is a ratio of totals, not an average of
-household ratios. With $\theta_1$ fixed, the bequest flow relative to
-aggregate wealth is most informative about $\theta_0$.
+Aggregate net worth relative to aggregate annual gross earnings is the most
+informative moment for the discount factor. With $\theta_1$ fixed, the bequest
+flow relative to aggregate wealth is most informative about $\theta_0$.
+
+Table~\ref{tab:quant-parameters} reports the estimates. Two are worth a
+comment. The space requirement is $h_P=1.10$ rooms: a family needs about one
+room beyond what yields no services before additional space adds to its
+welfare. The first-birth taste scale $\kappa_1=0.054$ is small, so the first
+birth responds strongly to differences in the value of having a child; it
+lies near the lower end of its search range.
 
 \begin{table}[t]
 \centering
@@ -276,27 +257,25 @@ aggregate wealth is most informative about $\theta_0$.
 \toprule
 Parameter & Interpretation & Value & Most informative moments \\
 \midrule
-$\beta_{\text{ann}}$ & Annual discount factor & 0.940 & Wealth / earnings \\
-$\xi$ & First-birth utility cost & 0.309 & Childlessness \\
-$\kappa_1$ & First-birth taste scale & 0.119 & First-birth age; children by 25 \\
-$\kappa_C$ & Later-birth taste scale & 0.358 & Exactly one child \\
-$\psi_0$ & Initial preference for children & 0.156 & Completed fertility; all fertility moments \\
-$\gamma$ & Curvature of the benefit of children & 0.098 & Exactly one child \\
-$h_P$ & Parenthood space requirement (rooms) & 2.596 & First-birth room response \\
-$\chi$ & Owner housing-service multiplier & 1.084 & Ownership; recent-parent gap \\
-$\kappa_T$ & Tenure taste scale & 0.018 & Ownership; recent-parent gap \\
-$H_0$ & Housing supply scale & 6.805 & Mean rooms; market clearing at replacement \\
-$\theta_0$ & Bequest-motive scale & 0.228 & Bequests / wealth \\
+$\beta_{\text{ann}}$ & Annual discount factor & 0.939 & Wealth / earnings \\
+$\xi$ & First-birth utility cost & 0.267 & Childlessness \\
+$\kappa_1$ & First-birth taste scale & 0.054 & First-birth age; children by 25 \\
+$\kappa_C$ & Later-birth taste scale & 0.153 & Exactly one child \\
+$\psi_0$ & Initial preference for children & 0.162 & Completed fertility; all fertility moments \\
+$\gamma$ & Curvature of the benefit of children & 0.533 & Exactly one child \\
+$h_P$ & Parenthood space requirement (rooms) & 1.098 & First-birth room response \\
+$\chi$ & Owner housing-service multiplier & 1.086 & Ownership; recent-parent gap \\
+$\kappa_T$ & Tenure taste scale & 0.022 & Ownership; recent-parent gap \\
+$H_0$ & Housing supply scale & 7.352 & Mean rooms; market clearing at replacement \\
+$\theta_0$ & Bequest-motive scale & 0.222 & Bequests / wealth \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} Search bounds: $\beta_{\text{ann}}\in[0.93,0.99]$,
-$h_P\in[0.1,2.6]$, $\kappa_1,\kappa_C\in[0.02,50]$. $H_0$ is reported on the
-scale of \eqref{eq:m-supply}.
-\mocktodo{$h_P=2.596$ is within 0.004 of its upper bound; decide how to report
-this. The search stopped on disk space, so optimization convergence is not
-certified (promotion receipt, Oct 7).}
+$h_P\in[0.1,2.6]$, $\kappa_1,\kappa_C\in[0.02,50]$, $\gamma\in[0,0.8]$,
+$\kappa_T\in[0.001,0.1]$. $H_0$ is reported on the scale of
+\eqref{eq:m-supply}. The 2007 house price is $P=0.681$.
 \end{minipage}
 \end{table}
 
@@ -304,16 +283,26 @@ certified (promotion receipt, Oct 7).}
 
 Table~\ref{tab:quant-fit} reports the targets and the model's values. The
 model matches completed fertility by construction, and matches childlessness,
-the share with exactly one child, the mean age at first birth, ownership, the
-recent-parent ownership gap and the wealth and bequest ratios closely. It
-misses two moments, and the two misses account for most of the loss. Households
-in the model have 0.55 children by age 25 against 0.81 in the data, so first
-births start too late even though their mean age is matched. And the model's
-family adds 1.26 rooms around the first birth against 1.47 in the data, with
-the space requirement $h_P$ at its upper bound. Three moments that are not
-targeted are close to the data: the share of first births at 30 or later, the
-room gap between larger and smaller families, and the dispersion of wealth
-among the old.
+the share with exactly one child, the mean age at first birth, mean rooms,
+ownership, the recent-parent ownership gap, the room response at the first
+birth and the wealth and bequest ratios closely. It misses one moment, and
+that miss accounts for most of the loss: households in the model have 0.55
+children by age 25 against 0.81 in the data, so first births start too late
+even though their mean age is matched. Of the three moments that are not
+targeted, the share of first births at 30 or later and the dispersion of
+wealth among the old are close to the data; the room gap between larger and
+smaller families is somewhat too large.
+
+The room response deserves a remark. In the simulated event study, model
+households add 1.49 rooms between two to three years before the first birth
+and three to four years after it, against 1.44 in the data. But the model's
+households also add rooms in the years leading up to the birth: six to seven
+years before it they occupy 0.54 fewer rooms than in the reference period, and
+eight or more years before 0.66 fewer, while the data show no pre-trend. A comparison of otherwise identical households with and
+without a first birth in the same period gives a response of only 0.59 rooms.
+Much of the event-study response in the model therefore reflects the growth
+of housing with age and income among households about to have a child, rather
+than the birth itself.
 
 \begin{table}[t]
 \centering
@@ -326,33 +315,50 @@ Moment & Data & Target & Model \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Fertility}}\\
 Completed fertility (normalization) & Replacement & 2.10 & 2.10 \\
-Childless, women 40--44 (\%) & CPS 2004, 2006 & 19.8 & 20.2 \\
-Exactly one child among mothers, 40--44 (\%) & CPS 2004, 2006 & 21.4 & 21.7 \\
-Mean age at first birth (years) & NCHS 2003--2006 & 25.98 & 25.96 \\
-Children ever born by age 25 & CPS 2004, 2006 & 0.810 & 0.553 \\
-First births at age 30+ (\%)$^{\dagger}$ & NCHS 2003--2006 & 24.9 & 23.8 \\
+Childless, women 40--44 (\%) & CPS 2004, 2006 & 19.8 & 20.0 \\
+Exactly one child among mothers, 40--44 (\%) & CPS 2004, 2006 & 21.4 & 21.6 \\
+Mean age at first birth (years) & NCHS 2003--2006 & 25.98 & 25.97 \\
+Children ever born by age 25 & CPS 2004, 2006 & 0.810 & 0.554 \\
+First births at age 30+ (\%)$^{\dagger}$ & NCHS 2003--2006 & 24.9 & 24.1 \\
 \addlinespace
 \multicolumn{4}{@{}l}{\emph{Housing}}\\
-Mean occupied rooms & AHS 2007 & 5.73 & 5.82 \\
+Mean occupied rooms & AHS 2007 & 5.73 & 5.77 \\
 Ownership, heads 30--55 (\%) & ACS 2005--2006 & 67.6 & 67.0 \\
-Recent-parent ownership gap & ACS 2005--2006 & 0.128 & 0.127 \\
-First-birth room response & PSID event study & 1.465 & 1.264 \\
-Rooms: 3+ versus 1--2 resident children$^{\dagger}$ & ACS 2005--2006 & 0.385 & 0.294 \\
+Recent-parent ownership gap & ACS 2005--2006 & 0.128 & 0.124 \\
+First-birth room response & PSID event study & 1.440 & 1.491 \\
+Rooms: 3+ versus 1--2 resident children$^{\dagger}$ & ACS 2005--2006 & 0.385 & 0.434 \\
 \addlinespace
 \multicolumn{4}{@{}l}{\emph{Wealth}}\\
-Wealth / annual gross earnings & PSID 2005, 2007 & 4.46 & 4.58 \\
-Annual bequests / wealth (\%) & SCF 2007 & 0.73 & 0.71 \\
-Wealth/income p90 / median, ages 76--84$^{\dagger}$ & PSID & 3.52 & 3.31 \\
+Wealth / annual gross earnings & PSID 2005, 2007 & 4.46 & 4.38 \\
+Annual bequests / wealth (\%) & SCF 2007 & 0.73 & 0.73 \\
+Wealth/income p90 / median, ages 76--84$^{\dagger}$ & PSID & 3.52 & 3.47 \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} $^{\dagger}$ Not targeted. Samples and
-definitions in Section~\ref{sec:quant-data}. Weighted loss 14.402, of which
-the children ever born by 25 contribute 6.60 and the first-birth room
-response 5.57.
+definitions in Section~\ref{sec:quant-data}. The model's room response is
+measured with the event-study design of the data on simulated households.
+Weighted loss 7.92, of which the children ever born by 25 contribute 6.52.
 \end{minipage}
 \end{table}
+
+Figure~\ref{fig:quant-lifecycle-2007} compares life-cycle profiles in 2007.
+\mocktodo{describe the 2007 life-cycle fit once read from the figure
+(lifecycle\_2007\_7p917.pdf); not read for this draft.}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../../output/model/production/2007/lifecycle_2007_7p917.pdf}
+\caption{Life-cycle profiles in 2007, model and data}
+\label{fig:quant-lifecycle-2007}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Homeownership and rooms by age of the household
+head, and the distribution of first births by age of the mother. Model: 2007
+steady state. Data: the sources of Table~\ref{tab:quant-fit}.
+\end{minipage}
+\end{figure}
 
 \subsection{The fertility decline, 2007--2023}
 \label{sec:quant-transition}
@@ -382,25 +388,25 @@ to end at that rate.
 
 Starting from the 2007 steady state, I hold all estimated parameters fixed
 and let the preference for children change twice, each time unexpectedly and
-believed to be permanent: from $\psi_0=0.156$ to $\psi_1=0.1311$ in 2007, and
-to $\psi_2=0.110$ in 2015. The two values are chosen to match the period
+believed to be permanent: from $\psi_0=0.162$ to $\psi_1=0.146$ in 2007, and to
+$\psi_2=0.1325$ in 2015. The two values are chosen to match the period
 fertility rate in the model's four-year periods 2011--2014 (1.861) and
-2019--2022 (1.646). Between the shocks, households and the population are
-carried forward, and prices, the pension and the rebate clear their markets
-at every date. After 2023 the preference stays at $\psi_2$, households have
-perfect foresight about prices, and the economy converges to a new stationary
-equilibrium. Appendix~\ref{app:algorithms} describes the solution method.
+2019--2022 (1.646); the model gives 1.862 and 1.642. Between the shocks,
+households and the population are carried forward, and the house price, the
+pension and the rebate clear their markets at every date. After 2023 the
+preference stays at $\psi_2$, households have perfect foresight about prices,
+and the economy converges to a new stationary equilibrium.
+Appendix~\ref{app:algorithms} describes the solution method.
 
 Figure~\ref{fig:quant-transition-fit} compares the model's period fertility
-with the data. The two shocks bring fertility to 1.86 in 2011--2014 and 1.65
-in 2019--2022. After 2023, with the preference fixed, period fertility rises
-slowly, to 1.79 by 2063. The recovery runs through the housing market: as the
-smaller cohorts born after 2007 enter adulthood, the demand for rooms falls
-and so does the price of space.
+with the data. After 2023, with the preference fixed, period fertility is
+1.63 in 2023--2026 and rises slowly, to 1.74 by 2063. The recovery runs
+through the housing market: as the smaller cohorts born after 2007 enter
+adulthood, the demand for rooms falls and so does the price of space.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.9\linewidth]{../../output/model/jmp_slides_transition_figures_20261009/fertility_fit_2007_2063.pdf}
+\includegraphics[width=0.9\linewidth]{\MECH/fertility_fit_7p9_2007_2063.pdf}
 \caption{Period fertility, model and data, 2007--2063}
 \label{fig:quant-transition-fit}
 \par\smallskip
@@ -411,66 +417,36 @@ fertility and its four-year averages.
 \end{minipage}
 \end{figure}
 
-Figure~\ref{fig:quant-full-transition} shows the whole transition, to 2403.
-Period fertility returns to replacement after about a century and a half and
-stays slightly above it for about a century before settling at replacement.
-The number of households falls by about 40 percent,
-to 0.594 of its 2007 level, total housing by about a quarter, and the house
-price by 38 percent, to 0.485. Because the stock stays on the supply curve,
-the fall in housing demand is split between a smaller stock and a lower price
-in proportions set by $\eta$: with $\eta=0.63$, a stock 25 percent smaller
-requires a price 38 percent lower. Along the way the price falls slowly. In 2023 it is 4.0 percent below
-its 2007 steady-state level, and it is still falling in 2063.
-% [MODEL] path_table_0.1311_0.110.md: benchmark price 0.7794; 2023 0.748;
-% endpoint price 0.48467, population scale 0.59398, stock 4.312 vs 5.779.
+Figure~\ref{fig:quant-full-transition} shows the whole transition, to 2411.
+Period fertility returns to replacement only after about two centuries. The
+number of households falls by about half, to 0.51 of its 2007 level, total
+housing by a third, and the house price by 48 percent, to 0.353. Because the
+stock stays on the supply curve, the fall in housing demand is split between a
+smaller stock and a lower price in proportions set by $\eta$: with
+$\eta=0.63$, a stock 34 percent smaller goes with a price 48 percent lower.
+Along the way the price falls slowly: it is 3.3 percent below its 2007 level
+in 2023 and 19.5 percent below in 2063. The rent falls less than the price
+early on. Along a transition, rent equals the user cost net of the expected
+capital gain, so a price that is expected to keep falling raises the rent: in
+2023 the rent per room is 2.5 percent above its 2007 level although the price
+is 3.3 percent below.
+% [MODEL] stage2_final_native_record.json rows: asset_price 2015 0.6683, 2023
+% 0.6586, 2063 0.5481, 2411 0.3533; Q0 0.68091 (base_2007); adult_population
+% 2023 0.9964, 2063 0.848, 2411 0.507; housing_supply 2411 3.817 vs initial
+% 5.771 (plot_full_transition_7p9.py: H_init backed out with xi 0.63);
+% renter_price 2023 0.1259 vs 2007 0.18028 x 0.68091 = 0.1228; period TFR
+% (topcode adjusted) 2023 1.634, 2063 1.740, 2235 2.100.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{../../output/model/jmp_slides_transition_figures_20261009/full_transition_four_panel.pdf}
-\caption{The full transition, 2007--2403}
+\includegraphics[width=\linewidth]{\TRANS/full_transition_four_panel_7p9.pdf}
+\caption{The full transition, 2007--2411}
 \label{fig:quant-full-transition}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
 \footnotesize\textit{Notes:} Period fertility, number of household heads,
 total housing and the house price along the two-shock transition, with the
-initial steady state normalized to 100. Diamonds mark the new stationary
-equilibrium.
-\end{minipage}
-\end{figure}
-
-The durability of the stock matters for this recovery.
-Figure~\ref{fig:quant-full-transition-fixed} adds a path along which the
-housing stock is frozen at its 2023 level. Because the rooms stay while the
-population shrinks, the price falls faster and further before recovering
-part of the fall, and period fertility rises above replacement from about
-the 2070s, peaks near 2.2 around 2100, and settles back. The number of
-households then stabilizes about 20 percent below its 2007 level rather than
-40 percent. Space that cannot be withdrawn is passed on to smaller cohorts as
-cheaper space, and cheaper space raises their fertility: completed fertility
-of the cohort born in 2029 is 1.72 rather than 1.58, and of the cohort born
-in 2057 1.93 rather than 1.72. Most of the gain is composition: fewer
-households of these cohorts are still renting at ages 30 to 33, and renters
-have the fewest children, although the renters who remain also gain.
-% [MODEL] cohort_table.md (frozen stock vs stock that follows the price);
-% "Born" in that table is the birth year of the cohort. Composition:
-% notes/argument_for_corina_20261008.md step 17 (renters at 30-33 fall from
-% a third to a fifth of a cohort; renters who remain 0.92 -> 1.01 for 2009).
-\mocktodo{the cohort numbers come from the frozen-stock comparison of Oct 8
-(cohort\_table.md); confirm they are on the same two-shock path as the
-figure.}
-Section~\ref{sec:policy-slow} introduces an intermediate case, a stock that
-adjusts slowly toward the supply curve.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{../../output/model/jmp_slides_transition_figures_20261009/full_transition_four_panel_fixed.pdf}
-\caption{The full transition with the housing stock fixed from 2023}
-\label{fig:quant-full-transition-fixed}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} As Figure~\ref{fig:quant-full-transition}, with
-a second path (dashed) along which the housing stock is held at its 2023
-level.
+initial steady state normalized to 100.
 \end{minipage}
 \end{figure}
 
@@ -478,51 +454,53 @@ level.
 \label{sec:quant-2023}
 
 The 2023 economy is the starting point of every counterfactual, so I compare
-it with the data on the same moments used in the calibration
+it with the data on the moments used in the calibration
 (Table~\ref{tab:quant-2023}). None of these moments was targeted in the
-transition, which matches only the period fertility rate. Housing is close to
-the data: mean rooms are 5.54 against 5.58, and the room response at the first
-birth and the room gap between larger and smaller families stay close to
-their 2007 values in both the model and the data. Ownership among heads aged 30 to 55 is 69.6 percent against 58.7
-percent: in the data ownership fell after 2007, while in the model, where
-housing became cheaper, it rose. The wealth ratio is below the data, which
-rose to 5.36 in 2017--2019.
-\mocktodo{the 2023 wealth/earnings data value (5.36) is from the PSID 2017/19
-on the narrow target definition, shown in red on the deck; confirm before
-keeping it.}
+transition, which matches only the period fertility rate. Mean rooms are 5.55
+against 5.58 in the data. Ownership among heads aged 30 to 55 is 69.7 percent
+against 58.7 percent: in the data ownership fell after 2007, while in the
+model, where housing became cheaper, it rose. The model misses the
+postponement of first births: the mean age at first birth is 26.8 against
+28.1, and 28 percent of first births are at 30 or later against 38 percent.
 
 \begin{table}[t]
 \centering
 \caption{The 2023 economy: data and model}
 \label{tab:quant-2023}
 \small
-\begin{tabularx}{\textwidth}{@{}Xrr@{}}
+\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
 \toprule
-Moment & Data & Model \\
+Moment & Data & Model & Previous calibration \\
 \midrule
-Completed fertility, ages 40--44 & 1.92 & 1.71 \\
-Childless, ages 40--44 (\%) & 18.8 & 27.4 \\
-Exactly one child among mothers, 40--44 (\%) & 22.2 & 23.4 \\
-Mean age at first birth (years) & 28.09 & 26.85 \\
-First births at age 30+ (\%) & 37.7 & 28.2 \\
+Completed fertility, ages 40--44 & 1.92 & & 1.71 \\
+Childless, ages 40--44 (\%) & 18.8 & & 27.4 \\
+Exactly one child among mothers, 40--44 (\%) & 22.2 & & 23.4 \\
+Mean age at first birth (years) & 28.09 & 26.85 & 26.85 \\
+First births at age 30+ (\%) & 37.7 & 28.4 & 28.2 \\
 \addlinespace
-Mean occupied rooms & 5.58 & 5.54 \\
-Ownership, heads 30--55 (\%) & 58.7 & 69.6 \\
-First-birth room response & 1.465 & 1.289 \\
-Rooms: 3+ versus 1--2 resident children & 0.355 & 0.286 \\
+Mean occupied rooms & 5.58 & 5.55 & 5.54 \\
+Ownership, heads 30--55 (\%) & 58.7 & 69.7 & 69.6 \\
+First-birth room response & 1.465 & & 1.289 \\
+Rooms: 3+ versus 1--2 resident children & 0.355 & & 0.286 \\
 \addlinespace
-Wealth / annual gross earnings (PSID 2017/19) & 5.36 & 4.58 \\
-Annual bequests / wealth (\%) & 0.88 & 0.80 \\
-Wealth/income p90 / median, ages 76--84 & 3.45 & 3.31 \\
+Wealth / annual gross earnings (PSID 2017/19) & 5.36 & & 4.58 \\
+Annual bequests / wealth (\%) & 0.88 & & 0.80 \\
+Wealth/income p90 / median, ages 76--84 & 3.45 & & 3.31 \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} Model: the 2023 period of the two-shock
-transition. Data: the sources of Table~\ref{tab:quant-fit} in their most
-recent waves; wealth over earnings from the PSID 2017 and 2019.
+transition at the current calibration; blank rows require the full 2023
+distribution, which is being computed. Previous calibration: the same exercise
+at the earlier calibration point (loss 14.40 on a different room target),
+shown only as a placeholder for the blank rows. Data: the sources of
+Table~\ref{tab:quant-fit} in their most recent waves; wealth over earnings
+from the PSID 2017 and 2019.
 \end{minipage}
 \end{table}
+\mocktodo{fill the model column from the 2023 table replay at 7.9 (submitted
+on the author's word, Oct 12); drop the previous-calibration column then.}
 
 The fertility rows are the model's largest miss, and they are informative
 about what the preference shock can and cannot do. In the data, the decline
@@ -530,83 +508,44 @@ in period fertility since 2007 came with almost unchanged childlessness among
 women aged 40 to 44 (19.8 percent in 2004--2006, 18.8 percent in 2024) and
 with later first births: the mean age at first birth rose from 26.0 to 28.1
 and the share of first births at 30 or later from 25 to 38 percent. In the
-model, a lower $\psi_t$ works mainly on the extensive margin and on every
-cohort alive. Women aged 40 to 44 in 2023 were 26 to 29 in 2007 and 34 to 37
-in 2015, so both shocks lowered their first-birth hazard in their main
-childbearing years, and 27.4 percent of them are childless. The data read the
-decline as postponement among younger cohorts; the model reads it as a
-permanent fall in the number of children of every cohort alive. A shock that
-falls on young cohorts, or that raises the cost of early births, would bring
-childlessness and the age at first birth closer to the data.
-% [MODEL] childlessness_2023_miss_20261009.md.
+model, a lower $\psi_t$ works on every cohort alive, so at the previous
+calibration 27 percent of women aged 40 to 44 in 2023 were childless. The data
+read the decline as postponement among younger cohorts; the model reads it as
+a fall in the number of children of every cohort alive. A gradual decline in
+the preference, which the next version of this exercise estimates, spreads
+the decline over cohorts but does not by itself produce postponement.
 
 The second miss concerns the house price. With only preference shocks,
 falling fertility lowers the demand for family space, so the model has to
-deliver a falling price: 4 percent below 2007 in 2023, and 10 percent below
-with a slowly adjusting stock. In the data, the real house price rose by 15.6
-percent between 2007 and 2023, and real rents by 15 to 19 percent. Part of the
-decline in fertility since 2007 therefore came with a rising cost of space
-that the estimation assigns to preferences. The transition says what housing
-would have done in response to the fertility decline, not that housing caused
-it.
+deliver a falling price: 3.3 percent below 2007 in 2023. In the data, the real
+house price rose by 15.6 percent between 2007 and 2023, and real rents by 15
+to 19 percent. Part of the decline in fertility since 2007 therefore came with
+a rising cost of space that the estimation assigns to preferences. The
+transition says what housing would have done in response to the fertility
+decline, not that housing caused it.
 % [DATA] Case-Shiller CSUSHPINSA / CPIAUCSL, 2023/2007 = 1.156
 % (historical_supply_comparison.csv); CPI rent of primary residence, FRED.
-\mocktodo{a refit with a housing-supply shock that targets the 2023 real price
-as a third moment would turn this into a housing result
-(housing\_tenure\_claims\_20261009.md, section 4).}
 
 Figure~\ref{fig:quant-lifecycle-2023} compares life-cycle profiles in 2023.
-The model reproduces the hump in housing size and the rise of ownership with
-age, but its households buy too early, at the start of adult life, and keep
-buying into old age: 40 percent of heads in their early twenties own in the
-model against about 10 percent in the data, and almost all of the oldest heads
-own against three quarters. Housing size peaks too early and falls too much
-after 60, and children stay at home longer than in the data, because each
-child leaves with a constant probability.
-% [REVIEW Oct 10] lifecycle_2023.pdf and the deck do not state these numbers
-% (40 percent, about 10 percent, three quarters); the figure file was not
-% available to the review, so they are taken from the draft unverified.
+The model reproduces the rise of ownership with age and the hump in housing
+size, but its households buy too early: 46 percent of heads aged 18 to 21 and
+52 percent of those aged 22 to 25 own their home in the model, far above the
+data. This miss matters for the credit experiments below, because it places
+too many young households near the margin of buying. First births are also
+too early: 28 percent of first births in the model are to women aged 18 to 21,
+against 17 percent in the 2021--2023 natality data, and 14 percent are at 30
+to 33, against 22 percent.
+\mocktodo{add the ACS young-ownership values from the figure's data series.}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth,trim=0 25 0 0,clip]{../../output/model/profile_2023_base14402/lifecycle_2023.pdf}
-\caption{Life-cycle profiles in 2023, model and ACS}
+\includegraphics[width=\linewidth]{\NT/lifecycle_2023.pdf}
+\caption{Life-cycle profiles in 2023, model and data}
 \label{fig:quant-lifecycle-2023}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Homeownership, rooms and the share of households
-with children at home by age of the household head. Model: the 2023 period of
-the two-shock transition. Data: ACS 2023.
-\end{minipage}
-\end{figure}
-
-Figure~\ref{fig:quant-allocation} returns to the allocation of large homes
-documented in Section~\ref{sec:empirical-evidence}. The model reproduces the
-shares held by young households without children and by middle-aged
-households with children, but it gives young families with children twice
-their share in the data (22.5 against 10.6 percent) and older households
-without children half of theirs (21.6 against 40.0 percent). Part of the gap
-is mechanical: in the model 9.3 percent of the large homes belong to old
-households with a child at home, against 0.7 percent in the data, because a
-child leaves with a constant probability. The model therefore understates the
-intergenerational concentration of large homes. Any reallocation of space
-from old to young that it predicts starts from a distribution in which the
-young already hold more than they do in the data.
-% [REVIEW Oct 10] 22.5 vs 10.6 and 21.6 vs 40.0 confirmed in
-% notes/argument_for_corina_20261008.md (step 17 flag); 9.3 vs 0.7 not found
-% in the notes and the figure file was not available to the review.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\linewidth]{../../output/model/profile_2023_base14402/intergenerational_allocation_2023.pdf}
-\caption{Who holds the large owner-occupied homes, model and data, 2023}
-\label{fig:quant-allocation}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Share of owner-occupied homes with six or more
-rooms held by each group, defined by the age of the householder and whether
-a child lives in the home. Data: ACS 2023, as in
-Figure~\ref{fig:large-homes}. Model: the 2023 period of the two-shock
-transition.
+\footnotesize\textit{Notes:} Homeownership and rooms by age of the household
+head, and first births by age of the mother. Model: the 2023 period of the
+two-shock transition. Data: ACS 2023; NCHS first births 2021--2023.
 \end{minipage}
 \end{figure}

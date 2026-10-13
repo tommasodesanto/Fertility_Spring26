@@ -1,287 +1,398 @@
 % ============================================================================
-% October 9, 2026 build (agent draft). Policy section, new. Sources:
-%   elastic stock (the deck's "Policy Results"):
-%     output/model/policy_transition_battery_20261008/h100_torch/
-%     (table_h100.md, tax_vs_credit_h100.pdf), base 14.402, from the 2023 state;
-%   slow stock (deck): tax_vs_credit_h100_slow_stock.pdf;
-%   by supply regime (deck appendix): ptax_by_supply_regime.pdf, h16 runs
-%     (table_h16-20261008T153908-0eb8.md);
-%   slow-stock refit and today's arms: output/model/slow_stock_h100_20261009/
-%     README.md (project copy README-20261009T203735-9f66.md), EXPERIMENTAL;
-%   channel reading: notes/ptax_vs_credit_channels_20261009.md;
-%   long run: \pol macros from latex/JMP_slides/prod_tables/policy.tex
-%     (reconciliation_14p40_20261007, stationary GE at psi 0.110).
+% October 13, 2026 build (agent draft). Policy section at the 7.9167
+% production point: from-2023 GE transitions, each policy against its own
+% no-policy path (base risk vs BASE, lower risk vs LR_BASE). Sources:
+%   numbers: output/model/experiments/transitions_2023/7p9167_v6/table.md
+%     (read Oct 13); housing behaviour: 7p9167_v6/housing_behavior/table.md
+%     (= /mnt/project-files/housing_behavior_table_7p9167.md);
+%   timing vs level: 7p9167_v6/notes/tempo_quantum_supm_vs_phi100.md;
+%   long run and lower-risk construction: notes/results_evaluation_20261012/
+%     evaluation.md sections 2A, 2F, 2I (checked against saved runs by the
+%     Experiments thread, Oct 12);
+%   starter home: 7p9167_v6/starter_home/starter_home_trap_by_age_7p9167_base.pdf
+%     (values as read for the Oct 12 deck: ownership 22-25 46 -> 68%, 2-room
+%     owners 8 -> 25%, births per 100 households 22.2 both);
+%   PSID: notes/starter_home_trap_empirics_20261009.md, finding 3.
+% Figures: tag-free copies (notag_7p9) used in the Oct 12 deck.
+% The rebated property tax, transfers, fixed stock and eta = 1.5 arms are in
+% Appendix app:policy-more (author Oct 12: no insurance and other policies in
+% the main text for now).
 % ============================================================================
 \providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
 
-\section{A Housing Policy}
+\section{Housing Policy from 2023}
 \label{sec:policy}
 
-Section~\ref{sec:quant-2023} showed that large homes sit with older
-households, and Section~\ref{sec:results} that the per-period cost of space is
-what moves the number of children. A natural policy question follows: can a
-policy that changes who holds housing, and at what price, raise births? I
-study the experiment of \citet{coven2024}. They tax housing by value and
-rebate the revenue equally to all households. Older owners, who hold the most
-housing, pay more than they get back, and young renters get back more than
-they pay. House prices fall, and constrained young households buy sooner or
-buy bigger. I run the same experiment from the 2023 economy: the property tax
-rises unexpectedly and permanently from 1.06 to 2 percent of value a year, and
-its revenue is rebated equally to all households at every date. I follow
-prices, rents, ownership and births along the path, and compare the tax with
-the mortgage credit of Section~\ref{sec:results-2023}, raising the financed
-share from 80 to 95 percent, also in general equilibrium. In both cases the
-preference for children stays at its 2023 value, and every change is measured
-against the baseline path from the same 2023 state.
+\refreshnote
 
-\subsection{Results with the baseline housing supply}
-\label{sec:policy-baseline}
+This section asks which housing policies can raise fertility in the 2023
+economy. I consider two policies that are often proposed and differ in which
+cost of family space they lower: an expansion of the housing supply, which
+lowers the price of space and with it the per-period cost of a room, and
+easier mortgage credit, which lowers the equity needed to buy. I then consider
+two variants that sharpen the comparison: a supply expansion sized to raise
+births on impact as much as credit does, and credit restricted to parents.
 
-Figure~\ref{fig:policy-baseline} reports the two policies when the housing
-stock moves along the supply curve at every date. The tax lowers the house
-price by 6.3 percent on impact, a gap that narrows slowly over the century.
-Births fall by 0.7 percent in 2023 and are 0.3 to 0.5 percent above the
-baseline from the 2030s through the 2060s. Ownership of the young rises by
-about 3 percentage points on impact and stays about 2 points higher through
-the 2060s. The adult population is 0.4 percent larger by 2100. Mortgage
-credit raises the ownership of the young by 20 to 25 percentage points
-throughout and barely moves the price. Births rise by 0.6 percent on impact,
-are below the baseline from the late 2020s, and are about 2 percent lower
-around 2100, when the population is 0.7 percent smaller.
-% [MODEL] table_h100.md, elastic arm: price -6.33 (2023) to -6.23 (2063),
-% -5.35 at the last date; births -0.69, +0.01, +0.25, +0.38, +0.47, +0.48,
-% +0.68 at the last date; own 18-29 +2.83, 1.87, 1.73, 2.60, 2.54, 1.95;
-% adults +0.67 at the long-run endpoint. LTV: own 18-29 +19.9 then 24.7-25.2;
-% births +0.56, -0.26, -0.63, -0.64, -0.32, -0.81; adults -1.09 in the long
-% run. The 2100 values are read from the figure.
+\subsection{Design of the experiments}
+\label{sec:policy-design}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.95\linewidth,trim=0 13 0 0,clip]{../../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100.pdf}
-\caption{Property tax and mortgage credit from 2023}
-\label{fig:policy-baseline}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Change relative to the baseline path from 2023
-in births, the house price, ownership at ages 18--29 and the adult population.
-Property tax from 1.06 to 2 percent a year with an equal rebate; mortgage
-credit: financed share from 80 to 95 percent. Housing stock on the supply
-curve at every date.
-\end{minipage}
-\end{figure}
+Every experiment starts from the 2023 state of the estimated transition of
+Section~\ref{sec:quant-transition}: the same households, with the same
+wealth, homes and children. In 2023 a policy is announced unexpectedly and
+believed to be permanent. Households then have perfect foresight about the
+paths of the house price, rents, the pension and the rebate, which clear their
+markets at every date until the economy reaches a new stationary equilibrium.
+I compare each policy with the path the economy follows from the same state
+without the policy, so that the differences isolate the policy from the
+ongoing transition. The preference for children stays at its 2023 value
+throughout. I report three measures. \emph{Births on impact} are births in
+2023--2026 relative to the no-policy path. \emph{Completed fertility by
+cohort} is the number of children ever born to the cohort aged 18 to 21 in a
+given year, relative to the same cohort without the policy. The \emph{long
+view} follows the price, period fertility and the number of households to
+2100.
 
-Why is the effect of the tax so small? A tax on value raises the cost of
-holding a room. When the stock can shrink within a period, builders withdraw
-rooms, so the price falls by less than the tax and the rent of a room rises:
-by 13.5 percent on impact and by 10 to 12 percent later. The rebate is then
-largely offset by a higher rent on the space a family needs, and births rise
-by less than half a percent. At fixed prices, the same tax raises rent by 19.6
-percent and lowers births by 2.9 percent on impact. What makes the tax
-pro-natal, to the extent it is, is the fall in the price.
+The policies are as follows. \emph{Housing supply}: the supply curve
+\eqref{eq:m-supply} shifts out by 10 percent from 2023 on, $H_0\to1.1H_0$,
+with the same elasticity. \emph{Mortgage credit}: the financed share rises
+from $\phi=0.80$ to 1, so buyers need no down payment, and owners who stay can
+borrow up to the value of their home. \emph{Credit for parents}: the financed
+share rises to 1 only for households with a child at home. \emph{Matched
+supply}: the supply curve shifts out by 6.3 percent, a size chosen so that
+births in 2023--2026 rise as much as under full mortgage credit.
 
-\subsection{A slowly adjusting housing stock}
-\label{sec:policy-slow}
+I run every experiment twice: at the estimated earnings risk and at lower
+earnings risk, with the standard deviation of the four-year earnings shock
+lowered from 0.48 to 0.35 from 2023 on. Each policy under lower risk is
+compared with the no-policy path under lower risk. Because lower risk is
+itself a large change in the economy, I describe it first.
 
-Housing is durable, and the stock cannot shrink by four percent in four
-years. I therefore replace the baseline supply with a stock that adjusts
-slowly. Builders replace depreciated rooms each period, and build more when
-prices are high:
-\begin{equation}
- I_t=\delta_H\,H_0\,P_t^{\eta},\qquad H_t=(1-\delta_H)H_{t-1}+I_t .
- \label{eq:policy-slow}
-\end{equation}
-In a steady state $I=\delta_H H$, so $H=H_0P^{\eta}$: the long-run supply
-curve, the 2007 steady state and the calibration are unchanged, and only the
-speed of adjustment differs. The stock moves toward the supply curve, closing
-a fraction $\delta_H$ of the gap each year. I compare it with two extremes:
-the baseline, in which the stock moves to the supply curve at once, and a
-stock frozen at its 2023 level.
+\subsection{Lower earnings risk}
+\label{sec:policy-risk}
 
-Figure~\ref{fig:policy-slow} repeats the two experiments with the slowly
-adjusting stock. The tax now lowers the price by 11 percent on impact, and
-the price gap closes over the century as the stock shrinks. Births rise by
-about 2.5 percent on impact and by 3.5 to 4 percent through the middle of the
-century, and the adult population is 3.5 percent larger by 2100. The
-ownership of the young rises by 5 points on impact and is back to the
-baseline by the 2040s. Mortgage credit is almost unaffected by the speed of
-supply: young ownership rises by 19 to 27 points, births rise by less than
-one percent at first and fall by 1.5 percent by 2100.
+Figure~\ref{fig:policy-risk} compares the no-policy paths at the estimated and
+at lower earnings risk. Lower risk raises births in 2023--2026 by 11.3 percent
+and the completed fertility of the cohort aged 18 to 21 in 2023 by 16.0
+percent, from 1.64 to 1.91. The effect is smaller than at a fixed price
+(Section~\ref{sec:results-risk}) because the additional demand for family
+space raises the house price, by 1.3 percent on impact and by about 10 percent
+by 2063. For comparison, Sommer (2016) finds that moving from 1990s to 1970s
+earnings risk raises completed fertility by 16 percent, and removing risk by
+26 percent.
+
+The experiment changes more than uncertainty, and the result should be read
+with that in mind. I lower the standard deviation of the shocks by mixing the
+transition matrix toward a less dispersed one with the same one-step expected
+earnings in each state, and then scale all earnings states by a common factor
+so that mean productivity stays at one in the new long-run distribution. On
+impact the scaling lowers every household's earnings by 4.6 percent, which
+works against births. Over time, the cross-sectional dispersion of earnings
+falls, so lower risk here combines lower uncertainty with lower inequality,
+and births rise steeply with earnings at the bottom of the distribution. A
+version that keeps the cross-sectional dispersion of earnings at every age
+and converts the removed uncertainty into differences known at entry would
+separate the two.
+\mocktodo{known-heterogeneity arm (author's word pending).}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.95\linewidth]{../../output/model/policy_transition_battery_20261008/h100_torch/tax_vs_credit_h100_slow_stock.pdf}
-\caption{Property tax and mortgage credit with a slowly adjusting stock}
-\label{fig:policy-slow}
+\includegraphics[width=0.95\linewidth]{\NT/risk0_baselines.pdf}
+\caption{No-policy paths at the estimated and at lower earnings risk}
+\label{fig:policy-risk}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} As Figure~\ref{fig:policy-baseline}, with the
-housing stock following \eqref{eq:policy-slow} from 2023.
+\footnotesize\textit{Notes:} Period fertility, completed fertility by cohort
+(cohort aged 18--21 in the year shown), household heads and the house price
+(2023 = 100), from 2023. Solid: estimated earnings risk ($\sigma_z=0.48$).
+Dashed: lower earnings risk from 2023 on ($\sigma_z=0.35$, mean-preserving).
 \end{minipage}
 \end{figure}
 
-Figure~\ref{fig:policy-supply} isolates the role of supply for the tax. With
-the baseline supply, rooms are withdrawn, the rent of a room rises by 13
-percent, and births barely move. With a slow or a fixed stock, the rooms
-stay, the house price falls instead, the rent barely moves on impact, and
-births rise by about 3 percent on impact, and later by 3 to 4 percent with
-the slow stock and by up to 6 percent with the fixed stock. The tax is
-pro-natal when the price absorbs it, and nearly neutral when supply passes it
-into rents.
-% [MODEL] table_h16: frozen stock, births +2.85 on impact rising to +6.0,
-% price -12.86, rent -0.10; elastic rent +13.55; fixed prices rent +19.64,
-% births -2.93.
-\mocktodo{the legends of the policy figures label the tax 1\%$\to$2\%; the
-runs raise it from 1.06 to 2 percent. Relabel the figures.}
+\subsection{Housing supply and mortgage credit}
+\label{sec:policy-supply-credit}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{../../output/model/jmp_slides_transition_figures_20261009/ptax_by_supply_regime.pdf}
-\caption{The property tax under three housing supplies}
-\label{fig:policy-supply}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Property tax from 1.06 to 2 percent a year,
-rebated, from 2023: change relative to the no-tax path in births, the house
-price, rent per room and the population, with the stock on the supply curve
-at every date, adjusting slowly as in \eqref{eq:policy-slow}, or fixed at its
-2023 level. Sixteen-period runs.
-\end{minipage}
-\end{figure}
-
-\subsection{Where the effect of the tax comes from}
-\label{sec:policy-channels}
-
-The slowly adjusting stock changes the transition of
-Section~\ref{sec:quant-transition}, so I re-estimate the two preference
-shocks under it, matching the same two fertility rates, and run the tax from
-the 2023 state of the re-estimated path.%
-\footnote{The re-estimated shocks are $\psi_1=0.1295$ and $\psi_2=0.1062$,
-which match period fertility of 1.861 and 1.646 to within 0.0004. The 2023
-price is 10 percent below its 2007 level.}
-Table~\ref{tab:policy-channels} reports the tax under four variants, against
-the no-policy path from the same state. Births are reported in 2023, as the
-mean over 2031--2035, and in 2067; completed fertility is that of the cohort
-aged 18 to 21 in 2023.
+Table~\ref{tab:policy-main} summarizes the results, and
+Figures~\ref{fig:policy-impact} to~\ref{fig:policy-long} show them.
 
 \begin{table}[t]
 \centering
-\caption{Where the effect of the property tax comes from}
-\label{tab:policy-channels}
+\caption{Policies from 2023: effects relative to the no-policy path}
+\label{tab:policy-main}
 \small
-\begin{tabular}{lrrrrrr}
+\begin{tabularx}{\textwidth}{@{}Xrrrrr@{}}
 \toprule
- & \multicolumn{3}{c}{Births (\%)} & Completed & Price & Rent per \\
-\cmidrule(lr){2-4}
- & 2023 & 2031--35 & 2067 & fertility (\%) & 2023 (\%) & room 2023 (\%) \\
+ & Price & Births & \multicolumn{2}{c}{Completed fertility} & Households \\
+ \cmidrule(lr){4-5}
+ & 2023 & 2023--26 & cohort 2023 & cohort 2043 & 2063 \\
 \midrule
-\emph{Slow stock, $\eta=0.63$} &&&&&& \\
-\quad Tax, rebated & $+2.4$ & $+3.3$ & $+3.4$ & $+3.9$ & $-11.1$ & $+1.6$ \\
-\quad Tax, rebate held at its base path & $-2.2$ & $-1.1$ & $-4.1$ & $-0.5$ & $-15.8$ & $-5.4$ \\
-\quad Financed share $80\%\to95\%$ & $+0.9$ & $+0.2$ & $-1.1$ & $-0.6$ & $+0.1$ & $+1.8$ \\
+\multicolumn{6}{@{}l}{\emph{Estimated earnings risk}}\\
+Housing supply $+10\%$ & $-8.9$ & $+3.1$ & $+4.8$ & $+3.8$ & $+1.4$ \\
+Mortgage credit, LTV 100 & $+0.5$ & $+1.9$ & $-0.6$ & $+0.7$ & $+0.2$ \\
+Matched supply $+6.3\%$ & $-5.7$ & $+2.0$ & $+3.1$ & $+2.5$ & $+0.9$ \\
+Credit for parents, LTV 100 & $+0.4$ & $+5.9$ & $+6.3$ & $+7.9$ & $+2.3$ \\
 \addlinespace
-\emph{Slow stock, $\eta=1.5$} &&&&&& \\
-\quad Tax, rebated & $+2.0$ & $+2.4$ & $+1.3$ & $+3.0$ & $-9.8$ & $+2.7$ \\
-\addlinespace
-\emph{Stock on the supply curve, $\eta=1.5$} &&&&&& \\
-\quad Tax, rebated & $-2.0$ & $-1.7$ & $-3.1$ & $-1.8$ & $-3.6$ & $+18.0$ \\
-\quad Financed share $80\%\to95\%$ & $+0.4$ & $-0.6$ & $-1.0$ & $-1.4$ & $+0.0$ & $+1.0$ \\
+\multicolumn{6}{@{}l}{\emph{Lower earnings risk}}\\
+Housing supply $+10\%$ & $-9.1$ & $+2.6$ & $+4.0$ & $+3.3$ & $+1.3$ \\
+Mortgage credit, LTV 100 & $+1.2$ & $+3.4$ & $-0.6$ & $-0.0$ & $+0.3$ \\
+Matched supply $+13.1\%^{\dagger}$ & $-11.6$ & $+3.4$ & $+5.1$ & $+4.3$ & $+1.7$ \\
+Credit for parents, LTV 100 & $+0.9$ & $+12.1$ & $+11.5$ & $+10.6$ & $+4.5$ \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} Each row: change relative to the no-policy path
-from the 2023 state of the transition re-estimated under the stated supply.
-Tax: property tax from 1.06 to 2 percent a year. Completed fertility: sum of
-the age-specific birth rates of the cohort aged 18--21 in 2023. With $\eta=1.5$
-the supply scale is renormalized so that the 2007 steady state is unchanged.
-\mocktodo{these runs are experimental (Oct 9): the slow-stock rule and
-$\eta=1.5$ are not part of the calibrated model, the terminal check fails near
-2400, and the $\eta=1.5$ stock-on-curve row starts from the closest grid pair
-rather than the exact fit. The $\eta=1.5$ slow-stock credit arm is still
-running.}
+\footnotesize\textit{Notes:} Percent differences from the no-policy path at
+the same earnings risk, from the same 2023 state. Completed fertility: children
+ever born to the cohort aged 18--21 in the year shown. $^{\dagger}$ Under lower
+risk the matched shift is sized to match credit's effect on births in
+2023--2026 at that risk.
 \end{minipage}
 \end{table}
 
-Three results stand out. First, the rebate carries the effect. When the
-rebate is held at its base path, so that the extra revenue is not returned,
-the same tax lowers births by 1.1 percent in 2031--2035 and completed
-fertility by 0.5 percent, even though the price falls by 16 percent and the
-rent of a room falls by 5 percent. The difference between the rebated and the
-held tax is 4.4 points of births. Second, the sign of the effect follows how
-much of the tax reaches the rent of a room. With a slow stock, the price
-absorbs the tax and the rent rises by 1.6 to 2.7 percent on impact; births
-rise by 2 to 3 percent. With a stock that can shrink quickly and an elastic
-supply, the price falls by only 3.6 percent, the rent rises by 18 percent, and
-births fall by about 2 percent, as at fixed prices. Third, mortgage credit
-raises the ownership of the young by 19 to 21 percentage points on impact and
-keeps births within about one percent of the baseline at every date, and
-completed fertility within 1.5 percent, under both supplies for which the
-credit arm has run.
-
-I read these results as follows. When the price absorbs the tax, the rebated
-tax is a transfer to every household, paid for by a one-time capital loss on
-the households that own in 2023, at an almost unchanged rent per room. The
-transfer raises the buffer of the households that decide on a first child
-without savings, the margin on which Section~\ref{sec:results} found births
-most responsive; the price fall itself lowers the one-time cost of buying,
-which in Section~\ref{sec:results-2023} moved the timing of births and not
-their number. When the price does not absorb the tax, it is a tax on rooms,
-partly offset by a flat rebate, and a tax on rooms is a tax on the space
-children need. The durability of the stock decides which case applies, and it
-also decides who gains. The cohort young at the announcement receives the
-rebate at an almost unchanged rent and has 3.9 percent more children; the
-cohort aged 18 to 21 in 2031 gains less, 2.8 percent, consistent with a stock
-that shrinks over time and a rent that rises with it. Births are counts, so
-part of their rise at later dates reflects the larger cohorts born after the
-reform rather than more children per household. The burden falls on the
-owners of 2023. In the model they are less concentrated among the old than in
-the data, because young families hold twice their share of the large homes
-(Figure~\ref{fig:quant-allocation}).
-% [REVIEW Oct 10] notes/ptax_vs_credit_channels_20261009.md marks the
-% buffer and timing readings as inference [I]; the cohort numbers (3.9, 2.8)
-% are in notes/housing_tenure_claims_20261009.md; "the owners are mostly old"
-% is contradicted by notes/argument_for_corina_20261008.md step 17 (old
-% childless hold 21.6% of large homes in the model against 40% in the data).
-
-Two qualifications matter for how far this reading goes. The tax does not
-move space to young families. Rent per room does not fall in any rebated arm,
-and the gain in young ownership is small and fades. What reaches young
-families is income, not rooms. And it remains open whether the housing
-market matters for delivering that income. A transfer of the same size
-financed by a payroll tax would show whether it matters that the rebate is
-funded by a tax on housing, which falls largely on retired owners and on a
-capitalized price rather than on the earnings of would-be parents.
-\mocktodo{the payroll-financed arm is specified
-(notes/ptax\_vs\_credit\_channels\_20261009.md) and waits on approval of the
-earnings-tax patch.}
-
-\subsection{The long run}
-\label{sec:policy-longrun}
-
-Because the population replaces itself only at 2.1 children per household,
-each policy returns births per household to replacement in the long run; its
-lasting effects appear in the population and in prices.
-Figure~\ref{fig:policy-longrun} compares stationary equilibria at the 2023
-preference for children, with and without each policy, under the baseline
-supply. Relative to the stationary equilibrium without it, the property tax
-changes the house price by $\pol{end_ptax2.price_pct.1}$ percent, the
-population by $\pol{end_ptax2.pop_pct.1}$ percent and young ownership by
-$\pol{end_ptax2.own_18_29_pp.1}$ points. Mortgage credit changes young
-ownership by $\pol{end_phi095.own_18_29_pp.1}$ points, the price by
-$\pol{end_phi095.price_pct.1}$ percent and the population by
-$\pol{end_phi095.pop_pct.1}$ percent. At fixed prices, the tax would change
-births by $\pol{ptax2_fp.births_pct.1}$ percent: the price fall is what makes
-it pro-natal.
+\paragraph{On impact.} Figure~\ref{fig:policy-impact} shows the effects on
+the price and on births in 2023--2026. A 10 percent expansion of the housing
+supply lowers the house price by 8.9 percent and raises births by 3.1 percent.
+Full mortgage credit leaves the price nearly unchanged, $+0.5$ percent, and
+raises births by 1.9 percent. The ranking depends on risk. Under lower risk,
+supply raises births by 2.6 percent and credit by 3.4 percent: lower risk
+shrinks the precautionary cost of a child that cheaper space relieves, as
+\eqref{eq:r-risk-cost} predicts, and it raises the number of young households
+held back only by the down payment. Births per percentage point of price
+decline are about 0.35 on impact for supply.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{../../output/model/jmp_slides_policy_functions_20261007/longrun_bars.pdf}
-\caption{Property tax and mortgage credit in the long run}
-\label{fig:policy-longrun}
+\includegraphics[width=\linewidth]{\NT/seq1_impact_risk_4panel_v2.pdf}
+\caption{Housing supply and mortgage credit: on impact}
+\label{fig:policy-impact}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Stationary equilibrium at $\psi_2=0.110$ with
-each policy, relative to the stationary equilibrium without it: house price,
-population and ownership at ages 18--29. Baseline housing supply.
+\footnotesize\textit{Notes:} Left: house price and births in 2023--2026,
+percent difference from the no-policy path at the same earnings risk. Right:
+births per household by decile of current labor earnings at fertile ages,
+2023. Top: housing supply $+10\%$. Bottom: mortgage credit, LTV 80 to 100.
 \end{minipage}
 \end{figure}
+
+\paragraph{Cohorts.} Figure~\ref{fig:policy-cohorts} shows completed
+fertility by cohort. Here the two policies differ in kind. Supply raises the
+completed fertility of the cohort aged 18 to 21 in 2023 by 4.8 percent, and of
+every later cohort, by 3.8 percent for the 2043 cohort. Credit lowers the
+completed fertility of the 2023 cohort by 0.6 percent and raises that of the
+2043 cohort by 0.7 percent. The births credit adds on impact are mostly births
+brought forward: for the 2023 cohort, credit raises birth rates at ages 18 to
+21 and lowers them at every age after 26, and it lowers the mean age at first
+birth by 0.12 years. Cohorts already past their early twenties in 2023 also
+gain from both policies, since they still have births to have.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{\NT/cohorts_from_fertile_2023/seq2_cohorts_risk_2panel_from1999.pdf}
+\caption{Housing supply and mortgage credit: completed fertility by cohort}
+\label{fig:policy-cohorts}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Completed fertility by cohort, percent
+difference from the no-policy path at the same earnings risk, from the oldest
+cohort still fertile in 2023 (aged 42--45 then). The horizontal axis is the
+year the cohort is aged 18--21; the dotted line marks the first cohort wholly
+after 2023. Left: housing supply $+10\%$. Right: mortgage credit, LTV 80 to
+100.
+\end{minipage}
+\end{figure}
+
+\paragraph{The long view.} Figure~\ref{fig:policy-long} follows the two
+policies to 2100. Supply keeps the price below its no-policy path for decades
+and raises period fertility by about 0.06 births per woman by 2063. The
+number of households rises slowly as the larger cohorts enter adulthood.
+Credit raises period fertility little after the first decade.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{\NT/seq3_transition_risk_full_cut2100.pdf}
+\caption{Housing supply and mortgage credit: the long view}
+\label{fig:policy-long}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} House price, period fertility and household
+heads, each policy against its own no-policy path at the same earnings risk,
+2023--2100. Top: housing supply $+10\%$. Bottom: mortgage credit, LTV 80 to
+100.
+\end{minipage}
+\end{figure}
+
+\subsection{Credit and the starter home}
+\label{sec:policy-starter}
+
+Why does credit raise ownership without raising completed fertility?
+Figure~\ref{fig:policy-starter} shows what households do with it, at the
+start of 2027--2030. Without a down payment, young households buy early and
+buy small. Among households aged 22 to 25, ownership rises from 46 to 68
+percent, and the share owning a two-room home from 8 to 25 percent. Births per
+100 households at those ages are 22.2 with and without the policy. A small
+home holds a family in this calibration, but households that buy one early
+are not the households whose fertility was held back.
+
+The same pattern holds later in the transition. In 2059, mortgage credit
+raises ownership among households aged 22 to 37 by 21 percentage points;
+young owners live in smaller homes, 5.64 rooms against 6.36, and carry more
+debt, 0.68 of the value of their home against 0.55. A supply expansion instead
+gives young owners larger homes, 6.65 rooms, with the same leverage. Credit
+buys earlier, smaller and more leveraged ownership; supply buys more space.
+
+The PSID offers a partial check on this mechanism. Among childless first-time
+buyers, those who bought homes of four rooms or fewer were 14 percentage
+points less likely to have a first birth within six years (standard error
+6.7). The gap goes in the model's direction, but without an instrument it is
+as consistent with selection, couples not planning children buying small, as
+with an effect of the home. The model also places far more young owners in
+small homes than the data do, so the size of this channel is likely
+overstated.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{\NT/starter_home/starter_home_trap_by_age_7p9167_base.pdf}
+\caption{Credit and the starter home}
+\label{fig:policy-starter}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Households at the start of 2027--2030, by age,
+estimated earnings risk. Left: homeowners, percent of households. Middle:
+households owning a two-room home. Right: births per 100 households in
+2027--2030. Grey: no policy. Orange: mortgage credit, LTV 100.
+\end{minipage}
+\end{figure}
+
+\subsection{Timing versus level: matched supply}
+\label{sec:policy-matched}
+
+The comparison so far mixes the size of the two policies with their nature. To
+separate them, I shift the supply curve by 6.3 percent, an amount chosen so
+that births in 2023--2026 rise by 2.0 percent, as under full credit (1.9
+percent). Table~\ref{tab:policy-tempo} compares the 2023 cohort under the two
+policies. With equal births on impact, matched supply raises completed
+fertility by 3.1 percent and credit lowers it by 0.6 percent. Supply raises
+the share of the cohort that ever has a child, by 2.4 percent, and raises
+birth rates at every age. Credit lowers that share slightly and moves births
+earlier. Supply is not neutral for timing either: it lowers the mean age at
+first birth by 0.14 years, about as much as credit does for this cohort. A
+cheaper room lowers the per-period cost of the commitment, so households
+commit sooner as well as more often. Credit changes almost only the timing.
+
+\begin{table}[t]
+\centering
+\caption{Matched supply and mortgage credit: the 2023 cohort}
+\label{tab:policy-tempo}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+\toprule
+ & Completed & Ever had a & Mean age at & Mean age \\
+ & fertility & first birth & first birth & at birth \\
+\midrule
+No policy & 1.641 & 0.676 & 27.10 & 31.99 \\
+Mortgage credit, LTV 100 & 1.632 ($-0.6\%$) & 0.670 ($-0.8\%$) & 26.99 & 31.91 \\
+Matched supply $+6.3\%$ & 1.692 ($+3.1\%$) & 0.692 ($+2.4\%$) & 26.96 & 31.92 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Cohort aged 18--21 in 2023, estimated earnings
+risk. Rates are per surviving member of the cohort; mean ages are
+rate-weighted midpoints of four-year age cells. These are descriptive cohort
+sums, not a formal tempo adjustment (Bongaarts and Feeney, 1998).
+\end{minipage}
+\end{table}
+
+The matched shift is a construct: its size is set by credit's effect on
+impact, not by any proposed policy. Its purpose is to show that, for the same
+number of births in the first four years, cheaper space raises the number of
+children a cohort has and easier credit does not.
+
+\subsection{Credit for parents}
+\label{sec:policy-parents}
+
+If credit fails because it reaches households whose fertility was not held
+back, credit tied to children should do better. I raise the financed share to
+1 only for households with a child at home. Figure~\ref{fig:policy-parents}
+shows the result. Births in 2023--2026 rise by 5.9 percent and the completed
+fertility of the 2023 cohort by 6.3 percent, with the price nearly unchanged
+on impact, $+0.4$ percent. Under lower earnings risk the effects roughly
+double, to 12.1 and 11.5 percent.
+
+The policy works through two channels that the experiment does not separate.
+First, a birth unlocks ownership without a down payment, so it rewards the
+birth itself. Second, a parent who owns can borrow up to the full value of the
+home in every period with a child at home, which is a buffer in exactly the
+state that carries the commitment. The second channel should weaken when risk
+is lower, as earnings insurance does; the effect instead grows, which points
+to the first: lower risk raises the demand to own, so access to ownership tied
+to a child is worth more. A version that relaxes the down payment only in the
+period of the birth would separate the two.
+
+Two objections qualify the size of the effect. The policy is unpriced: the
+model has no default and no mortgage insurance, so a permanent loan of the
+full value of the home to every parent has no cost here. And its effect runs
+through the demand of young households to own, which the model overstates
+(Section~\ref{sec:quant-2023}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{\NT/pphi_block/pphi100_impact_and_cohorts.pdf}
+\caption{Credit for parents: on impact and by cohort}
+\label{fig:policy-parents}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} LTV 100 for households with a child at home.
+Left: house price and births in 2023--2026. Right: completed fertility by
+cohort. Each against the no-policy path at the same earnings risk.
+\end{minipage}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{\NT/pphi_block/pphi100_long_view_cut2100.pdf}
+\caption{Credit for parents: the long view}
+\label{fig:policy-parents-long}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} House price, period fertility and household
+heads against the no-policy path at the same earnings risk, 2023--2100.
+\end{minipage}
+\end{figure}
+
+\subsection{The long run}
+\label{sec:policy-long-run}
+
+In the long run, births are pinned at replacement: the population is
+stationary only if each household has 2.1 children on average. A policy that
+raises desired fertility at a given price therefore shows up in the long run
+as a higher price and more households, not as more births per household. The
+house price is the one at which households choose replacement fertility, and
+the number of households is the one that fills the housing stock at that
+price.
+
+This logic gives a sharp prediction for supply. A 10 percent shift in the
+supply curve leaves the replacement price unchanged, so in the long run the
+price returns to its no-policy level and the number of households rises by 10
+percent: the additional rooms are filled by additional families. The model
+reproduces this exactly. For mortgage credit, the long-run price is 3.3
+percent higher and the number of households 2.5 percent higher at the
+estimated risk, so credit raises desired fertility slightly at a given price.
+Under lower risk the long-run effect of credit is about zero and cannot be
+signed at the precision of the solution. Credit for parents raises the
+long-run price by 27 percent and the number of households by 26 percent.
+Lower earnings risk alone raises the long-run price by 49 percent: births are
+not very sensitive to the price of space in this calibration, so a large rise
+in the price is needed to bring them back to replacement.
+
+The long-run effect of credit also depends on the price level. Holding the
+price at the low long-run level of the no-policy path, removing the down
+payment raises births 1.0 percentage point above replacement; at prices about
+50 percent higher, it raises them by only 0.1 to 0.2 percentage points. When space is expensive,
+the per-period cost of a family room dominates the decision, and credit, which
+changes only the one-time down payment, matters little.
+% [MODEL] evaluation.md 2F: long-run base risk price +3.33%, households
+% +2.51%, endpoint birth error 4e-7; lower risk endpoint accepted at a kink,
+% price effect between -1.3% and -0.6%; fixed-price tests at P = 0.3533; endpoint
+% scans over P in [0.515, 0.528]: +0.09 to +0.18 pt (mean +0.14). 2I: PPHI100
+% long-run price 0.4496 vs 0.3533 (+27.2%), population 0.6378 vs 0.5072
+% (+25.7%). Lower risk long run: housing_behavior table, price +49.2%.

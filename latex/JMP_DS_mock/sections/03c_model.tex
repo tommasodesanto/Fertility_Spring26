@@ -1,15 +1,16 @@
 % ============================================================================
-% October 9, 2026 build (agent draft). Model section rewritten from
-% 03b_model.tex in the notation of the JMP deck of Oct 9
-% (latex/JMP_slides/JMP_slides.tex, frames "Environment" to "Equilibrium" and
-% "Utility Specification"). Economic content is the engine of the 14.402
-% base point (one-birth Estate A + net-estate floor, balanced property-tax
-% rebate, PSID wealth-levels entry, post-interest transaction timing). The
-% supply curve is written as in the deck, H = H0 P^eta, with H0 = 6.805: the
-% engine writes H0_code (u P / r_bar)^eta with u the per-period user-cost
-% rate and r_bar = 0.16, so H0 = H0_code (u / r_bar)^eta (commit feaacb00);
-% the policy drivers rescale r_bar with u, so the curve in P is unchanged
-% when the property tax changes.
+% October 13, 2026 build (agent draft). Model section of the Oct 9 build,
+% brought to the engine of the 7.9167 production point: the Oct 8 sale-screen
+% fix (tmp/sale_screen_fix_20261008/root, household.py 541-544: a sale into
+% renting is checked by the renter budget after income arrives; the legacy
+% pre-income test R b + S >= 0 is off), plus a paragraph on who owns the
+% rental stock and who receives estates (deck silent; structure as in KMV
+% 2020 sec. 2.4). Notation as in the Oct 12 deck (model_test_new_frames.tex).
+% Supply written as H = H0 P^eta with H0 = 7.352 on this scale: the engine
+% writes H0_code (u P / r_bar)^eta, H0_code = 6.81993 (promotion receipt),
+% u = 0.18028, r_bar = 0.16, so H0 = 6.81993 (0.18028/0.16)^0.63 = 7.352.
+% At 7.9: h_P = 1.098, hbar_child_rooms = 0, owner sizes {2,...,10}
+% (p7p917 executed_P.json, read Oct 12 by the evaluation thread).
 % ============================================================================
 \providecommand{\mocktodo}[1]{\textcolor{red}{[TODO: #1]}}
 
@@ -213,6 +214,18 @@ cost of selling $\psi^s$, and the down payment described next. Along a
 transition, \eqref{eq:m-rent} prices rent net of the expected capital gain,
 so when the price is expected to recover, rent lies below the static user
 cost.
+Three ownership conventions close the housing block. The rental stock
+belongs to landlords outside the household sector: they hold rooms at zero
+profit, financed at the bond return, so rent income does not accrue to any
+household in the model. New rooms are produced by builders who are also
+outside the household sector, so construction revenue is not household
+income. And estates are not inherited by other households (see Bequests
+below). These are the conventions of Kaplan, Mitman and Violante (2020,
+Section 2.4).\footnote{The conventions matter for the policy comparisons. The
+revenue of builders and the return of landlords leave the household sector,
+so a supply expansion or a rise in the house price does not feed back into
+household income. A closed version of the economy would return them to
+households, for example as dividends.}
 % [CODE] steady state: inputs.py 159, user_cost_rate = (R_gross - 1) + delta
 % + tau_H = 0.18028 per period; equilibrium.py 641, r = user_cost_rate * p.
 % The dated rule along a transition is implemented in the transition runner,
@@ -226,10 +239,10 @@ elasticity with respect to the price,
 \end{equation}
 where $H_0$ sets the scale of the stock and $\eta$ is the supply elasticity.
 In the baseline, the stock is on this curve at every date: it adjusts to the
-price within a period. Section~\ref{sec:policy-slow} replaces this with a
-stock that adjusts slowly toward the same curve.
-% [MODEL INPUT] eta = 0.63; H0 = 6.805 on this scale (engine: H0_code 6.312
-% on the scale (u P / 0.16)^eta).
+price within a period. Appendix~\ref{app:policy-more} reports the
+policy experiments with the stock held fixed at its 2023 level.
+% [MODEL INPUT] eta = 0.63; H0 = 7.352 on this scale at 7.9 (engine: H0_code
+% 6.820 on the scale (u P / 0.16)^eta).
 % [CODE] distribution.py 3213-3223 and 3256-3257, native_phase_b.py 97-99:
 % supply = H0 * (user_cost_rate * p / r_bar) ** xi_supply, xi_supply = 0.63,
 % r_bar = 0.16; demand = renter rooms + owner rooms. H0 = 6.312 *
@@ -254,11 +267,13 @@ household brings into the period and the income it earns during it. With the
 budget constraint below, \eqref{eq:m-ltv} makes a purchase feasible when
 $R_b b_t+y^d_t+T_t\geq(1-\phi)P_t h_t$, so a household with little wealth
 can buy out of a period's income, and there is no separate rule for how the
-down payment is financed. Two further restrictions keep estates
-nonnegative. From retirement on, when the household may die, its debt may not
+down payment is financed. One further restriction keeps estates
+nonnegative: from retirement on, when the household may die, its debt may not
 exceed the sale value of its home net of the selling cost,
-$b_{t+1}\geq-(1-\psi^s)P_t h_t$. An owner may sell and return to renting only
-if the net proceeds repay the mortgage, $R_b b_t+(1-\psi^s)P_t h_{t-1}\geq0$.
+$b_{t+1}\geq-(1-\psi^s)P_t h_t$. An owner who sells and returns to renting
+faces the renter's budget and borrowing limit, with the net proceeds of the
+sale and the period's income both available, so a sale is possible whenever
+$R_b b_t+(1-\psi^s)P_t h_{t-1}+y^d_t+T_t$ covers the rent and consumption.
 Mortgages carry no amortization schedule and no limit on payments relative
 to income.
 % [CODE] renter floor: household.py 47-58 (unsecured_credit_limit = 0, so
@@ -276,7 +291,10 @@ to income.
 % applied to buyers and stayers. Sale solvency: kernels.py 417-420, selling to
 % rent is infeasible if R b + (1-psi) P h < 0 (require_owner_sale_solvency;
 % credit.py 5-19). A seller who rebuys needs R b + (1-psi) P h_old + y >=
-% (1-phi) P h_new (kernels.py 447-451). No amortization, no PTI
+% (1-phi) P h_new (kernels.py 447-451). Oct 13: at 7.9 the sale-to-rent test is
+% the renter budget after income (household.py 541-544, sale_screen_fix root;
+% require_owner_sale_solvency only under legacy_pre_income_sale_screen, off).
+% No amortization, no PTI
 % (household.py 729-742 forbid them with native_purchase_income).
 
 \subsubsection*{Budget constraint.}
