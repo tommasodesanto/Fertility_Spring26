@@ -1,0 +1,1079 @@
+
+  ___  ____  ____  ____  ____ ©
+ /__    /   ____/   /   ____/      17.0
+___/   /   /___/   /   /___/       MP—Parallel Edition
+
+ Statistics and Data Science       Copyright 1985-2021 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-STATA-PC        https://www.stata.com
+                                   979-696-4600        stata@stata.com
+
+Stata license: 2-user 8-core network perpetual
+Serial number: 501706331441
+  Licensed to: Tommaso De Santo
+               
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+      3. More than 2 billion observations are allowed; see help obs_advice.
+      4. Maximum number of variables is set to 5,000; see help set_maxvar.
+
+. do ../../sa_first_birth_value_2023.do 
+
+. * 1968-2023 copy of sa_first_birth_value_v1.do (Oct 20 2026). Only changes: i
+> nputs are the 1968-2023 files from
+. * build_psid_a2h_inputs_2023.do (same items and SHELF definitions, 2021/2023 
+> added), output paths, and
+. * why-moved codes 10-12 (COVID, evicted, foreclosed; new in 2021) counted as 
+> non-space, non-neighbourhood reasons.
+. * First-birth house value, mortgage and interstate-move event study, v1 (Oct 
+> 18, 2026).
+. * Question: do families get space at first birth by moving to cheaper places,
+. * so that house value and mortgage barely rise?
+. * Design copied from the A2h arm of sa_rooms_first_birth_v2.do (rooms target)
+> :
+. *   all current adults 18+, PSID longitudinal weight IW, first biological bir
+> th,
+. *   confirmed-childless never-parents as the control cohort, first birth no e
+> arlier
+. *   than first adult observation, treated adults reference person or spouse i
+> n the
+. *   -3/-2 baseline window; Sun-Abraham IW estimator (eventstudyinteract), per
+> son
+. *   and year fixed effects, age and education indicators, two-year windows,
+. *   reference window -3/-2, SE clustered by person.
+. * Sample preparation copied from prepare_first_birth_outcomes_v3.do (official
+. * year-specific rooms and tenure items merged to the interview year).
+. * The A2h filter is evaluated on the rooms sample, as in the rooms target; ea
+> ch
+. * outcome then keeps its own non-missing rows. Arm own_rep re-runs the v3 A2h
+> _own
+. * arm with the original logic (filter on the outcome sample) as a replication
+>  check.
+. * Shelf HOMEVALUER and HOMEMORTOTR are real 2022 USD at the interview year
+. * (HOMEVALUER verified equal to official A20 times a year constant, 1999 and 
+> 2001).
+. * HOMEMORTOTR exists only in 1984, 1989, 1994 and 1999-2019.
+. clear all
+
+. set more off
+
+. set processors 4
+    The maximum number of processors or cores being used is changed from 8 to
+    4.  It can be set to any number between 1 and 8
+
+. version 17.0
+
+. local out "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring2
+> 6/code/data/psid_followup_mar2026/output/sa_first_birth_value_2023"
+
+. local cms "/Users/tommasodesanto/Desktop/Projects/Datasets/PSID-SHELF/Constru
+> ction_Files/Data/Users/DD/Dropbox (University of Michigan)/Data/PSID/PSID_CMS
+> /PSID_COMPLETE_MAIN_STUDY_1968_2019.dta"
+
+. local shelf "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/extension_
+> 2023/shelf_1968_2023.dta"
+
+. local arms `"`1'"'
+
+. if `"`arms'"' == "" local arms "own_rep lnval lnrooms_own lnvpr lnval_preown 
+> lnrooms_preown lnvpr_preown anymort lnmort ltv interstate"
+
+. timer clear 1
+
+. timer on 1
+
+. * 1. Official year-specific family items, merged to the interview year (copie
+> d from v3).
+. use ID year rooms using "/Users/tommasodesanto/Desktop/Projects/Fertility/PSI
+> D/extension_2023/items_1968_2023.dta" if !missing(rooms), clear
+(PSID official family items by person-year, 1968-2023 (rooms A8, own/rent A19, 
+> mo)
+
+. isid ID year
+
+. tempfile src_rooms
+
+. save `src_rooms'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62862.000001 saved
+    as .dta format
+
+. use ID year own_raw using "/Users/tommasodesanto/Desktop/Projects/Fertility/P
+> SID/extension_2023/items_1968_2023.dta" if !missing(own_raw), clear
+(PSID official family items by person-year, 1968-2023 (rooms A8, own/rent A19, 
+> mo)
+
+. isid ID year
+
+. tempfile src_own_raw
+
+. save `src_own_raw'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62862.000002 saved
+    as .dta format
+
+. 
+. * 2. Shelf columns.
+. use ID year AGEREP EDUYEAR SEX REL CURRENT HHID FID IW DEATHYEAR RELCHIREP RE
+> LCHI1BYEAR ACTUALROOMS_ HOMEOWN HOMEVALUER HOMEMORTOTR GEOSTATE RELCHI1TYPE R
+> ELCHI2TYPE RELCHI2BYEAR RELCHI3TYPE RELCHI3BYEAR RELCHI4TYPE RELCHI4BYEAR REL
+> CHI5TYPE RELCHI5BYEAR RELCHI6TYPE RELCHI6BYEAR RELCHI7TYPE RELCHI7BYEAR RELCH
+> I8TYPE RELCHI8BYEAR RELCHI9TYPE RELCHI9BYEAR RELCHI10TYPE RELCHI10BYEAR RELCH
+> I11TYPE RELCHI11BYEAR RELCHI12TYPE RELCHI12BYEAR RELCHI13TYPE RELCHI13BYEAR R
+> ELCHI14TYPE RELCHI14BYEAR RELCHI15TYPE RELCHI15BYEAR RELCHI16TYPE RELCHI16BYE
+> AR RELCHI17TYPE RELCHI17BYEAR RELCHI18TYPE RELCHI18BYEAR RELCHI19TYPE RELCHI1
+> 9BYEAR RELCHI20TYPE RELCHI20BYEAR using "`shelf'", clear
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+
+. sort ID year
+
+. by ID: gen double rooms_shift = ACTUALROOMS_[_n-1] if _n > 1 & inlist(year-ye
+> ar[_n-1],1,2)
+(1,776,113 missing values generated)
+
+. foreach s in rooms own_raw {
+  2.     merge 1:1 ID year using `src_`s'', keep(master match) nogenerate
+  3. }
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                     1,609,790
+        from master                 1,609,790  
+        from using                          0  
+
+    Matched                         2,010,284  
+    -----------------------------------------
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                     1,609,790
+        from master                 1,609,790  
+        from using                          0  
+
+    Matched                         2,010,284  
+    -----------------------------------------
+
+. * Verification as in v3: rebuilt rooms vs shifted shelf column; own vs shelf 
+> HOMEOWN.
+. quietly count if CURRENT == 1 & !missing(rooms, rooms_shift) & rooms != rooms
+> _shift
+
+. assert r(N) == 0
+
+. gen byte own = cond(own_raw == 1, 1, cond(own_raw == 5, 0, .)) if !missing(ow
+> n_raw)
+(1,712,585 missing values generated)
+
+. gen byte own_shelf = cond(HOMEOWN == 1, 1, cond(HOMEOWN == 2, 0, .)) if !miss
+> ing(HOMEOWN)
+(2,734,812 missing values generated)
+
+. quietly count if CURRENT == 1 & !missing(own, own_shelf) & own != own_shelf
+
+. assert r(N) == 0
+
+. replace rooms = . if year <= 1984 & rooms == 9
+(17,928 real changes made, 17,928 to missing)
+
+. replace rooms = . if inrange(year,1985,1993) & rooms == 99
+(4,428 real changes made, 4,428 to missing)
+
+. replace rooms = . if year >= 1994 & inlist(rooms,98,99)
+(10,320 real changes made, 10,320 to missing)
+
+. 
+. * 3. Code and timing checks, 2001 owners: value and mortgage DK/NA codes; sta
+> te timing.
+. preserve
+
+.     keep if year == 2001 & CURRENT == 1
+(3,599,651 observations deleted)
+
+.     keep ID own HOMEVALUER HOMEMORTOTR GEOSTATE
+
+.     tempfile chk2001
+
+.     save `chk2001'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62862.000004 saved
+    as .dta format
+
+.     use ID ER17004 ER17044 ER17052 using "`cms'", clear
+(PSID Complete Main Study, 1968–2019, Release 2023.01. Data compiled: 2023/10/0
+> 8.)
+
+.     merge 1:1 ID using `chk2001', keep(using match) nogenerate
+(variable ID was float, now double to accommodate using data's values)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            20,423  
+    -----------------------------------------
+
+.     di "CHECK owners 2001"
+CHECK owners 2001
+
+.     count if own == 1
+  13,142
+
+.     count if own == 1 & ER17044 >= 9999997 & !missing(ER17044)
+  407
+
+.     count if own == 1 & ER17044 >= 9999997 & !missing(ER17044) & !missing(HOM
+> EVALUER)
+  0
+
+.     count if own == 1 & missing(HOMEVALUER)
+  407
+
+.     count if own == 1 & HOMEVALUER == 0
+  0
+
+.     count if own == 1 & HOMEMORTOTR == 0
+  2,909
+
+.     count if own == 1 & missing(HOMEMORTOTR)
+  773
+
+.     count if own == 1 & ER17052 >= 9999997 & !missing(ER17052)
+  788
+
+.     count if own == 1 & ER17052 >= 9999997 & !missing(ER17052) & !missing(HOM
+> EMORTOTR)
+  15
+
+.     summarize HOMEVALUER HOMEMORTOTR if own == 1, detail
+
+         FU's primary home, home val (real USD 2022)
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%      7470.84       112.0626
+ 5%     32124.61       134.4751
+10%     59766.72       134.4751       Obs              12,735
+25%     101603.4       134.4751       Sum of wgt.      12,735
+
+50%     167346.8                      Mean           226616.5
+                        Largest       Std. dev.        237677
+75%     276421.1        4482504
+90%     448250.4        4482504       Variance       5.65e+10
+95%     597667.2        6350214       Skewness       7.081956
+99%      1120626        6350214       Kurtosis       121.7987
+
+       FU's primary home, mortgage, all mentions (real
+                          USD 2022)
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            0              0       Obs              12,369
+25%      7470.84              0       Sum of wgt.      12,369
+
+50%     80685.07                      Mean           106267.3
+                        Largest       Std. dev.      127923.7
+75%     152405.1        2241252
+90%     246537.7        2241252       Variance       1.64e+10
+95%     298833.6        2241252       Skewness       4.611886
+99%     500546.3        2241252       Kurtosis       54.23665
+
+.     di "CHECK state timing 2001: GEOSTATE vs official ER17004 (mismatch with 
+> the modal map)"
+CHECK state timing 2001: GEOSTATE vs official ER17004 (mismatch with the modal 
+> map)
+
+.     egen double modal = mode(GEOSTATE), by(ER17004)
+Warning: at least one group contains all missing values or contains multiple
+modes.  Generating missing values for the mode of these groups.  Use the
+missing, maxmode, minmode, or nummode() options to control this behavior.
+(3 missing values generated)
+
+.     count if !missing(GEOSTATE, ER17004)
+  20,420
+
+.     count if !missing(GEOSTATE, ER17004) & GEOSTATE != modal
+  0
+
+. restore
+
+. 
+. * 4. Person-level constructions before any restriction (copied from v3).
+. gen double bio_candidate = .
+(3,620,074 missing values generated)
+
+. forvalues c = 1/20 {
+  2.     replace bio_candidate = RELCHI`c'BYEAR if RELCHI`c'TYPE == 1 & !missin
+> g(RELCHI`c'BYEAR) & (missing(bio_candidate) | RELCHI`c'BYEAR < bio_candidate)
+  3. }
+(1,389,367 real changes made)
+(1,247 real changes made)
+(215 real changes made)
+(86 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. bysort ID: egen double bio_first_year = min(bio_candidate)
+(2,229,847 missing values generated)
+
+. drop bio_candidate
+
+. bysort ID: egen double relchirep_max = max(RELCHIREP)
+(1,327,167 missing values generated)
+
+. gen double relchi1_year = RELCHI1BYEAR
+(2,230,707 missing values generated)
+
+. egen byte fid_tag = tag(HHID year FID) if CURRENT == 1 & !missing(HHID) & HHI
+> D > 0 & !missing(FID) & FID > 0
+
+. bysort HHID year: egen int n_current_fids = total(fid_tag)
+
+. drop fid_tag
+
+. gen byte woman = SEX == 2
+
+. gen byte current = CURRENT == 1
+
+. gen double rel = REL
+(2,666,070 missing values generated)
+
+. gen double hhid = HHID
+(1,828,454 missing values generated)
+
+. gen double fid = FID
+(1,593,471 missing values generated)
+
+. gen double iw = IW
+(2,910,734 missing values generated)
+
+. gen double adult_year = year if CURRENT == 1 & AGEREP >= 18 & !missing(AGEREP
+> ) & year <= DEATHYEAR
+(3,026,596 missing values generated)
+
+. bysort ID: egen double year_entry_adult = min(adult_year)
+(1,066,398 missing values generated)
+
+. drop adult_year
+
+. keep if CURRENT == 1
+(2,709,628 observations deleted)
+
+. drop if year > DEATHYEAR
+(56 observations deleted)
+
+. * Interstate move: state differs from the previous observed interview, one or
+>  two years earlier.
+. sort ID year
+
+. by ID: gen double prev_state = GEOSTATE[_n-1] if _n > 1 & inlist(year - year[
+> _n-1], 1, 2)
+(108,896 missing values generated)
+
+. gen byte interstate = GEOSTATE != prev_state if !missing(GEOSTATE, prev_state
+> )
+(115,297 missing values generated)
+
+. gen double value = HOMEVALUER
+(7,077 missing values generated)
+
+. gen double mort = HOMEMORTOTR
+(556,649 missing values generated)
+
+. keep ID year AGEREP EDUYEAR rooms own value mort interstate bio_first_year re
+> lchirep_max current rel iw year_entry_adult
+
+. isid ID year
+
+. compress
+  variable bio_first_year was double now int
+  variable relchirep_max was double now byte
+  variable rel was double now byte
+  variable year_entry_adult was double now int
+  (23,670,140 bytes saved)
+
+. tempfile base
+
+. save `base'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62862.000005 saved
+    as .dta format
+
+. 
+. * 5. Event studies, A2h design.
+. tempname P S
+
+. tempfile coeffile sumfile
+
+. postfile `P' str16 arm str8 window int k_lo int k_hi double estimate double s
+> tandard_error using `coeffile', replace
+(file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62862.000006 not
+    found)
+
+. postfile `S' str16 arm str70 definition int status double observations cluste
+> rs treated_individuals control_individuals ref_mean_outcome ref_mean_level co
+> ntrol_mean_outcome headline_effect headline_se dropped_unsupported_rows topco
+> ded_rows runtime_seconds using `sumfile', replace
+(file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62862.000007 not
+    found)
+
+. local ownsamp "own == 1 & value > 0 & !missing(value) & rooms > 0 & !missing(
+> rooms)"
+
+. foreach arm of local arms {
+  2.     timer clear 2
+  3.     timer on 2
+  4.     use `base', clear
+  5.     local basis = cond("`arm'" == "own_rep", "own", "rooms")
+  6.     keep if current & !missing(`basis', AGEREP, EDUYEAR) & AGEREP >= 18
+  7.     keep if !missing(iw) & iw > 0
+  8.     gen double f_c_y = bio_first_year
+  9.     drop if missing(f_c_y) & !(relchirep_max == 0)
+ 10.     drop if !missing(f_c_y) & f_c_y < year_entry_adult
+ 11.     gen byte control = missing(f_c_y) & relchirep_max == 0
+ 12.     gen byte hs_row = inlist(rel,1,2) & inrange(year - f_c_y, -3, -2)
+ 13.     bysort ID: egen byte hs_base = max(hs_row)
+ 14.     gen byte base_row = inrange(year - f_c_y, -3, -2)
+ 15.     bysort ID: egen byte has_base = max(base_row)
+ 16.     keep if control | (has_base & hs_base == 1)
+ 17.     drop hs_row hs_base base_row has_base
+ 18.     gen double K = year - f_c_y
+ 19.     if strpos("`arm'", "_preown") {
+ 20.         * Treated must own at every observed baseline (-3/-2) interview.
+.         gen byte b_own = inrange(K,-3,-2) & own == 1
+ 21.         gen byte b_not = inrange(K,-3,-2) & own != 1
+ 22.         bysort ID: egen byte any_b_own = max(b_own)
+ 23.         bysort ID: egen byte any_b_not = max(b_not)
+ 24.         keep if control | (any_b_own & !any_b_not)
+ 25.         drop b_own b_not any_b_own any_b_not
+ 26.     }
+ 27.     gen double y = .
+ 28.     gen double lvl = .
+ 29.     local tc = 0
+ 30.     if "`arm'" == "own_rep" {
+ 31.         replace y = own
+ 32.         replace lvl = own
+ 33.         local def "owner; replication of v3 A2h_own"
+ 34.     }
+ 35.     if inlist("`arm'", "lnval", "lnval_preown") {
+ 36.         replace y = ln(value) if `ownsamp'
+ 37.         replace lvl = value if !missing(y)
+ 38.         local def "log real house value (2022 USD); owners"
+ 39.     }
+ 40.     if inlist("`arm'", "lnrooms_own", "lnrooms_preown") {
+ 41.         replace y = ln(rooms) if `ownsamp'
+ 42.         replace lvl = rooms if !missing(y)
+ 43.         local def "log rooms; owners (same rows as lnval)"
+ 44.     }
+ 45.     if inlist("`arm'", "lnvpr", "lnvpr_preown") {
+ 46.         replace y = ln(value / rooms) if `ownsamp'
+ 47.         replace lvl = value / rooms if !missing(y)
+ 48.         local def "log real house value per room; owners (same rows as lnv
+> al)"
+ 49.     }
+ 50.     if "`arm'" == "anymort" {
+ 51.         replace y = mort > 0 if `ownsamp' & !missing(mort)
+ 52.         replace lvl = y
+ 53.         local def "any mortgage; owners; mortgage years only"
+ 54.     }
+ 55.     if "`arm'" == "lnmort" {
+ 56.         replace y = ln(mort) if `ownsamp' & mort > 0 & !missing(mort)
+ 57.         replace lvl = mort if !missing(y)
+ 58.         local def "log real mortgage principal; owners with a mortgage"
+ 59.     }
+ 60.     if "`arm'" == "ltv" {
+ 61.         quietly count if `ownsamp' & !missing(mort) & mort / value > 2
+ 62.         local tc = r(N)
+ 63.         replace y = min(mort / value, 2) if `ownsamp' & !missing(mort)
+ 64.         replace lvl = mort / value if !missing(y)
+ 65.         local def "mortgage / value, top-coded at 2; owners incl. zero mor
+> tgage"
+ 66.     }
+ 67.     if "`arm'" == "interstate" {
+ 68.         replace y = interstate
+ 69.         replace lvl = interstate
+ 70.         local def "state differs from previous interview; all tenures"
+ 71.     }
+ 72.     if strpos("`arm'", "_preown") local def "`def'; treated owned at -3/-2
+> "
+ 73.     keep if !missing(y)
+ 74.     * Cohort support: every treated cohort must be observed in the baselin
+> e window.
+.     gen byte in_reference = inrange(K,-3,-2)
+ 75.     bysort f_c_y: egen long reference_rows = total(in_reference)
+ 76.     gen byte unsupported = !missing(f_c_y) & control == 0 & reference_rows
+>  == 0
+ 77.     quietly count if unsupported
+ 78.     local dropped = r(N)
+ 79.     drop if unsupported
+ 80.     drop in_reference reference_rows unsupported
+ 81.     gen byte Wleft = K <= -8 & !missing(K)
+ 82.     gen byte Wm2 = inrange(K,-7,-6)
+ 83.     gen byte Wm1 = inrange(K,-5,-4)
+ 84.     gen byte Wp1 = inrange(K,-1,0)
+ 85.     gen byte Wp2 = inrange(K,1,2)
+ 86.     gen byte Wp3 = inrange(K,3,4)
+ 87.     gen byte Wp4 = inrange(K,5,6)
+ 88.     gen byte Wp5 = inrange(K,7,8)
+ 89.     gen byte Wp6 = inrange(K,9,10)
+ 90.     gen byte Wright = K >= 11 & !missing(K)
+ 91.     local dummies Wleft Wm2 Wm1 Wp1 Wp2 Wp3 Wp4 Wp5 Wp6 Wright
+ 92.     di "ARM `arm': `def'"
+ 93.     capture noisily eventstudyinteract y `dummies' [pw=iw], ///
+>         vce(cluster ID) absorb(ID year) cohort(f_c_y) control_cohort(control)
+>  ///
+>         covariates(i.AGEREP i.EDUYEAR)
+ 94.     local rc = _rc
+ 95.     timer off 2
+ 96.     quietly timer list 2
+ 97.     local secs = r(t2)
+ 98.     if `rc' {
+ 99.         di "ARM_FAIL `arm' rc=`rc'"
+100.         post `S' ("`arm'") ("`def'") (`rc') (.) (.) (.) (.) (.) (.) (.) (.
+> ) (.) (.) (`dropped') (`tc') (`secs')
+101.         continue
+102.     }
+103.     matrix b = e(b_iw)
+104.     matrix V = e(V_iw)
+105.     local n = e(N)
+106.     local clusters = e(N_clust)
+107.     local names : colnames b
+108.     forvalues i = 1/`=colsof(b)' {
+109.         local w : word `i' of `names'
+110.         local lo = cond("`w'"=="Wleft", ., cond("`w'"=="Wm2", -7, cond("`w
+> '"=="Wm1", -5, cond("`w'"=="Wp1", -1, cond("`w'"=="Wp2", 1, cond("`w'"=="Wp3"
+> , 3, cond("`w'"=="Wp4", 5, cond("`w'"=="Wp5", 7, cond("`w'"=="Wp6", 9, 11))))
+> )))))
+111.         local hi = cond("`w'"=="Wleft", -8, cond("`w'"=="Wright", ., `lo' 
+> + 1))
+112.         post `P' ("`arm'") ("`w'") (`lo') (`hi') (b[1,`i']) (sqrt(V[`i',`i
+> ']))
+113.     }
+114.     local h = colnumb("b", "Wp3")
+115.     quietly summarize y [aw=iw] if e(sample) & inrange(K,-3,-2)
+116.     local rm = r(mean)
+117.     quietly summarize lvl [aw=iw] if e(sample) & inrange(K,-3,-2)
+118.     local rl = r(mean)
+119.     quietly summarize y [aw=iw] if e(sample) & control
+120.     local cm = r(mean)
+121.     egen byte ctag = tag(ID) if e(sample) & control
+122.     quietly count if ctag
+123.     local cids = r(N)
+124.     egen byte ttag = tag(ID) if e(sample) & !control & !missing(f_c_y)
+125.     quietly count if ttag
+126.     local tids = r(N)
+127.     post `S' ("`arm'") ("`def'") (0) (`n') (`clusters') (`tids') (`cids') 
+> (`rm') (`rl') (`cm') (b[1,`h']) (sqrt(V[`h',`h'])) (`dropped') (`tc') (`secs'
+> )
+128.     di "ARM_PASS `arm' N=`n' Wp3=" b[1,`h'] " se=" sqrt(V[`h',`h'])
+129. }
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(372,836 observations deleted)
+(157,992 observations deleted)
+(93,332 missing values generated)
+(33,794 observations deleted)
+(142,828 observations deleted)
+(81,586 observations deleted)
+(59,538 missing values generated)
+(121,354 missing values generated)
+(121,354 missing values generated)
+(121,354 real changes made)
+(121,354 real changes made)
+(0 observations deleted)
+(0 observations deleted)
+ARM own_rep: owner; replication of v3 A2h_own
+(obs=2,104,304)
+
+IW estimates for dynamic effects                       Number of obs = 119,854
+Absorbing 2 HDFE groups                                F(592, 9797)  =    9.03
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.5324
+                                                       Adj R-squared =  0.4879
+                                                       Root MSE      =  0.3364
+                                 (Std. err. adjusted for 9,798 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0080623   .0161363     0.50   0.617    -.0235682    .0396928
+         Wm2 |  -.0010041   .0135113    -0.07   0.941     -.027489    .0254808
+         Wm1 |  -.0219972   .0102143    -2.15   0.031    -.0420194    -.001975
+         Wp1 |   .1616225    .008653    18.68   0.000     .1446608    .1785843
+         Wp2 |   .2463877   .0109605    22.48   0.000     .2249029    .2678726
+         Wp3 |   .2707043   .0123472    21.92   0.000     .2465012    .2949073
+         Wp4 |   .2654592   .0134864    19.68   0.000     .2390231    .2918953
+         Wp5 |   .2438516   .0148243    16.45   0.000      .214793    .2729102
+         Wp6 |   .2318984   .0159841    14.51   0.000     .2005663    .2632306
+      Wright |   .2220554   .0195329    11.37   0.000     .1837668     .260344
+------------------------------------------------------------------------------
+ARM_PASS own_rep N=119854 Wp3=.27070426 se=.01234721
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(72,273 real changes made)
+(72,273 real changes made)
+(56,311 observations deleted)
+(0 observations deleted)
+ARM lnval: log real house value (2022 USD); owners
+(obs=1,553,020)
+
+IW estimates for dynamic effects                        Number of obs = 70,538
+Absorbing 2 HDFE groups                                 F(590, 7007)  =   5.40
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.7623
+                                                        Adj R-squared = 0.7334
+                                                        Root MSE      = 0.4626
+                                 (Std. err. adjusted for 7,008 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0658578   .0305288     2.16   0.031     .0060121    .1257035
+         Wm2 |   .0766409   .0253752     3.02   0.003     .0268978    .1263839
+         Wm1 |   .0307074   .0201383     1.52   0.127    -.0087698    .0701845
+         Wp1 |   .0681548   .0147007     4.64   0.000      .039337    .0969727
+         Wp2 |   .1627602   .0197751     8.23   0.000     .1239951    .2015253
+         Wp3 |    .229938   .0222827    10.32   0.000     .1862571    .2736189
+         Wp4 |   .2805113   .0262164    10.70   0.000     .2291193    .3319034
+         Wp5 |    .300573   .0293436    10.24   0.000     .2430507    .3580953
+         Wp6 |   .3347086   .0326493    10.25   0.000      .270706    .3987112
+      Wright |   .3598183   .0436007     8.25   0.000     .2743478    .4452889
+------------------------------------------------------------------------------
+ARM_PASS lnval N=70538 Wp3=.22993796 se=.02228273
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(72,273 real changes made)
+(72,273 real changes made)
+(56,311 observations deleted)
+(0 observations deleted)
+ARM lnrooms_own: log rooms; owners (same rows as lnval)
+(obs=1,553,020)
+
+IW estimates for dynamic effects                        Number of obs = 70,538
+Absorbing 2 HDFE groups                                 F(590, 7007)  =   5.94
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.6091
+                                                        Adj R-squared = 0.5616
+                                                        Root MSE      = 0.2163
+                                 (Std. err. adjusted for 7,008 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0725612   .0147073     4.93   0.000     .0437305    .1013919
+         Wm2 |   .0475158   .0131474     3.61   0.000      .021743    .0732886
+         Wm1 |   .0215832   .0104833     2.06   0.040     .0010327    .0421336
+         Wp1 |    .043304   .0082279     5.26   0.000     .0271748    .0594331
+         Wp2 |   .1069253   .0098942    10.81   0.000     .0875297    .1263209
+         Wp3 |   .1511937    .010653    14.19   0.000     .1303105    .1720768
+         Wp4 |   .1811633   .0117498    15.42   0.000     .1581302    .2041964
+         Wp5 |   .1916824   .0128619    14.90   0.000     .1664693    .2168956
+         Wp6 |   .2182347    .013729    15.90   0.000     .1913216    .2451478
+      Wright |   .2366757   .0162502    14.56   0.000     .2048203    .2685311
+------------------------------------------------------------------------------
+ARM_PASS lnrooms_own N=70538 Wp3=.15119366 se=.01065301
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(72,273 real changes made)
+(72,273 real changes made)
+(56,311 observations deleted)
+(0 observations deleted)
+ARM lnvpr: log real house value per room; owners (same rows as lnval)
+(obs=1,553,020)
+
+IW estimates for dynamic effects                        Number of obs = 70,538
+Absorbing 2 HDFE groups                                 F(590, 7007)  =   4.40
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.7373
+                                                        Adj R-squared = 0.7054
+                                                        Root MSE      = 0.4373
+                                 (Std. err. adjusted for 7,008 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.0067034   .0262132    -0.26   0.798    -.0580893    .0446825
+         Wm2 |   .0291251   .0217052     1.34   0.180    -.0134238     .071674
+         Wm1 |   .0091242   .0172431     0.53   0.597    -.0246774    .0429258
+         Wp1 |   .0248509   .0136621     1.82   0.069     -.001931    .0516327
+         Wp2 |   .0558349   .0173816     3.21   0.001     .0217617    .0899081
+         Wp3 |   .0787443   .0197786     3.98   0.000     .0399723    .1175163
+         Wp4 |   .0993481   .0229392     4.33   0.000     .0543804    .1443158
+         Wp5 |   .1088906   .0256018     4.25   0.000     .0587033    .1590778
+         Wp6 |   .1164739   .0283481     4.11   0.000      .060903    .1720448
+      Wright |   .1231426   .0374499     3.29   0.001     .0497295    .1965557
+------------------------------------------------------------------------------
+ARM_PASS lnvpr N=70538 Wp3=.0787443 se=.01977858
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(44,974 observations deleted)
+(83,610 missing values generated)
+(83,610 missing values generated)
+(48,844 real changes made)
+(48,844 real changes made)
+(34,766 observations deleted)
+(0 observations deleted)
+ARM lnval_preown: log real house value (2022 USD); owners; treated owned at -3/
+> -2
+(obs=660,511)
+
+IW estimates for dynamic effects                      Number of obs =   47,282
+Absorbing 2 HDFE groups                               F(589, 5060)  = 98373.28
+                                                      Prob > F      =   0.0000
+                                                      R-squared     =   0.7607
+                                                      Adj R-squared =   0.7279
+                                                      Root MSE      =   0.4717
+                                 (Std. err. adjusted for 5,061 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0671534   .0351431     1.91   0.056    -.0017423    .1360491
+         Wm2 |   .0380045   .0298537     1.27   0.203    -.0205217    .0965306
+         Wm1 |   .0063657   .0220175     0.29   0.772     -.036798    .0495295
+         Wp1 |   .0766218   .0139546     5.49   0.000     .0492648    .1039788
+         Wp2 |   .1909052    .021227     8.99   0.000     .1492911    .2325193
+         Wp3 |   .2656114   .0236396    11.24   0.000     .2192677    .3119552
+         Wp4 |   .3215854   .0277611    11.58   0.000     .2671617    .3760091
+         Wp5 |   .3303795   .0319929    10.33   0.000     .2676596    .3930993
+         Wp6 |   .3526302   .0351096    10.04   0.000     .2838001    .4214603
+      Wright |   .3814362   .0465671     8.19   0.000     .2901444     .472728
+------------------------------------------------------------------------------
+ARM_PASS lnval_preown N=47282 Wp3=.26561144 se=.02363956
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(44,974 observations deleted)
+(83,610 missing values generated)
+(83,610 missing values generated)
+(48,844 real changes made)
+(48,844 real changes made)
+(34,766 observations deleted)
+(0 observations deleted)
+ARM lnrooms_preown: log rooms; owners (same rows as lnval); treated owned at -3
+> /-2
+(obs=660,511)
+
+IW estimates for dynamic effects                      Number of obs =   47,282
+Absorbing 2 HDFE groups                               F(589, 5060)  = 84407.35
+                                                      Prob > F      =   0.0000
+                                                      R-squared     =   0.6240
+                                                      Adj R-squared =   0.5725
+                                                      Root MSE      =   0.2200
+                                 (Std. err. adjusted for 5,061 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0689305   .0167302     4.12   0.000     .0361321    .1017288
+         Wm2 |   .0246954   .0151592     1.63   0.103    -.0050232    .0544141
+         Wm1 |   .0081504   .0111563     0.73   0.465    -.0137209    .0300216
+         Wp1 |   .0524237   .0085165     6.16   0.000     .0357277    .0691198
+         Wp2 |   .1216152   .0108852    11.17   0.000     .1002754    .1429549
+         Wp3 |   .1634615   .0120879    13.52   0.000      .139764     .187159
+         Wp4 |   .2038371   .0131347    15.52   0.000     .1780874    .2295868
+         Wp5 |   .2033081   .0149645    13.59   0.000     .1739711    .2326451
+         Wp6 |    .224585   .0159729    14.06   0.000     .1932712    .2558988
+      Wright |   .2423846   .0183383    13.22   0.000     .2064335    .2783357
+------------------------------------------------------------------------------
+ARM_PASS lnrooms_preown N=47282 Wp3=.1634615 se=.01208789
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(44,974 observations deleted)
+(83,610 missing values generated)
+(83,610 missing values generated)
+(48,844 real changes made)
+(48,844 real changes made)
+(34,766 observations deleted)
+(0 observations deleted)
+ARM lnvpr_preown: log real house value per room; owners (same rows as lnval); t
+> reated owned at -3/-2
+(obs=660,511)
+
+IW estimates for dynamic effects                     Number of obs =    47,282
+Absorbing 2 HDFE groups                              F(589, 5060)  = 110936.01
+                                                     Prob > F      =    0.0000
+                                                     R-squared     =    0.7373
+                                                     Adj R-squared =    0.7014
+                                                     Root MSE      =    0.4493
+                                 (Std. err. adjusted for 5,061 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.0017771   .0299995    -0.06   0.953     -.060589    .0570349
+         Wm2 |    .013309   .0254165     0.52   0.601    -.0365183    .0631363
+         Wm1 |  -.0017846   .0190581    -0.09   0.925    -.0391468    .0355776
+         Wp1 |   .0241981   .0137787     1.76   0.079    -.0028142    .0512103
+         Wp2 |   .0692901   .0186099     3.72   0.000     .0328065    .1057736
+         Wp3 |   .1021499   .0214806     4.76   0.000     .0600386    .1442613
+         Wp4 |   .1177483   .0245664     4.79   0.000     .0695875    .1659091
+         Wp5 |   .1270714   .0281674     4.51   0.000      .071851    .1822917
+         Wp6 |   .1280452   .0305809     4.19   0.000     .0680934    .1879971
+      Wright |   .1390516   .0403284     3.45   0.001     .0599905    .2181127
+------------------------------------------------------------------------------
+ARM_PASS lnvpr_preown N=47282 Wp3=.10214994 se=.02148062
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(39,295 real changes made)
+(39,295 real changes made)
+(89,289 observations deleted)
+(11,151 observations deleted)
+ARM anymort: any mortgage; owners; mortgage years only
+(obs=462,690)
+
+IW estimates for dynamic effects                        Number of obs = 26,096
+Absorbing 2 HDFE groups                                 F(316, 4618)  =   2.06
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.6432
+                                                        Adj R-squared = 0.5597
+                                                        Root MSE      = 0.2824
+                                 (Std. err. adjusted for 4,619 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.1017842   .0230891    -4.41   0.000    -.1470499   -.0565186
+         Wm2 |  -.0988536   .0212399    -4.65   0.000    -.1404939   -.0572134
+         Wm1 |  -.0280466   .0172463    -1.63   0.104    -.0618576    .0057645
+         Wp1 |   .0029863   .0117839     0.25   0.800    -.0201158    .0260883
+         Wp2 |   .0170837   .0147445     1.16   0.247    -.0118226      .04599
+         Wp3 |   .0063713   .0155625     0.41   0.682    -.0241386    .0368813
+         Wp4 |   -.001105   .0194886    -0.06   0.955    -.0393119    .0371019
+         Wp5 |  -.0002197   .0201925    -0.01   0.991    -.0398067    .0393672
+         Wp6 |   .0186926   .0227238     0.82   0.411    -.0258569    .0632422
+      Wright |   .0226731   .0308525     0.73   0.462    -.0378126    .0831589
+------------------------------------------------------------------------------
+ARM_PASS anymort N=26096 Wp3=.00637135 se=.01556249
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(29,742 real changes made)
+(29,742 real changes made)
+(98,842 observations deleted)
+(8,439 observations deleted)
+ARM lnmort: log real mortgage principal; owners with a mortgage
+(obs=400,868)
+
+IW estimates for dynamic effects                        Number of obs = 19,486
+Absorbing 2 HDFE groups                                 F(303, 3660)  = 168.19
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.6712
+                                                        Adj R-squared = 0.5868
+                                                        Root MSE      = 0.6168
+                                 (Std. err. adjusted for 3,661 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.2082133   .0616034    -3.38   0.001    -.3289937    -.087433
+         Wm2 |  -.2333009   .0553024    -4.22   0.000    -.3417276   -.1248743
+         Wm1 |   -.211935   .0519676    -4.08   0.000    -.3138232   -.1100467
+         Wp1 |   .0623966   .0317454     1.97   0.049     .0001562    .1246369
+         Wp2 |   .1093982   .0372611     2.94   0.003     .0363437    .1824528
+         Wp3 |   .0860998   .0381602     2.26   0.024     .0112824    .1609172
+         Wp4 |   .1047152   .0485849     2.16   0.031     .0094591    .1999712
+         Wp5 |   .1410316   .0502159     2.81   0.005     .0425776    .2394856
+         Wp6 |   .1053475   .0567264     1.86   0.063     -.005871    .2165659
+      Wright |   .1179698   .0798686     1.48   0.140    -.0386216    .2745611
+------------------------------------------------------------------------------
+ARM_PASS lnmort N=19486 Wp3=.08609978 se=.03816022
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(39,295 real changes made)
+(39,295 real changes made)
+(89,289 observations deleted)
+(11,151 observations deleted)
+ARM ltv: mortgage / value, top-coded at 2; owners incl. zero mortgage
+(obs=462,690)
+
+IW estimates for dynamic effects                        Number of obs = 26,096
+Absorbing 2 HDFE groups                                 F(316, 4618)  =   5.67
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.6688
+                                                        Adj R-squared = 0.5913
+                                                        Root MSE      = 0.2269
+                                 (Std. err. adjusted for 4,619 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.1718224   .0206444    -8.32   0.000    -.2122952   -.1313496
+         Wm2 |  -.1574525    .021493    -7.33   0.000     -.199589   -.1153161
+         Wm1 |  -.0961808   .0192569    -4.99   0.000    -.1339334   -.0584281
+         Wp1 |  -.0007988   .0124955    -0.06   0.949    -.0252959    .0236983
+         Wp2 |  -.0210421   .0135613    -1.55   0.121    -.0476289    .0055446
+         Wp3 |  -.0567861   .0143084    -3.97   0.000    -.0848374   -.0287348
+         Wp4 |  -.0673927    .017401    -3.87   0.000     -.101507   -.0332785
+         Wp5 |  -.0557786   .0181047    -3.08   0.002    -.0912724   -.0202848
+         Wp6 |  -.0756638   .0202161    -3.74   0.000    -.1152971   -.0360306
+      Wright |   -.086179   .0245574    -3.51   0.000    -.1343232   -.0380348
+------------------------------------------------------------------------------
+ARM_PASS ltv N=26096 Wp3=-.05678608 se=.01430839
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+(356,088 observations deleted)
+(161,611 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(62,379 missing values generated)
+(128,584 missing values generated)
+(128,584 missing values generated)
+(122,949 real changes made)
+(122,949 real changes made)
+(5,635 observations deleted)
+(683 observations deleted)
+ARM interstate: state differs from previous interview; all tenures
+(obs=2,141,497)
+
+IW estimates for dynamic effects                       Number of obs = 120,847
+Absorbing 2 HDFE groups                                F(582, 9726)  =    2.03
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.1976
+                                                       Adj R-squared =  0.1225
+                                                       Root MSE      =  0.2056
+                                 (Std. err. adjusted for 9,727 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+           y | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.0098588   .0085229    -1.16   0.247    -.0265655    .0068479
+         Wm2 |  -.0065719   .0076645    -0.86   0.391     -.021596    .0084522
+         Wm1 |    .009429   .0069835     1.35   0.177    -.0042602    .0231182
+         Wp1 |  -.0078334   .0063926    -1.23   0.220    -.0203643    .0046974
+         Wp2 |  -.0229113     .00607    -3.77   0.000    -.0348098   -.0110129
+         Wp3 |  -.0246918   .0064149    -3.85   0.000    -.0372664   -.0121173
+         Wp4 |  -.0313169   .0064335    -4.87   0.000    -.0439279    -.018706
+         Wp5 |  -.0263964   .0067804    -3.89   0.000    -.0396875   -.0131053
+         Wp6 |  -.0344687   .0070962    -4.86   0.000    -.0483788   -.0205587
+      Wright |  -.0310351   .0072267    -4.29   0.000    -.0452009   -.0168693
+------------------------------------------------------------------------------
+ARM_PASS interstate N=120847 Wp3=-.02469183 se=.00641489
+
+. postclose `P'
+
+. postclose `S'
+
+. use `coeffile', clear
+
+. format estimate standard_error %12.6g
+
+. export delimited using "`out'/coefficients.csv", replace
+(file
+    /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/
+    > data/psid_followup_mar2026/output/sa_first_birth_value_2023/coefficient
+    > s.csv not found)
+file /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/d
+> ata/psid_followup_mar2026/output/sa_first_birth_value_2023/coefficients.csv s
+> aved
+
+. use `sumfile', clear
+
+. format ref_mean_outcome ref_mean_level control_mean_outcome headline_effect h
+> eadline_se %12.6g
+
+. export delimited using "`out'/summary.csv", replace
+(file
+    /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/
+    > data/psid_followup_mar2026/output/sa_first_birth_value_2023/summary.csv
+    not found)
+file /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/d
+> ata/psid_followup_mar2026/output/sa_first_birth_value_2023/summary.csv saved
+
+. timer off 1
+
+. quietly timer list 1
+
+. di "VALUE_V1_DONE seconds=" r(t1)
+VALUE_V1_DONE seconds=1629.576
+
+. 
+end of do-file

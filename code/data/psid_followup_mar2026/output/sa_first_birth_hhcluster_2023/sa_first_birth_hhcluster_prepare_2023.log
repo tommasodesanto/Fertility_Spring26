@@ -1,0 +1,398 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /private/tmp/claude-501/-Users-tommasodesanto-Desktop-Projects-Fer
+> tility-Fertility-Spring26/5d7c0112-2a2b-45f4-ab6e-9684dff40b7f/scratchpad/hhc
+> 2023/prepare.log
+  log type:  text
+ opened on:  20 Oct 2026, 12:13:42
+
+. timer clear 1
+
+. timer on 1
+
+. * 1. Official year-specific family items, merged to the interview year.
+. use ID year rooms using "/Users/tommasodesanto/Desktop/Projects/Fertility/PSI
+> D/extension_2023/items_1968_2023.dta" if !missing(rooms), clear
+(PSID official family items by person-year, 1968-2023 (rooms A8, own/rent A19, 
+> mo)
+
+. isid ID year
+
+. tempfile src_rooms
+
+. save `src_rooms'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62855.000001 saved
+    as .dta format
+
+. use ID year own_raw using "/Users/tommasodesanto/Desktop/Projects/Fertility/P
+> SID/extension_2023/items_1968_2023.dta" if !missing(own_raw), clear
+(PSID official family items by person-year, 1968-2023 (rooms A8, own/rent A19, 
+> mo)
+
+. isid ID year
+
+. tempfile src_own_raw
+
+. save `src_own_raw'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62855.000002 saved
+    as .dta format
+
+. use ID year moved_raw using "/Users/tommasodesanto/Desktop/Projects/Fertility
+> /PSID/extension_2023/items_1968_2023.dta" if !missing(moved_raw), clear
+(PSID official family items by person-year, 1968-2023 (rooms A8, own/rent A19, 
+> mo)
+
+. isid ID year
+
+. tempfile src_moved_raw
+
+. save `src_moved_raw'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62855.000003 saved
+    as .dta format
+
+. use ID year why_raw using "/Users/tommasodesanto/Desktop/Projects/Fertility/P
+> SID/extension_2023/items_1968_2023.dta" if !missing(why_raw), clear
+(PSID official family items by person-year, 1968-2023 (rooms A8, own/rent A19, 
+> mo)
+
+. isid ID year
+
+. tempfile src_why_raw
+
+. save `src_why_raw'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St62855.000004 saved
+    as .dta format
+
+. 
+. * 2. Shelf columns.
+. use ID year AGEREP EDUYEAR SEX REL CURRENT HHID FID IW DEATHYEAR RELCHIREP RE
+> LCHI1BYEAR ACTUALROOMS_ HOMEOWN RELCHI1TYPE RELCHI1BYEAR RELCHI2TYPE RELCHI2B
+> YEAR RELCHI3TYPE RELCHI3BYEAR RELCHI4TYPE RELCHI4BYEAR RELCHI5TYPE RELCHI5BYE
+> AR RELCHI6TYPE RELCHI6BYEAR RELCHI7TYPE RELCHI7BYEAR RELCHI8TYPE RELCHI8BYEAR
+>  RELCHI9TYPE RELCHI9BYEAR RELCHI10TYPE RELCHI10BYEAR RELCHI11TYPE RELCHI11BYE
+> AR RELCHI12TYPE RELCHI12BYEAR RELCHI13TYPE RELCHI13BYEAR RELCHI14TYPE RELCHI1
+> 4BYEAR RELCHI15TYPE RELCHI15BYEAR RELCHI16TYPE RELCHI16BYEAR RELCHI17TYPE REL
+> CHI17BYEAR RELCHI18TYPE RELCHI18BYEAR RELCHI19TYPE RELCHI19BYEAR RELCHI20TYPE
+>  RELCHI20BYEAR using "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/e
+> xtension_2023/shelf_1968_2023.dta", clear
+(PSID-SHELF columns for the A2h event study, 1968-2023 (2021/2023 rebuilt with 
+> SH)
+
+. sort ID year
+
+. by ID: gen double rooms_shift = ACTUALROOMS_[_n-1] if _n > 1 & inlist(year-ye
+> ar[_n-1],1,2)
+(1,776,113 missing values generated)
+
+. foreach s in rooms own_raw moved_raw why_raw {
+  2.     merge 1:1 ID year using `src_`s'', keep(master match) nogenerate
+  3. }
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                     1,609,790
+        from master                 1,609,790  
+        from using                          0  
+
+    Matched                         2,010,284  
+    -----------------------------------------
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                     1,609,790
+        from master                 1,609,790  
+        from using                          0  
+
+    Matched                         2,010,284  
+    -----------------------------------------
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                     1,676,044
+        from master                 1,676,044  
+        from using                          0  
+
+    Matched                         1,944,030  
+    -----------------------------------------
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                     1,676,044
+        from master                 1,676,044  
+        from using                          0  
+
+    Matched                         1,944,030  
+    -----------------------------------------
+
+. * 3. Verification: rebuilt rooms vs shifted shelf column; own vs shelf HOMEOW
+> N.
+. quietly count if CURRENT == 1 & !missing(rooms, rooms_shift)
+
+. local both = r(N)
+
+. quietly count if CURRENT == 1 & !missing(rooms, rooms_shift) & rooms != rooms
+> _shift
+
+. local mismatch = r(N)
+
+. assert `mismatch' == 0
+
+. gen byte own = cond(own_raw == 1, 1, cond(own_raw == 5, 0, .)) if !missing(ow
+> n_raw)
+(1,712,585 missing values generated)
+
+. gen byte own_shelf = cond(HOMEOWN == 1, 1, cond(HOMEOWN == 2, 0, .)) if !miss
+> ing(HOMEOWN)
+(2,734,812 missing values generated)
+
+. quietly count if CURRENT == 1 & !missing(own, own_shelf)
+
+. local own_both = r(N)
+
+. quietly count if CURRENT == 1 & !missing(own, own_shelf) & own != own_shelf
+
+. local own_mismatch = r(N)
+
+. assert `own_mismatch' == 0
+
+. * 4. Outcome recodes (official codes: moved 1 yes / 5 no; why 3 = more space,
+>  6 = neighbourhood; 9/98/99 DK-NA).
+. gen byte moved = cond(moved_raw == 1, 1, cond(moved_raw == 5, 0, .)) if !miss
+> ing(moved_raw)
+(1,677,090 missing values generated)
+
+. gen byte moved_space = .
+(3,620,074 missing values generated)
+
+. replace moved_space = 0 if moved == 0
+(1,421,177 real changes made)
+
+. replace moved_space = 1 if moved == 1 & why_raw == 3
+(98,120 real changes made)
+
+. replace moved_space = 0 if moved == 1 & inlist(why_raw, 1, 2, 4, 5, 6, 7, 8, 
+> 10, 11, 12)
+(398,129 real changes made)
+
+. gen byte moved_nbhd = .
+(3,620,074 missing values generated)
+
+. replace moved_nbhd = 0 if moved == 0
+(1,421,177 real changes made)
+
+. replace moved_nbhd = 1 if moved == 1 & why_raw == 6
+(29,583 real changes made)
+
+. replace moved_nbhd = 0 if moved == 1 & inlist(why_raw, 1, 2, 3, 4, 5, 7, 8, 1
+> 0, 11, 12)
+(466,666 real changes made)
+
+. * Non-room codes to missing by interview year; zero retained.
+. quietly count if CURRENT == 1 & ((year <= 1984 & rooms == 9) | (inrange(year,
+> 1985,1993) & rooms == 99) | (year >= 1994 & inlist(rooms,98,99)))
+
+. local codes = r(N)
+
+. replace rooms = . if year <= 1984 & rooms == 9
+(17,928 real changes made, 17,928 to missing)
+
+. replace rooms = . if inrange(year,1985,1993) & rooms == 99
+(4,428 real changes made, 4,428 to missing)
+
+. replace rooms = . if year >= 1994 & inlist(rooms,98,99)
+(10,320 real changes made, 10,320 to missing)
+
+. * 5. Person-level constructions before any restriction.
+. gen double bio_candidate = .
+(3,620,074 missing values generated)
+
+. forvalues c = 1/20 {
+  2.     replace bio_candidate = RELCHI`c'BYEAR if RELCHI`c'TYPE == 1 & !missin
+> g(RELCHI`c'BYEAR) & (missing(bio_candidate) | RELCHI`c'BYEAR < bio_candidate)
+  3. }
+(1,389,367 real changes made)
+(1,247 real changes made)
+(215 real changes made)
+(86 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. bysort ID: egen double bio_first_year = min(bio_candidate)
+(2,229,847 missing values generated)
+
+. drop bio_candidate
+
+. bysort ID: egen double relchirep_max = max(RELCHIREP)
+(1,327,167 missing values generated)
+
+. gen double relchi1_year = RELCHI1BYEAR
+(2,230,707 missing values generated)
+
+. egen byte fid_tag = tag(HHID year FID) if CURRENT == 1 & !missing(HHID) & HHI
+> D > 0 & !missing(FID) & FID > 0
+
+. bysort HHID year: egen int n_current_fids = total(fid_tag)
+
+. drop fid_tag
+
+. gen byte woman = SEX == 2
+
+. gen byte current = CURRENT == 1
+
+. gen double rel = REL
+(2,666,070 missing values generated)
+
+. gen double hhid = HHID
+(1,828,454 missing values generated)
+
+. gen double fid = FID
+(1,593,471 missing values generated)
+
+. gen double iw = IW
+(2,910,734 missing values generated)
+
+. gen double adult_year = year if CURRENT == 1 & AGEREP >= 18 & !missing(AGEREP
+> ) & year <= DEATHYEAR
+(3,026,596 missing values generated)
+
+. bysort ID: egen double year_entry_adult = min(adult_year)
+(1,066,398 missing values generated)
+
+. drop adult_year
+
+. * Added for the H5 model-support run (Oct 18 2026), before current-person fil
+> tering, as in the Oct 10 bridge
+. * panel: last fertility report = last year with CURRENT == 1 and nonmissing R
+> ELCHIREP.
+. gen double frep_year = year if CURRENT == 1 & !missing(RELCHIREP)
+(2,852,296 missing values generated)
+
+. bysort ID: egen double last_fertility_report_year = max(frep_year)
+(1,327,167 missing values generated)
+
+. gen double frep_age = AGEREP if year == last_fertility_report_year
+(3,566,356 missing values generated)
+
+. bysort ID: egen double last_fertility_report_age = max(frep_age)
+(1,327,830 missing values generated)
+
+. gen double cur_year = year if CURRENT == 1
+(2,709,628 missing values generated)
+
+. bysort ID: egen double last_current_year = max(cur_year)
+(23,779 missing values generated)
+
+. gen double cur_age = AGEREP if year == last_current_year
+(3,535,221 missing values generated)
+
+. bysort ID: egen double last_current_age = max(cur_age)
+(28,227 missing values generated)
+
+. drop frep_year frep_age cur_year cur_age
+
+. keep if CURRENT == 1
+(2,709,628 observations deleted)
+
+. drop if year > DEATHYEAR
+(56 observations deleted)
+
+. keep ID year AGEREP EDUYEAR rooms rooms_shift own moved moved_space moved_nbh
+> d bio_first_year relchi1_year relchirep_max n_current_fids woman current rel 
+> hhid fid iw year_entry_adult last_fertility_report_year last_fertility_report
+> _age last_current_year last_current_age
+
+. sort ID year
+
+. isid ID year
+
+. quietly count
+
+. local rows = r(N)
+
+. quietly count if !missing(own)
+
+. local n_own = r(N)
+
+. quietly count if !missing(moved)
+
+. local n_moved = r(N)
+
+. quietly count if !missing(moved_space)
+
+. local n_space = r(N)
+
+. quietly summarize moved
+
+. local mean_moved = r(mean)
+
+. quietly summarize moved_space
+
+. local mean_space = r(mean)
+
+. quietly summarize own
+
+. local mean_own = r(mean)
+
+. compress
+  variable n_current_fids was int now byte
+  variable rooms_shift was double now byte
+  variable bio_first_year was double now int
+  variable relchirep_max was double now byte
+  variable relchi1_year was double now int
+  variable rel was double now byte
+  variable hhid was double now int
+  variable fid was double now int
+  variable year_entry_adult was double now int
+  variable last_fertility_report_year was double now int
+  variable last_fertility_report_age was double now int
+  variable last_current_year was double now int
+  variable last_current_age was double now int
+  (69,189,640 bytes saved)
+
+. save "/private/tmp/claude-501/-Users-tommasodesanto-Desktop-Projects-Fertilit
+> y-Fertility-Spring26/5d7c0112-2a2b-45f4-ab6e-9684dff40b7f/scratchpad/hhc2023/
+> analysis_sample.dta", replace
+(file
+    /private/tmp/claude-501/-Users-tommasodesanto-Desktop-Projects-Fertility-
+    > Fertility-Spring26/5d7c0112-2a2b-45f4-ab6e-9684dff40b7f/scratchpad/hhc2
+    > 023/analysis_sample.dta not found)
+file
+    /private/tmp/claude-501/-Users-tommasodesanto-Desktop-Projects-Fertility-
+    > Fertility-Spring26/5d7c0112-2a2b-45f4-ab6e-9684dff40b7f/scratchpad/hhc2
+    > 023/analysis_sample.dta saved
+
+. timer off 1
+
+. quietly timer list 1
+
+. di "ROOMS_V3_PREPARATION_PASS rows=`rows' rooms_both=`both' rooms_mismatch=`m
+> ismatch' own_both=`own_both' own_mismatch=`own_mismatch' codes=`codes' n_own=
+> `n_own' n_moved=`n_moved' n_space=`n_space' mean_own=`mean_own' mean_moved=`m
+> ean_moved' mean_space=`mean_space' seconds=`=r(t1)'"
+ROOMS_V3_PREPARATION_PASS rows=910390 rooms_both=834845 rooms_mismatch=0 own_bo
+> th=871153 own_mismatch=0 codes=12604 n_own=871102 n_moved=892029 n_space=8790
+> 66 mean_own=.5987209304995282 mean_moved=.2532866083950185 mean_space=.051274
+> 8758341239 seconds=14.289
+
+. log close _all
+      name:  <unnamed>
+       log:  /private/tmp/claude-501/-Users-tommasodesanto-Desktop-Projects-Fer
+> tility-Fertility-Spring26/5d7c0112-2a2b-45f4-ab6e-9684dff40b7f/scratchpad/hhc
+> 2023/prepare.log
+  log type:  text
+ closed on:  20 Oct 2026, 12:13:57
+-------------------------------------------------------------------------------

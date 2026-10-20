@@ -1,0 +1,12 @@
+arm,definition,status,observations,clusters,treated_individuals,control_individuals,ref_mean_outcome,ref_mean_level,control_mean_outcome,headline_effect,headline_se,dropped_unsupported_rows,topcoded_rows,runtime_seconds
+own_rep,owner; replication of v3 A2h_own,0,119854,9798,3447,6351,.42913127,.42913127,.59818727,.27070427,.012347206,0,0,311.034
+lnval,log real house value (2022 USD); owners,0,70538,7008,3099,3909,12.085907,231733.59,12.130478,.22993796,.022282729,0,0,210.082
+lnrooms_own,log rooms; owners (same rows as lnval),0,70538,7008,3099,3909,1.7303739,5.9139862,1.7638897,.15119366,.010653012,0,0,206.97099
+lnvpr,log real house value per room; owners (same rows as lnval),0,70538,7008,3099,3909,10.355534,40223.48,10.366589,.078744307,.019778581,0,0,209.82001
+lnval_preown,log real house value (2022 USD); owners; treated owned at -3/-2,0,47282,5061,1152,3909,12.100866,232359.48,12.130478,.26561144,.023639565,0,0,148.11
+lnrooms_preown,log rooms; owners (same rows as lnval); treated owned at -3/-2,0,47282,5061,1152,3909,1.7245657,5.886024,1.7638897,.16346151,.012087887,0,0,111.357
+lnvpr_preown,log real house value per room; owners (same rows as lnval); treated ow,0,47282,5061,1152,3909,10.376301,40785.805,10.366589,.10214994,.021480618,0,0,108.362
+anymort,any mortgage; owners; mortgage years only,0,26096,4619,1633,2986,.91995704,.91995704,.66432899,.0063713468,.015562486,11151,0,20.857
+lnmort,log real mortgage principal; owners with a mortgage,0,19486,3661,1510,2151,11.899695,186846.42,11.660731,.086099781,.038160216,8439,0,16.077999
+ltv,"mortgage / value, top-coded at 2; owners incl. zero mortgage",0,26096,4619,1633,2986,.68154287,.68154287,.37337148,-.056786086,.014308395,11151,75,21.021
+interstate,state differs from previous interview; all tenures,0,120847,9727,3596,6131,.091872662,.091872662,.049053542,-.024691829,.0064148922,683,0,254.601

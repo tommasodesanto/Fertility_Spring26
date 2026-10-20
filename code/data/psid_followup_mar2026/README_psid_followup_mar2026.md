@@ -32,6 +32,24 @@ stages the byte-pinned reference, compares the full sample with two identical
 income-observed samples, and exports aggregate results. This is a sensitivity
 analysis; it does not replace the main regression or calibration target.
 
+## PSID 1968-2023 update (Oct 20, 2026)
+
+The 2021 and 2023 waves (FAM2021ER, FAM2023ER, IND2023ER, CAH85_23, under
+`~/Desktop/Projects/Fertility/PSID/raw_2021_2023/`) are added with PSID-SHELF's
+own construction rules. `build_psid_extension_2023.do` rebuilds the SHELF
+columns and child records, and checks the same code against SHELF in 2017 and
+2019; `build_psid_a2h_inputs_2023.do` writes the combined 1968-2023 inputs to
+`~/Desktop/Projects/Fertility/PSID/extension_2023/`. The `*_2023.do` scripts
+are copies of the v1 scripts that read those inputs; `sa_first_birth_hhcluster_v1.do`
+is reused unchanged. Outputs: `output/sa_first_birth_hhcluster_2023/`
+(with `comparison_1968_2019_vs_2023.csv` and the comparison PDF from
+`compare_first_birth_2019_2023.py`), `output/sa_first_birth_value_2023/`,
+`output/sa_first_birth_descriptives_2023/`, and `output/wealth_earnings_2023/`
+(`build_wealth_earnings_2023.do`). Rule notes: CAH116/CAH118 replace SHELF's
+CAH106/CAH108; why-moved codes 10-12 (new in 2021) count as non-space reasons;
+SHELF's PCE lookup uses the index of year-8 (wealth, home value) and year-9
+(earnings) against 2014, which the rebuild reproduces exactly.
+
 ## Files
 
 - `sa_replication_own_only.do`

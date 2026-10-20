@@ -1,0 +1,375 @@
+
+  ___  ____  ____  ____  ____ ©
+ /__    /   ____/   /   ____/      17.0
+___/   /   /___/   /   /___/       MP—Parallel Edition
+
+ Statistics and Data Science       Copyright 1985-2021 StataCorp LLC
+                                   StataCorp
+                                   4905 Lakeway Drive
+                                   College Station, Texas 77845 USA
+                                   800-STATA-PC        https://www.stata.com
+                                   979-696-4600        stata@stata.com
+
+Stata license: 2-user 8-core network perpetual
+Serial number: 501706331441
+  Licensed to: Tommaso De Santo
+               
+
+Notes:
+      1. Stata is running in batch mode.
+      2. Unicode is supported; see help unicode_advice.
+      3. More than 2 billion observations are allowed; see help obs_advice.
+      4. Maximum number of variables is set to 5,000; see help set_maxvar.
+
+. do ../../sa_first_birth_hhcluster_v1.do /private/tmp/claude-501/-Users-tommas
+> odesanto-Desktop-Projects-Fertility-Fertility-Spring26/5d7c0112-2a2b-45f4-ab6
+> e-9684dff40b7f/scratchpad/hhc2023/augmented.dta /Users/tommasodesanto/Desktop
+> /Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/output
+> /sa_first_birth_hhcluster_2023 
+
+. * First-birth A2h event study with standard errors clustered by household (Oc
+> t 19, 2026).
+. * Point estimates are those of the person-clustered runs; only vce changes.
+. *   full support: sa_rooms_first_birth_v2.do A2h logic (rooms) and the v3 arm
+> s
+. *     A2h_own, A2h_moved (A2h filter on each outcome's non-missing rows)
+. *   common support (rooms_cs): sa_first_birth_model_bridge.do, original clock
+. * Household cluster: PSID HHID is wave-specific, so a cluster is a (year, HHI
+> D)
+. * pair. Treated adults take the household of their earliest reference-window
+. * (-3/-2) interview at which they are reference person or spouse; never-paren
+> t
+. * controls take the household of their first interview in the estimation samp
+> le.
+. * Each person keeps one cluster for all years, so persons nest in clusters.
+. * Panel: sa_first_birth_hhcluster_prepare_v1.do plus first_birth_model_bridge
+> .py
+. * (scratch, deleted after the run).
+. version 17.0
+
+. args panel outdir
+
+. capture mkdir "`outdir'"
+
+. tempname C R
+
+. postfile `C' str12 run str8 window double estimate se_household using "`outdi
+> r'/coef.dta", replace
+(file
+    /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/
+    > data/psid_followup_mar2026/output/sa_first_birth_hhcluster_2023/coef.dt
+    > a not found)
+
+. postfile `R' str12 run double observations persons clusters treated_ids contr
+> ol_ids missing_hh_persons persons_sharing seconds using "`outdir'/receipt.dta
+> ", replace
+(file
+    /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/
+    > data/psid_followup_mar2026/output/sa_first_birth_hhcluster_2023/receipt
+    > .dta not found)
+
+. foreach run in rooms_full own moved rooms_cs {
+  2.     timer clear 2
+  3.     timer on 2
+  4.     use "`panel'", clear
+  5.     local y = cond("`run'"=="rooms_cs" | "`run'"=="rooms_full", "rooms", "
+> `run'")
+  6.     keep if current & !missing(`y', AGEREP, EDUYEAR) & AGEREP >= 18 & !mis
+> sing(iw) & iw > 0
+  7.     gen double f_c_y = bio_first_year
+  8.     drop if missing(f_c_y) & !(relchirep_max == 0)
+  9.     drop if !missing(f_c_y) & f_c_y < year_entry_adult
+ 10.     gen byte control = missing(f_c_y) & relchirep_max == 0
+ 11.     gen byte hs_row = inlist(rel, 1, 2) & inrange(year - f_c_y, -3, -2)
+ 12.     bysort ID: egen byte hs_base = max(hs_row)
+ 13.     gen byte base_row = inrange(year - f_c_y, -3, -2)
+ 14.     bysort ID: egen byte has_base = max(base_row)
+ 15.     keep if control | (has_base & hs_base == 1)
+ 16.     drop hs_base base_row has_base
+ 17.     gen byte treated = !control & !missing(f_c_y)
+ 18.     if "`run'" == "rooms_cs" {
+ 19.         gen byte bad_f = treated & (missing(f_j) | f_j < 1 | f_j > fertili
+> ty_last_index)
+ 20.         gen byte miss_model = missing(model_boundary_censored, model_bound
+> ary_lifelong, model_age_censored)
+ 21.         drop if bad_f | miss_model
+ 22.         gen byte original_ref = treated & inrange(year - f_c_y, -3, -2)
+ 23.         bysort ID: egen byte id_original_ref = max(original_ref)
+ 24.         drop if treated & !id_original_ref
+ 25.     }
+ 26.     else {
+ 27.         * v2 cohort support: every treated cohort observed in the referenc
+> e window.
+.         gen byte in_ref = inrange(year - f_c_y, -3, -2)
+ 28.         bysort f_c_y: egen long ref_rows = total(in_ref)
+ 29.         drop if treated & ref_rows == 0
+ 30.     }
+ 31.     gen double K = year - f_c_y
+ 32.     gen byte Wleft = K <= -8 & !missing(K)
+ 33.     gen byte Wm2 = inrange(K, -7, -6)
+ 34.     gen byte Wm1 = inrange(K, -5, -4)
+ 35.     gen byte Wp1 = inrange(K, -1, 0)
+ 36.     gen byte Wp2 = inrange(K, 1, 2)
+ 37.     gen byte Wp3 = inrange(K, 3, 4)
+ 38.     gen byte Wp4 = inrange(K, 5, 6)
+ 39.     gen byte Wp5 = inrange(K, 7, 8)
+ 40.     gen byte Wp6 = inrange(K, 9, 10)
+ 41.     gen byte Wright = K >= 11 & !missing(K)
+ 42.     local dummies Wleft Wm2 Wm1 Wp1 Wp2 Wp3 Wp4 Wp5 Wp6 Wright
+ 43.     * Household cluster.
+.     gen double hhkey = year * 100000 + hhid if !missing(hhid) & hhid > 0
+ 44.     gen double tref_row = year if treated & hs_row == 1 & !missing(hhkey)
+ 45.     bysort ID: egen double tref = min(tref_row)
+ 46.     gen double kref_row = hhkey if treated & year == tref
+ 47.     bysort ID: egen double hh_t = min(kref_row)
+ 48.     gen double tfirst_row = year if control & !missing(hhkey)
+ 49.     bysort ID: egen double tfirst = min(tfirst_row)
+ 50.     gen double kfirst_row = hhkey if control & year == tfirst
+ 51.     bysort ID: egen double hh_c = min(kfirst_row)
+ 52.     gen double hhc = cond(control, hh_c, hh_t)
+ 53.     egen byte ptag = tag(ID)
+ 54.     quietly count if ptag & missing(hhc)
+ 55.     local miss = r(N)
+ 56.     * Persons without a valid household id keep a cluster of their own.
+.     replace hhc = -ID if missing(hhc)
+ 57.     bysort hhc: egen long npers = total(ptag)
+ 58.     quietly count if ptag & npers > 1
+ 59.     local sharing = r(N)
+ 60.     eventstudyinteract `y' `dummies' [pw=iw], vce(cluster hhc) absorb(ID y
+> ear) ///
+>         cohort(f_c_y) control_cohort(control) covariates(i.AGEREP i.EDUYEAR)
+ 61.     matrix b = e(b_iw)
+ 62.     matrix V = e(V_iw)
+ 63.     local n = e(N)
+ 64.     local nc = e(N_clust)
+ 65.     local names : colnames b
+ 66.     forvalues i = 1/`=colsof(b)' {
+ 67.         local w : word `i' of `names'
+ 68.         post `C' ("`run'") ("`w'") (b[1,`i']) (sqrt(V[`i',`i']))
+ 69.     }
+ 70.     egen byte ttag = tag(ID) if e(sample) & treated
+ 71.     quietly count if ttag
+ 72.     local tids = r(N)
+ 73.     egen byte ctag = tag(ID) if e(sample) & control
+ 74.     quietly count if ctag
+ 75.     local cids = r(N)
+ 76.     egen byte etag = tag(ID) if e(sample)
+ 77.     quietly count if etag
+ 78.     local pids = r(N)
+ 79.     timer off 2
+ 80.     quietly timer list 2
+ 81.     post `R' ("`run'") (`n') (`pids') (`nc') (`tids') (`cids') (`miss') (`
+> sharing') (r(t2))
+ 82.     di "HHC_PASS `run' N=`n' clusters=`nc' Wp3=" b[1, colnumb("b","Wp3")]
+ 83. }
+(517,699 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(0 observations deleted)
+(62,379 missing values generated)
+(8,626 missing values generated)
+(124,007 missing values generated)
+(67,167 missing values generated)
+(125,147 missing values generated)
+(67,167 missing values generated)
+(70,432 missing values generated)
+(66,205 missing values generated)
+(120,677 missing values generated)
+(66,205 missing values generated)
+(4,788 missing values generated)
+(4,788 real changes made)
+(obs=2,232,027)
+
+IW estimates for dynamic effects                       Number of obs = 127,136
+Absorbing 2 HDFE groups                                F(592, 9756)  =   11.52
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.5477
+                                                       Adj R-squared =  0.5061
+                                                       Root MSE      =  1.7169
+                                (Std. err. adjusted for 9,757 clusters in hhc)
+------------------------------------------------------------------------------
+             |               Robust
+       rooms | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .1496588   .0754507     1.98   0.047     .0017598    .2975577
+         Wm2 |   .0401378   .0584471     0.69   0.492    -.0744307    .1547063
+         Wm1 |  -.0308675   .0428038    -0.72   0.471    -.1147718    .0530368
+         Wp1 |   .6182162   .0346766    17.83   0.000     .5502429    .6861895
+         Wp2 |   1.190443   .0413371    28.80   0.000     1.109414    1.271472
+         Wp3 |   1.476161   .0487164    30.30   0.000     1.380666    1.571655
+         Wp4 |   1.635697   .0550466    29.71   0.000     1.527794      1.7436
+         Wp5 |   1.683038   .0632577    26.61   0.000      1.55904    1.807036
+         Wp6 |   1.859233    .077353    24.04   0.000     1.707605    2.010861
+      Wright |   1.855488   .0838138    22.14   0.000     1.691196    2.019781
+------------------------------------------------------------------------------
+HHC_PASS rooms_full N=127136 clusters=9757 Wp3=1.4761605
+(530,828 observations deleted)
+(93,332 missing values generated)
+(33,794 observations deleted)
+(142,828 observations deleted)
+(81,586 observations deleted)
+(0 observations deleted)
+(59,538 missing values generated)
+(8,158 missing values generated)
+(117,078 missing values generated)
+(64,292 missing values generated)
+(118,089 missing values generated)
+(64,292 missing values generated)
+(65,883 missing values generated)
+(61,820 missing values generated)
+(113,511 missing values generated)
+(61,820 missing values generated)
+(4,758 missing values generated)
+(4,758 real changes made)
+(obs=2,104,304)
+
+IW estimates for dynamic effects                       Number of obs = 119,854
+Absorbing 2 HDFE groups                                F(592, 9484)  =    8.94
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.5324
+                                                       Adj R-squared =  0.4879
+                                                       Root MSE      =  0.3364
+                                (Std. err. adjusted for 9,485 clusters in hhc)
+------------------------------------------------------------------------------
+             |               Robust
+         own | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0080623   .0161681     0.50   0.618    -.0236307    .0397553
+         Wm2 |  -.0010041    .013536    -0.07   0.941    -.0275375    .0255293
+         Wm1 |  -.0219972   .0102565    -2.14   0.032    -.0421021   -.0018923
+         Wp1 |   .1616225   .0086808    18.62   0.000     .1446063    .1786388
+         Wp2 |   .2463877   .0110669    22.26   0.000     .2246942    .2680812
+         Wp3 |   .2707043   .0124414    21.76   0.000     .2463164    .2950921
+         Wp4 |   .2654592   .0135918    19.53   0.000     .2388163     .292102
+         Wp5 |   .2438516   .0149382    16.32   0.000     .2145695    .2731337
+         Wp6 |   .2318984   .0161411    14.37   0.000     .2002584    .2635384
+      Wright |   .2220554   .0198317    11.20   0.000     .1831809    .2609298
+------------------------------------------------------------------------------
+HHC_PASS own N=119854 clusters=9485 Wp3=.27070426
+(519,773 observations deleted)
+(94,679 missing values generated)
+(31,682 observations deleted)
+(144,945 observations deleted)
+(84,324 observations deleted)
+(0 observations deleted)
+(62,997 missing values generated)
+(8,227 missing values generated)
+(125,021 missing values generated)
+(67,121 missing values generated)
+(126,189 missing values generated)
+(67,121 missing values generated)
+(70,610 missing values generated)
+(66,669 missing values generated)
+(121,735 missing values generated)
+(66,669 missing values generated)
+(4,124 missing values generated)
+(4,124 real changes made)
+(obs=2,237,276)
+
+IW estimates for dynamic effects                       Number of obs = 128,204
+Absorbing 2 HDFE groups                                F(582, 9785)  =    9.38
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.2956
+                                                       Adj R-squared =  0.2313
+                                                       Root MSE      =  0.3898
+                                (Std. err. adjusted for 9,786 clusters in hhc)
+------------------------------------------------------------------------------
+             |               Robust
+       moved | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |  -.1295601   .0135395    -9.57   0.000    -.1561004   -.1030199
+         Wm2 |  -.0977538   .0123632    -7.91   0.000    -.1219883   -.0735194
+         Wm1 |  -.0257028   .0115123    -2.23   0.026    -.0482693   -.0031362
+         Wp1 |  -.0722673   .0100808    -7.17   0.000    -.0920277   -.0525069
+         Wp2 |  -.1671315   .0108963   -15.34   0.000    -.1884905   -.1457724
+         Wp3 |  -.2128964   .0112704   -18.89   0.000    -.2349888    -.190804
+         Wp4 |  -.2104039   .0118776   -17.71   0.000    -.2336865   -.1871213
+         Wp5 |  -.2090733   .0126268   -16.56   0.000    -.2338245   -.1843222
+         Wp6 |  -.2181956   .0132048   -16.52   0.000    -.2440797   -.1923116
+      Wright |  -.1891584   .0139017   -13.61   0.000    -.2164087   -.1619081
+------------------------------------------------------------------------------
+HHC_PASS moved N=128204 clusters=9786 Wp3=-.21289639
+(517,699 observations deleted)
+(97,170 missing values generated)
+(34,791 observations deleted)
+(146,254 observations deleted)
+(83,062 observations deleted)
+(5,978 observations deleted)
+(0 observations deleted)
+(61,789 missing values generated)
+(8,082 missing values generated)
+(118,208 missing values generated)
+(66,110 missing values generated)
+(119,331 missing values generated)
+(66,110 missing values generated)
+(65,009 missing values generated)
+(60,818 missing values generated)
+(114,702 missing values generated)
+(60,818 missing values generated)
+(4,322 missing values generated)
+(4,322 real changes made)
+(obs=2,092,619)
+
+IW estimates for dynamic effects                       Number of obs = 121,108
+Absorbing 2 HDFE groups                                F(578, 9536)  =   16.61
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.5530
+                                                       Adj R-squared =  0.5107
+                                                       Root MSE      =  1.7121
+                                (Std. err. adjusted for 9,537 clusters in hhc)
+------------------------------------------------------------------------------
+             |               Robust
+       rooms | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0453889   .0797869     0.57   0.569    -.1110104    .2017882
+         Wm2 |  -.0401604   .0612853    -0.66   0.512    -.1602926    .0799717
+         Wm1 |  -.0880886   .0435486    -2.02   0.043    -.1734531    -.002724
+         Wp1 |   .6300459   .0354096    17.79   0.000     .5606356    .6994562
+         Wp2 |   1.182272   .0423567    27.91   0.000     1.099244      1.2653
+         Wp3 |    1.45395   .0502857    28.91   0.000     1.355379    1.552521
+         Wp4 |   1.598857   .0565636    28.27   0.000      1.48798    1.709733
+         Wp5 |   1.635832   .0652109    25.09   0.000     1.508005    1.763659
+         Wp6 |   1.816391   .0800883    22.68   0.000     1.659401    1.973381
+      Wright |   1.798729   .0858241    20.96   0.000     1.630496    1.966963
+------------------------------------------------------------------------------
+HHC_PASS rooms_cs N=121108 clusters=9537 Wp3=1.4539502
+
+. postclose `C'
+
+. postclose `R'
+
+. use "`outdir'/coef.dta", clear
+
+. format estimate se_household %24.17g
+
+. export delimited using "`outdir'/coefficients_household.csv", replace
+(file
+    /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/
+    > data/psid_followup_mar2026/output/sa_first_birth_hhcluster_2023/coeffic
+    > ients_household.csv not found)
+file /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/d
+> ata/psid_followup_mar2026/output/sa_first_birth_hhcluster_2023/coefficients_h
+> ousehold.csv saved
+
+. use "`outdir'/receipt.dta", clear
+
+. export delimited using "`outdir'/receipt.csv", replace
+(file
+    /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/
+    > data/psid_followup_mar2026/output/sa_first_birth_hhcluster_2023/receipt
+    > .csv not found)
+file /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/d
+> ata/psid_followup_mar2026/output/sa_first_birth_hhcluster_2023/receipt.csv sa
+> ved
+
+. erase "`outdir'/coef.dta"
+
+. erase "`outdir'/receipt.dta"
+
+. di "HHCLUSTER_DONE"
+HHCLUSTER_DONE
+
+. 
+end of do-file

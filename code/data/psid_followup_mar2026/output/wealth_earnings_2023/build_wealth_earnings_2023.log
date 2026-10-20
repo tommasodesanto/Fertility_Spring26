@@ -1,0 +1,600 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring2
+> 6/code/data/psid_followup_mar2026/output/wealth_earnings_2023/build_wealth_ea
+> rnings_2023.log
+  log type:  text
+ opened on:  20 Oct 2026, 12:17:32
+
+. 
+. * 1. Family items: RP wages, RP business labor, SP wages, SP business labor, 
+> farm/business assets and debts,
+. *    other real estate assets and debts, vehicles, wealth with equity (labels
+>  matched to the 2019 items).
+. infix fid 2-6 double wrp 6624-6630 double brp 6550-6556 double wsp 6733-6739 
+> double bsp 6659-6665 ///
+>     double fa 7132-7140 double fd 7142-7150 double ra 7178-7186 double rd 718
+> 8-7196 double auto 7210-7218 double nw 7324-7332 ///
+>     using "`raw'/fam2021er/FAM2021ER.txt", clear
+(9,207 observations read)
+
+. gen year = 2021
+
+. tempfile f21
+
+. save `f21'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000001 saved
+    as .dta format
+
+. infix fid 2-6 double wrp 6378-6384 double brp 6304-6310 double wsp 6487-6493 
+> double bsp 6413-6419 ///
+>     double fa 6886-6894 double fd 6896-6904 double ra 6932-6940 double rd 694
+> 2-6950 double auto 6964-6972 double nw 7078-7086 ///
+>     using "`raw'/fam2023er/FAM2023ER.txt", clear
+(9,152 observations read)
+
+. gen year = 2023
+
+. append using `f21'
+
+. isid year fid
+
+. tempfile fam
+
+. save `fam'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000002 saved
+    as .dta format
+
+. 
+. * 2. Persons: interview number, relation to reference person, age and weight 
+> from the 2023 individual file.
+. infix ER30001 2-5 ER30002 6-8 ///
+>     fid2019 5250-5254 seq2019 5255-5256 relraw2019 5257-5258 age2019 5259-526
+> 1 double wt2019 5672-5678 ///
+>     fid2021 5684-5688 seq2021 5689-5690 relraw2021 5691-5692 age2021 5693-569
+> 5 double wt2021 6107-6113 ///
+>     fid2023 6119-6123 seq2023 6124-6125 relraw2023 6126-6127 age2023 6128-613
+> 0 double wt2023 6542-6548 ///
+>     using "`raw'/ind2023er/IND2023ER.txt", clear
+(85,536 observations read)
+
+. gen double ID = ER30001*1000 + ER30002
+
+. drop ER30001 ER30002
+
+. reshape long fid seq relraw age wt, i(ID) j(year)
+(j = 2019 2021 2023)
+
+Data                               Wide   ->   Long
+-----------------------------------------------------------------------------
+Number of observations           85,536   ->   256,608     
+Number of variables                  16   ->   7           
+j variable (3 values)                     ->   year
+xij variables:
+                fid2019 fid2021 fid2023   ->   fid
+                seq2019 seq2021 seq2023   ->   seq
+       relraw2019 relraw2021 relraw2023   ->   relraw
+                age2019 age2021 age2023   ->   age
+                   wt2019 wt2021 wt2023   ->   wt
+-----------------------------------------------------------------------------
+
+. keep if relraw == 10 & inrange(seq, 1, 20)
+(228,680 observations deleted)
+
+. tempfile ind
+
+. save `ind'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000003 saved
+    as .dta format
+
+. keep if inlist(year, 2021, 2023)
+(9,569 observations deleted)
+
+. merge m:1 year fid using `fam', keep(master match) nogenerate
+(variable year was int, now float to accommodate using data's values)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                            18,359  
+    -----------------------------------------
+
+. tempfile pnew
+
+. save `pnew'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000004 saved
+    as .dta format
+
+. use ID ER77315 ER77296 ER77343 ER77324 ER77451 ER77453 ER77465 ER77467 ER7747
+> 3 ER77511 using "`cms'", clear
+(PSID Complete Main Study, 1968–2019, Release 2023.01. Data compiled: 2023/10/0
+> 8.)
+
+. rename (ER77315 ER77296 ER77343 ER77324 ER77451 ER77453 ER77465 ER77467 ER774
+> 73 ER77511) (wrp brp wsp bsp fa fd ra rd auto nw)
+
+. gen year = 2019
+
+. tempfile f19
+
+. save `f19'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000005 saved
+    as .dta format
+
+. use `ind' if year == 2019, clear
+
+. merge 1:1 ID year using `f19', keep(master match) nogenerate
+(variable year was int, now float to accommodate using data's values)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                             0
+    Matched                             9,569  
+    -----------------------------------------
+
+. append using `pnew'
+(variable wrp was long, now double to accommodate using data's values)
+(variable brp was long, now double to accommodate using data's values)
+(variable wsp was long, now double to accommodate using data's values)
+(variable bsp was long, now double to accommodate using data's values)
+(variable fa was long, now double to accommodate using data's values)
+(variable fd was long, now double to accommodate using data's values)
+(variable ra was long, now double to accommodate using data's values)
+(variable rd was long, now double to accommodate using data's values)
+(variable auto was long, now double to accommodate using data's values)
+(variable nw was long, now double to accommodate using data's values)
+
+. 
+. * 3. SHELF rules. Wealth items 2011+: keep -99999997..999999997 (0 included).
+>  Earnings 2011+: keep 0..9999997.
+. foreach v in nw fa fd ra rd auto {
+  2.     gen double `v'_n = `v' if inrange(`v', -99999997, 999999997)
+  3. }
+
+. foreach v in wrp brp wsp bsp {
+  2.     gen double `v'_n = `v' if inrange(`v', 0, 9999997)
+  3. }
+
+. gen double earnrp = wrp_n + brp_n
+
+. gen double earnsp = wsp_n + bsp_n
+
+. gen double earnrc = earnrp + earnsp if !missing(earnrp, earnsp)
+
+. replace earnrc = earnrp if !missing(earnrp) & missing(earnsp)
+(0 real changes made)
+
+. * SHELF 07 index lookup: wealth at index(year-8), earnings (tax year) at inde
+> x(year-9), radix index(2014).
+. gen double pw = cond(year==2019, 123.24161, cond(year==2021, 127.19513, 129.2
+> 1168))
+
+. gen double pe = cond(year==2019, 120.20075, cond(year==2021, 125.5398, 128.97
+> 54))
+
+. gen double NETWORTHR = nw_n * 128.9754 / pw
+
+. gen double WLTHFBIZTOTR = (fa_n - fd_n) * 128.9754 / pw
+
+. gen double WLTHREALTOTR = (ra_n - rd_n) * 128.9754 / pw
+
+. gen double WLTHAUTOTOTR = auto_n * 128.9754 / pw
+
+. gen double EARNINDRRC = earnrc * 128.9754 / pe
+
+. gen double IW = wt if wt != 0
+(7,586 missing values generated)
+
+. gen double AGEREP = age if inrange(age, 1, 199)
+(1 missing value generated)
+
+. gen RELTOHEAD_ = relraw
+
+. keep ID year AGEREP RELTOHEAD_ IW NETWORTHR EARNINDRRC WLTHFBIZTOTR WLTHREALT
+> OTR WLTHAUTOTOTR
+
+. tempfile rebuilt
+
+. save `rebuilt'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000006 saved
+    as .dta format
+
+. 
+. * 4. Check 2019 against SHELF (reference persons).
+. use ID year AGEREP RELTOHEAD_ IW NETWORTHR EARNINDRRC WLTHFBIZTOTR WLTHREALTO
+> TR WLTHAUTOTOTR using "`shelf'" if year >= 1999, clear
+(PSID-SHELF, 1968–2019, Beta Release 2023.01. Long format. Compiled: 2023/10/11
+> .)
+
+. tempfile shelfw
+
+. save `shelfw'
+file /var/folders/xs/ttwplgz97gvdr_6gkg5r_r9h0000gn/T//St63352.000007 saved
+    as .dta format
+
+. keep if year == 2019 & RELTOHEAD_ == 10
+(999,647 observations deleted)
+
+. rename (AGEREP IW NETWORTHR EARNINDRRC WLTHFBIZTOTR WLTHREALTOTR WLTHAUTOTOTR
+> ) s_=
+
+. merge 1:1 ID year using `rebuilt', keep(master match)
+(variable year was int, now float to accommodate using data's values)
+
+    Result                      Number of obs
+    -----------------------------------------
+    Not matched                           247
+        from master                       247  (_merge==1)
+        from using                          0  (_merge==2)
+
+    Matched                             9,569  (_merge==3)
+    -----------------------------------------
+
+. tab _merge
+
+   Matching result from |
+                  merge |      Freq.     Percent        Cum.
+------------------------+-----------------------------------
+        Master only (1) |        247        2.52        2.52
+            Matched (3) |      9,569       97.48      100.00
+------------------------+-----------------------------------
+                  Total |      9,816      100.00
+
+. foreach v in AGEREP IW NETWORTHR EARNINDRRC WLTHFBIZTOTR WLTHREALTOTR WLTHAUT
+> OTOTR {
+  2.     quietly count if _merge == 3 & !missing(s_`v', `v')
+  3.     local n = r(N)
+  4.     quietly count if _merge == 3 & !missing(s_`v', `v') & abs(s_`v' - `v')
+>  > max(1, 0.0005*abs(s_`v'))
+  5.     local d = r(N)
+  6.     quietly count if _merge == 3 & missing(s_`v') != missing(`v')
+  7.     di "CHECK2019 `v' both=`n' differ=`d' missing_mismatch=`r(N)'"
+  8. }
+CHECK2019 AGEREP both=9568 differ=6 missing_mismatch=0
+CHECK2019 IW both=6977 differ=0 missing_mismatch=0
+CHECK2019 NETWORTHR both=9569 differ=0 missing_mismatch=0
+CHECK2019 EARNINDRRC both=9569 differ=0 missing_mismatch=0
+CHECK2019 WLTHFBIZTOTR both=9569 differ=0 missing_mismatch=0
+CHECK2019 WLTHREALTOTR both=9569 differ=0 missing_mismatch=0
+CHECK2019 WLTHAUTOTOTR both=9569 differ=0 missing_mismatch=0
+
+. 
+. * 5. Ratios by wave and pooled windows: SHELF through 2019, rebuilt 2021 and 
+> 2023; rebuilt 2019 shown as a check.
+. use `rebuilt' if inlist(year, 2021, 2023), clear
+
+. gen byte src = 1
+
+. append using `shelfw'
+(variable RELTOHEAD_ was float, now double to accommodate using data's
+       values)
+
+. replace src = 0 if missing(src)
+(1,009,463 real changes made)
+
+. append using `rebuilt'
+
+. replace src = 2 if missing(src)
+(27,928 real changes made)
+
+. keep if RELTOHEAD_ == 10
+(903,700 observations deleted)
+
+. keep if inrange(AGEREP, 18, 85) & !missing(IW) & IW > 0 & !missing(NETWORTHR)
+>  & (AGEREP > 65 | (!missing(EARNINDRRC) & EARNINDRRC >= 0))
+(54,201 observations deleted)
+
+. foreach v in WLTHFBIZTOTR WLTHREALTOTR WLTHAUTOTOTR {
+  2.     replace `v' = 0 if missing(`v')
+  3. }
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. gen double nw_c = NETWORTHR - WLTHFBIZTOTR - WLTHREALTOTR - WLTHAUTOTOTR
+
+. * Sensitivity: SHELF's lookup puts wealth at the PCE index of year-8 and earn
+> ings at year-9. Undo it and
+. * convert nominal wealth (survey year) and nominal earnings (previous calenda
+> r year) at their own years' PCE.
+. * PCE list as in SHELF 07 (calendar years); 2023 = 2022 x 120.511/116.100 (FR
+> ED annual PCEPI).
+. gen double pidx_y = .
+(97,849 missing values generated)
+
+. gen double pidx_y1 = .
+(97,849 missing values generated)
+
+. gen double pidx_w = .
+(97,849 missing values generated)
+
+. gen double pidx_e = .
+(97,849 missing values generated)
+
+. local years 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 
+> 2017 2018 2019 2020 2021 2022 2023
+
+. local vals 106.00946 109.06383 112.1349 115.01231 118.41583 118.08571 120.200
+> 75 123.24161 125.5398 127.19513 128.9754 129.21168 130.52007 132.79867 135.51
+> 683 137.46421 138.95344 144.75197 154.10264 159.95637
+
+. forvalues k = 1/20 {
+  2.     local yy : word `k' of `years'
+  3.     local vv : word `k' of `vals'
+  4.     replace pidx_y = `vv' if year == `yy'
+  5.     replace pidx_y1 = `vv' if year - 1 == `yy'
+  6.     replace pidx_w = `vv' if year - 8 == `yy'
+  7.     replace pidx_e = `vv' if year - 9 == `yy'
+  8. }
+(0 real changes made)
+(5,565 real changes made)
+(0 real changes made)
+(6,361 real changes made)
+(5,565 real changes made)
+(0 real changes made)
+(6,361 real changes made)
+(0 real changes made)
+(0 real changes made)
+(5,759 real changes made)
+(0 real changes made)
+(6,378 real changes made)
+(5,759 real changes made)
+(0 real changes made)
+(6,378 real changes made)
+(0 real changes made)
+(0 real changes made)
+(6,030 real changes made)
+(0 real changes made)
+(6,394 real changes made)
+(6,030 real changes made)
+(0 real changes made)
+(6,394 real changes made)
+(0 real changes made)
+(0 real changes made)
+(6,204 real changes made)
+(0 real changes made)
+(13,710 real changes made)
+(6,204 real changes made)
+(0 real changes made)
+(13,710 real changes made)
+(0 real changes made)
+(0 real changes made)
+(6,361 real changes made)
+(0 real changes made)
+(13,202 real changes made)
+(6,361 real changes made)
+(0 real changes made)
+(13,202 real changes made)
+(0 real changes made)
+(0 real changes made)
+(6,378 real changes made)
+(0 real changes made)
+(13,102 real changes made)
+(6,378 real changes made)
+(0 real changes made)
+(13,102 real changes made)
+(0 real changes made)
+(0 real changes made)
+(6,394 real changes made)
+(0 real changes made)
+(0 real changes made)
+(6,394 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(13,710 real changes made)
+(0 real changes made)
+(0 real changes made)
+(13,710 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(13,202 real changes made)
+(0 real changes made)
+(0 real changes made)
+(13,202 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(13,102 real changes made)
+(0 real changes made)
+(0 real changes made)
+(13,102 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+
+. gen double cw = (pidx_w / 128.9754) * (154.10264 / pidx_y)
+(38,702 missing values generated)
+
+. gen double ce = (pidx_e / 128.9754) * (154.10264 / pidx_y1)
+(38,702 missing values generated)
+
+. gen double wnw = IW * NETWORTHR
+
+. gen double wnwc = IW * nw_c
+
+. gen double wearn = IW * EARNINDRRC if AGEREP <= 65
+(14,500 missing values generated)
+
+. gen double wnw_pce = wnw * cw
+(38,702 missing values generated)
+
+. gen double wnwc_pce = wnwc * cw
+(38,702 missing values generated)
+
+. gen double wearn_pce = wearn * ce
+(47,787 missing values generated)
+
+. tempname R
+
+. postfile `R' str24 window str10 source double N N_earn ratio_orig ratio_narro
+> w ratio_orig_pce ratio_narrow_pce using "`out'/ratios.dta", replace
+
+. program define postratio
+  1.     args handle window source cond
+  2.     quietly count if `cond'
+  3.     local N = r(N)
+  4.     quietly count if `cond' & AGEREP <= 65
+  5.     local Ne = r(N)
+  6.     quietly summarize wnw if `cond'
+  7.     local a = r(sum)
+  8.     quietly summarize wnwc if `cond'
+  9.     local b = r(sum)
+ 10.     quietly summarize wearn if `cond'
+ 11.     local d = r(sum)
+ 12.     quietly summarize wnw_pce if `cond'
+ 13.     local a2 = r(sum)
+ 14.     quietly summarize wnwc_pce if `cond'
+ 15.     local b2 = r(sum)
+ 16.     quietly summarize wearn_pce if `cond'
+ 17.     local d2 = r(sum)
+ 18.     post `handle' ("`window'") ("`source'") (`N') (`Ne') (`a'/`d') (`b'/`d
+> ') (`a2'/`d2') (`b2'/`d2')
+ 19. end
+
+. foreach y in 2013 2015 2017 2019 {
+  2.     postratio `R' "`y'" "shelf" "src == 0 & year == `y'"
+  3. }
+
+. postratio `R' "2019" "rebuilt" "src == 2 & year == 2019"
+
+. foreach y in 2021 2023 {
+  2.     postratio `R' "`y'" "rebuilt" "src == 1 & year == `y'"
+  3. }
+
+. postratio `R' "pooled_2017_2019" "shelf" "src == 0 & inlist(year, 2017, 2019)
+> "
+
+. postratio `R' "pooled_2015_2019" "shelf" "src == 0 & inlist(year, 2015, 2017,
+>  2019)"
+
+. postratio `R' "pooled_2019_2021" "mixed" "(src == 0 & year == 2019) | (src ==
+>  1 & year == 2021)"
+
+. postratio `R' "pooled_2021_2023" "rebuilt" "src == 1 & inlist(year, 2021, 202
+> 3)"
+
+. postratio `R' "pooled_2019_2023" "mixed" "(src == 0 & year == 2019) | (src ==
+>  1 & inlist(year, 2021, 2023))"
+
+. postclose `R'
+
+. use "`out'/ratios.dta", clear
+
+. format ratio_orig ratio_narrow %9.4f
+
+. list, noobs sep(0)
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2013 |   shelf |  6361 |   5533 |   6.0912 |   4.2430 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            6.185186             |            4.308448             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2015 |   shelf |  6378 |   5559 |   7.1273 |   4.9073 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            7.296815             |            5.024057             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2017 |   shelf |  6394 |   5489 |   7.7449 |   5.5032 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            7.590832             |            5.393731             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2019 |   shelf |  6859 |   5836 |   7.1839 |   5.2432 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            7.261299             |            5.299723             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2019 | rebuilt |  6851 |   5827 |   7.1844 |   5.2434 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            7.261792             |             5.29984             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2021 | rebuilt |  6601 |   5499 |   9.1369 |   7.1000 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            8.886544             |             6.90542             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  |             2023 | rebuilt |  6551 |   5410 |   8.9815 |   7.0173 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            8.668653             |            6.772892             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  | pooled_2017_2019 |   shelf | 13253 |  11325 |   7.4358 |   5.3600 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |             7.41111             |            5.342461             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  | pooled_2015_2019 |   shelf | 19631 |  16884 |   7.3371 |   5.2151 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            7.375283             |            5.242653             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  | pooled_2019_2021 |   mixed | 13460 |  12358 |   8.1245 |   6.1375 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            8.051536             |            6.080454             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  | pooled_2021_2023 | rebuilt | 13152 |  10909 |   9.0507 |   7.0541 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            8.769833             |            6.834433             |
+  +-------------------------------------------------------------------+
+
+  +-------------------------------------------------------------------+
+  |           window |  source |     N | N_earn | ratio_~g | ratio_~w |
+  | pooled_2019_2023 |   mixed | 20011 |  17768 |   8.4458 |   6.4673 |
+  |-------------------------------------------------------------------|
+  |            ra~g_pce             |            ra~w_pce             |
+  |            8.273283             |            6.329267             |
+  +-------------------------------------------------------------------+
+
+. export delimited using "`out'/wealth_earnings_by_wave_2023.csv", replace
+file /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/d
+> ata/psid_followup_mar2026/output/wealth_earnings_2023/wealth_earnings_by_wave
+> _2023.csv saved
+
+. log close
+      name:  <unnamed>
+       log:  /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring2
+> 6/code/data/psid_followup_mar2026/output/wealth_earnings_2023/build_wealth_ea
+> rnings_2023.log
+  log type:  text
+ closed on:  20 Oct 2026, 12:17:36
+-------------------------------------------------------------------------------
