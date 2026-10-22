@@ -17,7 +17,7 @@
 \providecommand{\chk}{\textcolor{red}{$^{\ddagger}$}}
 \newcommand{\PRF}{../../output/model/experiments/housing_supply/20261021_paper_results}
 
-\section{Housing Supply and Credit}
+\section{Counterfactuals}
 \label{sec:policy}
 
 This section uses the model to compare two ways of making family housing more
@@ -68,7 +68,9 @@ The two exercises are as follows. \emph{Mortgage credit}: the loan-to-value
 ratio rises from $\phi=0.80$ to 1 for all households, so buyers need no down
 payment. \emph{Matched supply}: the supply curve shifts out by \oldv{6.3\%},
 $H_0\to\oldv{1.063}\,H_0$, the size at which births in 2023 rise as much as
-under credit. The matched shift is a construct. Its size is set by the effect
+under credit.\footnote{In the supply experiments the inherited 2023
+distribution is projected onto the states feasible under the shifted supply;
+the projected mass is about $10^{-6}$.} The matched shift is a construct. Its size is set by the effect
 of credit on impact, not by any proposed policy, so that the paths that follow
 show the difference between earlier births and additional births.
 
@@ -134,6 +136,35 @@ which fertility is at replacement, and the number of households rises by the
 full \oldv{6.3\%}: the additional rooms are filled by additional families.
 Credit also has a small lasting effect, 3.1\% more households in the long
 run, with a price 3.2\% higher.
+
+The path of births under credit has four phases (Figure~\ref{fig:policy-qt},
+panel a). On impact, credit reaches every renter waiting to buy, at every
+fertile age, and some of them have their child now. From 2031 births fall
+below the no-policy path: households that had a child early have fewer later,
+and those who enter after 2023 only move their births earlier. Births then
+rise again. \oldv{About a third} of the rise is the echo, as the children born
+in 2023 become young parents, and \oldv{two thirds} comes from new entrants,
+who gain more from credit as housing becomes cheaper along the transition.
+Credit adds a little to lifetime fertility in the long run because space then
+becomes cheap: without policy, the price falls by 45\% from 2023 to the new
+stationary equilibrium. At the long-run price, removing the down payment raises births
+\oldv{1 percentage point} above replacement; at prices \oldv{about 50\%}
+higher, by only \oldv{0.1 to 0.2} points. When space is expensive, the
+per-period cost of a family room dominates the decision, and credit, which
+changes only the one-time down payment, matters little. Letting renters rent
+homes as large as 10 rooms removes \oldv{two thirds} of this long-run effect.
+
+The long run follows from one condition. In a stationary equilibrium the
+population is constant only if births per household are at replacement, and
+fertility falls with the cost of space. So the long-run price is the one at
+which households choose replacement fertility, and the number of households is
+the one that fills the housing stock at that price. A policy that raises
+fertility at a given price therefore ends up as a higher price and more
+households, not as more births per household. A supply expansion leaves the
+replacement price unchanged: a 10\% expansion brings the price back to its
+no-policy level and leaves 10.0\% more households. Credit for parents raises
+fertility at any price, so the price must rise, by 33\%, until fertility is
+back at replacement, with 36\% more households.
 
 \begin{figure}[!tb]
 \centering
@@ -201,6 +232,31 @@ The households that use the credit confirm this. Among households aged 22 to
 29 in 2023, ownership rises from \oldv{49\%} to \oldv{73\%}. \oldv{Seven in eight} of the
 new owners buy a home of 2 or 4 rooms. The share owning a home of 6 rooms or
 more, the size families choose, rises by only \oldv{3} percentage points.
+Across all households, ownership rises from 74.9\% to 82.8\% in 2023, and the
+mean size of an owned home falls from 6.05 to 5.73 rooms. Total demand for
+space falls by 0.09\%, and the price with it, by 0.14\%. The price barely
+matters for this result: at the no-policy prices, credit raises births in
+2023 by 1.38\%, against 1.35\% in equilibrium.
+
+Credit buys small homes early. Among households aged 22 to 25 in 2027,
+ownership rises from \oldv{46\%} to \oldv{68\%}, and the share owning a
+two-room home from \oldv{8\%} to \oldv{25\%}, while births per 100 households
+at those ages stay at \oldv{22.2}. A small home accommodates a young family,
+but the households that buy one early are not those whose fertility was held
+back. The pattern persists along the transition. In 2059 credit raises
+ownership at ages 22 to 37 by \oldv{21} percentage points, and young owners
+live in smaller homes, \oldv{5.64} rooms against \oldv{6.36}, with more debt,
+\oldv{0.68} of the value of the home against \oldv{0.55}. A supply expansion
+instead gives young owners larger homes, \oldv{6.65} rooms, with the same debt.
+Credit buys earlier, smaller and more leveraged ownership; supply buys more
+space.
+
+The PSID offers a partial check on this mechanism. Among childless first-time
+buyers aged 22 to 33, those who bought a home of four rooms or fewer were 14
+percentage points less likely to have a first birth within six years
+(standard error 6.7). The gap goes in the model's direction, but without an
+instrument it is as consistent with selection, couples not planning children
+buying small, as with an effect of the home.
 
 To isolate this margin from the response of prices, I raise $\phi$ to 1 in the
 2007 stationary equilibrium, at the same price. Ownership at ages 25 to 34
@@ -284,6 +340,14 @@ percentage points, is the value of insuring the downside of earnings rather
 than paying the same amount to everyone: a child is a long commitment, and
 insurance makes it safer. Both raise the price, by 24\% and 48\% in
 the long run, as the larger population demands more space.
+
+Insurance is a partial version of lower earnings risk, which gives the
+benchmark. Lowering the standard deviation of the four-year earnings shock
+from 0.48 to 0.35 from 2023 on, with mean earnings unchanged, raises births in
+2023 by \oldv{11.3\%} and the completed fertility of the 2023 cohort by
+\oldv{16.0\%}, from \oldv{1.64} to \oldv{1.91}. The additional demand for
+family space raises the price, by \oldv{11\%} by 2063 and \oldv{49\%} in the
+long run.
 
 The property tax lowers the price by \oldv{6.2\%} in 2023, close to the matched
 supply expansion, but births do not move (\oldv{$-0.2\%$}) and the completed
