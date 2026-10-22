@@ -7,8 +7,14 @@
 % (p6_figs_oldsetup.py, from 20261017_accounting/transitions/data/prod_*); 2023 tenure of ages 22-29:
 % transitions_2023/decay_ship_20261014/tenure_size_22_29_2023_decay.json. \oldv marks every placeholder.
 % The 2007 stationary credit figure (\FCC) is at the current calibration. Earlier versions in git.
+% Oct 22 15:30Z: FREE-ENTRY numbers filled where the arm has converged (credit, parents, cash, insurance; base TFR):
+% 20261021_paper_results/p6_values_fi.json and fig_p6_{paths,transfers}_fi_eta063.pdf (p6_figs_fi.py, from
+% 20261017_accounting/transitions/data_fi_torch/P063fi_*.json = Torch pol_063fi/out/runs/*/result.json). Credit is UNDER CHECK
+% (1.35% vs about 1.9% on the slides). Still \oldv (red, slides' runs): matched supply, property tax, the 22-29 tenure split, and
+% the quantum-tempo figure (needs matched supply).
 \providecommand{\pend}{\textcolor{red}{[pending]}}
-\providecommand{\oldv}[1]{#1}
+\providecommand{\oldv}[1]{\textcolor{red}{#1}}
+\providecommand{\chk}{\textcolor{red}{$^{\ddagger}$}}
 \newcommand{\PRF}{../../output/model/experiments/housing_supply/20261021_paper_results}
 
 \section{Housing Supply and Credit}
@@ -27,12 +33,14 @@ the number of children. Second, credit moves births earlier because the young
 use it to own the small homes they would otherwise rent; it lowers the down
 payment, not the per-period cost of the space a child needs. Third, credit
 tied to children lowers that cost and raises the completed fertility of the
-2023 cohort by \oldv{6.3\%}. I then compare these housing policies with a cash
+2023 cohort by 4.9\%. I then compare these housing policies with a cash
 transfer, earnings insurance and a property tax.
 
-\problem{The numbers from 2023 are placeholders from the runs in the slides
-(instant supply, earlier calibration and accounting), to be replaced by the
-free-entry runs.}
+\problem{Numbers in red are placeholders from the runs in the slides
+(instant supply, earlier calibration and accounting), to be replaced as each
+free-entry run lands: matched supply, the property tax and the split of new
+owners by home size. Mortgage credit is under check: it raises births by
+1.35\% on impact here, against about 1.9\% in the slides' runs.}
 
 \subsection{Design of the experiments}
 \label{sec:policy-design}
@@ -81,12 +89,12 @@ path. Table~\ref{tab:policy-main} summarizes the results.
 \cmidrule(lr){2-4}\cmidrule(l){6-7}
  & 2023 & 2063 & Long run & 2023 cohort & 2023 & Long run \\
 \midrule
-Mortgage credit & \oldv{$+1.9$} & \oldv{$+0.8$} & \oldv{$+2.5$} & \oldv{$-0.4$} & \oldv{$+0.5$} & \oldv{$+3.3$} \\
+Mortgage credit\chk & $+1.3$ & $+0.6$ & $+3.0$ & $-1.1$ & $-0.1$ & $+3.2$ \\
 Matched supply, \oldv{$+6.3\%$} & \oldv{$+2.0$} & \oldv{$+4.6$} & \oldv{$+6.3$} & \oldv{$+3.1$} & \oldv{$-5.8$} & \oldv{$0.0$} \\
-Credit for parents & \oldv{$+6.0$} & \oldv{$+14.4$} & \oldv{$+25.9$} & \oldv{$+6.3$} & \oldv{$+0.4$} & \oldv{$+27.2$} \\
+Credit for parents & $+5.1$ & $+16.6$ & $+36.1$ & $+4.9$ & $+0.3$ & $+33.5$ \\
 \addlinespace
-Cash transfer & \oldv{$+8.0$} & \oldv{$+14.1$} & \oldv{$+21.9$} & \oldv{$+7.7$} & \oldv{$+2.0$} & \oldv{$+24.7$} \\
-Earnings insurance & \oldv{$+14.8$} & \oldv{$+26.8$} & \oldv{$+46.5$} & \oldv{$+13.8$} & \oldv{$+3.8$} & \oldv{$+50.8$} \\
+Cash transfer & $+8.2$ & $+14.3$ & $+22.8$ & $+7.8$ & $+2.2$ & $+24.0$ \\
+Earnings insurance & $+15.2$ & $+27.5$ & $+48.9$ & $+14.0$ & $+3.9$ & $+48.3$ \\
 Property tax, rebated & \oldv{$-0.2$} & \oldv{$+1.1$} & \oldv{$+0.5$} & \oldv{$+0.8$} & \oldv{$-6.2$} & \oldv{$-5.0$} \\
 \bottomrule
 \end{tabularx}
@@ -98,9 +106,10 @@ four-year period starting in the year shown; long run: the new stationary
 equilibrium, where births per household are at replacement, so births and the
 number of households rise by the same percentage. Completed fertility:
 children ever born to the cohort aged 18--21 in 2023. Without policy, period
-fertility is \oldv{1.63} in 2023 and \oldv{1.74} in 2063. Policies are defined in
+fertility is 1.63 in 2023 and 1.73 in 2063. Policies are defined in
 Sections~\ref{sec:policy-design}, \ref{sec:policy-parents}
-and~\ref{sec:policy-transfers}.
+and~\ref{sec:policy-transfers}. \chk\,Under check. Red: placeholders from the
+runs in the slides.
 \end{minipage}
 \end{table}
 
@@ -110,10 +119,11 @@ and~\ref{sec:policy-transfers}.
 Demographers distinguish how many children are born, the \emph{quantum}, from
 when they are born, the \emph{tempo} \citep{bongaartsFeeneyQuantumTempo1998}.
 Credit is mostly tempo, and supply is quantum. Figure~\ref{fig:policy-qt}
-shows the two paths. Both raise births by \oldv{2\%} in 2023. Under credit the
-gain is nearly gone by 2035, when births are \oldv{0.2\%} above the no-policy
-path. Under supply births rise in every period, by \oldv{4.6\%} by 2063 and by
-\oldv{6.3\%} in the long run.
+shows the two paths. Both raise births by 1.3\% in 2023. Under credit the
+gain is gone within four years, and births fall below the no-policy path, by
+0.6\% in 2035, as the births brought forward are missing later. Under supply
+births rise in every period, by \oldv{4.6\%} by 2063 and by \oldv{6.3\%} in
+the long run.
 
 Supply raises births over time for two reasons. Cohorts that reach
 childbearing age after 2023 spend their whole fertile life with cheaper space,
@@ -122,8 +132,8 @@ Credit adds one pulse of births, and its echo fades. Supply adds a steady flow,
 and its echoes build up. In the long run the price returns to the level at
 which fertility is at replacement, and the number of households rises by the
 full \oldv{6.3\%}: the additional rooms are filled by additional families.
-Credit also has a small lasting effect, \oldv{2.5\%} more households in the long
-run, with a price \oldv{3.3\%} higher.
+Credit also has a small lasting effect, 3.1\% more households in the long
+run, with a price 3.2\% higher.
 
 \begin{figure}[!tb]
 \centering
@@ -136,14 +146,15 @@ run, with a price \oldv{3.3\%} higher.
 same 2023 state, births in each four-year period (panel a) and the number of
 households (panel b), to the new stationary equilibrium. Mortgage credit: LTV
 80 to 100 for all households. Matched supply: the supply curve shifted out by
-\oldv{6.3\%}.
+\oldv{6.3\%}. \oldv{Placeholder figure: runs in the slides, until matched
+supply lands.}
 \end{minipage}
 \end{figure}
 
 Table~\ref{tab:policy-tempo} follows the cohort aged 18 to 21 in 2023, which
 separates the number of children from their timing. Credit lowers its
-completed fertility by \oldv{0.4\%} and the share with a first birth by
-\oldv{0.6\%}, and brings first births forward by \oldv{0.11} years. Matched supply
+completed fertility by 1.1\% and the share with a first birth by 1.3\%, and
+brings first births forward by 0.08 years. Matched supply
 raises completed fertility by \oldv{3.1\%} and the share with a first birth by
 \oldv{2.4\%}. Supply also brings first births forward, by \oldv{0.14} years: a
 cheaper room lowers the per-period cost of the commitment, so households
@@ -158,10 +169,10 @@ commit sooner as well as more often.
 \toprule
  & Completed fertility & Share with a first birth & Mean age at first birth \\
 \midrule
-No policy & \oldv{1.643} & \oldv{0.676} & \oldv{27.09} \\
-Mortgage credit & \oldv{1.637} ($\oldv{-0.4\%}$) & \oldv{0.672} ($\oldv{-0.6\%}$) & \oldv{26.98} \\
+No policy & 1.640 & 0.673 & 27.15 \\
+Mortgage credit\chk & 1.622 ($-1.1\%$) & 0.665 ($-1.3\%$) & 27.07 \\
 Matched supply & \oldv{1.693} ($\oldv{+3.1\%}$) & \oldv{0.693} ($\oldv{+2.4\%}$) & \oldv{26.95} \\
-Credit for parents & \oldv{1.747} ($\oldv{+6.3\%}$) & \oldv{0.712} ($\oldv{+5.3\%}$) & \oldv{26.72} \\
+Credit for parents & 1.720 ($+4.9\%$) & 0.701 ($+4.1\%$) & 26.88 \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
@@ -169,7 +180,8 @@ Credit for parents & \oldv{1.747} ($\oldv{+6.3\%}$) & \oldv{0.712} ($\oldv{+5.3\
 \footnotesize\textit{Notes:} Children ever born and the share with a first
 birth, per household of the cohort, summed over ages 18 to 45. Mean age at
 first birth: first-birth rates weighted by the midpoints of the four-year age
-cells.
+cells. \chk\,Under check. Red: matched supply from the runs in the slides
+(a different no-policy path: 1.643, 0.676, 27.09).
 \end{minipage}
 \end{table}
 
@@ -186,7 +198,7 @@ child than without it. It is worth more without the child when it mainly helps
 households without children to buy.
 
 The households that use the credit confirm this. Among households aged 22 to
-29 in 2023, ownership rises from \oldv{49\%} to \oldv{73\%}. Seven in eight of the
+29 in 2023, ownership rises from \oldv{49\%} to \oldv{73\%}. \oldv{Seven in eight} of the
 new owners buy a home of 2 or 4 rooms. The share owning a home of 6 rooms or
 more, the size families choose, rises by only \oldv{3} percentage points.
 
@@ -221,13 +233,13 @@ household in each four-year age group (panel c), by age of the head.
 If credit fails because it reaches households whose fertility was not held
 back, credit tied to children should do better. I raise the loan-to-value
 ratio to 1 only for households with a child at home. This lowers the cost of
-the child rather than the cost of waiting. Births in 2023 rise by \oldv{6.0\%},
-three times as much as under credit for all households, at nearly the same
-price, \oldv{0.4\%} higher (Figure~\ref{fig:policy-paths}). The completed
-fertility of the 2023 cohort rises by \oldv{6.3\%}, and the share with a first
-birth by \oldv{5.3\%} (Table~\ref{tab:policy-tempo}). Births keep rising, by
-\oldv{14\%} by 2063. As the larger cohorts demand more space, the price rises, by
-\oldv{4\%} by 2063 and \oldv{27\%} in the long run, when there are \oldv{26\%} more
+the child rather than the cost of waiting. Births in 2023 rise by 5.1\%,
+several times as much as under credit for all households, at nearly the same
+price, 0.3\% higher (Figure~\ref{fig:policy-paths}). The completed
+fertility of the 2023 cohort rises by 4.9\%, and the share with a first
+birth by 4.1\% (Table~\ref{tab:policy-tempo}). Births keep rising, by
+17\% by 2063. As the larger cohorts demand more space, the price rises, by
+3.5\% by 2063 and 33\% in the long run, when there are 36\% more
 households.
 
 The policy works through two channels, which the experiment does not
@@ -238,7 +250,7 @@ the state that carries the commitment.
 
 \begin{figure}[!tb]
 \centering
-\includegraphics[width=0.9\linewidth]{\PRF/fig_p6_paths_oldsetup_eta063.pdf}
+\includegraphics[width=0.9\linewidth]{\PRF/fig_p6_paths_fi_eta063.pdf}
 \caption{Mortgage credit, matched supply and credit for parents}
 \label{fig:policy-paths}
 \par\smallskip
@@ -247,7 +259,8 @@ the state that carries the commitment.
 same 2023 state. Births in each four-year period (panel a), completed
 fertility of the cohort aged 18--21 in the year shown (panel b), number of
 households (panel c) and house price (panel d). Credit for parents: LTV 100
-for households with a child at home.
+for households with a child at home. \oldv{Matched supply: pending. Mortgage
+credit: under check.}
 \end{minipage}
 \end{figure}
 
@@ -265,11 +278,11 @@ revenue is rebated equally to all households.
 
 Transfers raise births far more than any of the housing policies
 (Figure~\ref{fig:policy-transfers}). Cash raises births in 2023 by
-\oldv{8.0\%} and the completed fertility of the 2023 cohort by \oldv{7.7\%};
-insurance by \oldv{14.8\%} and \oldv{13.8\%}. The difference, \oldv{6} to \oldv{7}
+8.2\% and the completed fertility of the 2023 cohort by 7.8\%;
+insurance by 15.2\% and 14.0\%. The difference, 6 to 7
 percentage points, is the value of insuring the downside of earnings rather
 than paying the same amount to everyone: a child is a long commitment, and
-insurance makes it safer. Both raise the price, by \oldv{25\%} and \oldv{51\%} in
+insurance makes it safer. Both raise the price, by 24\% and 48\% in
 the long run, as the larger population demands more space.
 
 The property tax lowers the price by \oldv{6.2\%} in 2023, close to the matched
@@ -282,14 +295,14 @@ price is not cheaper space.
 
 \begin{figure}[!tb]
 \centering
-\includegraphics[width=\linewidth]{\PRF/fig_p6_transfers_oldsetup_eta063.pdf}
+\includegraphics[width=\linewidth]{\PRF/fig_p6_transfers_fi_eta063.pdf}
 \caption{Cash, insurance and a property tax}
 \label{fig:policy-transfers}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
 \footnotesize\textit{Notes:} \% differences from the no-policy path from the
 same 2023 state, births in each four-year period (panel a) and house price
-(panel b).
+(panel b). \oldv{Property tax: pending.}
 \end{minipage}
 \end{figure}
 
