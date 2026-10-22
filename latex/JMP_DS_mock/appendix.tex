@@ -1,0 +1,284 @@
+% ============================================================================
+% October 13, 2026 build (agent draft). Appendix at the 7.9 production point.
+% Additional policy arms: 7p9167_v6/table.md (read Oct 13). Arms marked
+% PROVISIONAL there (stopped at the 30-map cap) are flagged in the table.
+% Transfer arms: driver_policy_v6.py lines 1-5 and 195-210 (INS_KIND
+% contingent / flat; 0.25 x shortfall below the median earnings state at each
+% working age; unfunded, in the household budget only).
+% The Oct 9 appendix on supply arms (14.402 figures) is retired; it is in git.
+% ============================================================================
+\input{sections/app_household_conditions}
+\input{sections/app_model_figures}
+\input{sections/app_policy_slow_stock}
+
+\section{Additional Policy Results}
+\label{app:policy-more}
+
+Table~\ref{tab:app-policy-more} reports the policy experiments that the main
+text does not discuss, with the same design as Section~\ref{sec:policy}: every
+arm starts from the 2023 state and is compared with the no-policy path at the
+same earnings risk and under the same housing supply.
+\problem{Only the three base-risk rows at the top (property tax, insurance, flat
+transfer) are at the constant-decay state. The fixed-stock, elasticity and
+lower-risk rows are still from the earlier two-step path and are to be rerun.}
+
+\paragraph{A rebated property tax.} The annual property tax rises from 1.06 to
+2 percent of value from 2023 on, and the revenue is rebated equally to all
+households. The tax lowers the price by 6.2 percent on impact, close to the
+8.9 percent of the supply expansion, but births do not move ($-0.2$ percent)
+and completed fertility rises by only 0.8 percent. The comparison is the
+cleanest test of the mechanism of Section~\ref{sec:results}. The tax lowers
+the price but raises the user-cost rate from 18.0 to 21.8 percent of the price
+per period, so the per-period cost of a room rises; and the rebate returns the
+revenue per household, not per room, so a family that needs more space pays
+more for it. In this experiment, the lower purchase price is therefore not
+equivalent to cheaper housing services. The comparison illustrates why the
+price of a dwelling alone is insufficient to assess the fertility incentive.
+\problem{The 13 percent increase in rent per room is a stationary
+comparison; the response along the transition is [X.X].}
+
+\paragraph{Earnings insurance and a flat transfer.} The insurance arm pays
+every working household a quarter of the shortfall of its earnings below the
+median earnings state at its age. The flat arm pays the expected value of that
+transfer at each age to every working household. Neither is financed within
+the model. Insurance raises births by 14.8 percent on impact and completed
+fertility by 13.8 percent; the flat transfer by 8.0 and 7.8 percent. The
+difference, about 6 percentage points, is the value of insuring the downside
+of earnings rather than paying the same amount to everyone, as \citet{fraserIncomeRisk2001}
+predicts for an irreversible commitment. Under lower earnings risk the
+difference shrinks to 1.5 points on impact. Because neither transfer is
+financed, they do not establish the effects of a budget-neutral program.
+Financing could change both the distribution of resources and the households
+whose fertility responds. The comparison isolates the difference between
+state-contingent and age-specific transfers within the stated experiment;
+it does not provide a fiscal or welfare ranking of implementable policies.
+
+\paragraph{A fixed housing stock.} Holding the stock at its 2023 level,
+instead of letting it follow the supply curve, lowers the price by 9.2 percent
+in 2023 and 29 percent by 2063, as the population shrinks into the same stock;
+completed fertility rises by 3.5 percent for the 2023 cohort and 8.6 percent
+for the 2043 cohort. With the stock fixed, demand policies raise the price
+more and births somewhat less. Mortgage credit raises the price by 2.1
+percent on impact and leaves completed fertility unchanged ($+0.1$ percent),
+the case in which credit is capitalized into prices. Credit for parents is the
+exception: its effect on completed fertility is larger with a fixed stock
+(7.8 against 6.3 percent), plausibly because the falling price makes ownership
+cheaper, so access to ownership tied to a child is worth more. This reading is
+inferred, not decomposed.
+
+\paragraph{A more elastic supply.} With a supply elasticity of 1.5 from 2023 on,
+a 10 percent shift in the supply curve lowers the price by 5.0 percent and
+raises completed fertility by 2.6 percent; births per percentage point of
+price decline are about the same as at $\eta=0.63$. Credit remains a matter of
+timing at either elasticity.
+
+\begin{table}[p]
+\centering
+\caption{Additional policies from 2023: effects relative to the no-policy path}
+\label{tab:app-policy-more}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrrrr@{}}
+\toprule
+ & Price & Births & \multicolumn{2}{c}{Completed fertility} & Households \\
+ \cmidrule(lr){4-5}
+ & 2023 & 2023--26 & cohort 2023 & cohort 2043 & 2063 \\
+\midrule
+\multicolumn{6}{@{}l}{\emph{Estimated earnings risk}}\\
+Property tax 1.06\% to 2\%, rebated & $-6.2$ & $-0.2$ & $+0.8$ & $+0.7$ & $+0.2$ \\
+Earnings insurance & $+3.8$ & $+14.8$ & $+13.8$ & $+12.9$ & $+4.9$ \\
+Flat transfer & $+2.0$ & $+8.0$ & $+7.8$ & $+7.0$ & $+2.7$ \\
+Fixed stock (vs.\ elastic) & $-9.2$ & $-0.1$ & $+3.5$ & $+8.6$ & $+1.1$ \\
+\quad Mortgage credit, LTV 100 & $+2.1$ & $+3.2$ & $+0.1$ & $-0.5$ & $+0.4$ \\
+\quad Earnings insurance & $+12.8$ & $+13.0$ & $+10.1$ & $+7.8$ & $+3.9$ \\
+\quad Flat transfer & $+7.0$ & $+7.1$ & $+5.5$ & $+3.9$ & $+2.1$ \\
+\quad Credit for parents & $+3.5$ & $+7.9$ & $+7.8$ & $+6.3$ & $+2.7$ \\
+Supply elasticity 1.5 (vs.\ 0.63) & $+0.6$ & $+1.0$ & $+0.4$ & $-1.4$ & $+0.1$ \\
+\quad Housing supply $+10\%$ & $-5.0$ & $+1.5$ & $+2.6$ & $+2.4$ & $+0.8$ \\
+\quad Mortgage credit, LTV 100$^{*}$ & $+0.3$ & $+2.1$ & $-0.7$ & $+0.5$ & $+0.2$ \\
+\addlinespace
+\multicolumn{6}{@{}l}{\emph{Lower earnings risk}}\\
+Property tax 1.06\% to 2\%, rebated & $-6.4$ & $-0.7$ & $+0.5$ & $+0.7$ & $+0.1$ \\
+Earnings insurance & $+2.6$ & $+7.4$ & $+6.4$ & $+6.3$ & $+2.6$ \\
+Flat transfer & $+1.8$ & $+5.9$ & $+5.6$ & $+5.2$ & $+2.2$ \\
+Fixed stock (vs.\ elastic) & $-2.7$ & $-0.9$ & $+0.5$ & $+3.0$ & $+0.2$ \\
+\quad Mortgage credit, LTV 100 & $+2.0$ & $+3.1$ & $-0.9$ & $-0.3$ & $+0.2$ \\
+\quad Earnings insurance & $+7.1$ & $+6.2$ & $+4.6$ & $+4.3$ & $+2.1$ \\
+\quad Flat transfer & $+5.6$ & $+5.2$ & $+4.2$ & $+3.3$ & $+1.7$ \\
+\quad Credit for parents$^{*}$ & $+4.9$ & $+11.8$ & $+10.5$ & $+8.5$ & $+4.2$ \\
+Supply elasticity 1.5 (vs.\ 0.63) & $-0.3$ & $+0.6$ & $+0.5$ & $-0.3$ & $+0.2$ \\
+\quad Housing supply $+10\%$ & $-5.1$ & $+1.3$ & $+2.1$ & $+1.9$ & $+0.7$ \\
+\quad Mortgage credit, LTV 100 & $+0.7$ & $+3.7$ & $-0.2$ & $+0.1$ & $+0.3$ \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Percent differences. Indented rows are compared
+with the no-policy path under the same supply variant (fixed stock, or
+elasticity 1.5); the unindented supply rows compare that no-policy path with
+the baseline one.
+\problem{Market clearing has not been established for the responses marked
+$^{*}$.}
+\end{minipage}
+\end{table}
+
+\section{A CES Housing Composite}
+\label{app:ces}
+
+% Source identity retained: previous calibration loss 14.40, matched-state room target.
+\problem{The CES comparison uses a different room-response target and
+parameter vector, so it does not isolate the effect of the housing composite.}
+The baseline combines a Cobb--Douglas composite with the space requirement
+$h_P$. I also consider a CES composite in which
+children raise the rooms needed for given housing services:
+\begin{equation}
+%OLD-20261016  u_t=\frac{1}{1-\sigma}\left(\frac{Q_t}{e(m_t)}\right)^{1-\sigma}+\psi_t m_t^{1-\gamma},\qquad
+ u_t=\frac{1}{1-\sigma}\left(\frac{Q_t}{e(n_t)}\right)^{1-\sigma}+\psi_t n_t^{1-\gamma},\qquad
+%OLD-20261016  Q_t=\Bigl[\alpha_0\,c_t^{\rho}+(1-\alpha_0)\Bigl(\frac{\chi^{\1\{\mathrm{own}\}}\,h_t}{k(m_t)}\Bigr)^{\rho}\Bigr]^{1/\rho},
+ Q_t=\Bigl[\alpha_0\,c_t^{\rho}+(1-\alpha_0)\Bigl(\frac{\chi^{\1\{\mathrm{own}\}}\,h_t}{k(n_t)}\Bigr)^{\rho}\Bigr]^{1/\rho},
+\end{equation}
+with $\rho=(\varepsilon-1)/\varepsilon$, $\varepsilon=0.67$, and
+%OLD-20261016 $k(m_t)=\exp\bigl[\eta_1\1\{m_t\ge1\}+\eta_2\max(m_t-1,0)\bigr]$. Housing and
+$k(n_t)=\exp\bigl[\eta_1\1\{n_t\ge1\}+\eta_2\max(n_t-1,0)\bigr]$. Housing and
+consumption are complements, and without a floor space is not a fixed entry
+cost of a child. I estimate $\eta_1$ and $\eta_2$, the rooms needed by the
+first and each later child at home, and $\alpha_0$, so twelve parameters are
+chosen to match thirteen moments. The specification changes how expenditure
+adjusts when a child arrives: housing needs operate through the services
+obtained per room, and the elasticity governs how readily consumption can
+substitute for those services. This allows a comparison with a housing need
+that is spread across the consumption--housing allocation rather than
+represented entirely by a fixed room floor. The new moments are the rent share of
+renters aged 30--55 with no child at home (0.360, CE), the probability of
+moving from renting to owning within four years at ages 22--41 (0.281, PSID),
+and the share of mothers with three or more children (0.357, CPS). The rooms
+added at the first birth are re-measured (1.025, PSID), the room gap between
+larger and smaller families becomes a target, and the recent-parent
+ownership gap becomes a validation moment.
+
+\input{../JMP_slides/ces_tables/numbers.tex}
+Table~\ref{tab:app-ces-fit} reports the fit. Relative to its matched
+Cobb--Douglas comparison, it is slightly better on childlessness, family size, rooms and the
+rooms at first birth, and worse on timing, ownership, the rent share, the
+family room gap, wealth and bequests. The responses of completed fertility
+retain the broad pattern of the matched comparison: \cesLTVhundred{} with 100 percent financing,
+\cesLowerRisk{} with lower earnings risk, and \cesCapTen{} with a ten-room
+rental cap.
+
+\begin{table}[t]
+\centering
+\caption{CES variant: targets and fit}
+\label{tab:app-ces-fit}
+\small
+\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
+\input{../JMP_slides/ces_tables/fit.tex}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.3\linewidth}\vspace{0pt}
+\input{../JMP_slides/ces_tables/params.tex}
+\end{minipage}
+\end{table}
+
+Table~\ref{tab:app-ces-credit} varies only $\psi$ to match
+19 percent childlessness under each specification, at fixed prices and the
+six-room rental cap. Mortgage credit moves completed fertility by between $-2$
+and $+0.3$ percent in all thirteen specifications that reach 19 percent
+childlessness, and the negative sign comes mostly from the floor. Credit to
+renters raises births on impact by 6 to 9 percent and completed fertility by
+between $-0.6$ and $+2.4$ percent in the cases shown.
+
+\begin{table}[t]
+\centering
+\caption{CES variant: credit across specifications}
+\label{tab:app-ces-credit}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}Xccc rr rr@{}}
+\toprule
+ & & & & \multicolumn{2}{c}{Financed share $80\%\to95\%$} & \multicolumn{2}{c}{Renter credit, 2 years} \\
+\cmidrule(lr){5-6}\cmidrule(l){7-8}
+ & $\varepsilon$ & Floor & Need $k$ & Impact & Completed & Impact & Completed \\
+\midrule
+Cobb--Douglas (benchmark) & 1 & yes & 1 & $+0.42\%$ & $-1.35\%$ & $+8.5\%$ & $+0.62\%$ \\
+CES & 0.5 & yes & 1 & $-0.16\%$ & $-1.40\%$ & $+8.0\%$ & $+0.22\%$ \\
+CES & 0.25 & yes & 1 & $-0.06\%$ & $-0.87\%$ & $+7.3\%$ & $-0.25\%$ \\
+CES & 0.5 & yes & 1.5 & $+0.05\%$ & $-1.10\%$ & $+7.0\%$ & $-0.63\%$ \\
+CES, no floor & 0.5 & no & 1 & $+0.44\%$ & $-0.03\%$ & $+6.9\%$ & $+2.25\%$ \\
+CES, no floor & 0.5 & no & 1.5 & $+0.51\%$ & $-0.18\%$ & $+8.3\%$ & $+2.39\%$ \\
+Cobb--Douglas, no floor & 1 & no & 1.5 & $+1.03\%$ & $+0.23\%$ & $+8.3\%$ & $+2.42\%$ \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Each row varies only $\psi$ to match 19 percent
+childlessness; house prices fixed, rental cap of six rooms.
+\end{minipage}
+\end{table}
+
+The small completed-fertility effects across these specifications suggest
+that the timing response to general mortgage credit is not confined to a
+single housing composite. The comparison remains conditional on fixed house
+prices and on matching childlessness through the preference for children.
+Because other parameters and targets differ from the main model, it cannot
+by itself measure the contribution of the floor to the main policy results.
+
+\section{Solution Algorithms}
+\label{app:algorithms}
+
+\paragraph{Stationary equilibrium.} I solve for the house price $P$ and the
+rebate $T$, given parameters, a fixed preference for children and the payroll
+tax. The pension is set before the search: in a stationary population the
+age distribution follows from survival and entry, so the pension that
+balances the payroll tax is known in advance, and the balance is verified at
+the end.
+\begin{enumerate}
+\item Guess $P$ and derive the rent $r$ from the user cost.
+\item Solve the household problem backward over age and compute the choice
+probabilities.
+\item Construct the stationary distribution of households, iterating on the
+rebate until $T$ times the number of households equals property-tax revenue.
+In the calibration the number of households is one and $H_0$ is set so that
+supply equals demand at $P$; in the counterfactuals $H_0$ is fixed and the
+number of households equals housing supply divided by mean housing per
+household.
+\item Compute the renewal residual: adjusted births divided by 2.1, relative to the
+number of entrants, minus one. It is zero when the population reproduces
+itself.
+\item Update $P$ by bracketing the root of the renewal residual and repeat
+until the renewal and rebate residuals are below $10^{-6}$. Re-solve at the
+selected price and require the same residuals, and verify that the pension
+budget balances to the same tolerance.
+\end{enumerate}
+% [CODE] native_phase_b.py 25-26 (RENEWAL_TOL, PAYGO_TOL 1e-6), 97-99
+% (supply rule), 126-127 (population = supply/demand; renewal = births/(2.1
+% entry) - 1), 440-454 (bracket, selected root, exact repeat);
+% equilibrium.py (model) 84-96 (implied H0 under population_one, renewal
+% root); fiscal_closure.py (T N = revenue - grants, FISCAL_TOL 1e-6);
+% e5f_stationary_paygo.py 47-62 (pension from the payroll tax). The earlier
+% text's "excess demand for housing" residual and one-period reproduction
+% check are not in the engine.
+
+%OLD-20261016 \paragraph{Transition.} I solve for the paths $(P_t,\varpi_t,T_t)_{t\geq t_0}$,
+\paragraph{Transition.} I solve for the paths $(P_t,m_t,T_t)_{t\geq t_0}$,
+given the inherited households and a preference believed permanent.
+\begin{enumerate}
+\item Solve the new stationary equilibrium; it supplies the terminal value
+function.
+\item Guess the three paths and derive rents from \eqref{eq:m-rent}.
+\item Solve the household problem backward in calendar time from the terminal
+value.
+\item Advance households and the queue of entrants forward from the inherited
+state, and aggregate housing demand and taxes at each date.
+\item Compute the three residuals at every date. The loss is the largest
+residual across dates.
+\item Update the paths jointly and repeat until the loss is below tolerance.
+Extend the horizon to check that early responses are stable.
+\end{enumerate}
+%OLD-20261016 The transitions in the paper use 100 four-year periods, from 2015 (or 2023
+%OLD-20261016 for the policy experiments) to 2411,
+The transitions in the paper use 100 four-year periods, from 2007 (or 2023
+for the policy experiments) to 2403, with tolerances of $2\times10^{-4}$ on
+the housing market and $2\times10^{-5}$ on the pension and the rebate, and
+$10^{-6}$ on the renewal condition of the terminal steady state. \problem{For two lower-risk credit endpoints, births deviate from
+replacement by up to 0.3 percent; the long-run effects are only approximately
+zero.}
+% [CODE] gates from state_2023/pair_result.json (market 2e-4, fiscal 2e-5,
+% stationary renewal 1e-6, horizon 1e-3); 7p9167_v6/table.md notes for the
+% LR_PHI100 and LR_F_PHI100 endpoints (renewal gap <= 0.003).

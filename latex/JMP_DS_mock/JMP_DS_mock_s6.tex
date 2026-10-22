@@ -1,0 +1,78 @@
+% Section 5 only, for quick reading. Same preamble as JMP_DS_mock.tex (lines 1-59);
+% cross-references come from the last full compile (JMP_DS_mock.aux).
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\numberwithin{equation}{section}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,decorations.pathreplacing}
+\definecolor{mechnavy}{RGB}{25,62,96}
+\definecolor{mechteal}{RGB}{27,125,129}
+\definecolor{mechrust}{RGB}{157,77,50}
+\usepackage[round]{natbib}
+\usepackage[expansion=false]{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{titlesec}
+
+% Compact run-in headings within each numbered subsection.
+\titleformat{\subsubsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.6em}
+\usepackage{xr-hyper}
+\usepackage{hyperref}
+\externaldocument{JMP_DS_mock}
+
+\graphicspath{{../figures/}{figures/}}
+\newcommand{\NT}{../../output/model/experiments/transitions_2023/notag_7p9/output/model/experiments/transitions_2023/7p9167_v6}
+\newcommand{\EXP}{../../output/model/experiments/transitions_2023/7p9167_v6}
+\newcommand{\MECH}{../../output/model/production_runs/2026-10-12_comparison_7p917}
+\newcommand{\TRANS}{../../output/model/production_runs/2026-10-11_transition_7p917/fitted_path_figure}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.12em,topsep=0.12em}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=0.12em,topsep=0.12em}
+\allowdisplaybreaks
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\problem}[1]{\textcolor{red}{[Problem: #1]}}
+
+\begin{document}
+\setcounter{section}{5}
+\setcounter{figure}{16}
+\setcounter{table}{3}
+\newcommand{\FCC}{../../output/model/experiments/first_child_cost/20261021}
+\input{sections/06_policy}
+% Appendix D (slow stock), numbered as in the full mock
+\clearpage
+\appendix
+\setcounter{section}{3}
+\setcounter{table}{8}
+\setcounter{figure}{23}
+\input{sections/app_policy_slow_stock}
+\end{document}
