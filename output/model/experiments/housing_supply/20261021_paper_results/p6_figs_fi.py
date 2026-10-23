@@ -64,11 +64,21 @@ def panel(arms, keys, fname, figsize, ncols):
         ax.set_xlabel('Year the cohort is aged 18 to 21' if k == 'cf' else 'Year', fontsize=9 if k == 'cf' else 10)
     axs[0].legend(frameon=False, fontsize=8, loc='upper left')
     fig.tight_layout(); fig.savefig(OUT / fname); plt.close(fig)
-panel((('PHI100', 'Mortgage credit', RUST, 'o'), ('SUPMC', 'Matched supply', NAVY, 's'), ('PPHI100', 'Credit for parents', TEAL, '^')),
+panel((('PHI100', 'Mortgage credit', RUST, 'o'), ('SUPMC', 'Housing supply', NAVY, 's'), ('PPHI100', 'Credit for parents', TEAL, '^')),
       (('b', '(a) Births'), ('cf', '(b) Completed fertility by cohort'), ('N', '(c) Households'), ('p', '(d) House price')),
       'fig_p6_paths_fi_eta063.pdf', (7.4, 5.0), 2)
 panel((('FLAT', 'Cash transfer', GOLD, 'o'), ('INS', 'Earnings insurance', TEAL, '^'), ('PTAX', 'Property tax, rebated', GREY, 'd')),
       (('b', '(a) Births'), ('p', '(b) House price')), 'fig_p6_transfers_fi_eta063.pdf', (7.4, 2.8), 2)
+# credit vs matched supply to the last date: births and households (the quantum-tempo figure)
+if 'PHI100' in X_ and 'SUPMC' in X_:
+    fig, axs = plt.subplots(1, 2, figsize=(7.4, 2.8))
+    for ax, k, ttl in zip(axs, ('b', 'N'), ('(a) Births', '(b) Households')):
+        for a, lab, col, mk in (('PHI100', 'Mortgage credit', RUST, 'o'), ('SUPMC', 'Housing supply', NAVY, 's')):
+            X = X_[a]; ax.plot(X['y'], 100 * (X[k] / B[k] - 1), color=col, marker=mk, ms=2, lw=1.4, label=lab)
+        ax.axhline(0, color='0.6', lw=0.6); ax.set_title(ttl, fontsize=10, loc='left'); ax.set_ylabel('% from no policy'); ax.set_xlabel('Year')
+        ax.set_xticks([2023, 2103, 2203, 2303, 2403]); ax.grid(axis='y', alpha=.25, lw=.5)
+    axs[0].legend(frameon=False, fontsize=8, loc='lower right')
+    fig.tight_layout(); fig.savefig(OUT / 'fig_p6_qt_fi_eta063.pdf'); plt.close(fig)
 print('arms', vals['arms_used']); print('base', {k: np.round(x, 4) for k, x in vals['base'].items()})
 print('cohort2023', {a: {k: round(x, 3) for k, x in v.items()} for a, v in vals['cohort2023'].items()})
 for a in X_:
