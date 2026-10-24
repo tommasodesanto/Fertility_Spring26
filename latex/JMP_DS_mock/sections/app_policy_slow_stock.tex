@@ -1,7 +1,9 @@
-% Slow-stock (KMV permit) policy results, moved from Section 6 on Oct 22, 2026 (his decision Oct 21 22:36Z: free entry
-% in the main text, KMV in the appendix as robustness). Numbers: output/model/experiments/housing_supply/20261021_paper_results/
-% p6_values.json (p6_figs.py), which match 20261017_accounting/report_20261018/policy_runs_table_f3.md (f3 runs, corrected
-% 2023 start). Matched supply at eta 0.63: run stalled, pending (no interpolation).
+% Appendix D, robustness of Section 6 (Oct 24, 2026). D.1: free entry, eta 1.5 (200-period arms, data_fi_torch/P15fi_*).
+% D.2: slow stock (KMV permits), eta 0.63, 200-period fit (data_k200_torch/P063k_*). Numbers: output/model/experiments/
+% housing_supply/20261021_paper_results/appD_values.json (p6_appendix.py); long run = stationary endpoint. At eta 1.5 the +10%
+% supply run already matches credit on impact (1.585% vs 1.586%), so it is the matched experiment. Pending (red): slow-stock
+% matched supply (x1.40, running) and credit for parents; slow stock at eta 1.5 (300-period arms running).
+% The previous version (old 100-period f3 runs) is in git (59d4c54e).
 \providecommand{\pend}{\textcolor{red}{[pending]}}
 \providecommand{\PRF}{../../output/model/experiments/housing_supply/20261021_paper_results}
 
@@ -15,31 +17,37 @@ elastic supply and with a slowly adjusting stock.
 \label{app:policy-eta}
 
 Table~\ref{tab:app-policy-eta} repeats the experiments with free entry and
-$\eta=1.5$. With a more elastic supply, a supply expansion lowers the price
-less, and the additional demand from credit for parents raises it less.
-\pend{}
+$\eta=1.5$. With a more elastic supply, a 10\% expansion lowers the price less
+on impact, by 5.0\% instead of 8.6\%, and raises births in 2023 by 1.6\%, as
+much as mortgage credit; it is therefore the matched expansion. Credit again
+moves births earlier: the completed fertility of the 2023 cohort falls by
+1.0\%, while the supply expansion raises it by 2.6\%. In the long run the price
+is again the one at which fertility is at replacement, so credit for parents
+raises it by about as much as with $\eta=0.63$, 34\%. With a more elastic
+supply, more households fit at that price: 76\% more, against 36\%.
 
 \begin{table}[H]
 \centering
-\caption{Housing policies from 2023 with $\eta=1.5$}
+\caption{Counterfactuals from 2023 with $\eta=1.5$}
 \label{tab:app-policy-eta}
 \small
 \begin{tabularx}{\textwidth}{@{}Xrrrcrr@{}}
 \toprule
  & \multicolumn{3}{c}{Births} & Completed fertility & \multicolumn{2}{c}{House price} \\
 \cmidrule(lr){2-4}\cmidrule(l){6-7}
- & 2023 & 2063 & 2103 & 2023 cohort & 2023 & 2063 \\
+ & 2023 & 2063 & Long run & 2023 cohort & 2023 & Long run \\
 \midrule
-Mortgage credit & \multicolumn{6}{c}{\pend} \\
-Housing supply, $+10\%$ & \multicolumn{6}{c}{\pend} \\
-Matched supply & \multicolumn{6}{c}{\pend} \\
-Credit for parents & \multicolumn{6}{c}{\pend} \\
+Mortgage credit & $+1.6$ & $+0.1$ & $+4.8$ & $-1.0$ & $-0.1$ & $+2.6$ \\
+Housing supply, $+10\%$ & $+1.6$ & $+4.3$ & $+10.0$ & $+2.6$ & $-5.0$ & $0.0$ \\
+Credit for parents & $+5.1$ & $+14.2$ & $+75.6$ & $+5.8$ & $+0.1$ & $+33.9$ \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} As in Table~\ref{tab:policy-main}, with free
-entry and $\eta=1.5$.
+entry and $\eta=1.5$. The 10\% supply expansion raises births in 2023 as much
+as mortgage credit. Without policy, period fertility is 1.63 in 2023 and 1.67
+in 2063.
 \end{minipage}
 \end{table}
 
@@ -62,69 +70,49 @@ in the preference for children from 2007 to 2023 is fitted under this rule, so
 the 2023 state differs from the one in Section~\ref{sec:policy}. Everything
 else is as in Section~\ref{sec:policy-design}.
 
-Table~\ref{tab:app-policy-slow} reports the results. With $\eta=0.63$,
-mortgage credit raises births by 1.7\% in 2023, but the gain falls to 0.6\%
-by 2063, and the completed fertility of the 2023 cohort falls by 0.2\%.
-Ownership at ages 18 to 29 rises by 19 percentage points on impact. A 10\%
-supply expansion lowers the price by 3.0\% in 2023 and raises births by only
-0.4\%. Construction keeps adding space, rents are 4\% lower by 2063, births
-are 3.2\% higher, and the completed fertility of the 2023 cohort rises by
-1.4\%. Credit for parents raises births by 6.2\% in 2023 and by 17\% by 2063,
-and the completed fertility of the 2023 cohort by 5.9\%. As the additional
-families demand more space, the house price rises, by 9\% by 2063.
-Figure~\ref{fig:app-policy-slow-paths} shows the paths.
+Table~\ref{tab:app-policy-slow} reports the results with $\eta=0.63$. Mortgage
+credit raises births by 1.7\% in 2023, but the gain falls to 0.6\% by 2063,
+and the completed fertility of the 2023 cohort falls by 0.2\%. A 10\% supply
+expansion lowers the price by 3.0\% in 2023 and raises births by only 0.4\%.
+Construction keeps adding space, and births are 3.2\% higher by 2063; the
+completed fertility of the 2023 cohort rises by 1.4\%. In the long run the
+supply expansion adds 10\% more households, as with free entry, and credit
+3.2\%. Figure~\ref{fig:app-policy-slow-paths} shows the paths.
 
-With $\eta=1.5$ (panel B), the effects on births in 2023 and 2063 are close
-to those with $\eta=0.63$. To raise births in 2023 as much as mortgage credit,
-the supply expansion must be 62\%. It then raises births by 12\% by 2063 and
-the completed fertility of the 2023 cohort by 5.6\%, against $-0.8\%$ under
-credit.
-
-\problem{Matched supply at $\eta=0.63$: run stalled, pending. With
-$\eta=1.5$ the paths are still well short of the terminal steady state in
-2403.}
+\problem{Pending: matched supply with a slowly adjusting stock (an expansion of
+about 40\%, running) and credit for parents; the slowly adjusting stock with
+$\eta=1.5$ (running).}
 
 \begin{table}[H]
 \centering
-\caption{Housing policies from 2023 with a slowly adjusting stock}
+\caption{Counterfactuals from 2023 with a slowly adjusting stock}
 \label{tab:app-policy-slow}
 \small
 \begin{tabularx}{\textwidth}{@{}Xrrrcrr@{}}
 \toprule
  & \multicolumn{3}{c}{Births} & Completed fertility & \multicolumn{2}{c}{House price} \\
 \cmidrule(lr){2-4}\cmidrule(l){6-7}
- & 2023 & 2063 & 2103 & 2023 cohort & 2023 & 2063 \\
+ & 2023 & 2063 & Long run & 2023 cohort & 2023 & Long run \\
 \midrule
-\multicolumn{7}{@{}l}{\emph{A. Supply elasticity $\eta=0.63$}}\\
-Mortgage credit & $+1.7$ & $+0.6$ & $+0.9$ & $-0.2$ & $+0.2$ & $+0.2$ \\
-Housing supply, $+10\%$ & $+0.4$ & $+3.2$ & $+5.1$ & $+1.4$ & $-3.0$ & $-4.7$ \\
+Mortgage credit & $+1.7$ & $+0.6$ & $+3.2$ & $-0.2$ & $+0.2$ & $+3.5$ \\
+Housing supply, $+10\%$ & $+0.4$ & $+3.2$ & $+10.0$ & $+1.4$ & $-3.0$ & $0.0$ \\
 Matched supply & \multicolumn{6}{c}{\pend} \\
-Credit for parents & $+6.2$ & $+17.1$ & $+23.1$ & $+5.9$ & $+1.8$ & $+9.4$ \\
-\addlinespace
-\multicolumn{7}{@{}l}{\emph{B. Supply elasticity $\eta=1.5$}}\\
-Mortgage credit & $+1.9$ & $+0.6$ & $+0.0$ & $-0.8$ & $-0.1$ & $+0.2$ \\
-Housing supply, $+10\%$ & $+0.3$ & $+2.4$ & $+3.8$ & $+1.1$ & $-2.1$ & $-3.1$ \\
-Matched supply, $+62\%$ & $+1.9$ & $+12.4$ & $+20.6$ & $+5.6$ & $-11.1$ & $-15.2$ \\
-Credit for parents & $+6.4$ & $+17.2$ & $+25.6$ & $+7.5$ & $+1.1$ & $+6.0$ \\
+Credit for parents & \multicolumn{6}{c}{\pend} \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} \% differences from the no-policy path from the
-same 2023 state, at the same supply elasticity, with the stock following
-\eqref{eq:app-slow-stock}. Births: births in the four-year period starting in
-the year shown. Completed fertility: children ever born to the cohort aged
-18--21 in 2023. Without policy and with $\eta=0.63$, period fertility is 1.64
-in 2023, 1.80 in 2063 and 2.00 in 2103. Matched supply: the supply shift that
-raises births in 2023 as much as mortgage credit.
+\footnotesize\textit{Notes:} As in Table~\ref{tab:policy-main}, $\eta=0.63$,
+with the stock following \eqref{eq:app-slow-stock}. Matched supply: the
+supply shift that raises births in 2023 as much as mortgage credit. Without
+policy, period fertility is 1.64 in 2023 and 1.80 in 2063.
 \end{minipage}
 \end{table}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\linewidth]{\PRF/fig_p6_paths_eta063.pdf}
-\caption{Mortgage credit, housing supply and credit for parents with a slowly
-adjusting stock}
+\includegraphics[width=0.9\linewidth]{\PRF/fig_appD_paths_k200_eta063.pdf}
+\caption{Mortgage credit and housing supply with a slowly adjusting stock}
 \label{fig:app-policy-slow-paths}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
@@ -133,5 +121,6 @@ same 2023 state, $\eta=0.63$, stock following \eqref{eq:app-slow-stock}.
 Births in each four-year period (panel a), completed fertility of the cohort
 aged 18--21 in the year shown (panel b), number of households (panel c) and
 house price (panel d). Housing supply: the supply curve shifted out by 10\%.
+\textcolor{red}{Matched supply and credit for parents: pending.}
 \end{minipage}
 \end{figure}
