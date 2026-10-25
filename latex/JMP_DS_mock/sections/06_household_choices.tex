@@ -1,0 +1,135 @@
+% Section 5, rewrite of October 21, 2026. Stationary solves at the estimated
+% point (loss 7.4186) and the 2007 price 0.7707, rebate balanced in each solve.
+% Figures and values: output/model/experiments/first_child_cost/20261021/
+% (fig_s5_*.pdf, s5_values.json, scripts/s5_figs.py).
+\newcommand{\FCC}{../../output/model/experiments/first_child_cost/20261021}
+
+\section{Household Choices in the Calibrated Model}
+\label{sec:results}
+
+This section describes how households in the calibrated model respond to parenthood, and how earnings risk shapes the decision to have one. First, I show how having children changes housing, consumption and
+tenure. The child's space trades off with consumption, so the cost
+weighs most on households with little wealth or low earnings. Second, I illustrate how
+ lowering the standard deviation of earnings shocks by about a quarter,
+holding the house price at its 2007 level, raises completed fertility by 12\%.
+
+\subsection{Choices at the first birth}
+\label{sec:results-policy-functions}
+
+Figure~\ref{fig:results-policy} compares the choices of the same household in
+the period in which it has no child and in the period in which a first child
+is born. The household is a renter aged 26 to 29 with median earnings, and
+the figure varies its liquid wealth. Without savings, a first child pushes the
+space the household rents close to the rental cap and lowers the probability
+of owning from 42\% to 24\%. The child needs space when the household can
+least afford a down payment, so it rents and pays for the space out of
+consumption. With more than about two years of earnings in liquid wealth, the
+child instead raises the probability of owning, and the household buys a
+larger home.
+
+Panel (d) shows the value of trying for a child, $V^F_{t,A}-V^F_{t,0}$. It is
+negative without savings, turns positive at about five months of earnings,
+and rises steeply at low wealth before flattening. Wealth therefore matters
+for the decision to have a first child mostly among households with little
+of it.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics[width=0.72\linewidth]{\FCC/fig_s5_choices.pdf}
+\caption{Choices with and without a first child}
+\label{fig:results-policy}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Renter aged 26--29 with median earnings
+($z=0.78$), 2007 stationary equilibrium. Liquid wealth in units of mean annual earnings.
+Rooms and consumption are averages over tenure choices.
+\end{minipage}
+\end{figure}
+
+\subsection{Choices across earnings}
+\label{sec:results-cost}
+
+Figure~\ref{fig:results-cost} repeats the comparison across earnings states,
+for renters aged 26 to 29 without savings. A first child adds about two thirds
+of a room at earnings up to the median, and about half a room at high earnings,
+where most of these households buy a home even without a child. Consumption falls
+by 21\% at the lowest state and by 2\% at the median state. At high earnings
+it rises, because the equivalence scale raises the household's needs and
+these households can afford to meet them. As Section~\ref{sec:m-analysis} shows, the space requirement alone
+costs about $r_th_P$ in every period the child is at home, whether the
+household rents or owns. At the 2007 price, this is 2.9\% of mean annual
+earnings each year. The cost of a child's space is therefore a recurring
+expense, and it weighs most on households with low earnings.
+
+\begin{figure}[!b]
+\centering
+\includegraphics[width=\linewidth]{\FCC/fig_s5_cost_by_earnings_all9.pdf}
+\caption{Choices with and without a first child, by earnings}
+\label{fig:results-cost}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Renters aged 26--29 without savings, 2007
+stationary equilibrium, by earnings state $z$. Rooms and consumption are
+averages over tenure choices. The dashed line marks the rental cap $\bar h^R$.
+\end{minipage}
+\end{figure}
+
+\subsection{Earnings risk}
+\label{sec:results-risk}
+
+Section~\ref{sec:m-analysis} showed that earnings risk raises the expected
+cost of a child, since that cost falls with earnings at a decreasing rate. To
+measure this force, I lower the standard deviation of the four-year earnings
+shock by about a quarter, from 0.48 to 0.35, rescale the earnings states to keep mean earnings
+unchanged, and solve the model at the 2007 price. Lower risk raises completed
+fertility by 12\%, from 2.10 to 2.36.\footnote{Without the rescaling, the same
+change raises mean earnings by 4.9\%, and completed fertility rises by 16\%.}
+Figure~\ref{fig:results-risk-floor} below reports the effect over a range of
+values of earnings risk.
+
+Figure~\ref{fig:results-risk} shows where the additional births come from.
+In the baseline, the model matches the distribution of children ever born
+among women in their early forties. Lower risk shifts households out of
+childlessness and toward larger families: the share without children falls
+from 20\% to 12\%, and the shares with two and with three or more rise.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics[width=0.6\linewidth]{\FCC/fig_s5_risk_children.pdf}
+\caption{Earnings risk and children ever born}
+\label{fig:results-risk}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Shares with 0, 1, 2, and 3 or more children
+ever born. Data: CPS June Fertility Supplement, 2006 and 2008, women aged
+40--44. Model: households at about age 42, 2007 stationary equilibrium, at
+the estimated earnings risk ($\sigma_z=0.48$, baseline) and at lower risk
+($\sigma_z=0.35$, earnings states rescaled to keep mean earnings unchanged),
+same price.
+\end{minipage}
+\end{figure}
+
+Earnings risk weighs more when a child requires more space.
+Figure~\ref{fig:results-risk-floor} solves the model at the 2007 price for
+different values of the space a child requires, $h_P$, and of the standard
+deviation of earnings shocks. Lowering risk to 0.35 raises completed
+fertility by 10\% when a child requires half a room, and by 17\% when it
+requires 1.6 rooms. The child's space must be paid in every period the child
+is at home, including after a bad earnings draw, when consumption is most
+valuable. The more space a child requires, the more these periods cost, and
+the more a household gains from lower risk.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\linewidth]{\FCC/fig_s5_risk_floor25.pdf}
+\caption{Earnings risk and the space a child requires}
+\label{fig:results-risk-floor}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Completed fertility, \% change from the
+baseline (marked), 2007 stationary equilibrium, same price, on a grid of 25
+values of each parameter. Vertical axis: standard deviation of the four-year
+earnings shock, with earnings states rescaled to keep mean earnings
+unchanged. Horizontal axis: space a child requires, $h_P$, in rooms.
+\end{minipage}
+\end{figure}
