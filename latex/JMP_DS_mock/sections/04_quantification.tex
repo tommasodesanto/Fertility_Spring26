@@ -231,8 +231,7 @@ about some parameters than others. I group them into five blocks and, for
 each, describe the variation in the data that disciplines it and the
 mechanism in the model through which it does.
 
-Three features of the model shape which variation identifies which
-parameter. First, fertility and housing are determined together. In the
+As the model contains many contemporaneous interactions, there are several things to keep in mind to properly inform the differnt parameters. First, fertility and housing are determined together. In the
 2007 steady state, the house price is the one at which completed fertility
 equals replacement, so a parameter that lowers births also lowers the price,
 and a lower price raises the space households occupy and how often they own.
@@ -262,18 +261,14 @@ children women have, and the mean age at first birth measures when they
 start.
 
 \paragraph{Fertility.}
-The CPS shows how the births of a cohort are spread across women. Among
-women aged 40 to 44 in 2004 and 2006, 19.8\% are childless, and 21.4\% of
-mothers have exactly one child. At a given completed fertility, the first
-share measures how many women become mothers, and the second how many
-children mothers have. I choose the first-birth cost $\xi=0.295$ and the
-curvature $\gamma=0.646$ to match the two shares. The cost is paid only at
-the first birth, so it lowers the value of becoming a parent and leaves the
-value of later children unchanged. A higher $\xi$ raises childlessness, and
-the same births then come from fewer mothers with larger families. A higher
-$\gamma$ makes the benefit of an additional child decline faster, so the
-first child is worth more relative to later ones. Childlessness falls and
-the share of mothers with one child rises.
+I choose the first-birth cost $\xi=0.295$ and the curvature $\gamma=0.646$
+to match two shares among women aged 40 to 44 in the June Fertility
+Supplement of the CPS, pooling 2004 and 2006: 19.8\% are childless, and
+21.4\% of mothers have exactly one child. The cost is paid only at the first
+birth, so a higher $\xi$ raises childlessness, and the same births then come
+from fewer mothers with larger families. A higher $\gamma$ makes the benefit
+of an additional child decline faster, so childlessness falls and more
+mothers stop at one.
 
 \paragraph{Timing of births.}
 In the NCHS natality files for 2003--2006, the mean age of mothers at first
