@@ -7,6 +7,7 @@
 % 0.148414), in output/model/experiments/housing_supply/20261022_fi_all_arms/history/.
 % 2023 table and life-cycle: .../housing_supply/20261021_free_entry/moments_2023_fi/ (free_entry_eta0.63
 % column; same observers as the 7.9 table, replay of the converged FIN063fi_fw history).
+% Oct 25: 4.1-4.2 restructured on the model of Boar, Gorea and Midrigan (2017, Sec. 4.1, Table 2).
 
 \section{Quantification}
 \label{sec:quant}
@@ -19,82 +20,41 @@ period fertility through 2023, and project the economy forward from 2023. The
 policy experiments of Section~\ref{sec:policy} all start from this 2023
 economy.
 
-\subsection{Data}
+I divide the parameters of the 2007 economy into two groups. The first
+group is assigned from external evidence or measured directly in the data.
+The second is chosen so that the model matches a set of moments in the data.
+Panel~A of Table~\ref{tab:quant-parameters} reports the moments, and Panel~B
+the parameters.
+
+\subsection{Assigned parameters}
 \label{sec:quant-data}
-
-Table~\ref{tab:quant-parameters} lists every moment with its source.
-Fertility moments come from the June Fertility Supplement of the CPS, pooling
-2004 and 2006: childlessness and the share of mothers with exactly one child
-among women aged 40 to 44, and children ever born by age 25, capped at three.
-The mean age at first birth comes from the NCHS natality files for
-2003--2006. Mean rooms come from the 2007 AHS, for heads aged 18 to 85.
-Ownership among heads aged 30 to 55, and the gap in ownership between recent
-parents, whose oldest child is under four, and heads without children, come
-from the 2005--2006 ACS.%
-\footnote{Both ownership samples exclude mobile homes, boats and vans (ACS
-structure codes 3 to 10), which have no counterpart in the model.}
-The room response to the first birth is the PSID event-study estimate of
-Section~\ref{sec:empirical-evidence} on the common support of the panel and
-the model, 1.44 rooms, and I apply the same estimator to simulated
-households.%
-\footnote{Model first births are dated from the birth event and model
-housing is mapped to the PSID interview calendar, so model and data compare
-the change in rooms over the same event-time windows.}
-% Production target: output/model/first_birth_rooms_event_20261010/
-% measurement_bridge/proposed_measurement_contract.json and original/rooms_coefficients.csv;
-% adopted in output/model/production/2007/PROMOTION_RECEIPT_20261011_7p917.md.
-% Common-support A2h target 1.439960832044094; model 1.4755 at the new point
-% (identification_newacct moments/center.json, birth_dated +3/+4).
-Wealth is aggregate net worth over aggregate annual gross labor earnings in
-the 2005 and 2007 PSID,%
-\footnote{Net worth of heads aged 18 to 85, excluding business and farm
-equity and other real estate; gross labor earnings of heads aged 18 to 65.}
-and the bequest flow is the annual flow of estates to children relative to
-aggregate net worth in the 2007 SCF.
-
-\subsection{From annual data to four-year periods}
 \label{sec:quant-period}
 
-A model period lasts four years. The unit of account is mean annual gross
-labor earnings of working-age households, \$82,882 in the 2005 and 2007 PSID
-(2022 dollars). Stocks, such as wealth and house prices, are in annual units;
-flows, such as income, consumption and rent, accrue over the four years.
-Interest, discounting and depreciation compound over the period, so
-$R_b=1.02^4$ and $\beta=\beta_{\text{ann}}^4$, and the property tax is four
-times its annual rate. Children leave home after 18 years on average, so each
-child leaves with probability $\lambda=2/9$ per period, and $\pi_a$ is the
-probability of a conception within four years at age $a$.
-The earnings process is estimated directly on non-overlapping four-year
-means of household earnings in the 1984--1997 PSID, the last years in which
-the survey is annual.%
-\footnote{After removing age and year effects, $\rho_z$ comes from the first
-two autocovariances of log four-year earnings. A data statistic for an age
-window weights each four-year model cell by the share of the cell inside the
-window; for the mean age at first birth, model births are dated at the
-midpoint of their cell and the natality data are grouped into the same
-cells.}
-
-\subsection{Parameters set outside the estimation}
-
-I set the parameters in the left half of Panel B of
-Table~\ref{tab:quant-parameters} outside the estimation. Some are measured
-directly in the data; the others follow the literature.
-
-\paragraph{Demographics.}
-Households enter at 18, retire at 66 and live at most through 85. Survival
-is certain before retirement and, after it, follows the 2023 period life
-table of the Social Security Administration. A child leaves home with
-probability $\lambda=2/9$ per period, so children stay at home for 18 years
-on average. Births are possible through age 45. The success of an attempt
-falls with age following the exponential schedule of
+\paragraph{Demographics and timing.}
+A period in the model lasts four years. Households enter at 18, retire at 66
+and live at most through 85. Survival is certain before retirement and,
+after it, follows the 2023 period life table of the Social Security
+Administration. Births are possible through age 45. The success of an
+attempt falls with age following the exponential schedule of
 \citet{sommerFertilityChoiceLife2016}, from 0.98 at 18 to 0.90 at 30, 0.80
-at 35 and 0.62 at 40.%
+at 35 and 0.62 at 40. A child leaves home with probability $\lambda=2/9$ per
+period, so children stay at home for 18 years on average.%
 % pi_a = 1 - 0.02 exp(0.134 (a - 18)); 0.50 at 42. Leridon (2004) four-year
 % conception 0.91 / 0.84 / 0.64 at 30 / 35 / 40 (docs/model/e5_target_review_20260724.md).
 % Survival: 2023 SSA period life table, four-year ratios
 % (docs/model/quantification_note_reaudit_and_study_guide_20260720.md).
 \footnote{A birth into the state of three or more children counts as 3.60
 children in completed fertility.}
+The unit of account is mean annual gross labor earnings of working-age
+households, \$82,882 in the 2005 and 2007 PSID (2022 dollars).%
+\footnote{Stocks, such as wealth and house prices, are in annual units;
+flows, such as income, consumption and rent, accrue over the four years.
+Interest, discounting and depreciation compound over the period, so
+$R_b=1.02^4$ and $\beta=\beta_{\text{ann}}^4$, and the property tax is four
+times its annual rate. A data statistic for an age window weights each
+four-year model cell by the share of the cell inside the window; for the
+mean age at first birth, model births are dated at the midpoint of their
+cell and the natality data are grouped into the same cells.}
 
 \paragraph{Preferences.}
 Risk aversion is $\sigma=2$. The equivalence scale is that of
@@ -127,17 +87,6 @@ earnings, the ratio in the CPS ASEC, and the payroll tax that finances it is
 % CALIBRATION_STATUS.before.md l.4956). Pension/gross-earnings 0.2294460119, payroll tax
 % 0.0802807096 (CALIBRATION_STATUS, Demography and closure).
 
-\paragraph{Earnings.}
-Earnings follow the four-year process of Section~\ref{sec:quant-period}. In
-the PSID, the variance of log four-year earnings, net of age and year
-effects, is 0.51, and its first autocovariance is 0.37. These give
-$\rho_z=0.735$ and $\sigma_z=0.484$, which I approximate with nine states.
-The second autocovariance, which the estimation does not use, is 0.29 in the
-data and 0.27 in the process.
-% output/model/native_financing_diagnostic_20260919/specification_followup/
-% earnings_entry_battery_v1/single_process_external_estimate.json: gamma0 0.5085,
-% gamma1 0.3735, held-out gamma2 0.2899 (model-implied 0.2744).
-
 \paragraph{Housing.}
 Owners choose among homes of 2, 4, 6, 8 and 10 rooms, and renters any size
 up to $\bar h^R=6$ rooms. The cap reflects the rental stock: in the 2023 AHS,
@@ -159,64 +108,64 @@ wealth. The bequest shifter is $\theta_1=0.008$, as in
 % Entry law levels_rank (model/entry_wealth.py): PSID 1984-2019, N = 1,835, negative
 % wealth censored at zero, one common scale, exact weighted-rank allocation to z.
 
-\subsection{Internally estimated parameters}
+\subsection{Calibrated parameters}
 \label{sec:quant-identification}
 
-I estimate the remaining ten parameters, in the right half of Panel B of
-Table~\ref{tab:quant-parameters}, to match the ten moments in Panel A.
-They minimize
-\begin{equation}
-\sum_{k=1}^{10} w_k\bigl[m_k(\theta)-\hat m_k\bigr]^2,
-\label{eq:q-loss}
-\end{equation}
-where $\hat m_k$ is a data moment, $m_k(\theta)$ its counterpart in the
-stationary equilibrium at parameters $\theta$, and $w_k$ the inverse square
-of a tolerance for the moment. Completed fertility is normalized to
-replacement, 2.1: the house price solves this condition, and $H_0$ is the
-supply scale at which that price clears the housing market with one unit of
-households.
+I choose the remaining parameters in two steps. I first estimate the
+earnings process from the PSID alone. Given this process, I choose the other
+ten parameters jointly, to match ten moments of the 2007 data.
 
-Even though the parameters are jointly identified, some moments are more
-informative about some parameters than others. Below I discuss which
-variation in the data pins down each parameter, and through which mechanism
-of the model.%
-\footnote{The responses quoted below are elasticities from a 1\% change in
-one parameter, solving for the equilibrium, house price included, each
-time.}
+\paragraph{Earnings.}
+I estimate the earnings process on non-overlapping four-year means of
+household earnings in the 1984--1997 PSID, the last years in which the
+survey is annual. Net of age and year effects, log earnings follow the
+AR(1) process of Section~\ref{sec:m-env}. I choose its persistence $\rho_z$
+and innovation standard deviation $\sigma_z$ to match the variance of log
+four-year earnings, 0.51, and their first autocovariance, 0.37. This gives
+$\rho_z=0.735$ and $\sigma_z=0.484$, which I approximate with nine states.
+The second autocovariance, which I do not target, is 0.29 in the data and
+0.27 in the process.
+% output/model/native_financing_diagnostic_20260919/specification_followup/
+% earnings_entry_battery_v1/single_process_external_estimate.json: gamma0 0.5085,
+% gamma1 0.3735, held-out gamma2 0.2899 (model-implied 0.2744); rho = gamma1/gamma0,
+% sigma_z = sqrt(gamma0 (1 - rho^2)).
 
-\paragraph{Family size.}
-The CPS shows how the births of a cohort are spread across women. Among
-women aged 40 to 44 in 2004 and 2006, 19.8\% are childless, and 21.4\% of
-mothers have exactly one child. At a given completed fertility, the first
-share measures how many women become mothers, and the second how many
-children mothers have. I choose the first-birth cost $\xi=0.295$ and the
-curvature $\gamma=0.646$ to match the two shares. The cost is paid only at
-the first birth, so it lowers the value of becoming a parent and leaves the
-value of later children unchanged: a higher $\xi$ raises childlessness, and
-the same births then come from fewer mothers with larger families. A higher
-$\gamma$ makes the benefit of an additional child decline faster, so the
-first child is more valuable relative to later ones: childlessness falls and
-the share of mothers with one child rises.
+\paragraph{Other parameters.}
+I choose the first ten calibrated parameters in Panel~B to match jointly the
+ten other moments in Panel~A, while the 2007 house price keeps completed
+fertility at replacement, 2.1.%
+\footnote{The parameters minimize a sum of squared gaps between model and
+data moments, each divided by a tolerance for the moment
+(Appendix~\ref{app:identification}). The supply scale $H_0$ is not free: it
+is the scale at which the 2007 price clears the housing market with one unit
+of households.}
+The parameters are identified jointly, but some moments are more informative
+about some of them, and I discuss each in turn.
 
-\paragraph{Timing of births.}
-In the NCHS natality files for 2003--2006, the mean age of mothers at first
-birth is 26.0 years. In the model, the timing of the first child trades off
-the decline of $\pi_a$ with age against the rise in earnings and savings
-that makes the space for a child affordable (Section~\ref{sec:m-analysis}).
-The scale of the first-birth taste shocks, $\kappa_1=0.050$, governs how
-closely first births follow this trade-off rather than idiosyncratic tastes.
-A larger $\kappa_1$ spreads first births over the fertile window, so more of
-them come late and the mean age at first birth rises; I choose $\kappa_1$ to
-match it. The scale for later births, $\kappa_C=0.129$, plays the same role
-for second and higher births. It also moves the first birth: a household
-with children keeps the option of further births, and the value of this
-option rises with $\kappa_C$, so a higher $\kappa_C$ lowers childlessness
-and brings first births earlier.
-Children ever born by age 25, 0.81 in the CPS, carries information on early
-births, but no parameter moves it much; I return to this miss in
-Section~\ref{sec:quant-fit}.
+I choose the first-birth cost $\xi=0.295$ and the curvature of the benefit
+of children $\gamma=0.646$ to match how births are spread across women aged
+40 to 44 in the June Fertility Supplement of the CPS, pooling 2004 and 2006:
+19.8\% are childless, and 21.4\% of mothers have exactly one child.
+Intuitively, the cost is paid only at the first birth, so a higher $\xi$
+raises childlessness and leaves the value of later children unchanged. A
+higher $\gamma$ makes the benefit of each additional child decline faster,
+so the first child is worth more relative to later ones: fewer women stay
+childless and more mothers stop at one.
 
-\paragraph{Preference for children.}
+I choose the scale of the first-birth taste shocks, $\kappa_1=0.050$, to
+match the mean age of mothers at first birth, 26.0 years in the NCHS natality
+files for 2003--2006. Intuitively, the larger $\kappa_1$, the less first
+births follow the trade-off between fecundity and earnings of
+Section~\ref{sec:m-analysis} and the more they follow idiosyncratic tastes,
+so first births spread over the fertile window and their mean age rises. The scale for later births,
+$\kappa_C=0.129$, plays the same role for second and higher births. No
+moment measures the timing of later births directly, so $\kappa_C$ is pinned
+through the first birth: the option of further births raises the value of
+becoming a parent, so a higher $\kappa_C$ lowers childlessness and brings
+first births earlier. Children ever born by age 25, 0.81 in the CPS with
+births capped at three, carries information on early births, but no
+parameter moves it much (Section~\ref{sec:quant-fit}).
+
 I choose $\psi_0$ so that completed fertility equals replacement, 2.1.
 Because $H_0$ adjusts so that any price clears the market, a higher $\psi_0$
 together with a higher price also delivers 2.1. Housing demand selects the
@@ -227,86 +176,86 @@ which mean rooms are 5.73, as in the 2007 AHS, and ownership is 67.6\%.
 % adjusted_births/(2.1*entry)-1 (equilibrium.py) and H0 is implied at population one.
 % 1% higher psi0: price +3.0%, mean rooms -1.9% (identification_newacct moments).
 
-\paragraph{Housing.}
 I choose the owner multiplier $\chi=1.112$ to match ownership among heads
-aged 30 to 55 in the 2005--2006 ACS, 67.6\%. An owner obtains $\chi$ times
-the services of the same home, so a higher $\chi$ raises the value of owning
-relative to renting: a 1\% higher $\chi$ raises ownership by 3.2\%.
+aged 30 to 55 in the 2005--2006 ACS, 67.6\%.%
+\footnote{Both ownership samples exclude mobile homes, boats and vans (ACS
+structure codes 3 to 10), which have no counterpart in the model.}
+Intuitively, an owner obtains $\chi$ times the services of the same home, so
+a higher $\chi$ raises the value of owning relative to renting.
 
-The tenure taste scale $\kappa_T=0.013$ and the space requirement
-$h_P=0.89$ rooms are disciplined by how housing differs between parents and
-other households. In the same ACS sample, heads whose oldest child is under
-four own at a rate 12.8 percentage points higher than heads with no children
-at home. In the model, children at home raise the space a household needs by
+I choose the space requirement $h_P=0.89$ rooms and the tenure taste scale
+$\kappa_T=0.013$ to match how housing differs between parents and other
+households. In the same ACS sample, heads whose oldest child is under four
+own at a rate 12.8 percentage points higher than heads with no children at
+home. Intuitively, children at home raise the space a household needs by
 $h_P$, and homes larger than $\bar h^R$ rooms are only for sale, so parents
-move into ownership. A higher $h_P$ widens this gap, and so does a smaller
-$\kappa_T$, which makes tenure follow these needs more closely. Mean rooms
-separate the two: they rise with $h_P$ and barely move with $\kappa_T$.
+move into ownership. A higher $h_P$ widens the gap, and so does a smaller
+$\kappa_T$, which makes tenure follow these needs more closely. Mean rooms,
+5.73 in the 2007 AHS for heads aged 18 to 85, separate the two: they rise
+with $h_P$ and barely move with $\kappa_T$. These two parameters are the
+least precisely determined in the calibration
+(Appendix~\ref{app:identification}).
+% Weakest direction of the loss: h_P and kappa_T together, +-5.9% and +-6.3% for a unit
+% rise in the loss; every other parameter moves by less than 2% along it
+% (identification_newacct results.json valley_fit.param_half_pct).
 
 The room response to the first birth adds the change in housing within
-households. Two to three years before the first birth, future parents in the
-PSID live in 4.71 rooms; three to four years after it, they occupy 1.44 more
-rooms, relative to the change among adults who never have a child
-(Section~\ref{sec:emp-first-birth}). I apply the same estimator to simulated
-households. In the model, this response reflects both the space a child
-requires and the rooms households add as their earnings and savings grow
-with age, so it is not tied to $h_P$ alone. Across the estimated parameters,
-it moves closely with the house price: a 1\% higher $\psi_0$ raises the
-price by 3.0\% and the response by 1.8\%.
+households. Recall from Section~\ref{sec:emp-first-birth} that future parents
+in the PSID live in 4.71 rooms two to three years before the first birth,
+and three to four years after it occupy 1.44 more rooms, relative to the
+change among adults who never have a child. I target this response on the
+common support of the panel and the model, and apply the same estimator to
+simulated households.%
+\footnote{Model first births are dated from the birth event and model
+housing is mapped to the PSID interview calendar, so model and data compare
+the change in rooms over the same event-time windows.}
+% Production target: output/model/first_birth_rooms_event_20261010/
+% measurement_bridge/proposed_measurement_contract.json and original/rooms_coefficients.csv;
+% adopted in output/model/production/2007/PROMOTION_RECEIPT_20261011_7p917.md.
+% Common-support A2h target 1.439960832044094; model 1.4755 at the new point
+% (identification_newacct moments/center.json, birth_dated +3/+4).
+In the model this response reflects both the space a child requires and the
+rooms households add as their earnings and savings grow with age, so it is
+not tied to one parameter; it responds most to $\beta$ and $\psi_0$.
+% Elasticities of the response: beta 7.73, psi0 1.78, xi -1.06, h_P -0.11
+% (identification_newacct results.json, G * theta / m).
 
-\paragraph{Wealth and bequests.}
 I choose the discount factor $\beta=0.936$ (annual) to match aggregate net
-worth of 4.46 times annual gross labor earnings in the 2005 and 2007 PSID.
-More patient households save more, and wealth responds to $\beta$ and to
-little else: a 1\% higher $\beta$ raises it by 13.7\%, and no other
-parameter moves it by more than 0.5\%. Savings also decide when a household
-can pay for the space a child requires, so $\beta$ moves fertility and
-housing as well: a 1\% higher $\beta$ lowers childlessness by 1.7\% and
-raises the room response by 7.7\%. The
-bequest scale $\theta_0=0.244$ governs how much wealth households keep for
-their heirs in old age. I choose it to match the annual flow of estates to
-children in the 2007 SCF, 0.73\% of aggregate net worth. This flow is the
-only target that responds to $\theta_0$.
+worth of 4.46 times aggregate annual gross labor earnings in the 2005 and
+2007 PSID.%
+\footnote{Net worth of heads aged 18 to 85, excluding business and farm
+equity and other real estate; gross labor earnings of heads aged 18 to 65.}
+Wealth responds to $\beta$ and to little else. Because savings decide when a
+household can pay for the space a child requires, $\beta$ also moves
+fertility and housing. I choose the bequest scale $\theta_0=0.244$ to match
+the annual flow of estates to children in the 2007 SCF, 0.73\% of aggregate
+net worth. This flow is the only target that responds to $\theta_0$.
 
-\paragraph{The response of births to housing costs.}
-The policy experiments change the cost of housing and ask how births
-respond. In the model this response runs through three objects, and the
-moments above discipline each of them. The first is how much space a child
-requires: a household with children at home pays for $h_P$ rooms every
-period, whether it rents or owns, and the recent-parent ownership gap and
-mean rooms pin $h_P$. The second is what this space costs: mean rooms and
-ownership select the 2007 price at which births are at replacement. The
-third is how strongly the decision to try for a child responds to its value.
-From \eqref{eq:m-fertility},
-\begin{equation*}
- \frac{\partial\pi^F_{t,a}}{\partial\bigl(V^F_{t,A}-V^F_{t,0}\bigr)}
- =\frac{\pi^F_{t,a}\bigl(1-\pi^F_{t,a}\bigr)}{\kappa},
-\end{equation*}
-so the scales $\kappa_1$ and $\kappa_C$, disciplined by the timing of births
-and their spread across mothers, govern how far a given change in the cost of
-a child moves births.
+As Panel~A of Table~\ref{tab:quant-parameters} shows, the model matches
+these targets closely. Childlessness is 20.1\% in the model and 19.8\% in
+the data, ownership 66.9\% and 67.6\%, and wealth 4.35 and 4.46 times annual
+earnings. The exception is children ever born by age 25, 0.56 in the model
+against 0.81, which accounts for most of the loss; I return to it in
+Section~\ref{sec:quant-fit}.
 
 \begin{table}[!tbp]
 \centering
 \caption{Parameterization}
 \label{tab:quant-parameters}
 \small
-\begin{tabularx}{\textwidth}{@{}X l r r@{}}
-\multicolumn{4}{c}{\textit{A. Moments used in the estimation}}\\
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}X r r @{\hspace{2em}} X r r@{}}
+\multicolumn{6}{c}{\textit{A. Moments used in the calibration}}\\
 \toprule
-Moment & Source & Data & Model \\
+ & Data & Model & & Data & Model \\
 \midrule
-Completed fertility (normalization) & Replacement & 2.10 & 2.10 \\
-Childless, women 40--44 (\%) & CPS 2004, 2006 & 19.8 & 20.1 \\
-Exactly one child among mothers, 40--44 (\%) & CPS 2004, 2006 & 21.4 & 21.7 \\
-Mean age at first birth (years) & NCHS 2003--2006 & 25.98 & 25.97 \\
-Children ever born by age 25 & CPS 2004, 2006 & 0.810 & 0.556 \\
-Mean occupied rooms & AHS 2007 & 5.73 & 5.75 \\
-Ownership, heads 30--55 (\%) & ACS 2005--2006 & 67.6 & 66.9 \\
-Recent-parent ownership gap & ACS 2005--2006 & 0.128 & 0.125 \\
-First-birth room response & PSID event study & 1.440 & 1.475 \\
-Wealth / annual gross earnings & PSID 2005, 2007 & 4.46 & 4.35 \\
-Annual bequests / wealth (\%) & SCF 2007 & 0.73 & 0.73 \\
+Variance, log earnings & 0.51 & 0.51 & Mean rooms & 5.73 & 5.75 \\
+Autocovariance, log earnings & 0.37 & 0.37 & Ownership, 30--55 (\%) & 67.6 & 66.9 \\
+Completed fertility & 2.10 & 2.10 & Recent-parent ownership gap & 0.128 & 0.125 \\
+Childless, 40--44 (\%) & 19.8 & 20.1 & First-birth room response & 1.440 & 1.475 \\
+One child, mothers 40--44 (\%) & 21.4 & 21.7 & Wealth / annual earnings & 4.46 & 4.35 \\
+Mean age at first birth & 25.98 & 25.97 & Bequests / wealth (\%) & 0.73 & 0.73 \\
+Children ever born by 25 & 0.810 & 0.556 & & & \\
 \bottomrule
 \end{tabularx}
 
@@ -314,7 +263,7 @@ Annual bequests / wealth (\%) & SCF 2007 & 0.73 & 0.73 \\
 \begin{tabularx}{\textwidth}{@{}l l X @{\hspace{1.5em}} l l X@{}}
 \multicolumn{6}{c}{\textit{B. Parameter values}}\\
 \toprule
-\multicolumn{3}{@{}l}{Assigned} & \multicolumn{3}{l}{Estimated}\\
+\multicolumn{3}{@{}l}{Assigned} & \multicolumn{3}{l}{Calibrated}\\
 \midrule
 $\sigma$ & 2 & risk aversion & $\beta_{\text{ann}}$ & 0.936 & annual discount factor \\
 $(\omega,\nu)$ & 0.7, 0.7 & equivalence scale & $\psi_0$ & 0.177 & preference for children \\
@@ -326,26 +275,29 @@ $\mu$ & 0.06 & selling cost & $h_P$ & 0.89 & space requirement (rooms) \\
 $\delta_H$ & 0.014 & depreciation, annual & $\chi$ & 1.112 & owner service multiplier \\
 $\tau^p$ & 0.0106 & property tax, annual & $\kappa_T$ & 0.013 & tenure taste scale \\
 $r$ & 0.02 & real interest rate, annual & $\theta_0$ & 0.244 & bequest-motive scale \\
-$\tau^w$ & 0.08 & payroll tax & $H_0$ & 6.776 & housing supply scale \\
+$\tau^w$ & 0.08 & payroll tax & $H_0$ & 6.776 & housing supply scale (implied) \\
 % H0 = 5.7505 / 0.77069^0.63 = 6.776 with eta 0.63; 5.7505 = 2007 housing per household.
-$\eta$ & 0.63 & housing-supply elasticity & & & \\
-$\bar h^R$ & 6 & rental size cap (rooms) & & & \\
+$\eta$ & 0.63 & housing-supply elasticity & $\rho_z$ & 0.735 & earnings persistence, four years \\
+$\bar h^R$ & 6 & rental size cap (rooms) & $\sigma_z$ & 0.484 & earnings innovation s.d., four years \\
 $\theta_1$ & 0.008 & bequest shifter & & & \\
-$(\rho_z,\sigma_z)$ & 0.735, 0.484 & earnings, per four years & & & \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} This table reports the moments used in the
-estimation and the parameter values. Samples and definitions in
-Section~\ref{sec:quant-data}. The model's room response is measured with the
-event-study design of the data on simulated households. Owners choose among
-homes of 2, 4, 6, 8 and 10 rooms. The 2007 house price is
-0.771; the weighted loss \eqref{eq:q-loss} is
-7.42, of which children ever born by 25 contribute
-6.41.
+\footnotesize\textit{Notes:} Earnings: PSID 1984--1997, four-year means;
+model values are those of the AR(1) process. Fertility: CPS June Fertility
+Supplement 2004 and 2006, women 40--44, and children ever born by 25 capped
+at three; NCHS natality 2003--2006 for the mean age at first birth;
+completed fertility is a normalization. Housing: AHS 2007 for rooms; ACS
+2005--2006 for ownership and the gap between heads whose oldest child is
+under four and heads without children; PSID event study for the room
+response, measured in the model with the same design on simulated
+households. Wealth: PSID 2005 and 2007; bequests: SCF 2007. Owners choose
+among homes of 2, 4, 6, 8 and 10 rooms. The 2007 house price is 0.771; the
+loss is 7.42, of which children ever born by 25 contribute 6.41.
 \end{minipage}
 \end{table}
+
 
 \subsection{Testing the model}
 \label{sec:quant-fit}

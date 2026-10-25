@@ -1,0 +1,105 @@
+\section{Identification}
+\label{app:identification}
+
+The ten calibrated parameters $\theta$ of Section~\ref{sec:quant-identification}
+minimize
+\begin{equation}
+\sum_{k=1}^{10} w_k\bigl[m_k(\theta)-\hat m_k\bigr]^2,
+\label{eq:q-loss}
+\end{equation}
+where $\hat m_k$ is a data moment, $m_k(\theta)$ its counterpart in the
+stationary equilibrium at parameters $\theta$, and $w_k$ the inverse square
+of a tolerance for the moment. At each $\theta$, the house price makes
+completed fertility equal to replacement, and $H_0$ is the supply scale at
+which that price clears the housing market with one unit of households.
+
+Table~\ref{tab:app-loss} reports, for each target, the tolerance that sets
+its weight in the loss \eqref{eq:q-loss} and its contribution to the loss at
+the estimates. Table~\ref{tab:app-jacobian} reports the elasticity of each
+targeted moment to each estimated parameter, from a 1\% change in the
+parameter, solving the equilibrium each time. The flattest direction of the
+loss raises $h_P$ and $\kappa_T$ together: along it, the loss rises by one
+when $h_P$ and $\kappa_T$ move by about 6\%, while no other parameter moves
+by more than 2\%.
+% identification_newacct results.json valley_fit: half_width 0.0886,
+% param_half_pct h_P 5.90, kappa_T 6.31, kappa_C 1.65, others <= 0.81.
+
+\begin{table}[h]
+\centering
+\caption{Tolerances and loss by moment}
+\label{tab:app-loss}
+\small
+\begin{tabularx}{0.8\textwidth}{@{}X r r r@{}}
+\toprule
+Moment & Tolerance & Gap & Loss \\
+\midrule
+Childless, women 40--44 & 0.0053 & $+0.0022$ & 0.17 \\
+Exactly one child, mothers 40--44 & 0.0061 & $+0.0033$ & 0.29 \\
+Mean age at first birth & 0.085 & $-0.006$ & 0.01 \\
+Children ever born by 25 & 0.100 & $-0.253$ & 6.41 \\
+Mean occupied rooms & 0.088 & $+0.021$ & 0.06 \\
+Ownership, heads 30--55 & 0.021 & $-0.007$ & 0.11 \\
+First-birth room response & 0.085 & $+0.036$ & 0.17 \\
+Recent-parent ownership gap & 0.0061 & $-0.0022$ & 0.13 \\
+Wealth / annual earnings & 0.363 & $-0.106$ & 0.08 \\
+Bequests / wealth & 0.00044 & $+0.000004$ & 0.00 \\
+\midrule
+Total & & & 7.42 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.8\linewidth}
+\footnotesize\textit{Notes:} Gap is model minus data. The weight of a
+moment is the inverse square of its tolerance, so its loss is the squared
+gap in tolerances.
+\end{minipage}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Elasticity of each targeted moment to each parameter}
+\label{tab:app-jacobian}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l rrrrrrrrrr@{}}
+\toprule
+ & $\psi_0$ & $\gamma$ & $\kappa_1$ & $\kappa_C$ & $\xi$ & $h_P$ & $\chi$ & $\kappa_T$ & $\beta$ & $\theta_0$ \\
+\midrule
+Childless, 40--44 & 0.02 & $-0.44$ & $-0.12$ & $-0.14$ & 0.35 & 0.04 & 0.07 & $-0.01$ & $-1.74$ & 0.00 \\
+One child, 40--44 & 0.08 & 0.34 & 0.17 & 0.05 & $-0.40$ & $-0.03$ & $-0.02$ & 0.00 & 0.71 & 0.00 \\
+Mean age, first birth & 0.01 & $-0.02$ & 0.04 & $-0.04$ & $-0.01$ & 0.00 & 0.03 & 0.00 & $-0.42$ & 0.00 \\
+Children by 25 & 0.06 & 0.11 & $-0.10$ & 0.13 & $-0.08$ & $-0.02$ & $-0.10$ & 0.00 & 0.90 & 0.00 \\
+Mean rooms & $-1.89$ & 0.45 & 0.00 & $-0.38$ & 0.70 & 0.36 & $-0.04$ & $-0.05$ & $-3.27$ & 0.00 \\
+Ownership, 30--55 & $-1.32$ & 0.53 & 0.00 & $-0.46$ & 0.77 & 0.39 & 3.15 & 0.02 & $-2.30$ & 0.00 \\
+Room response & 1.78 & $-0.63$ & $-0.36$ & 0.62 & $-1.06$ & $-0.11$ & 0.74 & $-0.17$ & 7.73 & 0.00 \\
+Recent-parent gap & $-4.56$ & 0.78 & $-0.35$ & $-1.31$ & 1.91 & 1.18 & $-4.26$ & $-0.28$ & $-21.71$ & $-0.01$ \\
+Wealth / earnings & $-0.10$ & 0.03 & 0.00 & $-0.02$ & 0.05 & 0.03 & 0.45 & $-0.03$ & 13.71 & 0.03 \\
+Bequests / wealth & $-0.10$ & 0.00 & 0.00 & 0.00 & 0.03 & $-0.01$ & $-0.29$ & 0.00 & 0.57 & 0.19 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Each entry is $\partial\log m_k/\partial\log
+\theta_p$, from central differences of 1\%. The recent-parent gap, bequests
+and ownership are not smooth at the estimates: their forward and backward
+derivatives differ.
+\end{minipage}
+\end{table}
+
+\paragraph{The response of births to housing costs.}
+The policy experiments change the cost of housing and ask how births
+respond. In the model this response runs through three objects, and the
+moments of Section~\ref{sec:quant-identification} discipline each of them.
+The first is how much space a child requires: a household with children at
+home pays for $h_P$ rooms every period, whether it rents or owns, and the
+recent-parent ownership gap and mean rooms pin $h_P$. The second is what
+this space costs: mean rooms and ownership select the 2007 price at which
+births are at replacement. The third is how strongly the decision to try
+for a child responds to its value. From \eqref{eq:m-fertility},
+\begin{equation*}
+ \frac{\partial\pi^F_{t,a}}{\partial\bigl(V^F_{t,A}-V^F_{t,0}\bigr)}
+ =\frac{\pi^F_{t,a}\bigl(1-\pi^F_{t,a}\bigr)}{\kappa},
+\end{equation*}
+so the scales $\kappa_1$ and $\kappa_C$, disciplined by the timing of births
+and their spread across mothers, govern how far a given change in the cost of
+a child moves births.
