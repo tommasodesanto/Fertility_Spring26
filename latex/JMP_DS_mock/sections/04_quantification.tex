@@ -103,15 +103,22 @@ times its annual rate. A data statistic for an age window weights each
 four-year model cell by the share of the cell inside the window.}
 
 \paragraph{Preferences.}
-Risk aversion is $\sigma=2$. The equivalence scale is that of
-\citet{scholzSeshadriKhitatrakunSaving2006}, with $\omega=\nu=0.7$: a couple
-with two children needs 1.45 times the consumption, and the housing services
-above its requirement, of a childless couple to reach the same utility. The
-consumption weight $\alpha_0=0.733$ is measured directly. A childless renter
-has no space requirement and no owner multiplier, so its utility is
-Cobb--Douglas in consumption and rented space, and it spends a share
-$1-\alpha_0$ of its budget on rent. In the 2019--2023 CEX, childless renters
-spend 26.7\% of their consumption expenditure on housing.
+Flow utility \eqref{eq:m-utility} is
+\begin{equation*}
+ u(c,\hat h,n)=\frac{1}{1-\sigma}\left[\frac{c^{\alpha_0}\bigl(\hat h-\chi^{\1\{\text{own}\}}\,\bar h(n)\bigr)^{1-\alpha_0}}{e(n)}\right]^{1-\sigma}+\psi\,n^{1-\gamma},
+ \qquad e(n)=\left(\frac{2+\omega n}{2}\right)^{\nu}.
+\end{equation*}
+I set the curvature to $\sigma=2$, a common choice in quantitative models of
+housing \citep{boarGoreaMidriganLiquidity2022}. The equivalence scale
+$e(n)$ is that of \citet{scholzSeshadriKhitatrakunSaving2006}, with
+$\omega=\nu=0.7$: a couple with two children needs 1.45 times the
+consumption, and the housing services above its requirement, of a childless
+couple to reach the same utility. The consumption weight $\alpha_0=0.733$
+is set to match the share of housing in the spending of childless renters in
+the 2019--2023 CEX, 26.7\%. Indeed, a childless renter has no space
+requirement and no owner multiplier, so its utility is Cobb--Douglas in
+consumption and rented space, and it spends a share $1-\alpha_0$ of its
+budget on rent.
 
 \paragraph{Housing finance and taxes.}
 The annual real interest rate is 2\%, and selling a home costs 6\% of its
