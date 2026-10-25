@@ -232,13 +232,20 @@ each, describe the variation in the data that disciplines it and the
 mechanism in the model through which it does.
 
 Three features of the model shape which variation identifies which
-parameter. First, fertility and housing are determined together. Completed
-fertility is held at replacement, so a change in any parameter that moves
-births also moves the house price, and the price moves the demand for space
-and for ownership. Housing moments therefore carry information about the
-fertility parameters, and fertility moments about the housing parameters.
-The policy experiments use the same link: a change in the price of space
-moves births. Second, families can occupy more space because a child requires it or
+parameter. First, fertility and housing are determined together. In the
+2007 steady state, the house price is the one at which completed fertility
+equals replacement, so a parameter that lowers births also lowers the price,
+and a lower price raises the space households occupy and how often they own.
+I separate the two blocks with moments that respond to the price very
+differently. How births are spread across women and over the life cycle,
+measured by the shares of childless women and of mothers with one child and
+by the mean age at first birth, barely moves with the price. Mean rooms and
+ownership respond strongly to it. The housing moments therefore pin the
+price, and the fertility moments pin the parameters that govern who has
+children and when.
+% 1% higher psi0: price +3.0%; childless +0.02%, one child +0.08%, mean age +0.01%;
+% mean rooms -1.89%, ownership -1.32% (identification_newacct results.json, G*theta/m).
+Second, families can occupy more space because a child requires it or
 because space is cheap. The level of housing across all households pins the
 price, and the difference in ownership between recent parents and other
 households pins the space a child requires. Third, a change in when women
