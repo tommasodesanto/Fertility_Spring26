@@ -271,19 +271,24 @@ of an additional child decline faster, so childlessness falls and more
 mothers stop at one.
 
 \paragraph{Timing of births.}
-In the NCHS natality files for 2003--2006, the mean age of mothers at first
-birth is 26.0 years. In the model, the timing of the first child trades off
-the decline of $\pi_a$ with age against the rise in earnings and savings
-that makes the space for a child affordable (Section~\ref{sec:m-analysis}).
-The scale of the first-birth taste shocks, $\kappa_1=0.050$, governs how
-closely first births follow this trade-off rather than idiosyncratic tastes.
-A larger $\kappa_1$ spreads first births over the fertile window, so more of
-them come late and the mean age at first birth rises. I choose $\kappa_1$ to
-match it. The scale for later births, $\kappa_C=0.129$, plays the same role
-for second and higher births, and it is pinned through the first birth. A household with
-children keeps the option of further births, and the value of this option
-rises with $\kappa_C$. A higher $\kappa_C$ therefore lowers childlessness and
-brings first births earlier.
+I include taste shocks in the fertility decision because, in the data,
+otherwise similar households make different choices. First births are spread
+over the whole fertile window, from the late teens to the early forties, and
+women in the lowest third of family income have about as many children by
+ages 40 to 44 as women in the top third. The shocks help explain this
+idiosyncratic variation. The scale of the first-birth shocks,
+$\kappa_1=0.050$, governs how much first births depart from the trade-off
+between fecundity and earnings of Section~\ref{sec:m-analysis}. A larger
+$\kappa_1$ spreads first births over the fertile window, so the mean age at
+first birth, 26.0 years in the NCHS natality files for 2003--2006, rises; I
+choose $\kappa_1$ to match it. The estimate is small: first births follow the
+economic trade-off closely, and the shocks mostly spread them across ages.
+The scale for later births, $\kappa_C=0.129$, governs how readily mothers go
+on to a second or third child. It is informed by the share of mothers with
+exactly one child and by childlessness, since the option of further births
+raises the value of becoming a parent.
+% POST-DEADLINE: verify the CPS income-third fact (FACTS Oct 10: CEB 40-44 by family-income third,
+% CPS June 2006/08, 1.98 / 1.81 / 1.82; model 1.50 / 1.97 / 2.31).
 
 \paragraph{Preference for children.}
 I choose $\psi_0$ so that completed fertility equals replacement, 2.1.
