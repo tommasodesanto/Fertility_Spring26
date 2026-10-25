@@ -140,15 +140,15 @@ earnings, the ratio in the CPS ASEC, and the payroll tax that finances it is
 % 0.0802807096 (CALIBRATION_STATUS, Demography and closure).
 
 \paragraph{Earnings.}
-I estimate the earnings process myself, outside the model, on non-overlapping
-four-year means of household earnings in the 1984--1997 PSID, the last years
-in which the survey is annual. Net of age and year effects, log earnings
-follow the AR(1) process of Section~\ref{sec:m-env}. Its persistence
-$\rho_z$ and innovation standard deviation $\sigma_z$ match the variance of
-log four-year earnings, 0.51, and their first autocovariance, 0.37, which
-gives $\rho_z=0.735$ and $\sigma_z=0.484$. I approximate the process with
-nine states. The second autocovariance, which the estimate does not use, is
-0.29 in the data and 0.27 in the process.
+A household of age $a$ earns $e_az_t$, where
+\begin{equation*}
+ \log z_{t+1}=\rho_z\log z_t+\epsilon_{t+1},\qquad \epsilon_{t+1}\sim N(0,\sigma_z^2).
+\end{equation*}
+I estimate $\rho_z$ and $\sigma_z$ from the variance and first
+autocovariance of log household earnings, averaged over non-overlapping
+four-year spells and net of age and year effects, in the 1984--1997 PSID,
+the last years in which the survey is annual. This gives $\rho_z=0.735$ and
+$\sigma_z=0.484$, which I approximate with nine states.
 % output/model/native_financing_diagnostic_20260919/specification_followup/
 % earnings_entry_battery_v1/single_process_external_estimate.json: gamma0 0.5085,
 % gamma1 0.3735, held-out gamma2 0.2899 (model-implied 0.2744); rho = gamma1/gamma0,
