@@ -75,12 +75,48 @@ follows from 2023 without it.
 I divide the parameters of the 2007 economy into two groups. The first
 group is assigned from external evidence or measured directly in the data.
 The second is chosen so that the model matches a set of moments in the data.
-Panel~A of Table~\ref{tab:quant-parameters} reports the moments, and Panel~B
-the parameters.
+Table~\ref{tab:quant-moments} reports the moments, and
+Table~\ref{tab:quant-parameters} the parameters.
 
 \subsection{Assigned parameters}
 \label{sec:quant-data}
 \label{sec:quant-period}
+
+\begin{table}[!tbp]
+\centering
+\caption{Parameter values}
+\label{tab:quant-parameters}
+\small
+\begin{tabularx}{\textwidth}{@{}l l X @{\hspace{1.5em}} l l X@{}}
+\toprule
+\multicolumn{3}{@{}l}{Assigned} & \multicolumn{3}{l}{Calibrated}\\
+\midrule
+$\sigma$ & 2 & risk aversion & $\beta_{\text{ann}}$ & 0.936 & annual discount factor \\
+$(\omega,\nu)$ & 0.7, 0.7 & equivalence scale & $\psi_0$ & 0.177 & preference for children \\
+$\alpha_0$ & 0.733 & consumption weight & $\gamma$ & 0.646 & curvature, benefit of children \\
+$\lambda$ & $2/9$ & child departure, per period & $\xi$ & 0.295 & first-birth utility cost \\
+$\pi_a$ & 0.98--0.50 & success of a birth attempt & $\kappa_1$ & 0.050 & first-birth taste scale \\
+$\phi$ & 0.80 & financed share & $\kappa_C$ & 0.129 & later-birth taste scale \\
+$\mu$ & 0.06 & selling cost & $h_P$ & 0.89 & space requirement (rooms) \\
+$\delta_H$ & 0.014 & depreciation, annual & $\chi$ & 1.112 & owner service multiplier \\
+$\tau^p$ & 0.0106 & property tax, annual & $\kappa_T$ & 0.013 & tenure taste scale \\
+$r$ & 0.02 & real interest rate, annual & $\theta_0$ & 0.244 & bequest-motive scale \\
+$\tau^w$ & 0.08 & payroll tax & $H_0$ & 6.776 & housing supply scale (implied) \\
+% H0 = 5.7505 / 0.77069^0.63 = 6.776 with eta 0.63; 5.7505 = 2007 housing per household.
+$\eta$ & 0.63 & housing-supply elasticity & & & \\
+$\bar h^R$ & 6 & rental size cap (rooms) & & & \\
+$\theta_1$ & 0.008 & bequest shifter & & & \\
+$(\rho_z,\sigma_z)$ & 0.735, 0.484 & earnings, per four years & & & \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Assigned parameters are set outside the
+calibration (Section~\ref{sec:quant-data}); calibrated parameters are chosen
+to match the moments of Table~\ref{tab:quant-moments}
+(Section~\ref{sec:quant-identification}).
+\end{minipage}
+\end{table}
 
 \paragraph{Demographics and timing.}
 A period in the model lasts four years. Households enter at 18, retire at 66
@@ -175,9 +211,8 @@ assign the wealth levels to earnings states by rank.
 
 \paragraph{Bequests.}
 In the bequest motive, $\theta_1$ determines how far bequests are a luxury
-good. I set it to 1\% of median annual earnings in the model, $\theta_1=0.008$.
-\problem{Original source of the $\theta_1$ restriction (taken from Greaney et
-al.) to be found.}
+good. I set it to 1\% of median annual earnings in the model,
+$\theta_1=0.008$, as in \citet{greaneyDynamicUrbanEconomics2025}.
 % Entry law levels_rank (model/entry_wealth.py): PSID 1984-2019, N = 1,835, negative
 % wealth censored at zero, one common scale, exact weighted-rank allocation to z.
 
@@ -185,7 +220,7 @@ al.) to be found.}
 \label{sec:quant-identification}
 
 I choose the remaining ten parameters so that the 2007 steady state matches
-the ten moments in Panel~A of Table~\ref{tab:quant-parameters}, while the
+the ten moments in Table~\ref{tab:quant-moments}, while the
 house price keeps completed fertility at replacement, 2.1.%
 \footnote{The parameters minimize a sum of squared gaps between model and
 data moments, each divided by a tolerance for the moment
@@ -309,7 +344,7 @@ heirs in old age. I choose it to match the annual flow of estates to
 children in the 2007 SCF, 0.73\% of aggregate net worth. This flow is the
 only target that responds to $\theta_0$.
 
-As Panel~A of Table~\ref{tab:quant-parameters} shows, the model matches
+As Table~\ref{tab:quant-moments} shows, the model matches
 these targets closely. Childlessness is 20.1\% in the model and 19.8\% in
 the data, ownership 66.9\% and 67.6\%, the recent-parent ownership gap 12.5
 and 12.8 percentage points, and wealth 4.35 and 4.46 times annual earnings.
@@ -318,46 +353,26 @@ by age 25.
 
 \begin{table}[!tbp]
 \centering
-\caption{Parameterization}
-\label{tab:quant-parameters}
+\caption{Moments used in the calibration}
+\label{tab:quant-moments}
 \small
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{@{}X r r @{\hspace{2em}} X r r@{}}
-\multicolumn{6}{c}{\textit{A. Moments used in the calibration}}\\
+\begin{tabularx}{0.8\textwidth}{@{}X r r@{}}
 \toprule
- & Data & Model & & Data & Model \\
+Moment & Data & Model \\
 \midrule
-Completed fertility & 2.10 & 2.10 & Mean rooms & 5.73 & 5.75 \\
-Childless, 40--44 (\%) & 19.8 & 20.1 & Ownership, 30--55 (\%) & 67.6 & 66.9 \\
-One child, mothers 40--44 (\%) & 21.4 & 21.7 & Recent-parent ownership gap & 0.128 & 0.125 \\
-Mean age at first birth & 25.98 & 25.97 & First-birth room response & 1.440 & 1.475 \\
-Children ever born by 25 & 0.810 & 0.556 & Wealth / annual earnings & 4.46 & 4.35 \\
- & & & Bequests / wealth (\%) & 0.73 & 0.73 \\
-\bottomrule
-\end{tabularx}
-
-\medskip
-\begin{tabularx}{\textwidth}{@{}l l X @{\hspace{1.5em}} l l X@{}}
-\multicolumn{6}{c}{\textit{B. Parameter values}}\\
-\toprule
-\multicolumn{3}{@{}l}{Assigned} & \multicolumn{3}{l}{Calibrated}\\
-\midrule
-$\sigma$ & 2 & risk aversion & $\beta_{\text{ann}}$ & 0.936 & annual discount factor \\
-$(\omega,\nu)$ & 0.7, 0.7 & equivalence scale & $\psi_0$ & 0.177 & preference for children \\
-$\alpha_0$ & 0.733 & consumption weight & $\gamma$ & 0.646 & curvature, benefit of children \\
-$\lambda$ & $2/9$ & child departure, per period & $\xi$ & 0.295 & first-birth utility cost \\
-$\pi_a$ & 0.98--0.50 & success of a birth attempt & $\kappa_1$ & 0.050 & first-birth taste scale \\
-$\phi$ & 0.80 & financed share & $\kappa_C$ & 0.129 & later-birth taste scale \\
-$\mu$ & 0.06 & selling cost & $h_P$ & 0.89 & space requirement (rooms) \\
-$\delta_H$ & 0.014 & depreciation, annual & $\chi$ & 1.112 & owner service multiplier \\
-$\tau^p$ & 0.0106 & property tax, annual & $\kappa_T$ & 0.013 & tenure taste scale \\
-$r$ & 0.02 & real interest rate, annual & $\theta_0$ & 0.244 & bequest-motive scale \\
-$\tau^w$ & 0.08 & payroll tax & $H_0$ & 6.776 & housing supply scale (implied) \\
-% H0 = 5.7505 / 0.77069^0.63 = 6.776 with eta 0.63; 5.7505 = 2007 housing per household.
-$\eta$ & 0.63 & housing-supply elasticity & & & \\
-$\bar h^R$ & 6 & rental size cap (rooms) & & & \\
-$\theta_1$ & 0.008 & bequest shifter & & & \\
-$(\rho_z,\sigma_z)$ & 0.735, 0.484 & earnings, per four years & & & \\
+Completed fertility & 2.10 & 2.10 \\
+Childless, women 40--44 (\%) & 19.8 & 20.1 \\
+Exactly one child, mothers 40--44 (\%) & 21.4 & 21.7 \\
+Mean age at first birth (years) & 25.98 & 25.97 \\
+Children ever born by age 25 & 0.810 & 0.556 \\
+\addlinespace
+Mean occupied rooms & 5.73 & 5.75 \\
+Ownership, heads 30--55 (\%) & 67.6 & 66.9 \\
+Recent-parent ownership gap & 0.128 & 0.125 \\
+First-birth room response & 1.440 & 1.475 \\
+\addlinespace
+Wealth / annual gross earnings & 4.46 & 4.35 \\
+Annual bequests / wealth (\%) & 0.73 & 0.73 \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
@@ -374,6 +389,8 @@ among homes of 2, 4, 6, 8 and 10 rooms. The 2007 house price is 0.771; the
 loss is 7.42, of which children ever born by 25 contribute 6.41.
 \end{minipage}
 \end{table}
+
+
 
 
 \subsection{The fertility decline, 2007--2023}
