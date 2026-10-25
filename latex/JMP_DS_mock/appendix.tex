@@ -14,112 +14,8 @@
 \section{Additional Policy Results}
 \label{app:policy-more}
 
-Table~\ref{tab:app-policy-more} reports the policy experiments that the main
-text does not discuss, with the same design as Section~\ref{sec:policy}: every
-arm starts from the 2023 state and is compared with the no-policy path at the
-same earnings risk and under the same housing supply.
-\problem{Only the three base-risk rows at the top (property tax, insurance, flat
-transfer) are at the constant-decay state. The fixed-stock, elasticity and
-lower-risk rows are still from the earlier two-step path and are to be rerun.}
-
-\paragraph{A rebated property tax.} The annual property tax rises from 1.06 to
-2 percent of value from 2023 on, and the revenue is rebated equally to all
-households. The tax lowers the price by 6.2 percent on impact, close to the
-8.9 percent of the supply expansion, but births do not move ($-0.2$ percent)
-and completed fertility rises by only 0.8 percent. The comparison is the
-cleanest test of the mechanism of Section~\ref{sec:results}. The tax lowers
-the price but raises the user-cost rate from 18.0 to 21.8 percent of the price
-per period, so the per-period cost of a room rises; and the rebate returns the
-revenue per household, not per room, so a family that needs more space pays
-more for it. In this experiment, the lower purchase price is therefore not
-equivalent to cheaper housing services. The comparison illustrates why the
-price of a dwelling alone is insufficient to assess the fertility incentive.
-\problem{The 13 percent increase in rent per room is a stationary
-comparison; the response along the transition is [X.X].}
-
-\paragraph{Earnings insurance and a flat transfer.} The insurance arm pays
-every working household a quarter of the shortfall of its earnings below the
-median earnings state at its age. The flat arm pays the expected value of that
-transfer at each age to every working household. Neither is financed within
-the model. Insurance raises births by 14.8 percent on impact and completed
-fertility by 13.8 percent; the flat transfer by 8.0 and 7.8 percent. The
-difference, about 6 percentage points, is the value of insuring the downside
-of earnings rather than paying the same amount to everyone, as \citet{fraserIncomeRisk2001}
-predicts for an irreversible commitment. Under lower earnings risk the
-difference shrinks to 1.5 points on impact. Because neither transfer is
-financed, they do not establish the effects of a budget-neutral program.
-Financing could change both the distribution of resources and the households
-whose fertility responds. The comparison isolates the difference between
-state-contingent and age-specific transfers within the stated experiment;
-it does not provide a fiscal or welfare ranking of implementable policies.
-
-\paragraph{A fixed housing stock.} Holding the stock at its 2023 level,
-instead of letting it follow the supply curve, lowers the price by 9.2 percent
-in 2023 and 29 percent by 2063, as the population shrinks into the same stock;
-completed fertility rises by 3.5 percent for the 2023 cohort and 8.6 percent
-for the 2043 cohort. With the stock fixed, demand policies raise the price
-more and births somewhat less. The credit relaxation raises the price by 2.1
-percent on impact and leaves completed fertility unchanged ($+0.1$ percent),
-the case in which credit is capitalized into prices. Credit for parents is the
-exception: its effect on completed fertility is larger with a fixed stock
-(7.8 against 6.3 percent), plausibly because the falling price makes ownership
-cheaper, so access to ownership tied to a child is worth more. This reading is
-inferred, not decomposed.
-
-\paragraph{A more elastic supply.} With a supply elasticity of 1.5 from 2023 on,
-a 10 percent shift in the supply curve lowers the price by 5.0 percent and
-raises completed fertility by 2.6 percent; births per percentage point of
-price decline are about the same as at $\eta=0.63$. Credit remains a matter of
-timing at either elasticity.
-
-\begin{table}[p]
-\centering
-\caption{Additional policies from 2023: effects relative to the no-policy path}
-\label{tab:app-policy-more}
-\small
-\begin{tabularx}{\textwidth}{@{}Xrrrrr@{}}
-\toprule
- & Price & Births & \multicolumn{2}{c}{Completed fertility} & Households \\
- \cmidrule(lr){4-5}
- & 2023 & 2023--26 & cohort 2023 & cohort 2043 & 2063 \\
-\midrule
-\multicolumn{6}{@{}l}{\emph{Estimated earnings risk}}\\
-Property tax 1.06\% to 2\%, rebated & $-6.2$ & $-0.2$ & $+0.8$ & $+0.7$ & $+0.2$ \\
-Earnings insurance & $+3.8$ & $+14.8$ & $+13.8$ & $+12.9$ & $+4.9$ \\
-Flat transfer & $+2.0$ & $+8.0$ & $+7.8$ & $+7.0$ & $+2.7$ \\
-Fixed stock (vs.\ elastic) & $-9.2$ & $-0.1$ & $+3.5$ & $+8.6$ & $+1.1$ \\
-\quad Credit relaxation, LTV 100 & $+2.1$ & $+3.2$ & $+0.1$ & $-0.5$ & $+0.4$ \\
-\quad Earnings insurance & $+12.8$ & $+13.0$ & $+10.1$ & $+7.8$ & $+3.9$ \\
-\quad Flat transfer & $+7.0$ & $+7.1$ & $+5.5$ & $+3.9$ & $+2.1$ \\
-\quad Credit for parents & $+3.5$ & $+7.9$ & $+7.8$ & $+6.3$ & $+2.7$ \\
-Supply elasticity 1.5 (vs.\ 0.63) & $+0.6$ & $+1.0$ & $+0.4$ & $-1.4$ & $+0.1$ \\
-\quad Housing supply $+10\%$ & $-5.0$ & $+1.5$ & $+2.6$ & $+2.4$ & $+0.8$ \\
-\quad Credit relaxation, LTV 100$^{*}$ & $+0.3$ & $+2.1$ & $-0.7$ & $+0.5$ & $+0.2$ \\
-\addlinespace
-\multicolumn{6}{@{}l}{\emph{Lower earnings risk}}\\
-Property tax 1.06\% to 2\%, rebated & $-6.4$ & $-0.7$ & $+0.5$ & $+0.7$ & $+0.1$ \\
-Earnings insurance & $+2.6$ & $+7.4$ & $+6.4$ & $+6.3$ & $+2.6$ \\
-Flat transfer & $+1.8$ & $+5.9$ & $+5.6$ & $+5.2$ & $+2.2$ \\
-Fixed stock (vs.\ elastic) & $-2.7$ & $-0.9$ & $+0.5$ & $+3.0$ & $+0.2$ \\
-\quad Credit relaxation, LTV 100 & $+2.0$ & $+3.1$ & $-0.9$ & $-0.3$ & $+0.2$ \\
-\quad Earnings insurance & $+7.1$ & $+6.2$ & $+4.6$ & $+4.3$ & $+2.1$ \\
-\quad Flat transfer & $+5.6$ & $+5.2$ & $+4.2$ & $+3.3$ & $+1.7$ \\
-\quad Credit for parents$^{*}$ & $+4.9$ & $+11.8$ & $+10.5$ & $+8.5$ & $+4.2$ \\
-Supply elasticity 1.5 (vs.\ 0.63) & $-0.3$ & $+0.6$ & $+0.5$ & $-0.3$ & $+0.2$ \\
-\quad Housing supply $+10\%$ & $-5.1$ & $+1.3$ & $+2.1$ & $+1.9$ & $+0.7$ \\
-\quad Credit relaxation, LTV 100 & $+0.7$ & $+3.7$ & $-0.2$ & $+0.1$ & $+0.3$ \\
-\bottomrule
-\end{tabularx}
-\par\smallskip
-\begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} Percent differences. Indented rows are compared
-with the no-policy path under the same supply variant (fixed stock, or
-elasticity 1.5); the unindented supply rows compare that no-policy path with
-the baseline one.
-\problem{Market clearing has not been established for the responses marked
-$^{*}$.}
-\end{minipage}
-\end{table}
+This appendix gives the details behind three results of
+Section~\ref{sec:policy}.
 
 \subsection{The credit relaxation by cohort}
 \label{app:policy-cohorts}
@@ -281,6 +177,36 @@ group, income decile, education (five groups) and living with a partner;
 standard errors clustered by woman in parentheses. Unweighted.
 \end{minipage}
 \end{table}
+
+\subsection{Increasing property taxes}
+\label{app:ptax-prices}
+
+Figure~\ref{fig:app-ptax-prices} shows the house price and the rent per room
+when the property tax rises from 1.06\% to 2\% of the house value in 2023,
+with the revenue rebated. The tax lowers the price by 7.0\% on impact and
+raises the rent per room by 14.5\%, because rents cover the tax. In the long
+run the price is 4.7\% lower and the rent 16.4\% higher. Returning the revenue
+in proportion to the rooms held by households of each age leaves both paths
+almost unchanged. Returning it in proportion to the rooms held by households of
+each age and earnings level lowers the long-run price by 10.1\% and raises the
+long-run rent by 9.9\%.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{\PRF/fig_appE_ptax_prices_fi_eta063.pdf}
+\caption{House price and rent with a higher property tax}
+\label{fig:app-ptax-prices}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} \% differences from the no-policy path from the
+same 2023 state, $\eta=0.63$. The property tax rises from 1.06\% to 2\% of the
+house value from 2023 on. Equal rebate per household: the revenue is returned
+in equal amounts to every household. By age, and by age and earnings: the
+rebate of each household is scaled by the rooms held by its age group, or by
+its age and earnings group. Rent per room is the rent of one room of rented
+housing.
+\end{minipage}
+\end{figure}
 
 \section{A CES Housing Composite}
 \label{app:ces}
