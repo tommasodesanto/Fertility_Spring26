@@ -164,14 +164,20 @@ rented homes (Appendix~\ref{app:housing-stock}). The supply elasticity in
 \eqref{eq:m-supply} is $\eta=0.63$, from the estimates of floor-space supply of
 \citet{baum-snowMicrogeographyHousingSupply2024}.
 
-\paragraph{Entry wealth and bequests.}
-New households draw their initial wealth from the PSID. I take the net worth
-of childless renter heads aged 18 to 24 in 1984--2019, set negative values to
-zero, and scale it to model units by the ratio of mean model earnings at
-entry to mean income in the sample. Entrants receive these wealth levels by
-rank of income, so that entrants with higher earnings also bring more
-wealth. The bequest shifter is $\theta_1=0.008$, as in
-\citet{greaneyDynamicUrbanEconomics2025}.
+\paragraph{Entry wealth.}
+Households enter the economy with the wealth of young adults in the PSID. I
+use the net worth of childless renters aged 18 to 24, pooling the 1984--2019
+waves, and set negative values to zero, since households in the model cannot
+borrow without collateral. I convert these wealth levels into model units
+with one common factor, the ratio of mean model earnings at entry to mean
+income in the sample. Entrants with higher earnings receive more wealth: I
+assign the wealth levels to earnings states by rank.
+
+\paragraph{Bequests.}
+In the bequest motive, $\theta_1$ determines how far bequests are a luxury
+good. I set it to 1\% of median annual earnings in the model, $\theta_1=0.008$.
+\problem{Original source of the $\theta_1$ restriction (taken from Greaney et
+al.) to be found.}
 % Entry law levels_rank (model/entry_wealth.py): PSID 1984-2019, N = 1,835, negative
 % wealth censored at zero, one common scale, exact weighted-rank allocation to z.
 
