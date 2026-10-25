@@ -42,7 +42,7 @@ for key, (D, pre) in SETS.items():
     if key == 'k063':   # paths figure, slow stock: credit, matched (or +10%) supply, parents, to 2103
         m = B['y'] <= 2103; yc = B['y'][:len(cb)]; mc = yc <= 2063
         sup = 'SUPMC' if 'SUPMC' in X_ else 'SUP110'
-        arms = (('PHI100', 'Mortgage credit', RUST, 'o'), (sup, 'Housing supply' + ('' if sup == 'SUPMC' else ', +10%'), NAVY, 's'),
+        arms = (('PHI100', 'Credit relaxation', RUST, 'o'), (sup, 'Housing supply' + ('' if sup == 'SUPMC' else ', +10%'), NAVY, 's'),
                 ('PPHI100', 'Credit for parents', TEAL, '^'))
         fig, axs = plt.subplots(2, 2, figsize=(7.4, 5.0))
         for (k, ttl), ax in zip((('b', '(a) Births'), ('cf', '(b) Completed fertility by cohort'), ('N', '(c) Households'), ('p', '(d) House price')), axs.ravel()):
