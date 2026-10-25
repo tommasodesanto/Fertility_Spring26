@@ -13,7 +13,7 @@
 \section{Quantification}
 \label{sec:quant}
 
-In this section, I describe the quantification of the model. I approximate
+In this section, I describe the quantification of the model. As fertility rates are very varaible and the population distribution is the consequence of many years of subsequent fertility decisions, some assumptions are needed to render the quantification tractable. To this end I approximate
 the United States economy of 2007 with a steady state, in which births are at
 replacement: in 2007 period fertility was about 2.1, just before its decline.
 I parameterize the model so that this steady state matches fertility, housing
@@ -24,6 +24,55 @@ as prices, family composition and household entry adjust
 (Section~\ref{sec:quant-transition}). I take this decline as given. The 2023
 state of this transition is the starting point of the policy experiments in
 Section~\ref{sec:policy}.
+
+\subsection{Quantification strategy}
+\label{sec:quant-approach}
+
+Two measures of fertility guide the quantification
+(Figure~\ref{fig:quant-us-fertility}). Period fertility, or the total
+fertility rate, is the number of children a woman would have if she lived
+through her fertile years at the birth rates of a given year. Completed
+fertility is the number of children a woman has had by the end of her fertile
+years. I measure it at ages 40 to 44. Period fertility responds at once to a
+change in when women have children. Completed fertility changes slowly,
+because it adds up the births of a cohort over two decades. In the United
+States, period fertility peaked at about 2.1 in 2007 and fell to 1.62 by 2023.
+Completed fertility was still 1.92 in 2024. If period fertility stayed at its
+2023 level, completed fertility would fall to 1.62 within about two decades,
+as the cohorts that had their children before 2007 age out. This illustrates
+the difference between the two measures. It is not a forecast.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fertility_introduction_projection_1990}
+\caption{Period and completed fertility in the United States}
+\label{fig:quant-us-fertility}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Left: period total fertility rate, World
+Development Indicators. Right: children ever born to women aged 40--44, CPS
+Fertility Supplement. Dotted lines: a constant-rate scenario that holds period
+fertility at its 2023 level; the completed-fertility continuation is rescaled
+to end at that rate.
+\end{minipage}
+\end{figure}
+
+I quantify the model in three steps, which follow the logic of
+Section~\ref{sec:m-analysis} and Figure~\ref{fig:m-illustration}. First, I
+treat the 2007 economy as a stationary equilibrium, point $A$ in the figure,
+with fertility at replacement. I choose the parameters so that this
+equilibrium matches fertility, housing and wealth moments of 2007
+(Sections~\ref{sec:quant-data} and~\ref{sec:quant-identification}). Second,
+I hold these parameters fixed and let the preference for children $\psi_t$
+fall after 2007. I choose the size of the fall so that period fertility in the
+model matches the data in 2020--2023. I then solve for the transition as
+prices, family composition and household entry adjust
+(Section~\ref{sec:quant-transition}). On impact, fertility falls at about the
+inherited price, from $A$ toward $A'$. As smaller cohorts enter, the price
+falls and the economy moves toward $B$. Third, I start every policy
+experiment of Section~\ref{sec:policy} from the 2023 state of this
+transition. I compare each policy with the path the economy follows from
+2023 without it.
 
 I divide the parameters of the 2007 economy into two groups. The first
 group is assigned from external evidence or measured directly in the data.
@@ -306,31 +355,6 @@ loss is 7.42, of which children ever born by 25 contribute 6.41.
 
 \subsection{The fertility decline, 2007--2023}
 \label{sec:quant-transition}
-
-Figure~\ref{fig:quant-us-fertility} shows the decline to be explained.
-The period fertility rate of the United States peaked at about 2.1 in 2007
-and fell to 1.62 by 2023. Completed fertility of women aged 40 to 44, which
-reflects births over the previous two decades, was 1.92 in 2024. The constant-rate
-scenario in the figure makes completed fertility converge to 1.62 within
-about two decades as the cohorts that had their children before 2007 age out.
-This continuation illustrates the distinction between a current flow of
-births and the lifetime fertility of older cohorts; it is not an estimate of
-future age-specific birth rates.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{fertility_introduction_projection_1990}
-\caption{Period and completed fertility in the United States}
-\label{fig:quant-us-fertility}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Left: period total fertility rate, World
-Development Indicators. Right: children ever born to women aged 40--44, CPS
-Fertility Supplement. Dotted lines: a constant-rate scenario that holds period
-fertility at its 2023 level; the completed-fertility continuation is rescaled
-to end at that rate.
-\end{minipage}
-\end{figure}
 
 Starting from the 2007 steady state, I hold all estimated parameters fixed
 and let the preference for children decline permanently from its 2007 level
