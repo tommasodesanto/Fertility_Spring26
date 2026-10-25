@@ -247,10 +247,15 @@ children and when.
 % mean rooms -1.89%, ownership -1.32% (identification_newacct results.json, G*theta/m).
 Second, households with children occupy more space than other households,
 partly because a child requires space and partly because parents are older
-and have higher earnings and savings. The difference in ownership between
-recent parents and other households speaks to the first: the space
-requirement applies only to parents, and because homes larger than $\bar h^R$
-rooms are only for sale, it pushes recent parents into ownership. Third, a change in when women
+and have higher earnings and savings. The change in rooms within households
+at the first birth, relative to adults who never have a child, isolates the
+space a child requires, $h_P$. The difference in ownership between recent
+parents and other households measures how closely tenure follows these
+needs, $\kappa_T$.
+% POST-DEADLINE: locally h_P barely moves the event-study room response (elasticity -0.11;
+% beta 7.73, psi0 1.78) and the ownership gap responds to h_P (1.18); revisit this pairing
+% (identification_newacct results.json, G*theta/m).
+Third, a change in when women
 have children and a change in how many they have both move period fertility.
 The distribution of completed family size at ages 40 to 44 measures how many
 children women have, and the mean age at first birth measures when they
@@ -304,24 +309,12 @@ structure codes 3 to 10), which have no counterpart in the model.}
 An owner obtains $\chi$ times the services of the same home, so a higher
 $\chi$ raises the value of owning relative to renting.
 
-The space requirement $h_P=0.89$ rooms and the tenure taste scale
-$\kappa_T=0.013$ are disciplined by how housing differs between parents and
-other households. In the same ACS sample, heads whose oldest child is under
-four own at a rate 12.8 percentage points higher than heads with no children
-at home. In the model, children at home raise the space a household needs by
-$h_P$, and homes larger than $\bar h^R$ rooms are only for sale, so parents
-move into ownership. A higher $h_P$ widens this gap, and so does a smaller
-$\kappa_T$, which makes tenure follow these needs more closely. Mean rooms,
-5.73 in the 2007 AHS for heads aged 18 to 85, separate the two: they rise
-with $h_P$ and barely move with $\kappa_T$.
-% Weakest direction of the loss: h_P and kappa_T together, +-5.9% and +-6.3% for a unit
-% rise in the loss (identification_newacct results.json valley_fit.param_half_pct).
-
-The room response to the first birth adds the change in housing within
-households. Recall from Section~\ref{sec:emp-first-birth} that future parents
-in the PSID live in 4.71 rooms two to three years before the first birth,
-and three to four years after it occupy 1.44 more rooms, relative to the
-change among adults who never have a child. I target this response on the
+The space requirement $h_P=0.89$ rooms is disciplined by the change in
+housing within households at the first birth. Recall from
+Section~\ref{sec:emp-first-birth} that future parents in the PSID live in
+4.71 rooms two to three years before the first birth, and three to four years
+after it occupy 1.44 more rooms, relative to the change among adults who
+never have a child. I target this response on the
 common support of the panel and the model, and apply the same estimator to
 simulated households.%
 \footnote{Model first births are dated from the birth event and model
@@ -332,11 +325,17 @@ the change in rooms over the same event-time windows.}
 % adopted in output/model/production/2007/PROMOTION_RECEIPT_20261011_7p917.md.
 % Common-support A2h target 1.439960832044094; model 1.4755 at the new point
 % (identification_newacct moments/center.json, birth_dated +3/+4).
-In the model this response reflects both the space a child requires and the
-rooms households add as their earnings and savings grow with age, so it is
-not tied to one parameter; it responds most to $\beta$ and $\psi_0$.
-% Elasticities of the response: beta 7.73, psi0 1.78, xi -1.06, h_P -0.11
-% (identification_newacct results.json, G * theta / m).
+The requirement is the space a household must add once it has a child, and
+this jump is the most direct measure of it in the data.
+
+The tenure taste scale $\kappa_T=0.013$ is disciplined by the difference in
+ownership between recent parents and other households. In the same ACS
+sample as ownership, heads whose oldest child is under four own at a rate
+12.8 percentage points higher than heads with no children at home. In the
+model, homes larger than $\bar h^R$ rooms are only for sale, so the space
+requirement pushes parents into ownership. A smaller $\kappa_T$ makes tenure
+follow these needs more closely and widens the gap.
+% POST-DEADLINE: see the note on the h_P / kappa_T pairing above.
 
 \paragraph{Wealth and bequests.}
 I choose the discount factor $\beta=0.936$ (annual) to match aggregate net
