@@ -299,17 +299,134 @@ loss is 7.42, of which children ever born by 25 contribute 6.41.
 \end{table}
 
 
-\subsection{Testing the model}
+\subsection{The fertility decline, 2007--2023}
+\label{sec:quant-transition}
+
+Figure~\ref{fig:quant-us-fertility} shows the decline to be explained.
+The period fertility rate of the United States peaked at about 2.1 in 2007
+and fell to 1.62 by 2023. Completed fertility of women aged 40 to 44, which
+reflects births over the previous two decades, was 1.92 in 2024. The constant-rate
+scenario in the figure makes completed fertility converge to 1.62 within
+about two decades as the cohorts that had their children before 2007 age out.
+This continuation illustrates the distinction between a current flow of
+births and the lifetime fertility of older cohorts; it is not an estimate of
+future age-specific birth rates.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{fertility_introduction_projection_1990}
+\caption{Period and completed fertility in the United States}
+\label{fig:quant-us-fertility}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Left: period total fertility rate, World
+Development Indicators. Right: children ever born to women aged 40--44, CPS
+Fertility Supplement. Dotted lines: a constant-rate scenario that holds period
+fertility at its 2023 level; the completed-fertility continuation is rescaled
+to end at that rate.
+\end{minipage}
+\end{figure}
+
+Starting from the 2007 steady state, I hold all estimated parameters fixed
+and let the preference for children decline permanently from its 2007 level
+$\psi_0$ toward a lower level $\psi'$,
+\begin{equation}
+\psi_t=\psi'+(\psi_0-\psi')\,\rho^{\,\tau},
+\label{eq:psi-decay}
+\end{equation}
+where $\tau$ counts four-year periods since 2007. Households learn the whole
+path in 2007 and have perfect foresight about it and about prices. The house
+price, the pension and the rebate clear their markets at every date
+(Appendix~\ref{app:algorithms}). I set $\rho=0.35$ and choose
+$\psi'=0.148$ to match period fertility in 2020--2023,
+1.646. The model then gives 1.74 in 2012--2015, against
+1.86 in the data (Figure~\ref{fig:quant-transition-fit}).%
+\footnote{A model period is dated by its first year and compared with the
+average period fertility of the four following calendar years: the period
+dated 2011 with 2012--2015, and the period dated 2019 with 2020--2023.} The decline in
+$\psi_t$ summarizes changes in the incentives to have children that the
+model does not otherwise capture; its role is to match the fall in period
+fertility while prices, family composition and household entry adjust.
+From the period dated 2023 on, period fertility is 1.63 and
+rises slowly, to 1.73 by 2063.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\linewidth]{../../output/model/production_runs/2026-10-24_transition_fi/fertility_fit_fi_eta063_2007_2063.pdf}
+\caption{Period fertility, model and data, 2007--2063}
+\label{fig:quant-transition-fit}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Model: births per woman in each four-year
+period of the transition from the 2007 steady state, with $\eta=0.63$; dashed,
+the same transition with $\eta=1.5$. Data: annual period fertility and its
+four-year averages.
+\end{minipage}
+\end{figure}
+
+Figure~\ref{fig:quant-full-transition} shows the whole transition. Period
+fertility returns to replacement slowly: it is 2.09 by 2203, and by 2403 the
+economy is at its new steady state, with the number of households at 49\%,
+total housing at 67\% and the house price at 53\% of their 2007 levels.
+Construction responds to the price within each period and stays positive
+along the whole path, so the stock moves with the price along the supply
+curve: in 2023 the price is 3.6\% below its 2007 level and the stock 2.3\%
+below; in 2063 they are 19.3\% and 12.6\% below. The rent does not follow
+the price down at first. Along a transition, rent equals the user cost net of
+the expected capital gain, so a price that is expected to keep falling raises
+the rent: in 2023 the rent per room is 2.0\% above its 2007 level.
+
+The housing stock governs how the price responds. The dashed lines in
+Figure~\ref{fig:quant-full-transition} show the same transition with the stock
+held at its 2023 level from then on. With no construction to adjust, the price
+falls much further, to 47\% of its 2007 level around 2111, below its
+long-run level. At that price fertility overshoots replacement, reaching 2.18
+around 2119, and the additional children fill the fixed stock a generation
+later. As they do, the price recovers and fertility returns to replacement.
+In the long run the price is the same as in the baseline, 53\% of its 2007
+level, because fertility at replacement pins it; the stock determines only how
+many households live at that price, 71\% of the 2007 level instead of 49\%.
+% Oct 25: target windows read from FIN063fi_fw.json decay block (target_2011 1.861 = WDI mean 2012-15,
+% target_2019 1.64575 = 2020-23) and the fit figure script (data averages over t+1..t+4).
+% [MODEL, Oct 24] FIN063fi_fw.json (free entry, eta 0.63, rho 0.35, psi_inf 0.148414,
+% psi_2007 0.177467; converged, 100 periods, terminal steady state reached by 2403):
+% output/model/experiments/housing_supply/20261022_fi_all_arms/history/. TFR 2011 1.7394,
+% 2019 1.6458, 2023 1.6313, 2063 1.7319, 2203 2.0891, 2403 2.1001; price/0.770686 2023 0.964,
+% 2063 0.807, 2403 0.529; stock/5.752224 2023 0.977, 2063 0.874, 2403 0.669; households 2403
+% 0.488; construction H_t-(1-delta)H_{t-1} between 0.19 and 0.30 at every date; rent 2023
+% 0.13350 vs 0.13085 in the 2007 steady state. Figures:
+% production_runs/2026-10-24_transition_fi/plot_transition_fi_eta063.py.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../../output/model/production_runs/2026-10-24_transition_fi/full_transition_four_panel_fi_eta063_fixedstock.pdf}
+\caption{The full transition, 2007--2403}
+\label{fig:quant-full-transition}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Period fertility, number of household heads,
+total housing and the house price along the transition with $\eta=0.63$,
+with the initial steady state normalized to 100. Dashed: the same transition
+with the housing stock held at its 2023 level from 2023 on.
+\end{minipage}
+\end{figure}
+
+\section{Testing the model}
 \label{sec:quant-fit}
 
-I next ask how well the model accounts for features of the data that the
-estimation does not target. Table~\ref{tab:quant-untargeted} reports
-untargeted moments, and Figure~\ref{fig:quant-lifecycle-2007} compares
-life-cycle profiles. I focus on the timing of births and on how households
-adjust housing and tenure around a birth, the two margins through which
-housing policy acts in Section~\ref{sec:policy}.
+In this section I ask how well the model accounts for features of the data
+that the calibration does not target. The policy experiments of
+Section~\ref{sec:policy} change the cost of housing for families, so the
+model must reproduce when women have their first child, how households
+adjust housing and tenure around a birth, and how ownership and housing
+evolve over the life cycle. I first compare the 2007 economy with the data:
+Table~\ref{tab:quant-untargeted} reports untargeted moments, and
+Figure~\ref{fig:quant-lifecycle-2007} compares life-cycle profiles. I then
+compare the 2023 economy, the starting point of every policy experiment,
+with the 2023 data. The transition of Section~\ref{sec:quant-transition}
+targets only period fertility, so every other 2023 moment is out of sample.
 
-\paragraph{Fertility.}
+\subsection{Fertility}
 The model matches the targets closely except children ever born by age 25,
 0.56 against 0.81 (Panel A of Table~\ref{tab:quant-parameters}). The share
 of women who are mothers by 25 is matched, 45.5\% against 45.7\%, so the miss
@@ -352,7 +469,7 @@ observation support, measured on simulated households with the same design.
 \end{minipage}
 \end{table}
 
-\paragraph{Housing around the first birth.}
+\subsection{Housing around the first birth}
 The model reproduces the size of the room response after the first birth,
 which it targets, but not its timing. In the data, parents occupy the same
 number of rooms in the years before the reference period, add 0.62 rooms in
@@ -376,7 +493,7 @@ consistent with the higher ownership of young households in the model
 with three or more children occupy 0.57 more rooms than those with one or
 two, against 0.39.
 
-\paragraph{Life-cycle profiles.}
+\subsection{Life-cycle profiles, 2007}
 The left and middle panels of Figure~\ref{fig:quant-lifecycle-2007} compare
 ownership and rooms by age of the head with the 2005--2006 ACS. The model
 reproduces the rise of ownership with age, and between 34 and 49 the two
@@ -394,7 +511,7 @@ the comparison is informative about shape rather than level.
 % [DATA] output/model/production/2007/plotted_long.csv (ACS 2005/06, rooms capped at 9;
 % NCHS 2005-07 first births).
 
-\paragraph{Wealth.}
+\subsection{Wealth}
 The model accounts for the dispersion of wealth among the old: the ratio of
 the 90th percentile to the median of wealth relative to income at ages 76 to
 84 is 3.27, against 3.52 in the PSID.
@@ -414,129 +531,25 @@ ACS; first births by four-year age group from the NCHS natality files for
 \end{minipage}
 \end{figure}
 
-\subsection{The fertility decline, 2007--2023}
-\label{sec:quant-transition}
-
-Figure~\ref{fig:quant-us-fertility} shows the decline to be explained.
-The period fertility rate of the United States peaked at about 2.1 in 2007
-and fell to 1.62 by 2023. Completed fertility of women aged 40 to 44, which
-reflects births over the previous two decades, was 1.92 in 2024. The constant-rate
-scenario in the figure makes completed fertility converge to 1.62 within
-about two decades as the cohorts that had their children before 2007 age out.
-This continuation illustrates the distinction between a current flow of
-births and the lifetime fertility of older cohorts; it is not an estimate of
-future age-specific birth rates.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{fertility_introduction_projection_1990}
-\caption{Period and completed fertility in the United States}
-\label{fig:quant-us-fertility}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Left: period total fertility rate, World
-Development Indicators. Right: children ever born to women aged 40--44, CPS
-Fertility Supplement. Dotted lines: a constant-rate scenario that holds period
-fertility at its 2023 level; the completed-fertility continuation is rescaled
-to end at that rate.
-\end{minipage}
-\end{figure}
-
-Starting from the 2007 steady state, I hold all estimated parameters fixed
-and let the preference for children decline permanently from its 2007 level
-$\psi_0$ toward a lower level $\psi'$,
-\begin{equation}
-\psi_t=\psi'+(\psi_0-\psi')\,\rho^{\,\tau},
-\label{eq:psi-decay}
-\end{equation}
-where $\tau$ counts four-year periods since 2007. Households learn the whole
-path in 2007 and have perfect foresight about it and about prices. The house
-price, the pension and the rebate clear their markets at every date
-(Appendix~\ref{app:algorithms}). I set $\rho=0.35$ and choose
-$\psi'=0.148$ to match period fertility in 2019--2022,
-1.646. The model then gives 1.74 in 2011--2014, against
-1.86 in the data (Figure~\ref{fig:quant-transition-fit}). The decline in
-$\psi_t$ summarizes changes in the incentives to have children that the
-model does not otherwise capture; its role is to match the fall in period
-fertility while prices, family composition and household entry adjust.
-After 2023, period fertility is 1.63 in 2023--2026 and
-rises slowly, to 1.73 by 2063.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.9\linewidth]{../../output/model/production_runs/2026-10-24_transition_fi/fertility_fit_fi_eta063_2007_2063.pdf}
-\caption{Period fertility, model and data, 2007--2063}
-\label{fig:quant-transition-fit}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Model: births per woman in each four-year
-period of the transition from the 2007 steady state, with $\eta=0.63$; dashed,
-the same transition with $\eta=1.5$. Data: annual period fertility and its
-four-year averages.
-\end{minipage}
-\end{figure}
-
-Figure~\ref{fig:quant-full-transition} shows the whole transition. Period
-fertility returns to replacement slowly: it is 2.09 by 2203, and by 2403 the
-economy is at its new steady state, with the number of households at 49\%,
-total housing at 67\% and the house price at 53\% of their 2007 levels.
-Construction responds to the price within each period and stays positive
-along the whole path, so the stock moves with the price along the supply
-curve: in 2023 the price is 3.6\% below its 2007 level and the stock 2.3\%
-below; in 2063 they are 19.3\% and 12.6\% below. The rent does not follow
-the price down at first. Along a transition, rent equals the user cost net of
-the expected capital gain, so a price that is expected to keep falling raises
-the rent: in 2023 the rent per room is 2.0\% above its 2007 level.
-
-The housing stock governs how the price responds. The dashed lines in
-Figure~\ref{fig:quant-full-transition} show the same transition with the stock
-held at its 2023 level from then on. With no construction to adjust, the price
-falls much further, to 47\% of its 2007 level around 2111, below its
-long-run level. At that price fertility overshoots replacement, reaching 2.18
-around 2119, and the additional children fill the fixed stock a generation
-later. As they do, the price recovers and fertility returns to replacement.
-In the long run the price is the same as in the baseline, 53\% of its 2007
-level, because fertility at replacement pins it; the stock determines only how
-many households live at that price, 71\% of the 2007 level instead of 49\%.
-% [MODEL, Oct 24] FIN063fi_fw.json (free entry, eta 0.63, rho 0.35, psi_inf 0.148414,
-% psi_2007 0.177467; converged, 100 periods, terminal steady state reached by 2403):
-% output/model/experiments/housing_supply/20261022_fi_all_arms/history/. TFR 2011 1.7394,
-% 2019 1.6458, 2023 1.6313, 2063 1.7319, 2203 2.0891, 2403 2.1001; price/0.770686 2023 0.964,
-% 2063 0.807, 2403 0.529; stock/5.752224 2023 0.977, 2063 0.874, 2403 0.669; households 2403
-% 0.488; construction H_t-(1-delta)H_{t-1} between 0.19 and 0.30 at every date; rent 2023
-% 0.13350 vs 0.13085 in the 2007 steady state. Figures:
-% production_runs/2026-10-24_transition_fi/plot_transition_fi_eta063.py.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{../../output/model/production_runs/2026-10-24_transition_fi/full_transition_four_panel_fi_eta063_fixedstock.pdf}
-\caption{The full transition, 2007--2403}
-\label{fig:quant-full-transition}
-\par\smallskip
-\begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} Period fertility, number of household heads,
-total housing and the house price along the transition with $\eta=0.63$,
-with the initial steady state normalized to 100. Dashed: the same transition
-with the housing stock held at its 2023 level from 2023 on.
-\end{minipage}
-\end{figure}
-
 \subsection{The 2023 economy}
 \label{sec:quant-2023}
 
-The 2023 economy is the starting point of every counterfactual, so I compare
-it with the data on the moments used in the calibration
-(Table~\ref{tab:quant-2023}). None of these moments was targeted in the
-transition, which matches only the period fertility rate. Mean rooms are
-close to the data, 5.51 against 5.58. Ownership among heads aged 30
-to 55 is 71.0\% against 58.7\%: in the data ownership fell
-after 2007, while in the model, where housing became cheaper, it rose. The
-model misses the postponement of first births: the mean age at first birth is
-26.9 against 28.1, and 29\% of first births
-are at 30 or later against 38\%. Households with three or more children
-occupy 0.54 more rooms than those with one or two, against
-0.36 in the data, and wealth is 4.38 times annual earnings
-against 7.05.
+The transition matches only period fertility, so the 2023 economy is an
+out-of-sample test of what the decline in $\psi_t$ alone does to the rest of
+the economy. Table~\ref{tab:quant-2023} compares the change from 2007 to 2023
+in the data and in the model. The model reproduces the shift of first births
+to later ages in direction but not in size: the share of women who are
+mothers by 25 falls by 13 percentage points in the model and by 18 in the
+data, the mean age at first birth rises by 0.9 years against 2.1, and the
+share of first births at 30 or later rises by 5 points against 13. Three
+changes have the wrong sign. Childlessness among women aged 40 to 44 rises by
+8.6 points in the model, while it fell by one point in the data. Ownership
+among heads aged 30 to 55 rises by 4.1 points, while it fell by 8.9. The
+house price falls by 3.6\%, while the real price rose by 15.6\%. Wealth
+relative to earnings, which rose from 4.46 to 7.05 in the PSID, barely moves
+in the model. Mean rooms are close to the data, 5.51 against 5.58. The extra
+space of families with three or more children falls by 0.03 rooms in both,
+but stays too large in the model, 0.54 rooms against 0.36.
 
 \begin{table}[t]
 \centering
@@ -545,40 +558,54 @@ against 7.05.
 % [MODEL] experiments/housing_supply/20261021_free_entry/moments_2023_fi/moments_2023_fi.csv,
 % free_entry_eta0.63 column (replay of FIN063fi_fw); mothers by 25 = 1 - ever_born_shares_age25['0'].
 \small
-\begin{tabularx}{\textwidth}{@{}Xrr@{}}
+\begin{tabularx}{\textwidth}{@{}X rr @{\hspace{1.5em}} rr@{}}
 \toprule
-Moment & Data & Model \\
+ & \multicolumn{2}{c}{Data} & \multicolumn{2}{c}{Model} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Moment & 2007 & 2023 & 2007 & 2023 \\
 \midrule
-Completed fertility, ages 40--44 & 1.92 & 1.69 \\
-Childless, ages 40--44 (\%) & 18.8 & 28.7 \\
-Exactly one child among mothers, 40--44 (\%) & 22.2 & 22.2 \\
-Mean age at first birth (years) & 28.09 & 26.88 \\
-Mothers by age 25 (\%) & 27.4 & 32.2 \\
-First births at age 30+ (\%) & 37.7 & 28.9 \\
+Completed fertility, ages 40--44 & -- & 1.92 & 2.10 & 1.69 \\
+Childless, ages 40--44 (\%) & 19.8 & 18.8 & 20.1 & 28.7 \\
+Exactly one child among mothers, 40--44 (\%) & 21.4 & 22.2 & 21.7 & 22.2 \\
+Mean age at first birth (years) & 25.98 & 28.09 & 25.97 & 26.88 \\
+Mothers by age 25 (\%) & 45.7 & 27.4 & 45.5 & 32.2 \\
+First births at age 30+ (\%) & 24.9 & 37.7 & 24.2 & 28.9 \\
 \addlinespace
-Mean occupied rooms (capped at 9) & 5.58 & 5.51 \\
-Ownership, heads 30--55 (\%) & 58.7 & 71.0 \\
-First-birth room response$^{\ddagger}$ & 1.476 & 0.55 \\
-Rooms: 3+ versus 1--2 resident children & 0.355 & 0.543 \\
+House price (2007 = 100) & 100 & 115.6 & 100 & 96.4 \\
+Mean occupied rooms (capped at 9) & -- & 5.58 & -- & 5.51 \\
+Ownership, heads 30--55 (\%) & 67.6 & 58.7 & 66.9 & 71.0 \\
+First-birth room response$^{\ddagger}$ & 1.440 & 1.476 & 1.475 & 0.55 \\
+Rooms: 3+ versus 1--2 resident children & 0.385 & 0.355 & 0.574 & 0.543 \\
 \addlinespace
-Wealth / annual gross earnings (PSID 2021/23) & 7.05 & 4.38 \\
-Annual bequests / wealth (\%) & 0.88 & 0.83 \\
-Wealth/income p90 / median, ages 76--84 & 3.45 & 3.29 \\
+Wealth / annual gross earnings & 4.46 & 7.05 & 4.35 & 4.38 \\
+Annual bequests / wealth (\%) & 0.73 & 0.88 & 0.73 & 0.83 \\
+Wealth/income p90 / median, ages 76--84 & 3.52 & 3.45 & 3.27 & 3.29 \\
 \bottomrule
 \end{tabularx}
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} Model: the 2023 period of the transition in
-Section~\ref{sec:quant-transition}, evaluated on the full 2023 distribution. $^{\ddagger}$ The model
-value compares otherwise identical households with and without a first birth
-in the same period, not the event study of the data. Data: the sources of
-Table~\ref{tab:quant-parameters} in their most recent waves; wealth over earnings
-from the PSID 2021 and 2023.
+\footnotesize\textit{Notes:} Model, 2007: the calibrated stationary
+equilibrium (Tables~\ref{tab:quant-parameters} and~\ref{tab:quant-untargeted});
+model, 2023: the period dated 2023 of the transition in
+Section~\ref{sec:quant-transition}, evaluated on the full 2023 distribution.
+Data, 2007: the sources of Tables~\ref{tab:quant-parameters}
+and~\ref{tab:quant-untargeted}; data, 2023: the same sources in their most
+recent waves, with wealth over earnings from the PSID 2021 and 2023. House
+price: S\&P CoreLogic Case--Shiller national index deflated by the CPI. A
+dash marks a 2007 value not measured on the 2023 definition. $^{\ddagger}$ In
+2023 the model value compares otherwise identical households with and
+without a first birth in the same period, not the event study of the data.
 \end{minipage}
 \end{table}
 \problem{The model and data measures of the first-birth room response have
 not been reconciled for the transition: 0.55 is the matched-state comparison,
-1.476 the event study.}
+1.476 the event study. Three 2023 data cells are not yet traced to a 2023
+source: bequests 0.88 (recorded only as an external benchmark), old-age
+dispersion 3.45 (recorded as PSID 1984--2019) and mothers by 25, 27.4.}
+% Oct 25 checks: model 2023 column = moments_2023_fi.csv free_entry_eta0.63 (all rows) and
+% validation_2023_model_fi_eta0.63.json (mothers by 25 = 1 - 0.67757). Model 2007 column = calibration
+% point center.json / lifecycle_2007_newacct (the transition's own 2007 state, psi 0.177467 vs 0.177405,
+% price 0.770687 vs 0.770691, is the same to rounding). Price 2023: FIN063fi_fw 0.742618/0.770686 = 0.964.
 
 The fertility moments reveal the limitations of explaining the decline with
 changes in the preference for children alone. In the data, the decline
