@@ -280,8 +280,9 @@ idiosyncratic variation. The scale of the first-birth shocks,
 $\kappa_1=0.050$, governs how much first births depart from the trade-off
 between fecundity and earnings of Section~\ref{sec:m-analysis}. A larger
 $\kappa_1$ spreads first births over the fertile window, so the mean age at
-first birth, 26.0 years in the NCHS natality files for 2003--2006, rises; I
-choose $\kappa_1$ to match it. The estimate is small: first births follow the
+first birth, 26.0 years in the NCHS natality files for 2003--2006, rises,
+and fewer women are mothers by age 25, 45.7\% in the CPS. I choose
+$\kappa_1$ to match both. The estimate is small: first births follow the
 economic trade-off closely, and the shocks mostly spread them across ages.
 The scale for later births, $\kappa_C=0.129$, governs how readily mothers go
 on to a second or third child. It is informed by the share of mothers with
@@ -351,8 +352,6 @@ As Table~\ref{tab:quant-moments} shows, the model matches
 these targets closely. Childlessness is 20.1\% in the model and 19.8\% in
 the data, ownership 66.9\% and 67.6\%, the recent-parent ownership gap 12.5
 and 12.8 percentage points, and wealth 4.35 and 4.46 times annual earnings.
-Section~\ref{sec:quant-fit} discusses the one exception, children ever born
-by age 25.
 
 \begin{table}[!tbp]
 \centering
@@ -367,7 +366,7 @@ Completed fertility & 2.10 & 2.10 \\
 Childless, women 40--44 (\%) & 19.8 & 20.1 \\
 Exactly one child, mothers 40--44 (\%) & 21.4 & 21.7 \\
 Mean age at first birth (years) & 25.98 & 25.97 \\
-Children ever born by age 25 & 0.810 & 0.556 \\
+Mothers by age 25 (\%) & 45.7 & 45.5 \\
 \addlinespace
 Mean occupied rooms & 5.73 & 5.75 \\
 Ownership, heads 30--55 (\%) & 67.6 & 66.9 \\
@@ -381,15 +380,15 @@ Annual bequests / wealth (\%) & 0.73 & 0.73 \\
 \par\smallskip
 \begin{minipage}{0.95\linewidth}
 \footnotesize\textit{Notes:} Fertility: CPS June Fertility
-Supplement 2004 and 2006, women 40--44, and children ever born by 25 capped
-at three; NCHS natality 2003--2006 for the mean age at first birth;
+Supplement 2004 and 2006, women 40--44, and mothers by 25; NCHS natality 2003--2006 for the mean age at first birth;
 completed fertility is a normalization. Housing: AHS 2007 for rooms; ACS
 2005--2006 for ownership and the gap between heads whose oldest child is
 under four and heads without children; PSID event study for the room
 response, measured in the model with the same design on simulated
 households. Wealth: PSID 2005 and 2007; bequests: SCF 2007. Owners choose
-among homes of 2, 4, 6, 8 and 10 rooms. The 2007 house price is 0.771; the
-loss is 7.42, of which children ever born by 25 contribute 6.41.
+among homes of 2, 4, 6, 8 and 10 rooms. The 2007 house price is 0.771.
+% POST-DEADLINE: mothers by 25 replaces children ever born by 25 as a target (his word Oct 25);
+% the parameters were estimated with CEB-by-25 (loss 7.42, CEB25 6.41). Re-estimate and check identification.
 \end{minipage}
 \end{table}
 
