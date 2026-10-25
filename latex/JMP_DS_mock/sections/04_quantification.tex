@@ -409,15 +409,16 @@ where $\tau$ counts four-year periods since 2007. Households learn the whole
 path in 2007 and have perfect foresight about it and about prices. The house
 price, the pension and the rebate clear their markets at every date
 (Appendix~\ref{app:algorithms}). I set $\rho=0.35$ and choose
-$\psi'=0.148$ to match period fertility in 2020--2023,
-1.646. The model then gives 1.74 in 2012--2015, against
-1.86 in the data (Figure~\ref{fig:quant-transition-fit}).%
+$\psi'=0.148$ to match period fertility in 2020--2023, 1.646
+(Figure~\ref{fig:quant-transition-fit}).%
 \footnote{A model period is dated by its first year and compared with the
 average period fertility of the four following calendar years: the period
-dated 2011 with 2012--2015, and the period dated 2019 with 2020--2023.} The decline in
-$\psi_t$ summarizes changes in the incentives to have children that the
-model does not otherwise capture; its role is to match the fall in period
-fertility while prices, family composition and household entry adjust.
+dated 2019 with 2020--2023.}
+The decline in $\psi_t$ summarizes changes in the incentives to have
+children that the model does not otherwise capture.%
+\footnote{See \citet{kearneyPuzzleFallingUS2022} and
+\citet{doepkeEconomicsFertilityNew2023} for reviews of the recent decline in
+fertility and its possible causes.}
 From the period dated 2023 on, period fertility is 1.63 and
 rises slowly, to 1.73 by 2063.
 
@@ -439,24 +440,25 @@ Figure~\ref{fig:quant-full-transition} shows the whole transition. Period
 fertility returns to replacement slowly: it is 2.09 by 2203, and by 2403 the
 economy is at its new steady state, with the number of households at 49\%,
 total housing at 67\% and the house price at 53\% of their 2007 levels.
-Construction responds to the price within each period and stays positive
-along the whole path, so the stock moves with the price along the supply
-curve: in 2023 the price is 3.6\% below its 2007 level and the stock 2.3\%
-below; in 2063 they are 19.3\% and 12.6\% below. The rent does not follow
+As the population shrinks, the house price falls: it is 3.6\% below its
+2007 level in 2023 and 19.3\% below in 2063. The rent does not follow
 the price down at first. Along a transition, rent equals the user cost net of
 the expected capital gain, so a price that is expected to keep falling raises
 the rent: in 2023 the rent per room is 2.0\% above its 2007 level.
 
-The housing stock governs how the price responds. The dashed lines in
-Figure~\ref{fig:quant-full-transition} show the same transition with the stock
-held at its 2023 level from then on. With no construction to adjust, the price
-falls much further, to 47\% of its 2007 level around 2111, below its
-long-run level. At that price fertility overshoots replacement, reaching 2.18
-around 2119, and the additional children fill the fixed stock a generation
-later. As they do, the price recovers and fertility returns to replacement.
-In the long run the price is the same as in the baseline, 53\% of its 2007
-level, because fertility at replacement pins it; the stock determines only how
-many households live at that price, 71\% of the 2007 level instead of 49\%.
+To illustrate the role of the housing stock in determining fertility in the
+model, the dashed lines in Figure~\ref{fig:quant-full-transition} show the
+same transition with the total housing stock $H$ held at its 2023 level from
+2023 on. With a fixed stock, the price falls much further, to 47\% of its
+2007 level around 2111. At that price fertility overshoots replacement,
+reaching 2.18 around 2119, and the additional children fill the fixed stock a
+generation later. As they do, the price recovers and fertility returns to
+replacement. In the long run the price is the same as in the baseline, 53\%
+of its 2007 level, because fertility at replacement pins it; the stock
+determines only how many households live at that price, 71\% of the 2007
+level instead of 49\%. This suggests a potential role for housing supply in
+speeding up the recovery of fertility, which I explore in
+Section~\ref{sec:policy}.
 % Oct 25: target windows read from FIN063fi_fw.json decay block (target_2011 1.861 = WDI mean 2012-15,
 % target_2019 1.64575 = 2020-23) and the fit figure script (data averages over t+1..t+4).
 % [MODEL, Oct 24] FIN063fi_fw.json (free entry, eta 0.63, rho 0.35, psi_inf 0.148414,
