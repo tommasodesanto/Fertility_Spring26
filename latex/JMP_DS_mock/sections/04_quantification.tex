@@ -101,7 +101,7 @@ $\mu$ & 0.06 & selling cost & $h_P$ & 0.89 & space requirement (rooms) \\
 $\delta_H$ & 0.014 & depreciation, annual & $\chi$ & 1.112 & owner service multiplier \\
 $\tau^p$ & 0.0106 & property tax, annual & $\kappa_T$ & 0.013 & tenure taste scale \\
 $r$ & 0.02 & real interest rate, annual & $\theta_0$ & 0.244 & bequest-motive scale \\
-$\tau^w$ & 0.08 & payroll tax & $H_0$ & 6.776 & housing supply scale (implied) \\
+$\tau^w$ & 0.08 & payroll tax & $H_0$ & 6.776 & housing supply scale \\
 % H0 = 5.7505 / 0.77069^0.63 = 6.776 with eta 0.63; 5.7505 = 2007 housing per household.
 $\eta$ & 0.63 & housing-supply elasticity & & & \\
 $\bar h^R$ & 6 & rental size cap (rooms) & & & \\
@@ -219,14 +219,11 @@ $\theta_1=0.008$, as in \citet{greaneyDynamicUrbanEconomics2025}.
 \subsection{Calibrated parameters}
 \label{sec:quant-identification}
 
-I choose the remaining ten parameters so that the 2007 steady state matches
-the ten moments in Table~\ref{tab:quant-moments}, while the
-house price keeps completed fertility at replacement, 2.1.%
+I choose the remaining eleven parameters so that the 2007 steady state
+matches the eleven moments in Table~\ref{tab:quant-moments}.%
 \footnote{The parameters minimize a sum of squared gaps between model and
 data moments, each divided by a tolerance for the moment
-(Appendix~\ref{app:identification}). The supply scale $H_0$ is not free: it
-is the scale at which the 2007 price clears the housing market with one unit
-of households.}
+(Appendix~\ref{app:identification}).}
 The parameters are chosen jointly, but some moments are more informative
 about some parameters than others. I group them into five blocks and, for
 each, describe the variation in the data that disciplines it and the
