@@ -317,12 +317,7 @@ housing within households at the first birth. Recall from
 Section~\ref{sec:emp-first-birth} that future parents in the PSID live in
 4.71 rooms two to three years before the first birth, and three to four years
 after it occupy 1.44 more rooms, relative to the change among adults who
-never have a child. I target this response on the
-common support of the panel and the model, and apply the same estimator to
-simulated households.%
-\footnote{Model first births are dated from the birth event and model
-housing is mapped to the PSID interview calendar, so model and data compare
-the change in rooms over the same event-time windows.}
+never have a child. I run the same regression on households in the model.
 % Production target: output/model/first_birth_rooms_event_20261010/
 % measurement_bridge/proposed_measurement_contract.json and original/rooms_coefficients.csv;
 % adopted in output/model/production/2007/PROMOTION_RECEIPT_20261011_7p917.md.
@@ -332,8 +327,8 @@ The requirement is the space a household must add once it has a child, and
 this jump is the most direct measure of it in the data.
 
 The tenure taste scale $\kappa_T=0.013$ is disciplined by the difference in
-ownership between recent parents and other households. In the same ACS
-sample as ownership, heads whose oldest child is under four own at a rate
+ownership between recent parents and other households. In the ACS, heads
+whose oldest child is under four own at a rate
 12.8 percentage points higher than heads with no children at home. In the
 model, homes larger than $\bar h^R$ rooms are only for sale, so the space
 requirement pushes parents into ownership. A smaller $\kappa_T$ makes tenure
