@@ -1,0 +1,384 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\setlist{itemsep=1pt,topsep=2pt,leftmargin=1.4em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\newcommand{\ok}{\textcolor{green!45!black}{\textbf{[verified]}}}
+\newcommand{\unv}{\textcolor{red!70!black}{\textbf{[unverified]}}}
+\newcommand{\entry}[5]{%
+  \textbf{#1}\par
+  \begin{itemize}
+    \item #2
+    \item #3
+    \item #4
+    \item #5
+  \end{itemize}}
+
+\title{Intro materials: fertility, housing costs and family housing policy}
+\author{Gathered for ``Declining Fertility and Housing Costs''}
+\date{October 26, 2026}
+
+\begin{document}
+\maketitle
+
+\textbf{How to read this.} Each entry gives what the item is, a verbatim quote or number, the source and date, and a status tag.
+\ok{} means the exact wording or number was read in the primary text (PDF, statute, official page or the paper's full text). \unv{} means only a secondary report or summary was seen, so do not cite it before checking.
+Translations from Hungarian, Polish and Korean are mine and are marked.
+Reminders for paper text: the decline is taken as given (never that housing caused it), first person ``I'', and no ``mortgage'' in paper text (the word appears below only inside source names and quotes).
+
+\section*{Strongest hooks}
+\begin{enumerate}[leftmargin=1.6em]
+  \item \textbf{The US decline is now a fiscal and demographic projection, not a forecast debate.} CBO (Jan 2026): deaths exceed births from 2030; TFR 1.60 in 2024, projected 1.58 in 2026 and 1.53 by 2036. The Social Security Trustees (2026) cut the ultimate TFR from 1.90 to 1.75. (\S1)
+  \item \textbf{Housing is among the top stated barriers to having children.} UNFPA's 14-country survey (2025): housing is the third-ranked reason people have fewer children than they want, cited by 19\% on average, 31\% in Korea and 15\% in the US. (\S2)
+  \item \textbf{International organisations put housing costs next to the decline.} OECD (2024): TFR fell from 3.3 (1960) to 1.5 (2022), and ``increased housing costs since the mid-2010s have complicated the formation of long-term relationships and families.'' (\S1)
+  \item \textbf{Both US parties proposed policies on the family housing and credit margin.} Harris (Aug 2024): up to \$25,000 in down-payment assistance plus a \$6,000 newborn credit. Vance (Oct 2024): people are ``delaying having families \ldots because they can't afford a place to raise a family.'' Enacted in 2025--26: Trump Accounts (\$1,000 per newborn), a \$2,200 child tax credit and the ROAD to Housing Act. (\S2, \S3)
+  \item \textbf{Abroad, governments tie housing credit to births directly.} Hungary writes off HUF 10 million of a 3\% home loan per child from the second child, and forgives the whole Babaváró loan at the third child. Poland repays PLN 20,000 (second child) or PLN 60,000 (third child) of a family home loan. Korea runs a newborn special home-purchase loan, and Singapore reserves up to 40\% of new flats for families with children. (\S3)
+  \item \textbf{The age of entry into ownership has moved to the age of family formation and beyond.} NAR (Nov 2025): first-time buyers are a record-low 21\% of buyers, and their median age is a record-high 40. JCHS (2025): the price-to-income ratio is 5.0, against 4.1 in 2019. (\S2)
+  \item \textbf{The literature leaves a gap on credit and tenure.} Kearney, Levine and Pardue find no economic factor that explains the decline, but their housing test uses state rents only. Quasi-experiments find that credit and space raise births: Hacamo (+6 pp in buying a home and having a child), van Doornik et al. (+3.8\% overall, +32\% at ages 20--25) and Dettling--Kearney (owners and renters move in opposite directions). KMV find that credit does not move prices because renting is the outside option. (\S4)
+\end{enumerate}
+
+Counterweight to keep in view: Redfin/Ipsos (2025) finds that only 4\% of people struggling with housing payments delayed or gave up a child (\S2). Couillard (2025) states that housing costs are ``a major cause of fertility decline''. That is the causal framing my paper avoids (\S4).
+
+%=====================================================================
+\section{Fertility decline as a policy concern}
+
+\entry{CBO, deaths exceed births from 2030}
+{CBO's 2026 demographic outlook: falling fertility pushes deaths above births, so all population growth comes from immigration.}
+{``declining fertility rates cause the annual number of deaths to exceed the annual number of births starting in 2030. Without immigration, the population would begin to shrink in 2030.''}
+{CBO, \emph{The Demographic Outlook: 2026 to 2056}, \url{https://www.cbo.gov/publication/61879}. January 7, 2026.}
+{\ok{} (read on the live page).}
+
+\entry{CBO, the projected TFR path}
+{TFR history and projection.}
+{``After peaking in 2007 at 2.12, that rate has generally fallen, mainly because of lower fertility rates for women under age 25.'' ``1.64 births per woman in 2020 and declined to 1.60 in 2024.'' ``CBO projects that the total fertility rate will equal 1.58 births per woman in 2026, decline to 1.53 in 2036.''}
+{CBO, same report, Fertility section, \url{https://www.cbo.gov/publication/61994}. January 7, 2026.}
+{\ok{} (live page). The January 2025 edition had higher paths, so cite one edition.}
+
+\entry{Social Security Trustees cut the long-run TFR}
+{The intermediate ultimate TFR falls from 1.90 to 1.75, and the reasons listed include economic prospects.}
+{``The Trustees assume ultimate total fertility rates of 2.10, 1.75, and 1.40 children per woman \ldots{} the intermediate and high-cost ultimate rates are 0.15 and 0.20 lower, respectively, than the ultimate rates assumed in last year's report.'' Reasons include ``possible concerns about economic opportunity for the future.''}
+{SSA, 2026 Trustees Report, Section V.A, \url{https://www.ssa.gov/oact/tr/2026/V_A_demo.html}. 2026.}
+{\ok{} (live page).}
+
+\entry{CDC/NCHS, 2025 provisional births}
+{Births and the general fertility rate fell again.}
+{``the number of births decreased by 1\% from 2024, with 3,606,400 births recorded in 2025. The general fertility rate also fell slightly to 53.1 births for every 1,000 females ages 15 to 44 in 2025.''}
+{NCHS press release ``U.S. Births down 1\% in 2025'', \url{https://www.cdc.gov/nchs/pressroom/releases/20260409.html}. April 9, 2026.}
+{\ok{} (live page). The final 2024 GFR is 53.8 (CDC FastStats, \ok). The final 2024 TFR (reportedly 1,599.5 per 1,000) is \unv: the PDF would not open. Use CBO's 1.60 instead.}
+
+\entry{Kearney, Levine and Pardue, the size of the US decline}
+{The standard academic statement of the decline.}
+{The birth rate fell to 55.8 per 1,000 women aged 15--44 in 2020, ``about a 20 percent decline over 13 years.''}
+{\emph{JEP} 36(1), 2022, printed p.~151.}
+{\ok{} (full text).}
+
+\entry{UN World Population Prospects 2024}
+{Global TFR, the share of countries below replacement, and the population peak.}
+{``Currently, the global fertility rate stands at 2.25 live births per woman, down from 3.31 births in 1990.'' ``More than half of all countries and areas globally have fertility below the replacement level of 2.1.'' Nearly one fifth, including China, Italy, Korea and Spain, are below 1.4. The population peaks around 10.3 billion in the mid-2080s.}
+{UN DESA, \emph{WPP 2024: Summary of Results}, Key messages, \url{https://population.un.org/wpp/assets/Files/WPP2024_Summary-of-Results.pdf}. 2024.}
+{\ok{} (PDF text). The page number was not recorded; the quotes are in the front-matter key messages.}
+
+\entry{OECD, Society at a Glance 2024}
+{OECD average TFR, with housing costs named.}
+{``the total fertility rate dropped from 3.3 children per woman in 1960 to just 1.5 children per woman in 2022, on average across OECD countries.'' ``increased housing costs since the mid-2010s have complicated the formation of long-term relationships and families.'' Scarpetta: ``Facilitating parenthood decisions requires comprehensive and reliable support to families. This includes affordable housing.''}
+{OECD press release, \url{https://www.oecd.org/en/about/news/press-releases/2024/06/declining-fertility-rates-put-prosperity-of-future-generations-at-risk.html}. June 20, 2024.}
+{\ok{} (live press release). The report chapter itself was not opened.}
+
+\entry{Lancet GBD 2021, forecasts to 2100}
+{Almost every country falls below replacement by 2100.}
+{``global TFR of 1.83 (1.59--2.08) in 2050 and 1.59 (1.25--1.96) in 2100.'' Countries above replacement: ``49 (24.0\%) in 2050 and only six (2.9\%) in 2100.''}
+{GBD 2021 Fertility and Forecasting Collaborators, \emph{The Lancet} 403(10440): 2057--2099, doi:10.1016/S0140-6736(24)00550-6. March 20, 2024.}
+{\ok{} (accepted-version PDF, Findings).}
+
+\entry{IMF working paper, fertility and growth in Europe}
+{IMF staff evidence that lower fertility drags on growth.}
+{``The total fertility rate \ldots{} in Europe is already at 1.46.'' ``fertility has a significant positive effect on real GDP per capita growth in a sample of 42 European countries over the period 1960--2022.''}
+{Cevik, IMF WP/25/55, ``Lost Generations? Fertility and Economic Growth in Europe'', \url{https://www.imf.org/en/publications/wp/issues/2025/03/21/lost-generations-fertility-and-economic-growth-in-europe-565380}. March 21, 2025.}
+{\ok{} (IMF summary page). These are the author's views, not the IMF's. The April 2025 WEO chapter and F\&D articles were not read: \unv.}
+
+\entry{Korea declares a ``demographic national emergency''}
+{The president's declaration names housing among the causes.}
+{``Today, I officially declare a demographic national emergency.'' The report adds that ``expensive housing prices, education costs and long working hours, have made young people reluctant to start families.''}
+{\emph{The Korea Times}, \url{https://www.koreatimes.co.kr/amp/southkorea/society/20240619/korean-presidentyoon-declares-demographic-national-emergency-vows-all-out-efforts-to-tackle-low-birthrate}. June 19, 2024.}
+{\ok{} as a news report quoting the speech, not a transcript. Yoon was later removed from office, so frame this as 2024.}
+
+\entry{US pronatalist salience: Vance at the March for Life}
+{The vice president ties births to affordability.}
+{``I want more babies in the United States of America.'' \ldots{} ``it is the task of our government to make it easier for young moms and dads to afford to have kids.''}
+{Catholic World Report/CNA, \url{https://www.catholicworldreport.com/2025/01/24/jd-vance-addresses-march-for-life-we-need-a-culture-that-celebrates-life-at-all-stages/}. January 24, 2025.}
+{\ok{} as quoted in the article, not a transcript.}
+
+\entry{Executive order on IVF}
+{The administration frames family formation as a policy goal.}
+{``our public policy must make it easier for loving and longing mothers and fathers to have children.''}
+{White House, ``Expanding Access to In Vitro Fertilization'', \url{https://www.whitehouse.gov/presidential-actions/2025/02/expanding-access-to-in-vitro-fertilization/}. February 18, 2025.}
+{\ok. Trump's ``baby boom'' and ``fertilization president'' quotes were not found in a primary source, so they are not used.}
+
+%=====================================================================
+\section{Housing costs and fertility in public discussion}
+
+\entry{UNFPA State of World Population 2025, housing as a barrier}
+{A 14-country YouGov survey on why people have fewer children than they want.}
+{``The third, at 19 per cent, was housing concerns, such as lack of space or high cost'' (printed p.~18). Figure 2, ``Housing limitations (e.g., lack of space, high house prices/rent costs)'': Korea 31\%, India 22\%, Germany 18\%, US 15\%, all-country average 19\% (printed p.~16). Financial limitations rank first: ``39 per cent reported that financial limitations had affected or would affect their ability to realize their desired family size.''}
+{UNFPA, \emph{The Real Fertility Crisis}, \url{https://www.unfpa.org/sites/default/files/pub-pdf/EN_State\%20of\%20World\%20Population\%20report\%202025.pdf}. June 2025.}
+{\ok{} (PDF text).}
+
+\entry{UNFPA 2025 cites the Brazil housing-credit lottery}
+{The UN report uses housing-credit evidence as its policy example.}
+{``One study from Brazil found that young adult winners of housing credit lotteries were 32 per cent more likely to have children (Van Doornik and others, 2025).'' ``housing costs are a particularly critical concern among young people.''}
+{Same report, printed p.~54.}
+{\ok.}
+
+\entry{Vance, NewsNation town hall}
+{Then the vice-presidential nominee; he links housing costs to delayed marriage and children.}
+{``So many people in my generation --- they're delaying having families, they're delaying getting married because they can't afford a place to raise a family.'' He called housing costs ``the biggest threat to the American dream.''}
+{NewsNation, \url{https://digital-release.newsnationnow.com/?p=3101836}. October 25, 2024.}
+{\ok{} (article quoting him).}
+
+\entry{Pronatalists target housing}
+{Press framing of the right-of-centre pronatalist agenda.}
+{``Proponents of boosting the declining US birth rate are targeting Americans' biggest expense: housing'' (Business Insider). Stone (IFS): ``It's the thing that everybody thinks about first, as soon as they're thinking about fertility.''}
+{IFS news digests, \url{https://ifstudies.org/in-the-news/jd-vance-wants-women-to-have-more-babies-conservative-pro-natalists-say-cheaper-housing-is-key}. May 28 and August 15, 2025.}
+{\ok{} for the excerpts on the IFS pages. The full Business Insider article was not read.}
+
+\entry{IFS, \emph{Homes for Young Families}}
+{An advocacy think-tank survey putting housing first among the gaps between desired and expected family size.}
+{``housing costs explain more total foreshortening of family goals across our whole sample than any other factor we surveyed.''}
+{Cox and Stone, Institute for Family Studies, \url{https://ifstudies.org/ifs-admin/resources/reports/ifs-homesforyoungfamiliesreportmarch2025.pdf}. March 2025.}
+{\ok{} (PDF text). This is an advocacy source and the evidence is correlational survey data.}
+
+\entry{Seoul mayor: housing costs block births}
+{Seoul expands public housing for newlyweds.}
+{``Seoul's high housing and residential costs have been the biggest obstacles for newlywed couples to have children.''}
+{\emph{Korea JoongAng Daily}, \url{https://www.koreajoongangdaily.com/korea/seoul-to-provide-around-4400-public-housing-for-newlyweds/11819449}. Circa 2025.}
+{\ok{} for the wording. The date is \unv.}
+
+\entry{Bank of Greece governor, BIS speech}
+{A central banker on housing affordability and family formation.}
+{``Many young adults end up remaining in the parental home for longer than they would otherwise choose, while others postpone or reconsider decisions related to family formation altogether.''}
+{Stournaras, ``What can central banks do about housing affordability'', \url{https://www.bis.org/speeches/20260603-what-can-central-banks-do-about-housing-affordability}. May 30, 2026.}
+{\ok.}
+
+\entry{Pew, reasons for not having children}
+{The cost of a child in general, not housing specifically.}
+{Among adults under 50 who say they are unlikely to have children: ``They can't afford to have a child (36\% vs. 12\%).''}
+{Pew Research Center, \url{https://www.pewresearch.org/social-trends/2024/07/25/reasons-adults-give-for-not-having-children/}. July 25, 2024.}
+{\ok. There is no housing item.}
+
+\entry{Redfin/Ipsos counterweight}
+{Few people say they delay children because of housing.}
+{``Four percent of people who struggle with monthly payments have decided against or delayed having a child to afford housing costs.'' This is out of the 44.4\% who struggle.}
+{Redfin, \url{https://www.redfin.com/news/survey-homebuyers-renters-family-sacrifices/}. September 23, 2025.}
+{\ok.}
+
+\textbf{Affordability facts}
+
+\entry{NAR, first-time buyers at record low share and record high age}
+{The age at first purchase is now past the age of first birth.}
+{``The share of first-time home buyers dropped to a record low of 21\%, while the typical age of first-time buyers climbed to an all-time high of 40 years.'' Lautz: a market ``starved for affordable inventory.''}
+{NAR, 2025 Profile of Home Buyers and Sellers, press release, \url{https://www.nar.realtor/newsroom/first-time-home-buyer-share-falls-to-historic-low-of-21-median-age-rises-to-40}. November 4, 2025.}
+{\ok.}
+
+\entry{Harvard JCHS, prices and rent burdens}
+{Price-to-income ratios and renter cost burdens.}
+{``In 2024, the price-to-income ratio hit 5.0, on par with the record high reached in 2022 and well above the pre-pandemic reading of 4.1 in 2019.'' ``the number of cost-burdened renters reached another record high in 2023 at 22.6 million renters (50 percent).''}
+{JCHS, \emph{State of the Nation's Housing 2025}, \url{https://www.jchs.harvard.edu/sites/default/files/reports/files/Harvard_JCHS_The_State_of_the_Nations_Housing_2025.pdf}. June 2025.}
+{\ok{} (PDF text). Page numbers were not recorded.}
+
+\entry{NCHS, age at first birth}
+{The mean age of mothers at first birth.}
+{``The mean age of mothers at first birth increased 0.9 year, from 26.6 in 2016 to 27.5 in 2023.''}
+{NCHS report via PubMed Central, \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC12278045/}. 2025.}
+{\ok. Set against NAR: the median first-time buyer is about 12 years older than the mean first-time mother (my arithmetic, mixing a median and a mean).}
+
+%=====================================================================
+\section{Housing and credit policies aimed at families and first-time buyers}
+\subsection*{United States}
+
+\entry{Harris campaign: \$25,000 down payment, 3 million homes, \$6,000 newborn credit}
+{Proposed, not enacted.}
+{``Providing Historic \$25,000 Down-Payment Support for First-Time Homeowners'': for buyers who paid rent on time for two years, ``up to \$25,000 in down-payment assistance.'' The release has the heading ``Calling for the Construction of 3 Million New Housing Units To End the Housing Supply Shortage in the Next Four Years.'' It also proposes to ``expand the Child Tax Credit to provide a \$6,000 tax cut to families with newborn children.''}
+{Harris for President press release, ``Vice President Harris Lays Out Agenda to Lower Costs for American Families'', \url{https://mailchi.mp/press.kamalaharris.com/vice-president-harris-lays-out-agenda-to-lower-costs-for-american-families}. August 16, 2024.}
+{\ok{} (the campaign's own text). The earlier Biden--Harris version limited the \$25,000 to first-generation buyers and added a \$10,000 first-time-buyer credit; that detail is from the agent's reading of the same release and I did not recheck it.}
+
+\entry{Trump Accounts: \$1,000 per newborn (Public Law 119-21)}
+{Enacted in the One Big Beautiful Bill Act.}
+{Each eligible child ``shall be treated as making a payment \ldots{} in an amount equal to \$1,000,'' for children ``born after December 31, 2024, and before January 1, 2029'' who are US citizens (new IRC \S6434, Sec.~70204).}
+{Public Law 119-21, \url{https://www.congress.gov/119/plaws/publ21/PLAW-119publ21.htm}. July 4, 2025.}
+{\ok{} (statute text). The IRS proposed rules on March 6, 2026 (IR-2026-31).}
+
+\entry{Child tax credit raised to \$2,200}
+{Enacted in the same law.}
+{Sec.~70104 strikes ``\$2,000'' and inserts ``\$2,200'' (IRC \S24(h)).}
+{Public Law 119-21, as above. July 4, 2025.}
+{\ok.}
+
+\entry{21st Century ROAD to Housing Act (Public Law 119-101)}
+{Enacted housing-supply law; it grew out of the Senate ROAD to Housing Act (S.~2651), which Senate Banking reported unanimously in July 2025.}
+{``An Act To increase the supply of housing in America, and for other purposes.''}
+{GPO, \url{https://www.govinfo.gov/content/pkg/PLAW-119publ101/html/PLAW-119publ101.htm}. July 11, 2026. CRS R48732 covers the Senate bill.}
+{\ok{} for the title, date and purpose; the provisions were not read. The vote counts seen in a search summary are \unv.}
+
+\entry{FHA annual premium cut}
+{Enacted administrative action that lowers the cost of low-down-payment FHA loans.}
+{New annual premium of 50 bps for loan-to-value up to 95\% and 55 bps above 95\%, ``effective for case numbers endorsed on or after March 20, 2023.''}
+{HUD Mortgagee Letter 2023-05, \url{https://archives.hud.gov/news/2024/2023-05hsgml.pdf}. February 22, 2023.}
+{\ok{} for the new rates. The old rate (85 bps) and the \$800 a year saving are \unv.}
+
+\entry{\$5,000 ``baby bonus'' idea}
+{Floated by the administration and never enacted.}
+{Reported as ``a \$5,000 payment to mothers after birth.''}
+{\emph{New York Times}, April 2025, as relayed by ABC News, \url{https://abc7.com/post/trump-administration-looking-baby-bonus-incentivize-public-have-more-children/16231863/}. April 22, 2025.}
+{\unv: the NYT original was not read and there is no government document.}
+
+\entry{50-year home loan idea}
+{Floated by FHFA Director Pulte and not implemented.}
+{Called ``a complete game changer'' (as quoted in the press).}
+{Press reports, e.g.\ \url{https://www.floridarealtors.org/news-media/news-articles/2025/11/fhfa-explores-50-year-home-loan-option}. November 8--10, 2025.}
+{\unv: the original X post was not seen.}
+
+\subsection*{International}
+
+\entry{Hungary: CSOK Plusz, debt written off per child}
+{Enacted in 2024: a 3\% fixed-rate home loan for families, written down as children arrive.}
+{``A második és minden következő gyermek születése esetén pedig 10-10 millió forintot le lehet írni a hitelből'' (my translation: on the birth of the second and each later child, HUF 10 million each can be written off the loan). Up to HUF 50 million at 3\% throughout.}
+{Government of Hungary, \url{https://kormany.hu/hirek/a-fix-3-os-lakashitel-tobb-mas-tamogatassal-is-osszevonhato}. Page from 2025--26.}
+{\ok{} (Hungarian text; translation mine).}
+
+\entry{Hungary: Babaváró loan, forgiven at the third child}
+{Enacted in 2019: an interest-free loan to couples expecting children, usable as a down payment.}
+{``A babaváró plusz 11 millió forintot jelent \ldots{} a babaváró 0\%-os kamatú. A harmadik gyermek érkezését követően az állam az adósság teljes összegét elengedi'' (my translation: HUF 11 million at 0\%; after the third child the state forgives the whole debt).}
+{Same kormany.hu page.}
+{\ok{} (translation mine).}
+
+\entry{Poland: per-child repayment of a family home loan}
+{Enacted by the 2021 act on borrower assistance (the family home-loan programme).}
+{``Spłata rodzinna jest dokonywana w wysokości: 1) 20 000 zł --- w przypadku powiększenia gospodarstwa domowego kredytobiorcy o drugie dziecko, 2) 60 000 zł --- \ldots{} o trzecie albo kolejne dziecko'' (Art.~7(3); my translation: PLN 20,000 on a second child and PLN 60,000 on a third or later child).}
+{Sejm consolidated text, Dz.U.\ 2024 poz.\ 1724, \url{https://api.sejm.gov.pl/eli/acts/DU/2024/1724/text/U/D20241724Lj.pdf}. Statute 2021, consolidated 2024--26.}
+{\ok{} (statute text). Whether new loans are still made in 2026, and the ``Safe 2\% loan'' terms, are \unv.}
+
+\entry{South Korea: newborn special home loan}
+{Enacted January 2024: subsidised purchase and jeonse loans for households with a newborn.}
+{Release title (my translation): ``From 2024, home-purchase loans of up to KRW 500 million for households with births.'' In December 2024 the income cap rose to KRW 200 million for dual earners, with base rates of 3.30--4.30\% (purchase) and 3.05--4.10\% (jeonse).}
+{MOLIT via korea.kr, \url{https://www.korea.kr/briefing/pressReleaseView.do?newsId=156607815} (December 27, 2023) and \url{https://www.korea.kr/news/policyNewsView.do?newsId=148936821} (November 28, 2024).}
+{\ok{} for the titles and headline figures (translation mine). The body was not read and the 2026 terms were not checked.}
+
+\entry{Singapore: Family and Parenthood Priority Scheme}
+{Enacted; priority allocation of public flats to families with children.}
+{``For first-timer married couples with child(ren) and young married couples to get their flat more easily.'' ``Up to 40\% of the BTO flat supply and up to 60\% of the SBF flat supply are set aside for you.''}
+{MND/HDB portal, \url{https://www.mynicehome.gov.sg/get-started/hdb-priority-schemes-guide/}. Page updated August 23, 2026.}
+{\ok.}
+
+\entry{China: national childcare subsidy}
+{Enacted July 2025; not a housing measure, but the national pronatalist benchmark.}
+{``3,600 yuan (about 503 US dollars) per year for each child under the age of three.''}
+{National Health Commission (Xinhua), \url{https://en.nhc.gov.cn/2025-07/31/c_86502.htm}. July 31, 2025.}
+{\ok.}
+
+\entry{China: local housing-fund loan limits raised for families with two or three children}
+{Local measure (Ningbo); similar measures in other cities.}
+{``raise the upper limit of such loans from 600,000 yuan (\$94,000) to 800,000 yuan for first-time homebuyers who have two or three children.''}
+{\emph{China Daily}, \url{https://govt.chinadaily.com.cn/s/202202/07/WS620068fa498e6a12c121e7bc/ningbo-to-ease-housing-loans-to-boost-births.html}. February 2022.}
+{\ok{} as a state-media report. The municipal text was not seen, and there is no national rule. Other cities are \unv.}
+
+\entry{Russia: maternity capital usable for housing}
+{Enacted in 2007 and indexed since.}
+{About RUB 729 thousand for a first child in 2026 (media figure).}
+{Media reports only.}
+{\unv.}
+
+%=====================================================================
+\section{Academic facts the intro could cite}
+All from full texts on disk unless marked.
+
+\entry{Kearney, Levine and Pardue (2022), ``The Puzzle of Falling US Birth Rates since the Great Recession''}
+{A descriptive decomposition plus state-level correlations.}
+{The decline is in first births: ``driven more by a decline in initial childbearing (first births) than by women not having larger families'' (p.~156). Housing is tested through state-level rents only: ``The data, though, do not indicate a negative association between state-level changes in rents and state-level changes in birth rates'' (p.~165). ``we are unable to identify a strong link between any specific policies or economic factors and the declining birth rates'' (p.~152). They speculate that the cause is ``not about some changing policy or cost factor, but rather shifting priorities across cohorts'' (p.~167).}
+{\emph{JEP} 36(1): 151--176, 2022.}
+{\ok{} (printed pages checked against the PDF). There is no test of house prices, credit or the tenure margin; that is my reading, not theirs.}
+
+\entry{Dettling and Kearney (2014), ``House prices and birth rates''}
+{MSA-by-group panel, 1997--2006, with house prices interacted with ownership.}
+{``a \$10,000 increase leads to a 5\% increase in fertility rates among owners and a 2.4\% decrease among non-owners.'' ``the net effect of a \$10,000 increase in house prices is a 0.8\% increase in current period fertility rates'' at mean ownership (p.~82). Framing: ``Recognizing that housing is a major cost associated with child rearing.''}
+{\emph{Journal of Public Economics} 110: 82--100.}
+{\ok. The renter sentence with ``21\%'' reads oddly in the original (Section 4); avoid it.}
+
+\entry{Lovenheim and Mumford (2013), ``Do Family Wealth Shocks Affect Fertility Choices?''}
+{PSID panel with MSA house-price growth.}
+{``a \$100,000 increase in housing wealth among home owners causes a 16\% to 18\% increase in the probability of having a child.'' ``There is no evidence of an effect of MSA-level housing price growth on the fertility of renters'' (p.~464).}
+{\emph{REStat} 95(2): 464--475.}
+{\ok.}
+
+\entry{Hacamo (2021), ``The Babies of Mortgage Market Deregulation''}
+{A federal regulator ruling as a credit-supply shock.}
+{``young households fully exposed to mortgage market deregulation increase their probability of purchasing a home and having a child by 6 percentage points \ldots{} access to space is the relevant economic mechanism.'' Opening framing: population aging ``is deemed to be one of the most threatening economic challenges of the next several decades'' (p.~907).}
+{\emph{RFS} 34(2): 907--948; local copy \texttt{\textasciitilde/Desktop/Papers/hhaa073.pdf}.}
+{\ok{} (I read the abstract and first page myself).}
+
+\entry{van Doornik, Fazio, Ramadorai and Skrastins, ``Housing and Fertility''}
+{Brazilian housing-credit consortium lotteries.}
+{``obtaining housing increases the average probability of having a child by 3.8\% and the number of children by 3.2\%.'' For ages 20--25 the effects are 32\% and 33\%, ``with no increase in fertility for people above age 40.'' ``alleviating housing credit and physical space constraints can significantly increase fertility.''}
+{NBER conference version, October 2024 (local \texttt{f209752.pdf}); also CEPR DP 19805 (2025).}
+{\ok{} for the October 2024 version. The 2025 version was not checked, and its age-group figures may differ.}
+
+\entry{Cumming and Dettling (2024), ``Monetary Policy and Birth Rates''}
+{Pass-through of policy rates to rate resets, UK and US.}
+{``each one percentage point drop in the policy rate increased birth rates amongst households eligible for a rate adjustment by 3\%'' (p.~229).}
+{\emph{REStud} 91(1): 229--258.}
+{\ok.}
+
+\entry{Couillard (2025), ``Build, Baby, Build''}
+{Structural model of location, bedrooms and fertility; rents only, no down-payment constraint.}
+{``rising costs since 1990 are responsible for 11\% fewer children, 51\% of the total fertility rate decline between the 2000s and 2010s.'' ``a supply shift for large units generates 2.3 times more births than an equal-cost shift for small units.'' ``I conclude that rising housing costs are a major cause of fertility decline'' (pp.~1--3).}
+{Working paper, November 2, 2025.}
+{\ok. Contrast: this is the causal-decline framing my paper does not take.}
+
+\entry{Kaplan, Mitman and Violante (2017/2020), ``The Housing Boom and Bust''}
+{HA model with credit, income and belief shocks.}
+{``Shifts in credit conditions do not move house prices but are important for the dynamics of home ownership, leverage, and foreclosures.'' ``house prices are almost completely decoupled from credit conditions \ldots{} the most surprising insight of our paper'' (NBER WP, p.~6).}
+{NBER WP 23694 (2017); \emph{JPE} 2020 (published version not checked).}
+{\ok{} for the WP.}
+
+\entry{Patterson and Sarsons (2026), ``The Child Cost Index''}
+{A CPI-style price index of a fixed-quality child-year (CEX goods plus parental time), 1990--2023, relative to an adult consumption index.}
+{``the monetary price of a child-year has risen at almost exactly the pace of the adult consumption it displaces'' (p.~1). Shelter is the largest offset: children are assigned only the cost of an extra bedroom, ``so rapid shelter inflation raises the ACI more than the CCI'' (p.~2). Allocating housing per capita moves the 2023 ratio to ``roughly four percentage points above parity'' (p.~16). The cost of an additional bedroom rose ``from about \$1,000 per year in 1990 to nearly \$4,000 in 2023'' (p.~12, fn.~11, nominal). Their caveat, which is my mechanism: costs are ``concentrated in the early years of childhood, when households have lower earnings and limited access to credit'' (p.~3), and the evidence ``shifts attention from broad-based average price growth toward the timing, concentration, heterogeneity, and perception of child-related costs'' (p.~3).}
+{Working paper, July 2026; local \texttt{Fertility papers collection/Patterson and Sarsons - 2026 - The Child Cost Index.pdf}.}
+{\ok{} (full text). Cite it in the intro or literature review as the aggregate-accounting counterpoint. It hurts a ``children got more expensive'' framing and fits a timing, liquidity and entry framing.}
+
+\entry{Moreno-Maldonado and Santamaria (2024)}
+{Structural model of delayed childbearing and city-centre location.}
+{``delayed childbearing accounts for 52\% of urban revival.'' The causality runs from fertility to housing, the reverse of my direction.}
+{Working paper, March 2024.}
+{\ok.}
+
+\entry{Doepke, Hannusch, Kindermann and Tertilt (2023), ``The economics of fertility: a new era''}
+{Handbook survey.}
+{The driving forces ``are qualitatively different from earlier decades''. A full-text search finds no discussion of housing.}
+{\emph{Handbook of the Economics of the Family}, ch.~4.}
+{\ok. The gap is my reading.}
+
+\entry{Others}
+{Sommer (2014): higher uninsurable earnings risk ``lead[s] to a postponement in births \ldots{} and \ldots{} a decline in the total number of births'' (no housing; \ok).}
+{Halket and Vasudev (2014): ``removing the down payment requirement for buying a house does not make home ownership that much more attractive'' (\ok; a counterpoint to keep in view).}
+{Paz-Pardo (WP): ownership at age 35 fell from 75\% (1940s cohort) to 55\% (1980s cohort) (\ok{} for the WP).}
+{Clark and Ferrer (2019, Canada): \unv. Aksoy and Mulder/Billari: not found.}
+
+%=====================================================================
+\section{Not verified: do not cite yet}
+\begin{itemize}
+  \item Final 2024 TFR of 1.5995 (NVSR 75-02): the PDF would not open; use CBO's 1.60.
+  \item Final 2025 births in CDC Data Brief 571 (3,612,012): search summary only.
+  \item UNFPA 2026 youth survey (57\% blame housing and economic constraints): secondary reports only.
+  \item The \$5,000 baby bonus wording; the 50-year loan quote; Russian maternity capital amounts.
+  \item Press of record (Economist, NYT, WSJ, FT) on housing and the baby bust: behind paywalls, so not read.
+  \item Not searched in time: Fannie/Freddie 3\% down programmes, the Downpayment Toward Equity Act, the YIMBY Act, California SB~79, Japan, Italy, the Singapore Baby Bonus, and Hungary's family-policy spending share of GDP.
+\end{itemize}
+
+\end{document}

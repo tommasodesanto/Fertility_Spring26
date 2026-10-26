@@ -1,0 +1,214 @@
+\section{Household Optimality Conditions}
+\label{app:household}
+
+In this Appendix, I derive the conditions that Section~\ref{sec:m-analysis}
+uses: the choices within a housing option, the Euler equation for the bond
+and the borrowing multiplier $\zeta_t$, the effect of credit on the value of
+a household and on fertility, and the two results in the footnotes of that
+Section. Throughout, $n$ is the number of children at home after the birth
+outcome of period $t$, and the budget constraint \eqref{eq:m-budget} of the
+chosen option defines $c_t$ as a function of $b_{t+1}$ and, for a renter, of
+$h^R_t$.
+
+\subsubsection*{Choices within an option.}
+Within option $j$ of \eqref{eq:m-vh}, renting or owning $h^O_t\in\mathcal H$,
+the household chooses $b_{t+1}$ and, if it rents, $h^R_t$, subject to the
+borrowing limit \eqref{eq:m-ltv}, with $h^O_t=0$ for a renter, and to the
+cap $h^R_t\le\bar h^R$. Let $\zeta_t\ge0$ and $\nu_t\ge0$ be the multipliers
+on the two constraints. By \eqref{eq:m-budget},
+$\partial c_t/\partial b_{t+1}=-1$ in every option and
+$\partial c_t/\partial h^R_t=-r_t$ for a renter. In \eqref{eq:m-utility}, the
+marginal utilities of consumption and of rented space are the same power of
+the composite in brackets, times $\alpha_0/c_t$ and
+$(1-\alpha_0)/(h^R_t-\bar h(n))$, so the condition
+$\partial u/\partial h^R_t=r_t\,\partial u/\partial c_t+\nu_t$ gives, below
+the cap,
+\begin{equation}
+ r_t\bigl(h^R_t-\bar h(n)\bigr)=\frac{1-\alpha_0}{\alpha_0}\,c_t .
+ \label{eq:app-intra}
+\end{equation}
+A renter spends the share $\alpha_0$ of $c_t+r_t(h^R_t-\bar h(n))$ on
+consumption and $1-\alpha_0$ on space above the requirement. With
+$b_t=b_{t+1}=0$ and no home to sell, this spending is
+$y_t+T_t-r_t\bar h(n)$, and substituting the two shares into
+\eqref{eq:m-utility} gives \eqref{eq:m-indirect}. At the cap,
+$h^R_t=\bar h^R$ and
+$\nu_t=\partial u/\partial h^R_t-r_t\,\partial u/\partial c_t\ge0$. An
+owner's space is fixed within the option, so its only choice is the bond.
+
+\subsubsection*{The bond.}
+The first-order condition for $b_{t+1}$ is the Euler equation
+\begin{equation}
+ \frac{\partial u}{\partial c_t}
+ =\beta\,\E_t\Bigl[s_a\frac{\partial V_{t+1}}{\partial b_{t+1}}+(1-s_a)\,B'(x_{t+1})\Bigr]+\zeta_t,
+ \qquad
+ \zeta_t\bigl(b_{t+1}+\phi P_th^O_t\bigr)=0,
+ \label{eq:app-euler}
+\end{equation}
+where $h^O_t=0$ for a renter and
+$B'(x_{t+1})=\theta_0(\theta_1+x_{t+1})^{-\sigma}$. The multiplier $\zeta_t$
+is the gain, in period-$t$ utility, from borrowing one more unit in period
+$t$ and repaying $R_b$ in period $t+1$: the marginal utility of consumption
+today net of the discounted expected marginal value of the bond tomorrow. It
+is positive only at the limit. The estate $x_{t+1}=b_{t+1}+(1-\mu)P_th^O_t$
+contains the bond position itself, so $\partial x_{t+1}/\partial b_{t+1}=1$
+and the bequest term carries no $R_b$; the survival term does, through the
+budget of period $t+1$.
+
+For Gumbel shocks with scale $\kappa$, the expected maximum over options is
+the logsum in \eqref{eq:m-fertility} and \eqref{eq:m-tenure}, whose
+derivative with respect to the value of one option is the probability of
+that option:
+\begin{equation}
+ \frac{\partial}{\partial V^k}\,\kappa\log\sum_{j}\exp\bigl(V^j/\kappa\bigr)
+ =\frac{\exp\bigl(V^k/\kappa\bigr)}{\sum_{j}\exp\bigl(V^j/\kappa\bigr)} .
+ \label{eq:app-logsum}
+\end{equation}
+The household observes the shocks before it chooses, so a marginal change in
+a state moves the value of the chosen option only; at the shocks where the
+choice switches, the two options have the same value. The derivative of the
+expected maximum with respect to a state is therefore the
+probability-weighted average of the derivatives of the option values. When
+$\sigma\ge1$, the value of an option whose feasible set shrinks to a point
+tends to $-\infty$, since $u\to-\infty$ as $c_t\to0$, so its probability
+tends to zero and the logsum is continuous where an option enters or leaves
+the feasible set. Within an option $j$ of period $t+1$, $b_{t+1}$ enters
+only the budget, with $\partial c_{t+1}/\partial b_{t+1}=R_b$, so
+$\partial V^j_{t+1}/\partial b_{t+1}=R_b\,\partial u/\partial c_{t+1}$ at the
+option's consumption, whether or not a constraint binds in that period.
+Writing $\frac{\partial u}{\partial c_{t+1}}(j,n')$ for this marginal
+utility with $n'$ children at home, and applying \eqref{eq:app-logsum} to
+\eqref{eq:m-tenure} and to \eqref{eq:m-fertility},
+\begin{multline}
+ \frac{\partial V_{t+1}}{\partial b_{t+1}}
+ =R_b\Bigl[\bigl(1-\pi_{a+1}\pi^F_{t+1,a+1}\bigr)\sum_{j}\pi^H_{t+1}(j\mid n_{t+1})\,\frac{\partial u}{\partial c_{t+1}}(j,n_{t+1})\\
+ +\pi_{a+1}\pi^F_{t+1,a+1}\sum_{j}\pi^H_{t+1}(j\mid n_{t+1}+1)\,\frac{\partial u}{\partial c_{t+1}}(j,n_{t+1}+1)\Bigr],
+ \label{eq:app-envelope}
+\end{multline}
+where $n_{t+1}$ is the number of children at home at the start of period
+$t+1$ and $\pi_{a+1}\pi^F_{t+1,a+1}$ is the probability of a birth in that
+period, zero outside the fertile ages. The derivative is $R_b$ times the
+marginal utility of consumption in period $t+1$, averaged over the birth
+outcome and the housing choice of that period; the cost $\xi$ drops out. The
+expectation $\E_t$ in \eqref{eq:app-euler} then averages over $z_{t+1}$ and
+the departure of children.
+
+\subsubsection*{A birth and the multiplier.}
+At the limit, $\zeta_t$ is the difference between the two sides of
+\eqref{eq:app-euler} at $b_{t+1}=-\phi P_th^O_t$, and a birth changes both.
+In period $t$, it adds $r_th_P$ to the spending a renter cannot avoid,
+lowers an owner's space above the requirement by $\chi h_P$, and raises
+$e(n)$; for $\sigma>1$, each of these raises $\partial u/\partial c_t$ at the
+given bond position. In period $t+1$ the same holds with probability
+$1-\lambda$, when the child is still at home, and the bequest term does not
+depend on $n$. Within an option,
+\begin{equation}
+ \zeta_t(h^O_t,n+1)-\zeta_t(h^O_t,n)
+ =\Bigl[\frac{\partial u}{\partial c_t}\Bigr]_{n}^{n+1}
+ -\beta s_a\,\E_t\Bigl[\frac{\partial V_{t+1}}{\partial b_{t+1}}\Bigr]_{n}^{n+1},
+ \label{eq:app-birth}
+\end{equation}
+where $[\,\cdot\,]_n^{n+1}$ is the difference between the values with $n+1$
+and with $n$ children at home, at $b_{t+1}=-\phi P_th^O_t$ in both. The
+first term is positive, and larger when spending in period $t$ is small,
+since the marginal utility of consumption is convex in spending. The second
+is scaled by $\beta s_a$ and by $1-\lambda$, averaged with the choice
+probabilities of period $t+1$, and evaluated at that period's spending,
+which is larger when earnings rise with age. The multiplier therefore rises
+for a young household with low spending today and rising earnings, and can
+fall for one that expects to spend less next period; the sign is ambiguous
+in general.
+
+\subsubsection*{Credit.}
+Consider a change in $\phi$ in period $t$ alone. It enters the problem of an
+owner only through the borrowing limit, whose derivative with respect to
+$\phi$ is $P_th^O_t$, so by the envelope theorem
+$\partial V^j_t/\partial\phi=\zeta_t(h^O,n)P_th^O$ for owning
+$h^O\in\mathcal H$ and $\partial V^j_t/\partial\phi=0$ for renting, where
+$\zeta_t(h^O,n)$ is the multiplier in the option of owning $h^O$ with $n$
+children at home. Applying \eqref{eq:app-logsum} to \eqref{eq:m-tenure}
+gives the second line of \eqref{eq:m-credit}. For the probability of trying,
+\eqref{eq:m-fertility} and
+$V^F_{t,A}-V^F_{t,0}=\pi_a\bigl[V^H_t(n_t+1)-V^H_t(n_t)-\xi\,\1\{\text{first child}\}\bigr]$
+give
+\begin{equation}
+ \frac{\partial\pi^F_{t,a}}{\partial\phi}
+ =\frac{\pi^F_{t,a}\bigl(1-\pi^F_{t,a}\bigr)}{\kappa}\,
+ \frac{\partial\bigl(V^F_{t,A}-V^F_{t,0}\bigr)}{\partial\phi}
+ =\frac{\pi^F_{t,a}\bigl(1-\pi^F_{t,a}\bigr)}{\kappa}\,\pi_a
+ \left[\frac{\partial V^H_t(n_t+1)}{\partial\phi}-\frac{\partial V^H_t(n_t)}{\partial\phi}\right],
+ \label{eq:app-credit-pi}
+\end{equation}
+where $\kappa=\kappa_1$ before the first child and $\kappa_C$ after; the
+cost $\xi$ does not depend on $\phi$ and drops out. This is the first line
+of \eqref{eq:m-credit}. If the change in $\phi$ is permanent, it also enters
+$V_{t+1}$, and the envelope theorem adds
+$\beta s_a\E_t\,\partial V_{t+1}/\partial\phi$ to the derivative of each
+option, which by \eqref{eq:app-logsum} is the second line of
+\eqref{eq:m-credit} in period $t+1$, averaged over the choices of that
+period, and so on: the derivative becomes the sum of these terms over all
+future periods, discounted by $\beta$ and weighted by survival and by the
+probabilities of the choices that lead to each option.
+
+The bracket in \eqref{eq:m-credit} splits into two parts,
+\begin{multline}
+ \frac{\partial V^H_t(n+1)}{\partial\phi}-\frac{\partial V^H_t(n)}{\partial\phi}
+ =\sum_{h^O\in\mathcal H}\bigl[\pi^H_t(h^O\mid n+1)-\pi^H_t(h^O\mid n)\bigr]\,\zeta_t(h^O,n)\,P_th^O\\
+ +\sum_{h^O\in\mathcal H}\pi^H_t(h^O\mid n+1)\bigl[\zeta_t(h^O,n+1)-\zeta_t(h^O,n)\bigr]\,P_th^O ,
+ \label{eq:app-credit-decomp}
+\end{multline}
+where the first sum holds the multipliers at their values without the child
+and the second holds the probabilities at their values with the child. The
+first sum is positive when the child moves probability from renting, and
+from homes where the limit is slack, toward homes where
+$\zeta_t(h^O,n)P_th^O$ is large. The second is positive when the child
+raises the multiplier in the homes the household is likely to own with it,
+with the sign of \eqref{eq:app-birth}. Both are small for a household that
+rents with high probability with and without the child.
+
+\subsubsection*{The owner's cost of space.}
+By \eqref{eq:m-budget}, an owner that holds a unit of housing from period $t$
+to period $t+1$ pays $P_t$ and $\tau^pP_t$ in period $t$. In period $t+1$ it
+pays maintenance $\delta_HP_{t+1}$ if it stays, or receives
+$(1-\delta_H-\mu)P_{t+1}$ if it sells, so apart from the selling cost the unit
+is worth $(1-\delta_H)P_{t+1}$ in period $t+1$, which the bond values at
+$(1-\delta_H)P_{t+1}/R_b$ in period $t$. A renter pays $r_t$ in period $t$. By
+\eqref{eq:m-rent},
+\begin{equation}
+ r_t-\Bigl[(1+\tau^p)P_t-\frac{(1-\delta_H)P_{t+1}}{R_b}\Bigr]=0,
+ \label{eq:app-usercost}
+\end{equation}
+where the term in brackets is the owner's cost in period-$t$ units. Apart from
+the selling cost, owning a unit of space costs the same as renting it, along a
+transition as well as in a stationary equilibrium.
+
+\subsubsection*{The cost of a child's space and earnings.}
+Let $\tilde y_t=y_t+T_t$, $k=r_th_P$ and
+$\Theta_t=\alpha_0^{\alpha_0}(1-\alpha_0)^{1-\alpha_0}r_t^{\alpha_0-1}$. The
+first term of \eqref{eq:m-indirect} is $(\Theta_t\tilde y_t)^{1-\sigma}/(1-\sigma)$
+without children and
+$\bigl(\Theta_t(\tilde y_t-k)/e(1)\bigr)^{1-\sigma}/(1-\sigma)$ with one
+child, so the utility cost of a first child and its second derivative are
+\begin{equation}
+\begin{aligned}
+ \Delta_t(\tilde y_t)&=\frac{\Theta_t^{1-\sigma}}{1-\sigma}\Bigl[\tilde y_t^{\,1-\sigma}-e(1)^{\sigma-1}(\tilde y_t-k)^{1-\sigma}\Bigr],\\
+ \Delta_t''(\tilde y_t)&=\sigma\,\Theta_t^{1-\sigma}\Bigl[e(1)^{\sigma-1}(\tilde y_t-k)^{-\sigma-1}-\tilde y_t^{\,-\sigma-1}\Bigr],
+\end{aligned}
+\label{eq:app-delta}
+\end{equation}
+where $\tilde y_t>k$. For $\sigma\ge1$, $e(1)^{\sigma-1}\ge1$ and
+$(\tilde y_t-k)^{-\sigma}>\tilde y_t^{\,-\sigma}$, so
+$\Delta_t'(\tilde y_t)=\Theta_t^{1-\sigma}\bigl[\tilde y_t^{\,-\sigma}-e(1)^{\sigma-1}(\tilde y_t-k)^{-\sigma}\bigr]<0$
+and $\Delta_t''>0$: the cost is decreasing and convex in earnings. The
+second derivative rises with $k$, since
+$\partial\Delta_t''/\partial k=\sigma(\sigma+1)\Theta_t^{1-\sigma}e(1)^{\sigma-1}(\tilde y_t-k)^{-\sigma-2}>0$,
+and, for $\sigma>1$, with $r_t$, since $\Theta_t^{1-\sigma}$ is proportional
+to $r_t^{(1-\alpha_0)(\sigma-1)}$. For a renter at the cap with and without
+the child, $c_t=\tilde y_t-r_t\bar h^R$ in both cases and the child lowers
+space above the requirement from $\bar h^R$ to $\bar h^R-h_P$, so
+\[
+ \Delta_t(\tilde y_t)=\frac{(\tilde y_t-r_t\bar h^R)^{\alpha_0(1-\sigma)}}{1-\sigma}
+ \Bigl[(\bar h^R)^{(1-\alpha_0)(1-\sigma)}-e(1)^{\sigma-1}\bigl(\bar h^R-h_P\bigr)^{(1-\alpha_0)(1-\sigma)}\Bigr],
+\]
+which for $\sigma>1$ is positive, decreasing and convex in $\tilde y_t$ and
+rises with $r_t$ and $h_P$.

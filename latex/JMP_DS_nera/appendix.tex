@@ -1,0 +1,64 @@
+% Appendix for the Nera draft (Oct 22-23, 2026). The additional-policy table (7.9 point) and the CES appendix
+% (14.40 calibration) of the mock are left out: both predate the current calibration and supply rule.
+\input{sections/app_household_conditions}
+\input{sections/app_model_figures}
+\input{sections/app_policy_slow_stock}
+
+\section{Solution Algorithms}
+\label{app:algorithms}
+
+\paragraph{Stationary equilibrium.} I solve for the house price $P$ and the
+rebate $T$, given parameters, a fixed preference for children and the payroll
+tax. The pension is set before the search: in a stationary population the
+age distribution follows from survival and entry, so the pension that
+balances the payroll tax is known in advance, and the balance is verified at
+the end.
+\begin{enumerate}
+\item Guess $P$ and derive the rent $r$ from the user cost.
+\item Solve the household problem backward over age and compute the choice
+probabilities.
+\item Construct the stationary distribution of households, iterating on the
+rebate until $T$ times the number of households equals property-tax revenue.
+In the calibration the number of households is one and $H_0$ is set so that
+supply equals demand at $P$; in the counterfactuals $H_0$ is fixed and the
+number of households equals housing supply divided by mean housing per
+household.
+\item Compute the renewal residual: adjusted births divided by 2.1, relative to the
+number of entrants, minus one. It is zero when the population reproduces
+itself.
+\item Update $P$ by bracketing the root of the renewal residual and repeat
+until the renewal and rebate residuals are below $10^{-6}$. Re-solve at the
+selected price and require the same residuals, and verify that the pension
+budget balances to the same tolerance.
+\end{enumerate}
+% [CODE] native_phase_b.py 25-26 (RENEWAL_TOL, PAYGO_TOL 1e-6), 97-99
+% (supply rule), 126-127 (population = supply/demand; renewal = births/(2.1
+% entry) - 1), 440-454 (bracket, selected root, exact repeat);
+% equilibrium.py (model) 84-96 (implied H0 under population_one, renewal
+% root); fiscal_closure.py (T N = revenue - grants, FISCAL_TOL 1e-6);
+% e5f_stationary_paygo.py 47-62 (pension from the payroll tax). The earlier
+% text's "excess demand for housing" residual and one-period reproduction
+% check are not in the engine.
+
+\paragraph{Transition.} I solve for the paths $(P_t,m_t,T_t)_{t\geq t_0}$,
+given the inherited households and a preference believed permanent.
+\begin{enumerate}
+\item Solve the new stationary equilibrium; it supplies the terminal value
+function.
+\item Guess the three paths and derive rents from \eqref{eq:m-rent}.
+\item Solve the household problem backward in calendar time from the terminal
+value.
+\item Advance households and the queue of entrants forward from the inherited
+state, and aggregate housing demand and taxes at each date.
+\item Compute the three residuals at every date. The loss is the largest
+residual across dates.
+\item Update the paths jointly and repeat until the loss is below tolerance.
+Extend the horizon to check that early responses are stable.
+\end{enumerate}
+The transitions in the paper use 100 four-year periods, from 2007 (or 2023
+for the policy experiments) to 2403, with tolerances of $2\times10^{-4}$ on
+the housing market and $2\times10^{-5}$ on the pension and the rebate, and
+$10^{-6}$ on the renewal condition of the terminal steady state.
+% [CODE] gates from state_2023/pair_result.json (market 2e-4, fiscal 2e-5,
+% stationary renewal 1e-6, horizon 1e-3); 7p9167_v6/table.md notes for the
+% LR_PHI100 and LR_F_PHI100 endpoints (renewal gap <= 0.003).

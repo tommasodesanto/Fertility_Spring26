@@ -1,0 +1,262 @@
+% Housing-supply deck for Raquel (Friday Oct 23 2026); was housing_supply_three_slides.tex. Style copied from JMP_slides/preamble.tex (no calibration tables input).
+% Sources: latex/housing_supply_raquel/handoff.md; figures from output/model/experiments/housing_supply/20261020_raquel_deck/make_figs.py (saved results only).
+% Old = old calibration, old housing accounting, instant supply. New = new calibration, new housing accounting, slow stock.
+\documentclass[11pt,aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{appendixnumberbeamer}
+\setbeamercovered{transparent=5}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamertemplate{footline}{\hspace{3mm}\hfill{\usebeamercolor[fg]{page number in head/foot}\usebeamerfont{page number in head/foot}\insertframenumber\,/\,\inserttotalframenumber}\hspace{3mm}\vspace{1mm}}
+\linespread{1.2}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\definecolor{sourcegray}{RGB}{95,95,95}
+\definecolor{oldgray}{RGB}{110,110,110}
+\definecolor{newblue}{RGB}{44,95,153}
+% Notation line at the bottom of a frame.
+\newcommand{\notation}[1]{\vfill{\linespread{0.95}\scriptsize\color{sourcegray}#1\par}}
+\newcommand{\fig}{../../output/model/experiments/housing_supply/20261022_supply_schematic}
+\newcommand{\old}{{\color{oldgray}\textbf{Old}}}
+\newcommand{\new}{{\color{newblue}\textbf{New}}}
+
+\title{Housing in the Model}
+\author{Tommaso De Santo}
+\date{October 2026}
+\begin{document}
+
+%---------------------------------------------------------------
+\begin{frame}[label=dev]{Housing Supply: Developers}
+\footnotesize\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{3pt}
+  \item Competitive developers build new housing from goods: $I_t = Z_tX_t \ge 0$
+  \item The stock depreciates at rate $\delta_H$: $H_t = (1-\delta_H)H_{t-1} + I_t$
+  \item Congestion externality: productivity falls with the aggregate stock, so a unit costs
+  \[ c_t = 1/Z_t = (H_t/H_0)^{1/\eta},\qquad Z_t=(H_0/H_t)^{1/\eta} \]
+  \vspace{-12pt}
+  \begin{itemize}\setlength\itemsep{1pt}
+    \item Why timing: $H_t$ both sets this period's cost and results from this period's building
+    \item I assume plans come first: the planned stock fixes $c_t$; units are then built at $c_t$
+    \item Each developer takes the plan as given; in equilibrium, plans and output coincide
+  \end{itemize}
+  \item Free entry: $P_t = c_t$ if $I_t > 0$; $P_t \le c_t$ if $I_t = 0$; profit is zero
+  \item The rising cost stands in for land and regulation; I abstract from land rents
+\end{itemize}
+\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025) \hyperlink{app-gpv}{\beamergotobutton{Details}}. $X_t$: goods used in construction. $\eta$: price elasticity of the stock; $H_0$: its scale.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Durable Housing: Supply in a Period}
+\small
+\begin{columns}[c]
+\begin{column}{0.50\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{\fig/supply_free_entry.pdf}
+\end{column}
+\begin{column}{0.48\textwidth}
+\scriptsize
+\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
+\begin{itemize}\setlength\itemsep{3pt}
+  \item Construction:
+  \[
+  I_t=\max\bigl\{0,\;H_0P_t^{\eta}-(1-\delta_H)H_{t-1}\bigr\}
+  \]
+  \item Stock:
+  \[
+  \begin{aligned}H_t&=(1-\delta_H)H_{t-1}+I_t\\ &=\max\bigl\{(1-\delta_H)H_{t-1},\,H_0P_t^{\eta}\bigr\}\end{aligned}
+  \]
+  \item Demand rises ($A$): developers build until the price equals the cost
+  \item Demand falls faster than wear ($B$): nothing is built, the stock shrinks by $\delta_H$, the price falls below cost
+  \item Steady state: building replaces wear, $I=\delta_HH$, and the price equals the cost, $H=H_0P^{\eta}$
+\end{itemize}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{From the Dynamic Rule to the Static Supply Curve}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item Each period, the inherited stock, building and free entry give
+  \[
+  H_t=\max\bigl\{(1-\delta_H)H_{t-1},\,H_0P_t^{\eta}\bigr\}
+  \]
+  \item While developers build, $P_t=c(H_t)$: the stock sits on the curve $H=H_0P^{\eta}$
+  \item The inherited stock matters only through the floor, which binds if demand falls faster than wear
+  \item Steady state: $I=\delta_HH>0$, so developers always build and $H=H_0P^{\eta}$
+  \item This is the old model's static supply curve; it holds each period unless the floor binds
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Rental Housing: Landlords}
+\small
+\setlength{\abovedisplayskip}{1pt}\setlength{\belowdisplayskip}{1pt}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item \textbf{Landlords.} Absentee and competitive: they own all rental housing, no selling cost
+  \item \textbf{User cost.} A landlord with $P_t$ can invest it at $R_b$, or buy a unit and rent it out:
+  \begin{itemize}\setlength\itemsep{1pt}
+    \item the tenant pays $r_t$ at the start of the period, which the landlord invests
+    \item tax $\tau^pP_t$ now; in $t+1$, maintenance $\delta_HP_{t+1}$ and resale at $P_{t+1}$
+  \end{itemize}
+  \item Zero profit: a unit's earnings equal the income forgone on its price
+  \[
+  \underbrace{R_b\,(r_t-\tau^pP_t)+(1-\delta_H)P_{t+1}}_{\text{rent and resale, net of tax and maintenance}}=\underbrace{R_bP_t}_{\text{forgone income}}
+  \quad\Rightarrow\quad r_t=(1+\tau^p)P_t-\frac{(1-\delta_H)P_{t+1}}{R_b}
+  \]
+\end{itemize}
+\notation{$R_b$ fixed (small open economy). Close to the REITs of Greaney, Parkhomenko and Van Nieuwerburgh (2025), whose rent in continuous time is $r=(\delta+q+\tau)p-\dot p$ \hyperlink{app-gpv}{\beamergotobutton{Details}}}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Market Clearing}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item Households own at $P_t$ or rent at $r_t$
+  \item Owners and landlords must pay maintenance $\delta_HP_t$ per unit held into $t$, so a home keeps its size
+  \item Owned homes come in a few sizes, $h^O_t\in\mathcal H$: changing size means selling
+  \item Rented space is any $h^R_t\le\bar h^R$, chosen again each period
+  \item One price per unit clears owned and rented space against the stock:
+  \[
+  \int\bigl(h^O_t+h^R_t\bigr)\,dG_t=H_t
+  \]
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------
+\newcommand{\mkt}{../../output/model/experiments/housing_supply/20261024_market_picture}
+\begin{frame}{Owner Market Clearing}
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item The same condition, written as trades in the owner market in $t$:
+  \[
+  \underbrace{(1-\delta_H)E_{t-1}}_{\text{(1) homes of the dead}}
+  +\underbrace{(1-\delta_H)S_t(P_t)}_{\text{(2) homes of owners who sell}}
+  +\underbrace{I_t(P_t)}_{\text{(3) new construction}}
+  \]
+  \[
+  =\underbrace{B_t(P_t)}_{\text{purchases}}+\underbrace{\delta_HK_t(P_t)}_{\text{maintenance of stayers}}+\underbrace{H^L_t-(1-\delta_H)H^L_{t-1}}_{\text{landlords' net purchases}}
+  \]
+  \item (1) is fixed in $t$: it depends only on who died at the end of $t-1$
+  \item (2) depends on $P_t$: owners choose to stay or sell
+  \item (3) is zero below $c\bigl((1-\delta_H)H_{t-1}\bigr)$ and rises with $P_t$ above it
+  \item A household that moves from $h$ to $h'$ supplies $(1-\delta_H)h$ and demands $h'$
+\end{itemize}
+\notation{$E_{t-1}$: homes owned by households that died at the end of $t-1$. $S_t$: homes of owners who sell. $B_t$: homes bought. $K_t$: homes of owners who stay. $H^L_t$: units held by landlords.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Owner Market: Three Blocks of Supply}
+\centering
+\includegraphics[width=\textwidth]{\mkt/fig_owner_supply_blocks.pdf}
+\notation{Model, 2007 steady state up to $t-1$ and from $t+1$ on; $P_t$ moved alone. Common horizontal scale. At low $P_t$ the rent is low too, since $P_{t+1}$ returns to $P_{ss}$, so more owners sell and rent.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Owner Market: Supply and Demand}
+\centering
+\includegraphics[height=0.82\textheight]{\mkt/fig_owner_supply_total.pdf}
+\notation{Same experiment. Shaded: (1) homes of the dead, (2) homes of owners who sell, (3) new construction.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Variant: Flow Cost (Kaplan, Mitman and Violante 2020)}
+\small
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Builders combine goods with a fixed flow of permits $\bar L$ each period: $I_t = X_t^{\alpha}\bar L^{1-\alpha}$
+  \item Marginal cost of a unit:
+  \[
+  m(I_t) = \tfrac{1}{\alpha}\,(I_t/\bar L)^{(1-\alpha)/\alpha}
+  \]
+  \item It rises with this period's building and resets every period
+  \item $P_t = m(I_t)$ gives $I_t = \kappa P_t^{\varepsilon}$, with $\varepsilon = \alpha/(1-\alpha)$ and $\kappa = \alpha^{\varepsilon}\bar L$
+  \item Goods cost $\alpha P_tI_t$; the permit rent $(1-\alpha)P_tI_t$ goes to the government and is wasted
+\end{itemize}
+\vspace{4pt}
+\notation{I set $\alpha=\eta/(1+\eta)$, so $\varepsilon=\eta$, and $\bar L=\delta_HH_0/\alpha^{\varepsilon}$, so $\kappa=\delta_HH_0$: at the initial price, building just replaces wear, and the steady state matches the stock cost.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Variant: Flow Cost, Supply in a Period}
+\small
+\begin{columns}[c]
+\begin{column}{0.50\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{\fig/supply_slow_stock.pdf}
+\end{column}
+\begin{column}{0.48\textwidth}
+\footnotesize
+\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
+\begin{itemize}\setlength\itemsep{2pt}
+  \item The stock adds this period's construction to what survives:
+  \[
+  H_t = (1-\delta_H)H_{t-1} + \kappa P_t^{\varepsilon}
+  \]
+  \item Impact elasticity of the stock: $\varepsilon I_t/H_t$, equal to $\delta_H\varepsilon$ at the steady state; the price absorbs the shock ($A'$, $B'$)
+  \item Something is always built: the first units are almost free
+  \item Same steady state as the stock cost; only the path differs
+\end{itemize}
+\end{column}
+\end{columns}
+\vspace{4pt}
+\notation{Schematic. Dashed: steady-state curve $H=H_0P^{\eta}$, common to both versions.}
+\end{frame}
+
+
+%---------------------------------------------------------------
+\newcommand{\cmpfi}{../../output/model/experiments/housing_supply/20261023_comparison_fi}
+\newcommand{\polslide}[3]{%
+\begin{frame}{#1}
+{\centering\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{\cmpfi/cmp_policy_#2.pdf}\par}
+\notation{Percent change against each setup's own no-policy path. Policies start as a surprise in 2023. #3}
+\end{frame}}
+\begin{frame}{Full Transition: 2007--2403}
+{\centering\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{\cmpfi/cmp_full_transition_k200.pdf}\par}
+\notation{Both setups at $\eta=0.63$.}
+\end{frame}
+%---------------------------------------------------------------
+\polslide{Credit for Everyone: Loan-to-Value 80 to 100}{credit_k200}{}
+\polslide{Credit for Parents: Loan-to-Value 100}{pcredit}{}
+
+%---------------------------------------------------------------
+\appendix
+\begin{frame}[label=app-gpv]{Greaney, Parkhomenko and Van Nieuwerburgh (2025)}
+\scriptsize\linespread{1.0}\selectfont
+\textbf{Developers}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item They turn the numeraire good into floor space, $Y^h=Z^hK$, with productivity $Z^h$ taken as given
+  \item Construction is irreversible: the price equals the cost $1/Z^h$ when they build, and is lower otherwise
+  \item $Z^h$ is chosen so that, when building, $r=\bar r\,(N_t/N_0)^{1/\xi}$
+  \item In continuous time the cost depends on the current stock, a state variable
+  \item In steady state they always build: the same supply curve as here, $P=(H/H_0)^{1/\eta}$
+  \item Calibration: $\xi$ from Saiz (2010), 0.66 for San Francisco; tract spread from Baum-Snow and Han (2024)
+\end{itemize}
+\textbf{Landlords (REITs)}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item Competitive REITs own rental and commercial space across locations and borrow at an outside rate $q$
+  \item Rent: $r=(\delta+q+\tau)p-\dot p$
+\end{itemize}
+\textbf{Differences from this paper}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item They use continuous time, many locations, and residential and commercial space
+  \item Here $\eta=0.63$ is the floor-space elasticity of Baum-Snow and Han (2024)
+  \item In GPV households hold part of the REITs; here rental gains and losses leave the economy
+\end{itemize}
+\par\hfill\hyperlink{dev}{\beamerreturnbutton{Back}}
+\end{frame}
+
+\end{document}

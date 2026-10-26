@@ -1,0 +1,56 @@
+\subsubsection*{The figures of Section~\ref{sec:m-analysis}.}
+\label{app:model-figures}
+I compute Figures~\ref{fig:m-risk} and~\ref{fig:m-illustration} from the model at the parameters of
+Table~\ref{tab:quant-parameters}. The estimated values are
+$\beta_{\text{ann}}=0.9357$, $\psi_0=0.1774$, $\gamma=0.6457$, $\xi=0.2946$,
+$\kappa_1=0.0505$, $\kappa_C=0.1285$, $h_P=0.8899$, $\chi=1.1121$,
+$\kappa_T=0.0131$ and $\theta_0=0.2435$, and the assigned parameters are those
+of the same table. In the 2007 stationary equilibrium at these values, the
+price is $P_0=0.7707$, the rebate is $T=0.1879$ per household and there are
+$N_0=1$ households. Supply \eqref{eq:m-supply} is $H=6.776\,P^{0.63}$. Each
+solve below is a stationary solve of the household problem and of the
+distribution of households at a given price, with the rebate set so that the
+government budget balances at that price (relative residual below
+$10^{-6}$). None of these solves is a transition. The stationary rent is
+$r=\bigl[1+\tau^p-(1-\delta_H)/R_b\bigr]P=0.1698\,P$. The axes of the figures
+carry no numerical scale, and I report the values of the marked points
+below.
+
+\paragraph{Figure~\ref{fig:m-risk}.} This figure is computed from
+\eqref{eq:m-indirect} and involves no solve. With $\sigma=2$, the cost of a
+first child is
+$\Delta(y)=\bigl[e(1)/(y+T-rh_P)-1/(y+T)\bigr]/\Theta$, where
+$\Theta=\alpha_0^{\alpha_0}(1-\alpha_0)^{1-\alpha_0}r^{\alpha_0-1}$. The
+values are $\alpha_0=0.733$, $e(1)=1.35^{0.7}=1.234$ and $h_P=0.890$, and
+both curves use the 2007 rebate, $T=0.188$. The solid curve uses the 2007
+rent, $r=0.1308$, so that $rh_P=0.116$. The dashed curve uses the rent at
+the long-run price $P_1=0.394$ of Figure~\ref{fig:m-illustration},
+$r=0.0669$, so that $rh_P=0.060$. Earnings $y_L=0.274$ and $y_H=0.752$ are
+after-tax earnings per period at ages 22--25 in the first and third of the
+nine efficiency states, $z=0.103$ and $z=0.284$. In the 2007 solve, at least
+98\% of the renters of that age in these two states end the period at the
+borrowing limit. Over the plotted range, neither a childless renter nor a
+parent reaches the rental cap $\bar h^R=6$ at either rent. The additional
+cost due to risk, $\tfrac12[\Delta(y_L)+\Delta(y_H)]-\Delta(\bar y)$, is 0.245
+at the 2007 rent and 0.106 at the long-run rent; the braces mark these two
+differences.
+
+\paragraph{Figure~\ref{fig:m-illustration}.} Both panels come from 22 solves at
+given prices. Ten are at $\psi_0=0.1774$, at prices from 0.30 to 0.92. The
+other twelve are at $\psi_1=0.1472$ over the same range, three of them steps
+of the search for $P_1$. Here $\psi_1$ is the long-run level $\psi'$ of the
+decay path \eqref{eq:psi-decay}, with $\rho=0.35$.
+\textcolor{red}{[$\psi_1$ is from a nearby point; refit at the final
+calibration.]} At each price, $n(P;\psi)$ is births per entering household,
+with the bin of three or more children counted as 3.60 and replacement at
+$\bar n=2.1$, and $h(P;\psi)$ is housing demand per household. The demand and
+fertility curves interpolate the solved points with monotone cubic splines,
+and supply is $H=6.776\,P^{0.63}$. At $A$, $P_0=0.771$, $H=5.750$, $N_0=1$
+and $n=\bar n$. At $A'$, preferences are $\psi_1$ at $P_0$ with $N_0$
+households, and $n=1.632$. At $B$, the long-run stationary equilibrium,
+$P_1=0.394$, $n=\bar n$ (births within $10^{-6}$ of replacement), $H=3.769$,
+$N_1=H/h(P_1;\psi_1)=0.472$ and $T=0.133$. From $A$ to $B$, the price falls by
+49\%, the stock by 34\% and the number of households by 53\%. In panel (a),
+demand at $A'$ is $N_0h(P_0;\psi_1)=5.698$, which is 0.9\% below demand at
+$A$, so I mark $A'$ at $A$. The arrows only indicate the direction of the
+adjustment.

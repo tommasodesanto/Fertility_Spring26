@@ -1,0 +1,134 @@
+% Introduction for the Nera draft (Oct 23, 2026). Structure after Boar, Gorea and Midrigan (2022), Menzio,
+% Telyukova and Visschers (2016) and Fernandez and Wong (2014). Numbers: sections 2-6 of this draft;
+% Section 6 values in output/model/experiments/housing_supply/20261022_fi_all_arms/p6_values_fi.json.
+% Wording of the question and the main message from the author's spiel (docs/job_market/spiel.tex, Oct 20).
+\section{Introduction}
+\label{sec:intro}
+
+Fertility in the United States has fallen steadily since 2007. The period
+fertility rate was about 2.1 in 2007 and 1.62 in 2023. Many governments now
+want to raise births, and housing costs are at the center of this debate. The
+reason is intuitive. Children need space, and young households, who have
+little savings, find that space costly to pay for. Housing enters the
+decision to have a child in two ways: as a recurring cost, the extra rooms a
+family pays for every year, and, for buyers, as an upfront cost, the down
+payment. Since most large homes are owner-occupied, family space often
+requires that down payment. In the 2023 American Housing Survey, 43\% of
+owned homes have seven or more rooms, against 7.5\% of rented homes.
+
+My goal in this paper is to ask: which housing policies can raise births, and
+by how much? The question looks to the future rather than the past. I take
+the decline in fertility as given and ask how much housing can matter for
+births from here on. The answer is not obvious. A child needs a discrete jump
+in space, and a lower down payment may be exactly what lets a young couple
+reach a family-size home, so easier credit could matter a great deal. Whether
+it does depends on how many households sit just below that threshold. Births
+today also become households that compete for housing a generation later, so
+a policy that raises births changes the price of the space the next
+generation needs. Weighing these forces requires a quantitative model with an
+equilibrium housing market. I build one and find that policy raises births
+when it lowers the cost of a child rather than the cost of a home, and that
+its effects build up over a generation.
+
+I start with evidence from the Panel Study of Income Dynamics
+(Section~\ref{sec:empirical-evidence}). In an event study around the first
+birth, parents adjust both their space and their tenure. Three to four years
+after the birth, they live in 1.44 more rooms than two to three years before
+it, a 31\% increase, and they are 27 percentage points more likely to own
+their home. Moves for more space become a third more likely after the birth,
+while moves for neighborhood reasons do not rise. The demand for space jumps
+at parenthood, and owning is the main route to a large home.
+
+Households in my model face persistent and uninsurable earnings risk and save
+in a bond (Section~\ref{sec:model}). During their fertile years they decide
+whether to try for a child. Throughout their lives they choose whether to
+rent or own, how much space to occupy and how much to save. A child raises
+the household's needs and requires a minimum amount of space, which the
+household pays for in every period the child is at home. Owners can borrow
+against their home up to 80\% of its value and renters cannot borrow, so
+buying requires a down payment. Rental units are capped in size, so the
+largest homes are only for sale. Absentee developers build housing at a cost
+that rises with the stock, and absentee landlords rent it out, so house
+prices and rents are determined in equilibrium. Children who leave home form
+households of their own and enter the housing market.
+
+I calibrate the model to the United States in 2007, before the decline, to
+match fertility, housing and wealth moments, including the rooms parents add
+at the first birth (Section~\ref{sec:quant}). I treat the fall in births since
+2007 as an exogenous decline in the preference for children, chosen to match
+period fertility in 2019--2022. The model does not explain the decline. It
+asks how housing responds to it and what housing policy can do from 2023 on.
+Every policy experiment starts from the model's 2023 economy, with the same
+households, wealth, homes and children, and is compared with the path the
+economy follows from there without the policy.
+
+Three forces shape the results (Section~\ref{sec:m-analysis}). First, rent
+equals the user cost of owning, so a family can rent its space at about the
+per-period cost of owning it. Mortgage credit lowers the equity needed to buy
+a home, not the per-period cost of the space a child needs, which at the
+2007 price is about 2.9\% of mean annual earnings every year. Credit
+therefore raises births only where the down payment stands between a
+household and the home its family needs. Second, a child is a long
+commitment, paid for in every period, including after bad earnings draws. The
+utility cost of a child falls with earnings at a decreasing rate, so earnings
+risk raises its expected cost. In the 2007 economy, lowering the standard
+deviation of earnings shocks by about a quarter, with mean earnings
+unchanged, raises completed fertility by 12\% (Section~\ref{sec:results}).
+Third, in a stationary equilibrium births per household are at replacement.
+The long-run house price is therefore the price at which households choose
+replacement fertility, and the number of households is the one that fills the
+housing stock at that price. A policy that raises fertility at a given price
+ends up as a higher price and more households, not as more births per
+household.
+
+I then compare housing policies (Section~\ref{sec:policy}). Mortgage credit
+for all households, a loan-to-value limit of 100\% instead of 80\%, raises
+births by 1.3\% in 2023.\textcolor{red}{$^{\ddagger}$} The gain is gone within
+four years, and births then fall below the path without policy, by 0.6\% in
+2035. The completed fertility of the cohort aged 18 to 21 in 2023 falls by
+1.1\%. Credit moves births earlier and does not add children. The households
+that use it are young and buy the small homes they would otherwise rent:
+ownership at ages 18 to 29 rises by 21 percentage points in 2023. In the 2007
+economy at a given price, credit raises the share of households aged 22 to 25
+that own a home of two or four rooms from 12\% to 49\%, while the share
+owning six rooms or more, the size families choose, rises by about one
+percentage point. Credit lowers the cost of a home, not the cost of a child.
+
+A housing supply expansion has a different effect. I shift the supply curve
+out by 4.35\%, so that births in 2023 rise by about as much as under credit,
+1.4\%. Births then keep rising, by 3.0\% by 2063 and by 4.3\% in the long
+run, and the completed fertility of the 2023 cohort rises by 2.0\%. Supply
+lowers the price and rents, so every cohort that enters spends its fertile
+years with cheaper space, and the additional children form households of
+their own a generation later. In the terms of demographers, credit changes
+the tempo of births and supply changes their quantum
+\citep{bongaartsFeeneyQuantumTempo1998}.
+
+Policies that lower the cost of a child raise fertility more. Credit tied to
+children, a loan-to-value limit of 100\% only for households with a child at
+home, raises births by 5.1\% in 2023 and the completed fertility of the 2023
+cohort by 4.9\%. Insurance against low earnings raises completed fertility
+by 14.0\%, against 7.8\% for a cash transfer with the same expected value.
+Neither transfer is financed. The gap between them is the value of insuring
+the downside of earnings: a child is a long commitment, and insurance makes it
+safer. A rebated property
+tax lowers the house price by 7.0\% but raises rents by 14.5\%, and births
+barely move. A lower price is not cheaper space.
+
+The long run differs from the impact. Births per household return to
+replacement, so a policy that raises fertility shows up as more households. A
+10\% supply expansion leaves the long-run price unchanged and raises the
+number of households by 10\%. Credit for parents raises fertility at any
+price, so fertility returns to replacement only at a price 33\% higher, and
+at that price the housing stock holds 36\% more households. Housing policy aimed at births should therefore be judged by its
+long-run effects, not only by its effect on impact.
+
+\input{sections/01b_literature}
+
+The rest of the paper is organized as follows. Section~\ref{sec:empirical-evidence}
+presents the evidence on housing around the first birth.
+Section~\ref{sec:model} describes the model, and Section~\ref{sec:quant} its
+quantification and the transition from 2007 to 2023.
+Section~\ref{sec:results} describes household choices in the calibrated model.
+Section~\ref{sec:policy} studies housing policies, and
+Section~\ref{sec:conclusion} concludes.

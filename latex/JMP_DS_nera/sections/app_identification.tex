@@ -1,0 +1,72 @@
+\section{Identification}
+\label{app:identification}
+
+Table~\ref{tab:app-loss} reports, for each target, the tolerance that sets
+its weight in the loss \eqref{eq:q-loss} and its contribution to the loss at
+the estimates. Table~\ref{tab:app-jacobian} reports the elasticity of each
+targeted moment to each estimated parameter, from a 1\% change in the
+parameter, solving the equilibrium each time.
+
+\begin{table}[h]
+\centering
+\caption{Tolerances and loss by moment}
+\label{tab:app-loss}
+\small
+\begin{tabularx}{0.8\textwidth}{@{}X r r r@{}}
+\toprule
+Moment & Tolerance & Gap & Loss \\
+\midrule
+Childless, women 40--44 & 0.0053 & $+0.0022$ & 0.17 \\
+Exactly one child, mothers 40--44 & 0.0061 & $+0.0033$ & 0.29 \\
+Mean age at first birth & 0.085 & $-0.006$ & 0.01 \\
+Children ever born by 25 & 0.100 & $-0.253$ & 6.41 \\
+Mean occupied rooms & 0.088 & $+0.021$ & 0.06 \\
+Ownership, heads 30--55 & 0.021 & $-0.007$ & 0.11 \\
+First-birth room response & 0.085 & $+0.036$ & 0.17 \\
+Recent-parent ownership gap & 0.0061 & $-0.0022$ & 0.13 \\
+Wealth / annual earnings & 0.363 & $-0.106$ & 0.09 \\
+Bequests / wealth & 0.00044 & $+0.000004$ & 0.00 \\
+\midrule
+Total & & & 7.42 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.8\linewidth}
+\footnotesize\textit{Notes:} Gap is model minus data. The weight of a
+moment is the inverse square of its tolerance, so its loss is the squared
+gap in tolerances. \textcolor{red}{[Recalibrated point; recheck after
+recalibration.]}
+\end{minipage}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Elasticity of each targeted moment to each parameter}
+\label{tab:app-jacobian}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l rrrrrrrrrr@{}}
+\toprule
+ & $\psi_0$ & $\gamma$ & $\kappa_1$ & $\kappa_C$ & $\xi$ & $h_P$ & $\chi$ & $\kappa_T$ & $\beta$ & $\theta_0$ \\
+\midrule
+Childless, 40--44 & 0.02 & $-0.44$ & $-0.12$ & $-0.14$ & 0.35 & 0.04 & 0.07 & $-0.01$ & $-1.74$ & 0.00 \\
+One child, 40--44 & 0.08 & 0.34 & 0.17 & 0.05 & $-0.40$ & $-0.03$ & $-0.02$ & 0.00 & 0.71 & 0.00 \\
+Mean age, first birth & 0.01 & $-0.02$ & 0.04 & $-0.04$ & $-0.01$ & 0.00 & 0.03 & 0.00 & $-0.42$ & 0.00 \\
+Children by 25 & 0.06 & 0.11 & $-0.10$ & 0.13 & $-0.08$ & $-0.02$ & $-0.10$ & 0.00 & 0.90 & 0.00 \\
+Mean rooms & $-1.89$ & 0.45 & 0.00 & $-0.38$ & 0.70 & 0.36 & $-0.04$ & $-0.05$ & $-3.27$ & 0.00 \\
+Ownership, 30--55 & $-1.32$ & 0.53 & 0.00 & $-0.46$ & 0.77 & 0.39 & 3.15 & 0.02 & $-2.30$ & 0.00 \\
+Room response & 1.78 & $-0.63$ & $-0.36$ & 0.62 & $-1.06$ & $-0.11$ & 0.74 & $-0.17$ & 7.73 & 0.00 \\
+Recent-parent gap & $-4.56$ & 0.78 & $-0.35$ & $-1.31$ & 1.91 & 1.18 & $-4.26$ & $-0.28$ & $-21.71$ & $-0.01$ \\
+Wealth / earnings & $-0.10$ & 0.03 & 0.00 & $-0.02$ & 0.05 & 0.03 & 0.45 & $-0.03$ & 13.71 & 0.03 \\
+Bequests / wealth & $-0.10$ & 0.00 & 0.00 & 0.00 & 0.03 & $-0.01$ & $-0.29$ & 0.00 & 0.57 & 0.19 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Each entry is $\partial\log m_k/\partial\log
+\theta_p$, from central differences of 1\%. The recent-parent gap, bequests
+and ownership are not smooth at the estimates: their forward and backward
+derivatives differ. \textcolor{red}{[Recalibrated point; recheck after
+recalibration.]}
+\end{minipage}
+\end{table}
