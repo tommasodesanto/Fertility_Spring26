@@ -487,26 +487,27 @@ with the housing stock held at its 2023 level from 2023 on.
 \subsection{Testing the model}
 \label{sec:quant-fit}
 
-I conclude by comparing the model with moments that the calibration does not
-target. Table~\ref{tab:quant-untargeted} reports them. These moments speak
-to the main margins of the model. It is important for the model to capture
-how many children mothers have beyond the first, because the space
-requirement does not rise with the number of children: later births test the
-other costs and benefits of children in the model. The share of first births
-at 30 or later matters because the central trade-off in the model is one of
-timing, between fecundity that falls with age and earnings and savings that
-rise with it. The difference in rooms between larger and smaller families
-and the rise in ownership at the first birth matter because the model links
-children to housing through the space they require and the ownership of
-large homes. The dispersion of wealth among the old matters because saving
-decides when households can afford that space. The model reproduces
-the distribution of completed family size. The calibration targets the share
-of women with no children and the share of mothers with one child, but not
-how the remaining mothers split between two children and three or more. In
-the model, 32.2\% of women aged 40 to 44 have two children and 30.4\% have
-three or more, against 34.4\% and 28.6\% in the CPS. The timing of first
-births is also close to the data: 24.2\% of first births occur at 30 or
-later, against 24.9\% in the natality files.
+I conclude by comparing the model with some moments that the calibration
+does not target, reported in Table~\ref{tab:quant-untargeted}. The first is
+how many children mothers have beyond the first. This matters because the
+space requirement does not rise with the number of children, so later births
+test the other costs and benefits of children in the model. The calibration
+targets the share of women with no children and the share of mothers with one
+child, but not how the remaining mothers split between two children and three
+or more. The model matches this split: 32.2\% of women aged 40 to 44 have two
+children and 30.4\% have three or more, against 34.4\% and 28.6\% in the CPS.
+The second is the timing of first births, which matters because the central
+trade-off in the model is one of timing, between fecundity that falls with
+age and earnings and savings that rise with it. The model matches the share
+of first births at 30 or later, 24.2\% against 24.9\% in the natality files.
+The third is the dispersion of wealth among the old, which reflects how much
+households save: the ratio of the 90th percentile to the median of wealth
+relative to income at ages 76 to 84 is 3.27 in the model and 3.52 in the
+PSID. The model fits two housing moments less well. Children are linked to
+housing in the model through the space they require and the ownership of
+large homes. Households with three or more children occupy 0.57 more rooms
+than those with one or two, against 0.39 in the data, and ownership rises
+around the first birth by 14 percentage points, against 26.
 % [MODEL] family size: kappa_identification/stage3/runs/center/.../observers.json uniform_birth_time
 % parity_shares_40_44 (20.0/17.3/32.2/30.4); [DATA] 2026-10-25_data_pictures/cps_family_size_40_44.json
 % (CPS June 2004/06, n = 10,872: 19.8/17.1/34.4/28.6).
