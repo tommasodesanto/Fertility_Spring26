@@ -1,0 +1,128 @@
+% Moved from Section 5 to the appendix, Oct 25 2026 (his word: the full 2023 fit goes to the appendix).
+\section{The 2023 economy}
+\label{sec:quant-2023}
+
+The transition matches only period fertility, so the 2023 economy is an
+out-of-sample test of what the decline in $\psi_t$ alone does to the rest of
+the economy. Table~\ref{tab:quant-2023} compares the change from 2007 to 2023
+in the data and in the model. The model reproduces the shift of first births
+to later ages in direction but not in size: the share of women who are
+mothers by 25 falls by 13 percentage points in the model and by 18 in the
+data, the mean age at first birth rises by 0.9 years against 2.1, and the
+share of first births at 30 or later rises by 5 points against 13. Three
+changes have the wrong sign. Childlessness among women aged 40 to 44 rises by
+8.6 points in the model, while it fell by one point in the data. Ownership
+among heads aged 30 to 55 rises by 4.1 points, while it fell by 8.9. The
+house price falls by 3.6\%, while the real price rose by 15.6\%. Wealth
+relative to earnings, which rose from 4.46 to 7.05 in the PSID, barely moves
+in the model. Mean rooms are close to the data, 5.51 against 5.58. The extra
+space of families with three or more children falls by 0.03 rooms in both,
+but stays too large in the model, 0.54 rooms against 0.36.
+
+\begin{table}[t]
+\centering
+\caption{The 2023 economy: data and model}
+\label{tab:quant-2023}
+% [MODEL] experiments/housing_supply/20261021_free_entry/moments_2023_fi/moments_2023_fi.csv,
+% free_entry_eta0.63 column (replay of FIN063fi_fw); mothers by 25 = 1 - ever_born_shares_age25['0'].
+\small
+\begin{tabularx}{\textwidth}{@{}X rr @{\hspace{1.5em}} rr@{}}
+\toprule
+ & \multicolumn{2}{c}{Data} & \multicolumn{2}{c}{Model} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Moment & 2007 & 2023 & 2007 & 2023 \\
+\midrule
+Completed fertility, ages 40--44 & -- & 1.92 & 2.10 & 1.69 \\
+Childless, ages 40--44 (\%) & 19.8 & 18.8 & 20.1 & 28.7 \\
+Exactly one child among mothers, 40--44 (\%) & 21.4 & 22.2 & 21.7 & 22.2 \\
+Mean age at first birth (years) & 25.98 & 28.09 & 25.97 & 26.88 \\
+Mothers by age 25 (\%) & 45.7 & 27.4 & 45.5 & 32.2 \\
+First births at age 30+ (\%) & 24.9 & 37.7 & 24.2 & 28.9 \\
+\addlinespace
+House price (2007 = 100) & 100 & 115.6 & 100 & 96.4 \\
+Mean occupied rooms (capped at 9) & -- & 5.58 & -- & 5.51 \\
+Ownership, heads 30--55 (\%) & 67.6 & 58.7 & 66.9 & 71.0 \\
+First-birth room response$^{\ddagger}$ & 1.440 & 1.476 & 1.475 & 0.55 \\
+Rooms: 3+ versus 1--2 resident children & 0.385 & 0.355 & 0.574 & 0.543 \\
+\addlinespace
+Wealth / annual gross earnings & 4.46 & 7.05 & 4.35 & 4.38 \\
+Annual bequests / wealth (\%) & 0.73 & 0.88 & 0.73 & 0.83 \\
+Wealth/income p90 / median, ages 76--84 & 3.52 & 3.45 & 3.27 & 3.29 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Model, 2007: the calibrated stationary
+equilibrium (Tables~\ref{tab:quant-moments} and~\ref{tab:quant-untargeted});
+model, 2023: the period dated 2023 of the transition in
+Section~\ref{sec:quant-transition}, evaluated on the full 2023 distribution.
+Data, 2007: the sources of Tables~\ref{tab:quant-moments}
+and~\ref{tab:quant-untargeted}; data, 2023: the same sources in their most
+recent waves, with wealth over earnings from the PSID 2021 and 2023. House
+price: S\&P CoreLogic Case--Shiller national index deflated by the CPI. A
+dash marks a 2007 value not measured on the 2023 definition. $^{\ddagger}$ In
+2023 the model value compares otherwise identical households with and
+without a first birth in the same period, not the event study of the data.
+\end{minipage}
+\end{table}
+\problem{The model and data measures of the first-birth room response have
+not been reconciled for the transition: 0.55 is the matched-state comparison,
+1.476 the event study. Three 2023 data cells are not yet traced to a 2023
+source: bequests 0.88 (recorded only as an external benchmark), old-age
+dispersion 3.45 (recorded as PSID 1984--2019) and mothers by 25, 27.4.}
+% Oct 25 checks: model 2023 column = moments_2023_fi.csv free_entry_eta0.63 (all rows) and
+% validation_2023_model_fi_eta0.63.json (mothers by 25 = 1 - 0.67757). Model 2007 column = calibration
+% point center.json / lifecycle_2007_newacct (the transition's own 2007 state, psi 0.177467 vs 0.177405,
+% price 0.770687 vs 0.770691, is the same to rounding). Price 2023: FIN063fi_fw 0.742618/0.770686 = 0.964.
+
+The fertility moments reveal the limitations of explaining the decline with
+changes in the preference for children alone. In the data, the decline
+in period fertility since 2007 came with almost unchanged childlessness among
+women aged 40 to 44 (19.8\% in 2004--2006, 18.8\% in 2024) and
+with later first births: the mean age at first birth rose from 26.0 to 28.1
+and the share of first births at 30 or later from 25 to 38\%. In the
+model, a lower $\psi_t$ works on every cohort alive, so 29\% of women
+aged 40 to 44 in 2023 are childless and their completed fertility is 1.69,
+against 1.92 in the data. The data
+show a prominent role for later first births among younger cohorts; the
+model instead reduces fertility across the cohorts exposed to the common
+preference change. This discrepancy leaves the distribution of preference changes across
+cohorts unresolved.
+
+With only preference shocks,
+falling fertility lowers the demand for family space, so the model has to
+deliver a falling price: 3.6\% below 2007 in 2023. In the data, the real
+house price rose by 15.6\% between 2007 and 2023, and real rents by 15
+to 19\%. Part of the decline in fertility since 2007 therefore came with
+a rising cost of space that the estimation assigns to preferences. The
+transition says what housing would have done in response to the fertility
+decline, not that housing caused it.
+% [DATA] Case-Shiller CSUSHPINSA / CPIAUCSL, 2023/2007 = 1.156
+% (historical_supply_comparison.csv); CPI rent of primary residence, FRED.
+
+Figure~\ref{fig:quant-lifecycle-2023} compares life-cycle profiles in 2023.
+The model reproduces the rise of ownership with age and the hump in housing
+size, but its households buy too early: 43\% of heads aged 18
+to 21 and 52\% of those aged 22 to 25 own their home in the
+model, against 11\% and 15\% in the ACS. This miss matters
+for the credit experiments of Section~\ref{sec:policy}, because it places too many young households
+near the margin of buying. First births are also too early:
+29\% of first births in the model are to women aged 18 to 21,
+against 17\% in the 2021--2023 natality data, and 14\% are at
+30 to 33, against 22\%.
+% [MODEL] free_entry/moments_2023_fi/lifecycle_by_age_0.63.csv: own 18-21 42.6, 22-25
+% 52.2; validation_2023_model_fi_eta0.63.json birth_flow_first shares 18-21 0.288,
+% 30-33 0.139. [DATA] actual2023_age_housing_levels.csv: 10.6, 15.3.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../../output/model/calibration/2026-10-24_lifecycle_2023_fi/lifecycle_2023_fi_eta063.pdf}
+\caption{Life-cycle profiles in 2023, model and data}
+\label{fig:quant-lifecycle-2023}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Homeownership and rooms by age of the household
+head, and first births by age of the mother. Model: the 2023 period of the
+transition in Section~\ref{sec:quant-transition}. Data: ACS 2023; NCHS first births 2021--2023.
+\end{minipage}
+\end{figure}

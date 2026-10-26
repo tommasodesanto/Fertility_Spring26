@@ -45,7 +45,7 @@ the relaxation, and they have about 2\% fewer children a year at ages 26 to 42.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\linewidth]{\PRF/fig_appE_cohort_2023.pdf}
+\includegraphics[width=\linewidth]{\PRF/fig_appE_cohort_2023.pdf}
 \caption{The credit relaxation by cohort, with one path held at its 2023 level}
 \label{fig:app-cohort-2023}
 \par\smallskip
@@ -75,7 +75,7 @@ fall in the effect is the end of the gain from falling prices, not a new loss.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\linewidth]{\PRF/fig_appE_cohort_dip.pdf}
+\includegraphics[width=\linewidth]{\PRF/fig_appE_cohort_dip.pdf}
 \caption{The credit relaxation by cohort, with the house price held from 2063}
 \label{fig:app-cohort-dip}
 \par\smallskip
@@ -125,7 +125,10 @@ renters use the credit, buying with probability 0.63 instead of 0.57 at ages
 more than 85\% of the value of their home. The credit relaxation for all
 households, in the last column, instead raises the purchases of childless
 renters, from 0.25 to 0.75 at ages 22 to 25, and in 2023 barely changes
-their first-birth attempts.
+their first-birth attempts. When parents get the higher limit only when they
+buy, so that owners who stay cannot borrow more against their home, first-birth
+attempts rise almost as much (0.157 instead of 0.161 at ages 22 to 25), and
+births in 2023 rise by 3.8\% instead of 5.1\%.
 
 \begin{table}[H]
 \centering
@@ -141,7 +144,10 @@ are per four-year period: trying for a first child, and buying a home for a
 household that starts the period as a renter. Debt relative to home value is
 measured at the start of the period, among owners. Credit for parents raises
 the loan-to-value limit to 1 for households with a child at home; the credit
-relaxation raises it to 1 for all households.
+relaxation raises it to 1 for all households. $^{\dagger}$Credit for parents
+at purchase only: owners who stay keep the borrowing limit of 80\% of the
+home's value. Provisional: the housing market in this transition clears to
+$3.7\times10^{-4}$, above the $2\times10^{-4}$ of the other runs.
 \end{minipage}
 \end{table}
 
@@ -193,7 +199,7 @@ long-run rent by 9.9\%.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.95\linewidth]{\PRF/fig_appE_ptax_prices_fi_eta063.pdf}
+\includegraphics[width=\linewidth]{\PRF/fig_appE_ptax_prices_fi_eta063.pdf}
 \caption{House price and rent with a higher property tax}
 \label{fig:app-ptax-prices}
 \par\smallskip
@@ -362,3 +368,5 @@ equilibrium.
 % market residual <= 2.0e-4, fiscal and rebate <= 1.9e-5.
 
 \input{sections/app_identification}
+
+\input{sections/app_2023}
