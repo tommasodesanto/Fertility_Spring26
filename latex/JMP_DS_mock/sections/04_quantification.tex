@@ -555,7 +555,28 @@ ACS; first births by four-year age group from the NCHS natality files for
 \end{minipage}
 \end{figure}
 
-Appendix~\ref{sec:quant-2023} compares the 2023 economy, the starting point of
-the policy experiments, with the 2023 data. None of these moments is
-targeted by the transition. The model matches the share of mothers with one
-child, 22.2\% in both, and mean rooms, 5.51 against 5.58.
+Appendix~\ref{sec:quant-2023} compares the 2023 economy, the starting point
+of the policy experiments, with the 2023 data. None of these moments is
+targeted by the transition. The model reproduces the direction of the shift
+in the timing of births: from 2007 to 2023 the share of women who are mothers
+by 25 falls by 13 percentage points in the model and by 18 in the data, in
+line with the fall in birth rates at younger ages documented by
+\citet{kearneyPuzzleFallingUS2022}. It also matches the share of mothers
+with one child, 22.2\% in both, and mean rooms, 5.51 against 5.58. Two
+misses are informative about what a decline in preferences alone leaves out.
+First, in the model the decline works on every cohort alive, so childlessness
+among women aged 40 to 44 rises to 28.7\%, while in the data it barely moved,
+from 19.8\% to 18.8\%. Second, fewer births lower the demand for family
+space, so the model's house price falls by 3.6\%, while in the data the real
+house price rose by 15.6\%.%
+\footnote{Two features of the model limit its account of house prices over
+this period. First, the model starts from a stationary population, so it
+misses the momentum of the age distribution of 2007, shaped by earlier
+periods of higher fertility, which kept household formation growing after
+2007. Second, the model has no aggregate shocks to credit or income, so it
+does not capture the boom and bust in house prices around 2007. It is built
+to study medium- and long-run trends.}
+The transition shows how housing responds to a decline in fertility; it does
+not attribute the decline to housing.
+% [MODEL 2023] moments_2023_fi.csv free_entry_eta0.63; mothers by 25 32.2 (validation json), 2007 45.5.
+% [DATA] Case-Shiller CSUSHPINSA / CPIAUCSL 2023/2007 = 1.156 (historical_supply_comparison.csv).
