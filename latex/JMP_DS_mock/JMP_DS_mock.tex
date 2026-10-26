@@ -24,6 +24,14 @@
 \titleformat{\subsubsection}[runin]
   {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
 \titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.6em}
+\usepackage[section]{placeins}
+% Float placement (Oct 25): floats stay in their section and sit with the text.
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
 \usepackage{hyperref}
 
 \graphicspath{{../figures/}{figures/}}
