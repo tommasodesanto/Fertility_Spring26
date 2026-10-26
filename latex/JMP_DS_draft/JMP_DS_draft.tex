@@ -2,14 +2,21 @@
 
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
+\numberwithin{equation}{section}
 \usepackage{booktabs,tabularx,array}
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{float}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric}
+\definecolor{mechnavy}{RGB}{25,62,96}
+\definecolor{mechteal}{RGB}{27,125,129}
 \usepackage[round]{natbib}
 \usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
 \usepackage{titlesec}
 
 % Compact run-in headings within each numbered subsection.
@@ -44,25 +51,33 @@
 \newcommand{\dd}{\mathrm d}
 \newcommand{\E}{\mathbb E}
 \newcommand{\1}{\mathbf 1}
+\newcommand{\problem}[1]{\textcolor{red}{[Problem: #1]}}
 
-\title{Intergenerational Housing Misallocation and Fertility}
-\author{Tommaso De Santo}
-\date{}
+\title{Declining Fertility and Housing Costs}
+\author{Tommaso De Santo\thanks{New York University (td2248@nyu.edu). I am grateful to Corina Boar, Guido Menzio, Raquel Fernández and Sharon Traiberman for their guidance and support. I thank David Berger, Jaroslav Borovička, Nicoló Ceneri, Gian Luca Clementi, Simon Gilchrist, Paolo Martellini, Virgiliu
+		Midrigan, Abdoulaye Ndiaye, Alessandra Peter, Diego Perez, Martin Rotemberg, Saverio Spinella, Venky Venkateswaran, and participants to the NYU Macroeconomics Lunch Seminar and NYU Student Macroeconomics Lunch Seminar for their comments and suggestions.}}
+\date{\today\\[0.4em]\small\href{https://tommasodesanto.github.io/jmp.pdf}{Click here for the latest version}}
 
 \begin{document}
 
 \maketitle
 \input{sections/00_abstract}
-
+\vspace*{\fill}
+\pagebreak
 \input{sections/01_introduction}
 \input{sections/02_empirical_evidence}
 \input{sections/03_model}
 \input{sections/04_quantification}
+\input{sections/05_results}
 \input{sections/05_policy}
 \input{sections/06_conclusion}
 
 \clearpage
 \bibliographystyle{plainnat}
-\bibliography{../references,../main_bib,../lit_review_extra}
+\bibliography{../references,../main_bib,../lit_review_extra,../new_entries}
+
+\clearpage
+\input{data_appendix}
+\input{appendix}
 
 \end{document}

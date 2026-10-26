@@ -394,29 +394,25 @@ survival and the entry of $E=\lambda K$ new households map $G$ into itself.
 \subsection{Model analysis}
 \label{sec:m-analysis}
 
-\textcolor{red}{[Review with results.]}
-
-In this Section, I discuss the main tensions that shape fertility in the
-model. The first is timing: children come early in life, while earnings and
-wealth come later, and owning the space a child requires takes a down
-payment. The second is the interaction of the cost of a child's space with
-earnings risk. The third is the response of housing costs to fertility
-itself. A household that wants a child must therefore pay for its
-space, often before its earnings rise, and commit to paying for it while
-those earnings are uncertain. These tensions are then measured and assessed
-in Sections~\ref{sec:quant} and~\ref{sec:results}.
+Three tensions shape fertility in the model. The first is timing: the chance
+of a birth falls with age, while earnings and wealth rise, and owning the
+space a child needs takes a down payment. The second is risk: the child's
+space is paid for in every period the child is at home, out of uncertain
+earnings. The third runs through the housing market: fewer children lower the
+demand for housing and its price, and a lower price raises fertility.
+Section~\ref{sec:results} measures the cost of the child's space and the role
+of risk, Section~\ref{sec:policy-credit} the role of the down payment, and
+Section~\ref{sec:quant-transition} the response of the housing market.
 
 \subsubsection*{Borrowing limits and the timing of children.}
-The borrowing limit ties the timing of a child to the household's wealth. A
-try for a child succeeds with probability $\pi_a$, which declines with age,
+A try for a child succeeds with probability $\pi_a$, which declines with age,
 while earnings $e_az_t$ rise with age through $e_a$
 (Figure~\ref{fig:m-agetiming}a). A child raises by $r_th_P$ the spending
-needed for the same housing services, today and, with probability
-$1-\lambda$, next period, while earnings are still low. The home a family
-wants also requires a down payment, but a renter cannot borrow and an owner
-can borrow only against its home. Let $\zeta_t\ge0$ denote the multiplier on
-the borrowing limit, $b_{t+1}\ge-\phi P_th^O_t$ with $h^O_t=0$ for a renter:
-the value, in utility, of borrowing one more unit in period
+needed for the same housing services, in every period it is at home. The home
+a family wants also requires a down payment: a renter cannot borrow, and an
+owner can borrow only against its home. Let $\zeta_t\ge0$ denote the
+multiplier on the borrowing limit, $b_{t+1}\ge-\phi P_th^O_t$ with $h^O_t=0$
+for a renter: the value, in utility, of borrowing one more unit in period
 $t$.\footnote{Appendix~\ref{app:household} derives the Euler equation for the
 bond and the conditions behind the results below.} A birth raises the
 multiplier when it raises marginal utility more today than next period, as
@@ -467,7 +463,6 @@ once its savings cover the down payment.
 \end{tikzpicture}
 \caption{Timing of fertility, earnings and the purchase of a family home}
 \label{fig:m-agetiming}
-\problem{The earnings profile $e_a$ in panel (a) is a placeholder until the PSID estimate is in.}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
 \footnotesize\textit{Notes:} Schematic. The shaded area marks the fertile
@@ -478,21 +473,18 @@ $\phi'>\phi$, and the shaded area is the family space it gains.
 \end{minipage}
 \end{figure}
 
-A relaxation of the borrowing limit shows how much the down payment matters
-for fertility. A higher loan-to-value ratio $\phi$ lowers the equity
-$(1-\phi)P_th^O_t$ a buyer needs and allows an earlier purchase
-(Figure~\ref{fig:m-agetiming}b), but it leaves the cost of a child's space
-unchanged: by \eqref{eq:m-rent}, that space costs about $r_th_P$ every
-period, whether the household rents or owns.\footnote{Apart from the selling
-cost, an owner that holds a unit from $t$ to $t+1$ pays $(1+\tau^p)P_t$ in
-period $t$ and holds $(1-\delta_H)P_{t+1}$ in period $t+1$, so by
-\eqref{eq:m-rent} its cost, in period-$t$ units, equals the rent $r_t$.} If births respond to $\phi$, the borrowing
-limit stands between some households and a child. For a change in $\phi$ in
-period $t$, the envelope theorem, \eqref{eq:m-tenure} and
-\eqref{eq:m-fertility} give\footnote{Here $\kappa=\kappa_1$ before the first
-child and $\kappa_C$ after. A permanent change in $\phi$ adds the
-corresponding terms for all future periods, discounted and weighted by
-survival.}
+A higher loan-to-value ratio $\phi$ lowers the equity $(1-\phi)P_th^O_t$ a
+buyer needs and allows an earlier purchase (Figure~\ref{fig:m-agetiming}b).
+It leaves the cost of a child's space unchanged: by \eqref{eq:m-rent}, that
+space costs about $r_th_P$ every period, whether the household rents or
+owns.\footnote{Apart from the selling cost, an owner that holds a unit from
+$t$ to $t+1$ pays $(1+\tau^p)P_t$ in period $t$ and holds $(1-\delta_H)P_{t+1}$
+in period $t+1$, so by \eqref{eq:m-rent} its cost, in period-$t$ units, equals
+the rent $r_t$.} For a change in $\phi$ in period $t$, the envelope theorem,
+\eqref{eq:m-tenure} and \eqref{eq:m-fertility} give\footnote{Here
+$\kappa=\kappa_1$ before the first child and $\kappa_C$ after. A permanent
+change in $\phi$ adds the corresponding terms for all future periods,
+discounted and weighted by survival.}
 \begin{equation}
  \begin{gathered}
  \frac{\partial\pi^F_{t,a}}{\partial\phi}
@@ -506,21 +498,19 @@ survival.}
 \end{equation}
 where $\pi^H_t(h^O\mid n)$ is the probability of owning $h^O$ and
 $\zeta_t(h^O,n)$ the multiplier in that option. The second line is the value
-of credit to a household with $n$ children at home: a higher $\phi$ lets an
-owner of $h^O$ borrow $P_th^O$ more, each unit is worth $\zeta_t(h^O,n)$, and
-the sum weights each home by the probability of owning it. Credit is worth
-nothing to a household that rents or whose limit is slack and, at given
-multipliers, worth more when homes are expensive. The first line says that
-credit raises the probability of trying only through the difference between
-its value with the additional child and without it. The difference is
-positive when the child moves the household toward owning larger homes,
-where the limit binds, or tightens the limit for a given home. It is close to
-zero for a household that rents in either case, and negative when credit is
-worth more without the child, as when it mainly helps households without
-children to buy. The factor in front is largest for households close to
-indifferent about trying and falls with age through $\pi_a$. Whether this
-margin matters for fertility is a quantitative question, which
-Section~\ref{sec:policy-credit} assesses.
+of credit to a household with $n$ children at home: an owner of $h^O$ can
+borrow $P_th^O$ more, and each unit is worth $\zeta_t(h^O,n)$. Credit is worth
+nothing to a household that rents or whose limit is slack. The first line
+says that credit raises the probability of trying only through the difference
+between its value with the additional child and without it. The difference is
+positive when the child moves the household toward larger owned homes, where
+the limit binds, close to zero for a household that rents either way, and
+negative when credit mainly helps households without children to buy. The
+factor in front is largest for households close to indifferent about trying
+and falls with age through $\pi_a$. Section~\ref{sec:policy-credit} shows
+which case dominates in the calibrated model: credit mostly lets young
+households buy the small homes they would otherwise rent, and it brings
+births forward.
 
 \subsubsection*{Earnings risk.}
 A child stays at home for $1/\lambda$ periods on average, while earnings are
@@ -544,10 +534,11 @@ which is positive for $\sigma\ge1$, since $e(1)\ge1$ and $k>0$, and rises
 with $k$.} By Jensen's inequality, earnings risk raises the expected cost of a
 child above its cost at expected earnings, and by more when the child's space
 is more expensive (Figure~\ref{fig:m-risk}). Savings soften this effect.
+Section~\ref{sec:results-risk} measures it in the calibrated model.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.7\linewidth]{figures/fig_m_risk_fi.pdf}
+\includegraphics[width=0.65\textwidth]{figures/fig_m_risk_fi.pdf}
 \caption{Earnings risk and the utility cost of a child}
 \label{fig:m-risk}
 \par\smallskip
@@ -555,7 +546,7 @@ is more expensive (Figure~\ref{fig:m-risk}). Savings soften this effect.
 \footnotesize\textit{Notes:} The figure is computed from \eqref{eq:m-indirect} at the
 parameters of Section~\ref{sec:quant} (Appendix~\ref{app:model-figures}).
 The curves plot $\Delta_t$ for a renter at the borrowing limit, at the rent of
-the initial stationary equilibrium (solid) and at the long-run rent of
+the initial steady state (solid) and at the rent of the new steady state of
 Figure~\ref{fig:m-illustration} (dashed). Earnings are $y_L$ or $y_H$ with
 equal probability. Filled circles mark the cost at expected earnings $\bar y$
 and open circles the expected cost; the braces mark the additional cost due to
@@ -564,48 +555,48 @@ risk.
 \end{figure}
 
 \subsubsection*{Households and the housing market.}
-Figure~\ref{fig:m-illustration} shows how the equilibrium responds to a fall
-in the preference for children, from $\psi_0$ to $\psi_1$. Panel (a) shows the
-housing market. Supply \eqref{eq:m-supply} rises with the price, and demand,
-$N\,h(P;\psi)$, is the number of households $N$ times the housing each
-occupies at the price $P$. Panel (b) shows the fertility $n(P;\psi)$ that
-households choose at each price.\footnote{Housing and fertility respond to
-the rent. In a stationary equilibrium, the rent is proportional to the
-price by \eqref{eq:m-rent}, so both can be read against the price. Along a transition, the rent also reflects the
-expected change in the price, by \eqref{eq:m-rent}.} At $A$, the market
-clears at $P_0$ with $N_0$ households, and fertility is at the replacement
-rate $\bar n$. When the preference falls, the population is inherited and the
-price stays at about $P_0$, so fertility falls along $n(P;\psi_1)$, from $A$
-to $A'$. Over the following generations, smaller cohorts reduce the number of
-households, demand shifts left, and the price falls along the supply curve.
-The lower price raises fertility along $n(P;\psi_1)$, until fertility is back
-at replacement at $B$, with fewer households and cheaper housing. The
-quantitative transition of Section~\ref{sec:quant-transition} follows these
-steps.
+Figure~\ref{fig:m-illustration} shows how the economy responds to a fall in
+the preference for children, from $\psi_0$ to $\psi_1$. Panel (a) shows the
+housing market in a steady state. Supply \eqref{eq:m-supply} rises with the
+price. Demand, $N\,h(P;\psi)$, is the number of households $N$ times the
+housing each one owns or rents at the price $P$.\footnote{In a steady state,
+the housing market (Section~\ref{sec:m-equilibrium}) clears when this demand equals the stock.
+Housing and fertility respond to the rent. In a steady state, the rent is
+proportional to the price by \eqref{eq:m-rent}, so both can be read against
+the price. Along a transition, the rent also reflects the expected change in
+the price.} Panel (b) shows the fertility $n(P;\psi)$ that households choose
+at each price. At $A$, the market clears at $P_0$ with $N_0$ households, and
+fertility is at the replacement rate $\bar n$. When the preference falls, the
+population is inherited and the price stays close to $P_0$, so fertility
+falls along $n(P;\psi_1)$, from $A$ to $A'$. Over the following generations,
+smaller cohorts reduce the number of households, demand shifts left, and the
+price falls along the supply curve. The lower price raises fertility along
+$n(P;\psi_1)$, until fertility is back at replacement at $B$, with fewer
+households and cheaper housing. The transition of
+Section~\ref{sec:quant-transition} follows these steps.
 
-In a stationary equilibrium, the number of new households equals the number
-that die, so fertility is at the replacement rate. Since the household
-problem, the pension and the rebate per household do not depend on the number
-of households, the condition $n(P;\psi)=\bar n$ in panel (b) determines the
-long-run price, and supply and demand in panel (a) then determine the number
-of households. For a given initial equilibrium, a more elastic supply leaves
-the long-run price unchanged and implies a larger fall in the number of
-households.
+In a steady state, the number of new households equals the number that die,
+so fertility is at the replacement rate. Since the household problem, the
+pension and the rebate per household do not depend on the number of
+households, the condition $n(P;\psi)=\bar n$ in panel (b) determines the
+steady-state price, and supply and demand in panel (a) then determine the
+number of households. A more elastic supply therefore leaves the steady-state
+price unchanged and implies a larger fall in the number of households.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\linewidth]{figures/fig_m_illustration_fi.pdf}
+\includegraphics[width=\textwidth]{figures/fig_m_illustration_demand.pdf}
 \caption{The housing market and fertility}
 \label{fig:m-illustration}
 \par\smallskip
 \begin{minipage}{0.92\linewidth}
-\footnotesize\textit{Notes:} The figure is computed from stationary solves of the model
-at given prices, at the parameters of Section~\ref{sec:quant}
+\footnotesize\textit{Notes:} The figure is computed from stationary solves of
+the model at given prices, at the parameters of Section~\ref{sec:quant}
 (Appendix~\ref{app:model-figures}). Panel (a) shows housing supply
-\eqref{eq:m-supply} and demand with $N_0$ households under $\psi_0$ and $N_1$
-households under $\psi_1$. Panel (b) shows the fertility households choose at
-each price; the dotted line marks replacement. $A$ is the initial stationary
-equilibrium, $A'$ the outcome at the inherited population after the fall in
-$\psi$, and $B$ the new stationary equilibrium.
+\eqref{eq:m-supply} and demand with $N_0$ households under $\psi_0$ (solid)
+and $N_1$ households under $\psi_1$ (dashed). Panel (b) shows the fertility
+households choose at each price; the dotted line marks replacement. $A$ is the
+initial steady state, $A'$ the outcome at the inherited population after the
+fall in $\psi$, and $B$ the new steady state.
 \end{minipage}
 \end{figure}
