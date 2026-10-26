@@ -1,4 +1,4 @@
-% Shipped from the mock (latex/JMP_DS_mock/sections/04_quantification.tex) on Oct 26 2026, his word "ship this in main" (re-ship with 4.5 Testing).
+% Shipped from the mock (latex/JMP_DS_mock/sections/04_quantification.tex) on Oct 26 2026, his word (fecundity and e_a sentences).
 % Section 4 at the recalibrated new-accounting point (loss 7.4186), Oct 21 2026.
 % Parameters and 2007 fit: output/model/calibration/2026-10-19_identification_newacct/
 % (torch/best_point.json; moments/center.json: target_fit, event paths, price, loss).
@@ -124,10 +124,18 @@ to match the moments of Table~\ref{tab:quant-moments}
 A period in the model lasts four years. Households enter at 18, retire at 66
 and live at most through 85. Survival is certain before retirement and,
 after it, follows the 2023 period life table of the Social Security
-Administration. Births are possible through age 45. The success of an
-attempt falls with age following the exponential schedule of
-\citet{sommerFertilityChoiceLife2016}, from 0.98 at 18 to 0.90 at 30, 0.80
-at 35 and 0.62 at 40.\textcolor{red}{[Problem: Source of the conception probabilities by age to be settled; not Sommer, not Leridon.]} A child leaves home with probability $\lambda=2/9$ per
+Administration. Births are possible through age 45. The probability that
+an attempt succeeds within a period falls with age as
+$\pi_a=1-0.02\,e^{0.134(a-18)}$, and is zero from age 45, using the
+exponential form of \citet{sommerFertilityChoiceLife2016}. The schedule gives
+0.90 at 30, 0.80 at 35 and 0.62 at 40, close to the probabilities of a
+conception leading to a live birth within four years computed by
+\citet{leridon2004}, 0.91, 0.84 and 0.64.
+% POST-DEADLINE: (1) check that Leridon's four-year success probability is the right object for a model
+% attempt (the model has no memory of failed attempts; success depends on age only); (2) run the current
+% schedule against the July least-squares fit to Leridon (0.01331, 0.14960), holding all else fixed.
+% Leridon numbers checked in the abstract by ChatGPT (Oct 25), not read in full here.
+A child leaves home with probability $\lambda=2/9$ per
 period, so children stay at home for 18 years on average.%
 % pi_a = 1 - 0.02 exp(0.134 (a - 18)); 0.50 at 42. Leridon (2004) four-year
 % conception 0.91 / 0.84 / 0.64 at 30 / 35 / 40 (docs/model/e5_target_review_20260724.md).
@@ -187,8 +195,12 @@ autocovariance of log household earnings, averaged over non-overlapping
 four-year spells and net of age and year effects, in the 1984--1997 PSID,
 the last years in which the survey is annual. This gives $\rho_z=0.735$ and
 $\sigma_z=0.484$, which I approximate with nine states. The age profile
-$e_a$ is normalized to average one over working ages.\textcolor{red}{[Problem: Source of the
-age profile $e_a$ to be confirmed.]}
+$e_a$ is piecewise constant: it rises through early adulthood and declines
+modestly before retirement, and it is normalized to average one over working
+ages.
+% POST-DEADLINE: e_a has no recorded source (values from the April MATLAB code, two changed in the June 4
+% refactor, commit b5980c0a; flagged Sept 21, never closed). Estimate it from the PSID and re-solve; the
+% flat young profile (0.72 at 18-25 vs PSID/ACS 0.24-0.54) may feed the young-ownership and early-birth misses.
 % output/model/native_financing_diagnostic_20260919/specification_followup/
 % earnings_entry_battery_v1/single_process_external_estimate.json: gamma0 0.5085,
 % gamma1 0.3735, held-out gamma2 0.2899 (model-implied 0.2744); rho = gamma1/gamma0,
