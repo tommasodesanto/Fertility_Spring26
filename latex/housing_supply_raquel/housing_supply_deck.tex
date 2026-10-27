@@ -54,7 +54,7 @@
   \item Competitive developers build new housing from goods: $I_t = Z_tX_t \ge 0$
   \item The stock depreciates at rate $\delta_H$: $H_t = (1-\delta_H)H_{t-1} + I_t$
   \item Congestion externality: productivity falls with the aggregate stock, so a unit costs
-  \[ c_t = 1/Z_t = (H_t/H_0)^{1/\eta},\qquad Z_t=(H_0/H_t)^{1/\eta} \]
+  \[ c_t = 1/Z_t = (H_t/\bar H)^{1/\eta},\qquad Z_t=(\bar H/H_t)^{1/\eta} \]
   \vspace{-12pt}
   \begin{itemize}\setlength\itemsep{1pt}
     \item Why timing: $H_t$ both sets this period's cost and results from this period's building
@@ -64,7 +64,7 @@
   \item Free entry: $P_t = c_t$ if $I_t > 0$; $P_t \le c_t$ if $I_t = 0$; profit is zero
   \item The rising cost stands in for land and regulation; I abstract from land rents
 \end{itemize}
-\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025) \hyperlink{app-gpv}{\beamergotobutton{Details}}. $X_t$: goods used in construction. $\eta$: price elasticity of the stock; $H_0$: its scale.}
+\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025) \hyperlink{app-gpv}{\beamergotobutton{Details}}. $X_t$: goods used in construction. $\eta$: price elasticity of the stock; $\bar H$: its scale.}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -81,15 +81,15 @@
 \begin{itemize}\setlength\itemsep{3pt}
   \item Construction:
   \[
-  I_t=\max\bigl\{0,\;H_0P_t^{\eta}-(1-\delta_H)H_{t-1}\bigr\}
+  I_t=\max\bigl\{0,\;\bar HP_t^{\eta}-(1-\delta_H)H_{t-1}\bigr\}
   \]
   \item Stock:
   \[
-  \begin{aligned}H_t&=(1-\delta_H)H_{t-1}+I_t\\ &=\max\bigl\{(1-\delta_H)H_{t-1},\,H_0P_t^{\eta}\bigr\}\end{aligned}
+  \begin{aligned}H_t&=(1-\delta_H)H_{t-1}+I_t\\ &=\max\bigl\{(1-\delta_H)H_{t-1},\,\bar HP_t^{\eta}\bigr\}\end{aligned}
   \]
   \item Demand rises ($A$): developers build until the price equals the cost
   \item Demand falls faster than wear ($B$): nothing is built, the stock shrinks by $\delta_H$, the price falls below cost
-  \item Steady state: building replaces wear, $I=\delta_HH$, and the price equals the cost, $H=H_0P^{\eta}$
+  \item Steady state: building replaces wear, $I=\delta_HH$, and the price equals the cost, $H=\bar HP^{\eta}$
 \end{itemize}
 \end{column}
 \end{columns}
@@ -103,11 +103,11 @@
 \begin{itemize}\setlength\itemsep{6pt}
   \item Each period, the inherited stock, building and free entry give
   \[
-  H_t=\max\bigl\{(1-\delta_H)H_{t-1},\,H_0P_t^{\eta}\bigr\}
+  H_t=\max\bigl\{(1-\delta_H)H_{t-1},\,\bar HP_t^{\eta}\bigr\}
   \]
-  \item While developers build, $P_t=c(H_t)$: the stock sits on the curve $H=H_0P^{\eta}$
+  \item While developers build, $P_t=c(H_t)$: the stock sits on the curve $H=\bar HP^{\eta}$
   \item The inherited stock matters only through the floor, which binds if demand falls faster than wear
-  \item Steady state: $I=\delta_HH>0$, so developers always build and $H=H_0P^{\eta}$
+  \item Steady state: $I=\delta_HH>0$, so developers always build and $H=\bar HP^{\eta}$
   \item This is the old model's static supply curve; it holds each period unless the floor binds
 \end{itemize}
 \end{frame}
@@ -235,7 +235,7 @@
   \item Goods cost $\alpha P_tI_t$; the permit rent $(1-\alpha)P_tI_t$ goes to the government and is wasted
 \end{itemize}
 \vspace{4pt}
-\notation{I set $\alpha=\eta/(1+\eta)$, so $\varepsilon=\eta$, and $\bar L=\delta_HH_0/\alpha^{\varepsilon}$, so $\kappa=\delta_HH_0$: at the initial price, building just replaces wear, and the steady state matches the stock cost.}
+\notation{I set $\alpha=\eta/(1+\eta)$, so $\varepsilon=\eta$, and $\bar L=\delta_H\bar H/\alpha^{\varepsilon}$, so $\kappa=\delta_H\bar H$: at the initial price, building just replaces wear, and the steady state matches the stock cost.}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -261,7 +261,7 @@
 \end{column}
 \end{columns}
 \vspace{4pt}
-\notation{Schematic. Dashed: steady-state curve $H=H_0P^{\eta}$, common to both versions.}
+\notation{Schematic. Dashed: steady-state curve $H=\bar HP^{\eta}$, common to both versions.}
 \end{frame}
 
 
@@ -290,7 +290,7 @@
   \item Construction is irreversible: the price equals the cost $1/Z^h$ when they build, and is lower otherwise
   \item $Z^h$ is chosen so that, when building, $r=\bar r\,(N_t/N_0)^{1/\xi}$
   \item In continuous time the cost depends on the current stock, a state variable
-  \item In steady state they always build: the same supply curve as here, $P=(H/H_0)^{1/\eta}$
+  \item In steady state they always build: the same supply curve as here, $P=(H/\bar H)^{1/\eta}$
   \item Calibration: $\xi$ from Saiz (2010), 0.66 for San Francisco; tract spread from Baum-Snow and Han (2024)
 \end{itemize}
 \textbf{Rental companies (REITs)}
