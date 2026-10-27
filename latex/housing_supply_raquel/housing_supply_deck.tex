@@ -34,93 +34,20 @@
 \begin{document}
 
 %---------------------------------------------------------------
-\begin{frame}{Housing Demand}
+\begin{frame}{Housing}
 \footnotesize
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
 \begin{itemize}\setlength\itemsep{6pt}
-  \item Households own at $P_t$ or rent at $r_t$
-  \item Owned homes come in a few sizes, $h^O_t\in\mathcal H$: changing size means selling
-  \item Rented space is any $h^R_t\le\bar h^R$, chosen again each period
-  \item Owners and rental companies pay maintenance $\delta_HP_t$ per unit held into $t$, so a home keeps its size
-  \item Rental companies buy the units households rent, at $P_t$
-  \item One price per unit clears owned and rented space against the stock:
-  \[
-  \int\bigl(h^O_t+h^R_t\bigr)\,dG_t=H_t
-  \]
+  \item One housing good, in units of space: one price $P_t$ and one rent $r_t$ per unit
+  \item Between periods, a fraction $\delta_H$ of every unit depreciates
+  \item Owned homes come in a few sizes, $h^O_t\in\mathcal H$; renters choose any $h^R_t\le\bar h^R$ each period
+  \item Owners pay the property tax $\tau^pP_th^O_t$ and maintenance $\delta_HP_th^O_{t-1}$; selling costs a fraction $\mu$
+  \item Owners can borrow up to $\phi P_th^O_t$; renters cannot borrow
+  \item Housing demand comes from the household problem: tenure, size and saving, given the path of prices
 \end{itemize}
 \end{frame}
 
 %---------------------------------------------------------------
-\begin{frame}{Rental Housing: Rental Companies}
-\small
-\setlength{\abovedisplayskip}{1pt}\setlength{\belowdisplayskip}{1pt}
-\begin{itemize}\setlength\itemsep{0pt}
-  \item \textbf{Rental companies.} Competitive, they live outside the economy and own all rental housing, no selling cost
-  \item \textbf{User cost.} A company with $P_t$ can invest it at $R_b$, or buy a unit and rent it out:
-  \begin{itemize}\setlength\itemsep{1pt}
-    \item the tenant pays $r_t$ at the start of the period, which the company invests
-    \item tax $\tau^pP_t$ now; in $t+1$, maintenance $\delta_HP_{t+1}$ and resale at $P_{t+1}$
-  \end{itemize}
-  \item Zero profit: a unit's earnings equal the income forgone on its price
-  \[
-  \underbrace{R_b\,(r_t-\tau^pP_t)+(1-\delta_H)P_{t+1}}_{\text{rent and resale, net of tax and maintenance}}=\underbrace{R_bP_t}_{\text{forgone income}}
-  \quad\Rightarrow\quad r_t=(1+\tau^p)P_t-\frac{(1-\delta_H)P_{t+1}}{R_b}
-  \]
-\end{itemize}
-\notation{$R_b$ fixed (small open economy). Close to the REITs of Greaney, Parkhomenko and Van Nieuwerburgh (2025), whose rent in continuous time is $r=(\delta+q+\tau)p-\dot p$ \hyperlink{app-gpv}{\beamergotobutton{Details}}}
-\end{frame}
-
-%---------------------------------------------------------------
-\newcommand{\mkt}{../../output/model/experiments/housing_supply/20261024_market_picture}
-\begin{frame}{Housing Supply in Three Parts}
-\footnotesize
-\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-\begin{itemize}\setlength\itemsep{6pt}
-  \item The same condition, written as trades in the market for owned homes in $t$:
-  \[
-  \underbrace{(1-\delta_H)E_{t-1}}_{\text{(1) homes of the dead}}
-  +\underbrace{(1-\delta_H)S_t(P_t)}_{\text{(2) homes of owners who sell}}
-  +\underbrace{I_t(P_t)}_{\text{(3) new construction}}
-  \]
-  \[
-  =\underbrace{B_t(P_t)}_{\text{purchases}}+\underbrace{\delta_HK_t(P_t)}_{\text{maintenance of stayers}}+\underbrace{H^L_t-(1-\delta_H)H^L_{t-1}}_{\text{rental companies' net purchases}}
-  \]
-  \item (1) Homes of the dead: fixed in $t$, set by who died at the end of $t-1$
-  \item (2) Owners who sell: they compare staying with selling, given prices from $t$ on
-  \item (3) Construction: zero below $c\bigl((1-\delta_H)H_{t-1}\bigr)$, rising with $P_t$ above it
-  \item A household that moves from $h$ to $h'$ supplies $(1-\delta_H)h$ and demands $h'$
-\end{itemize}
-\notation{$E_{t-1}$: homes owned by households that died at the end of $t-1$. $S_t$: homes of owners who sell. $B_t$: homes bought. $K_t$: homes of owners who stay. $H^L_t$: units held by rental companies.}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{Owner Market: Three Blocks of Supply}
-\centering
-\includegraphics[width=\textwidth]{\mkt/fig_owner_supply_blocks_schematic.pdf}
-\notation{Schematic. Common horizontal scale.}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{Supply (2): Owners Who Sell}
-\footnotesize
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\begin{itemize}\setlength\itemsep{5pt}
-  \item Owners are part of housing supply: an owner who sells puts its home on the market
-  \item An owner enters $t$ with the home $h^O_{t-1}$. It stays if
-  \[
-  \underbrace{V^{h^O_{t-1}}_t}_{\text{stay}}\ \ge\ \underbrace{\max\Bigl\{V^R_t,\ \max_{h\neq h^O_{t-1}}V^h_t\Bigr\}}_{\text{sell, then rent or buy}}
-  \]
-  and sells otherwise
-  \item Stay: pay $(\delta_H+\tau^p)P_th^O_{t-1}$ in $t$; in $t+1$, sell for $(1-\mu)P_{t+1}h^O_{t-1}$ or borrow up to $\phi P_{t+1}h^O_{t-1}$
-  \item Sell: pay the same maintenance, receive $(1-\mu)P_th^O_{t-1}$, then rent at $r_t$ or buy $h$ at $P_th$
-  \item The rent $r_t$ contains $P_{t+1}$, and $V_{t+1}$ contains the same choice at $P_{t+1}$ and $P_{t+2}$
-  \item So an owner compares the value of staying with the value of selling, given the whole path $\{P_s\}_{s\ge t}$
-\end{itemize}
-\notation{Taste shocks set aside. $\mu$: selling cost. $\tau^p$: property tax. $\phi$: financed share.}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}[label=dev]{Supply (3): Construction}
+\begin{frame}[label=dev]{Housing Supply: Construction}
 \footnotesize\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
 \begin{itemize}\setlength\itemsep{3pt}
@@ -183,6 +110,107 @@
   \item Steady state: $I=\delta_HH>0$, so developers always build and $H=H_0P^{\eta}$
   \item This is the old model's static supply curve; it holds each period unless the floor binds
 \end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Rental Housing: Rental Companies}
+\small
+\setlength{\abovedisplayskip}{1pt}\setlength{\belowdisplayskip}{1pt}
+\begin{itemize}\setlength\itemsep{0pt}
+  \item \textbf{Rental companies.} Competitive, they live outside the economy and own all rental housing, no selling cost
+  \item \textbf{User cost.} A company with $P_t$ can invest it at $R_b$, or buy a unit and rent it out:
+  \begin{itemize}\setlength\itemsep{1pt}
+    \item the tenant pays $r_t$ at the start of the period, which the company invests
+    \item tax $\tau^pP_t$ now; in $t+1$, maintenance $\delta_HP_{t+1}$ and resale at $P_{t+1}$
+  \end{itemize}
+  \item Zero profit: a unit's earnings equal the income forgone on its price
+  \[
+  \underbrace{R_b\,(r_t-\tau^pP_t)+(1-\delta_H)P_{t+1}}_{\text{rent and resale, net of tax and maintenance}}=\underbrace{R_bP_t}_{\text{forgone income}}
+  \quad\Rightarrow\quad r_t=(1+\tau^p)P_t-\frac{(1-\delta_H)P_{t+1}}{R_b}
+  \]
+\end{itemize}
+\notation{$R_b$ fixed (small open economy). Close to the REITs of Greaney, Parkhomenko and Van Nieuwerburgh (2025), whose rent in continuous time is $r=(\delta+q+\tau)p-\dot p$ \hyperlink{app-gpv}{\beamergotobutton{Details}}}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{The Household Problem: Housing}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{5pt}
+  \item A household enters $t$ with bonds $b_t$ and the home $h^O_{t-1}$, zero for a renter
+  \item It buys, stays or rents, with the budget constraint of the chosen option:
+  \[
+  \begin{aligned}
+  &\text{Buy:}  && c_t+b_{t+1}+\tau^pP_th^O_t+\delta_HP_th^O_{t-1}=R_bb_t+y_t+T_t-P_th^O_t+(1-\mu)P_th^O_{t-1}\\
+  &\text{Stay:} && c_t+b_{t+1}+\tau^pP_th^O_{t-1}+\delta_HP_th^O_{t-1}=R_bb_t+y_t+T_t\\
+  &\text{Rent:} && c_t+b_{t+1}+r_th^R_t+\delta_HP_th^O_{t-1}=R_bb_t+y_t+T_t+(1-\mu)P_th^O_{t-1}
+  \end{aligned}
+  \]
+  \item Buyers and stayers: $b_{t+1}\ge-\phi P_th^O_t$; renters: $b_{t+1}\ge0$
+  \item A buyer pays at least $(1-\phi)P_th^O_t$ itself: the down payment
+\end{itemize}
+\notation{$y_t$: earnings or pension. $T_t$: property-tax rebate. Each option also carries a taste shock.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Staying or Selling}
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item Owners are part of the supply of housing when they decide to sell
+  \item Setting the taste shocks aside, an owner that enters $t$ with the home $h^O_{t-1}>0$ stays if
+  \[
+  \underbrace{V^{h^O_{t-1}}_t}_{\text{stay}}\ \ge\ \underbrace{\max\Bigl\{V^R_t,\ \max_{h\neq h^O_{t-1}}V^h_t\Bigr\}}_{\text{sell, then rent or buy}}
+  \]
+  and sells otherwise
+  \item The owner compares the value of keeping its home with the value of selling it and then renting or buying another
+  \item It takes into account the future path of prices
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Market Clearing}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item One price per unit clears owned and rented space against the stock:
+  \[
+  \int\bigl(h^O_t+h^R_t\bigr)\,dG_t=H_t
+  \]
+  \item Rental companies buy the units households rent, at $P_t$
+  \item The rent follows from the price path, by the rental companies' zero profit
+  \item One unknown and one condition per period; since $r_t$ contains $P_{t+1}$, the price path is solved jointly
+\end{itemize}
+\end{frame}
+
+%---------------------------------------------------------------
+\newcommand{\mkt}{../../output/model/experiments/housing_supply/20261024_market_picture}
+\begin{frame}{Housing Supply in Three Parts}
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item The same condition, written as trades in the market for owned homes in $t$:
+  \[
+  \underbrace{(1-\delta_H)E_{t-1}}_{\text{(1) homes of the dead}}
+  +\underbrace{(1-\delta_H)S_t(P_t)}_{\text{(2) homes of owners who sell}}
+  +\underbrace{I_t(P_t)}_{\text{(3) new construction}}
+  \]
+  \[
+  =\underbrace{B_t(P_t)}_{\text{purchases}}+\underbrace{\delta_HK_t(P_t)}_{\text{maintenance of stayers}}+\underbrace{H^L_t-(1-\delta_H)H^L_{t-1}}_{\text{rental companies' net purchases}}
+  \]
+  \item (1) Homes of the dead: fixed in $t$, set by who died at the end of $t-1$
+  \item (2) Owners who sell: they compare staying with selling, given prices from $t$ on
+  \item (3) Construction: zero below $c\bigl((1-\delta_H)H_{t-1}\bigr)$, rising with $P_t$ above it
+  \item A household that moves from $h$ to $h'$ supplies $(1-\delta_H)h$ and demands $h'$
+\end{itemize}
+\notation{$E_{t-1}$: homes owned by households that died at the end of $t-1$. $S_t$: homes of owners who sell. $B_t$: homes bought. $K_t$: homes of owners who stay. $H^L_t$: units held by rental companies.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Owner Market: Three Blocks of Supply}
+\centering
+\includegraphics[width=\textwidth]{\mkt/fig_owner_supply_blocks_schematic.pdf}
+\notation{Schematic. Common horizontal scale.}
 \end{frame}
 
 %---------------------------------------------------------------
