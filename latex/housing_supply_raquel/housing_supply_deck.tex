@@ -158,24 +158,6 @@
 \end{frame}
 
 %---------------------------------------------------------------
-\begin{frame}{Market Clearing}
-\footnotesize
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\begin{itemize}\setlength\itemsep{6pt}
-  \item The rental market clears at the rent $r_t$: rental companies hold the units households rent
-  \[
-  H^L_t=\int h^R_t(\mathbf s_t)\,dG_t(\mathbf s_t)
-  \]
-  \item The owner market clears at the price $P_t$ (next slide)
-  \item Together, owned and rented housing equal the stock:
-  \[
-  \int\bigl(h^O_t(\mathbf s_t)+h^R_t(\mathbf s_t)\bigr)\,dG_t(\mathbf s_t)=H_t
-  \]
-  \item Since $r_t$ contains $P_{t+1}$, the path of prices is solved jointly
-\end{itemize}
-\end{frame}
-
-%---------------------------------------------------------------
 \newcommand{\mkt}{../../output/model/experiments/housing_supply/20261024_market_picture}
 \begin{frame}{Owner Market Clearing}
 \footnotesize
@@ -212,10 +194,35 @@ The market for owned homes clears at the price $P_t$:
 \end{frame}
 
 %---------------------------------------------------------------
-\begin{frame}{The Owner Market in a Period}
+\begin{frame}{Owner Market: Three Parts of Supply}
 \centering
-\includegraphics[height=0.80\textheight]{../../output/model/experiments/housing_supply/20261027_market_graph/fig_market_graph.pdf}
-\notation{Schematic. Demand falls (lower $\psi$). $A$: initial steady state. $A'$: impact; nothing is built and the price falls below the cost. $B$: new steady state, with a smaller stock.}
+\includegraphics[width=\textwidth]{\mkt/fig_owner_supply_blocks_schematic.pdf}
+\notation{Schematic. Common horizontal scale.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Owner Market: Supply and Demand}
+\centering
+\includegraphics[height=0.82\textheight]{\mkt/fig_owner_supply_total_schematic.pdf}
+\notation{Schematic. Shaded: (1) homes of the dead, (2) homes of owners who sell, (3) construction.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Aggregate Accounting}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item The rental market clears at the rent $r_t$: rental companies hold the units households rent
+  \[
+  H^L_t=\int h^R_t(\mathbf s_t)\,dG_t(\mathbf s_t)
+  \]
+  \item The owner market clears at the price $P_t$, as above
+  \item Together, owned and rented housing equal the stock:
+  \[
+  \int\bigl(h^O_t(\mathbf s_t)+h^R_t(\mathbf s_t)\bigr)\,dG_t(\mathbf s_t)=H_t
+  \]
+  \item Since $r_t$ contains $P_{t+1}$, the path of prices is solved jointly
+\end{itemize}
 \end{frame}
 
 %---------------------------------------------------------------
