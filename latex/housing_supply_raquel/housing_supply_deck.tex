@@ -113,7 +113,7 @@
   \item Demand rises: developers build until the price equals the cost
   \item Demand falls faster than wear: nothing is built, and the price falls below $c\bigl((1-\delta_H)H_{t-1}\bigr)$
 \end{itemize}
-\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025) \hyperlink{app-gpv}{\beamergotobutton{Details}}. $X_t$: goods used in construction. $c(H)=(H/\bar H)^{1/\eta}$: cost of a unit. $\eta$: price elasticity of the stock; $\bar H$: its scale.}
+\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025). $X_t$: goods used in construction. $c(H)=(H/\bar H)^{1/\eta}$: cost of a unit. $\eta$: price elasticity of the stock; $\bar H$: its scale.}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -133,7 +133,7 @@
   \quad\Rightarrow\quad r_t=(1+\tau^p)P_t-\frac{(1-\delta_H)P_{t+1}}{R_b}
   \]
 \end{itemize}
-\notation{$R_b$ fixed (small open economy). Close to the REITs of Greaney, Parkhomenko and Van Nieuwerburgh (2025), whose rent in continuous time is $r=(\delta+q+\tau)p-\dot p$ \hyperlink{app-gpv}{\beamergotobutton{Details}}}
+\notation{$R_b$ fixed (small open economy). Close to the REITs of Greaney, Parkhomenko and Van Nieuwerburgh (2025), whose rent in continuous time is $r=(\delta+q+\tau)p-\dot p$}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -204,120 +204,4 @@ The market for owned homes clears at the price $P_t$:
 \end{itemize}
 \end{frame}
 
-%---------------------------------------------------------------
-\begin{frame}{Variant: Flow Cost (Kaplan, Mitman and Violante 2020)}
-\small
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\begin{itemize}\setlength\itemsep{5pt}
-  \item Builders combine goods with a fixed flow of permits $\bar L$ each period: $I_t = X_t^{\alpha}\bar L^{1-\alpha}$
-  \item Marginal cost of a unit:
-  \[
-  m(I_t) = \tfrac{1}{\alpha}\,(I_t/\bar L)^{(1-\alpha)/\alpha}
-  \]
-  \item It rises with this period's building and resets every period
-  \item $P_t = m(I_t)$ gives $I_t = \kappa P_t^{\varepsilon}$, with $\varepsilon = \alpha/(1-\alpha)$ and $\kappa = \alpha^{\varepsilon}\bar L$
-  \item Goods cost $\alpha P_tI_t$; the permit rent $(1-\alpha)P_tI_t$ goes to the government and is wasted
-\end{itemize}
-\vspace{4pt}
-\notation{I set $\alpha=\eta/(1+\eta)$, so $\varepsilon=\eta$, and $\bar L=\delta_H\bar H/\alpha^{\varepsilon}$, so $\kappa=\delta_H\bar H$: at the initial price, building just replaces wear, and the steady state matches the stock cost.}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{Variant: Flow Cost, Supply in a Period}
-\small
-\begin{columns}[c]
-\begin{column}{0.50\textwidth}
-\centering
-\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{\fig/supply_slow_stock.pdf}
-\end{column}
-\begin{column}{0.48\textwidth}
-\footnotesize
-\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
-\begin{itemize}\setlength\itemsep{2pt}
-  \item The stock adds this period's construction to what survives:
-  \[
-  H_t = (1-\delta_H)H_{t-1} + \kappa P_t^{\varepsilon}
-  \]
-  \item Impact elasticity of the stock: $\varepsilon I_t/H_t$, equal to $\delta_H\varepsilon$ at the steady state; the price absorbs the shock ($A'$, $B'$)
-  \item Something is always built: the first units are almost free
-  \item Same steady state as the stock cost; only the path differs
-\end{itemize}
-\end{column}
-\end{columns}
-\vspace{4pt}
-\notation{Schematic. Dashed: steady-state curve $H=\bar HP^{\eta}$, common to both versions.}
-\end{frame}
-
-
-%---------------------------------------------------------------
-\newcommand{\cmpfi}{../../output/model/experiments/housing_supply/20261023_comparison_fi}
-\newcommand{\polslide}[3]{%
-\begin{frame}{#1}
-{\centering\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{\cmpfi/cmp_policy_#2.pdf}\par}
-\notation{Percent change against each setup's own no-policy path. Policies start as a surprise in 2023. #3}
-\end{frame}}
-\begin{frame}{Full Transition: 2007--2403}
-{\centering\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{\cmpfi/cmp_full_transition_k200.pdf}\par}
-\notation{Both setups at $\eta=0.63$.}
-\end{frame}
-%---------------------------------------------------------------
-\polslide{Credit for Everyone: Loan-to-Value 80 to 100}{credit_k200}{}
-\polslide{Credit for Parents: Loan-to-Value 100}{pcredit}{}
-
-%---------------------------------------------------------------
-\appendix
-\begin{frame}[label=app-gpv]{Greaney, Parkhomenko and Van Nieuwerburgh (2025)}
-\scriptsize\linespread{1.0}\selectfont
-\textbf{Developers}
-\begin{itemize}\setlength\itemsep{0pt}
-  \item They turn the numeraire good into floor space, $Y^h=Z^hK$, with productivity $Z^h$ taken as given
-  \item Construction is irreversible: the price equals the cost $1/Z^h$ when they build, and is lower otherwise
-  \item $Z^h$ is chosen so that, when building, $r=\bar r\,(N_t/N_0)^{1/\xi}$
-  \item In continuous time the cost depends on the current stock, a state variable
-  \item In steady state they always build: the same supply curve as here, $P=(H/\bar H)^{1/\eta}$
-  \item Calibration: $\xi$ from Saiz (2010), 0.66 for San Francisco; tract spread from Baum-Snow and Han (2024)
-\end{itemize}
-\textbf{Rental companies (REITs)}
-\begin{itemize}\setlength\itemsep{0pt}
-  \item Competitive REITs own rental and commercial space across locations and borrow at an outside rate $q$
-  \item Rent: $r=(\delta+q+\tau)p-\dot p$
-\end{itemize}
-\textbf{Differences from this paper}
-\begin{itemize}\setlength\itemsep{0pt}
-  \item They use continuous time, many locations, and residential and commercial space
-  \item Here $\eta=0.63$ is the floor-space elasticity of Baum-Snow and Han (2024)
-  \item In GPV households hold part of the REITs; here rental gains and losses leave the economy
-\end{itemize}
-\par\hfill\hyperlink{dev}{\beamerreturnbutton{Back}}
-\end{frame}
-
 \end{document}
-%---------------------------------------------------------------
-\begin{frame}{Backup: The Stock in a Period}
-\small
-\begin{columns}[c]
-\begin{column}{0.50\textwidth}
-\centering
-\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{\fig/supply_free_entry.pdf}
-\end{column}
-\begin{column}{0.48\textwidth}
-\scriptsize
-\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
-\begin{itemize}\setlength\itemsep{3pt}
-  \item Construction:
-  \[
-  I_t=\max\bigl\{0,\;\bar HP_t^{\eta}-(1-\delta_H)H_{t-1}\bigr\}
-  \]
-  \item Stock:
-  \[
-  \begin{aligned}H_t&=(1-\delta_H)H_{t-1}+I_t\\ &=\max\bigl\{(1-\delta_H)H_{t-1},\,\bar HP_t^{\eta}\bigr\}\end{aligned}
-  \]
-  \item Demand rises ($A$): developers build until the price equals the cost
-  \item Demand falls faster than wear ($B$): nothing is built, the stock shrinks by $\delta_H$, the price falls below cost
-  \item Steady state: building replaces wear, $I=\delta_HH$, and the price equals the cost, $H=\bar HP^{\eta}$
-\end{itemize}
-\end{column}
-\end{columns}
-
-\end{frame}
-
