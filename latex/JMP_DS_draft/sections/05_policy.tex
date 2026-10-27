@@ -1,4 +1,370 @@
-\section{Policy}
+\providecommand{\PRF}{../../output/model/experiments/housing_supply/20261021_paper_results}
+\section{Counterfactuals}
 \label{sec:policy}
 
-% Author text.
+In this section, I use the calibrated model to study counterfactual changes to
+the 2023 economy and unpack the interaction between family space and
+fertility. First, I show that relaxing credit and expanding the housing
+supply raise births by the same amount on impact but have different effects
+over time, with housing supply having a stronger long-run effect. Second, I show that the main reason credit moves births earlier, but doesn't have as strong of a permanent effect, is  because young
+households use it to buy the small homes they would otherwise rent. Intuitively, credit lowers
+the down payment, not the cost of the space a child needs. Third, I show that
+credit tied to children, which does lower that cost, raises the completed
+fertility of the 2023 cohort by 4.9\%, and I compare these changes with a
+property tax.
+
+
+\subsection{Credit relaxation and housing supply}
+\label{sec:policy-design}
+
+I compare two changes that intervene in the housing market. The first relaxes
+credit: the loan-to-value limit $\phi$ rises from 80\% to 100\%, so buyers no
+longer need a down payment. As Section~\ref{sec:m-analysis} shows, credit
+raises the probability of trying for a child only if it is worth more to a
+household with the additional child than without it \eqref{eq:m-credit}. Importantly, it
+can raise fertility when the down payment stands between a household and the
+home its family needs. The quantification is hence an important tool to assess whether there is a significant mass of agents that are giving up on having kids due to their inability of affording a `family home' with many rooms. The second change expands the housing supply: the scale of
+the supply curve \eqref{eq:m-supply}, $\bar H$, rises by 4.35\%, so that at any price the stock
+is 4.35\% larger. I choose this size so that births in 2023 rise by as
+much as under the credit policy. Credit lowers the down payment needed to buy a home.
+Supply lowers the cost of housing, both the price and rents. With the same
+effect on impact, the comparison shows which of the two costs matters for
+fertility.
+
+Both experiments start from the 2023 state of the transition in
+Section~\ref{sec:quant-transition}. In 2023 the change is announced unexpectedly and
+understood to be permanent by agents. I compare each experiment with the path the economy follows from
+the same state without the change. The preference for children follows the
+same path with and without the change. Appendix~\ref{app:policy-robust} repeats the
+experiments with a more elastic supply and with a slowly adjusting stock.
+
+I report births in the four-year periods starting in 2023 and 2063 and in the
+long run, when the economy reaches its new stationary equilibrium, and the
+completed fertility of the cohort aged 18 to 21 in 2023: the children ever
+born to these households over their lives. All are relative to the no-policy
+path. Table~\ref{tab:policy-main} summarizes the results; it also reports
+credit for parents, which Section~\ref{sec:policy-parents} describes.
+
+\begin{table}[H]
+\centering
+\caption{Counterfactuals from 2023}
+\label{tab:policy-main}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrrcrr@{}}
+\toprule
+ & \multicolumn{3}{c}{Births} & Completed fertility & \multicolumn{2}{c}{House price} \\
+\cmidrule(lr){2-4}\cmidrule(l){6-7}
+ & 2023 & 2063 & Long run & 2023 cohort & 2023 & Long run \\
+\midrule
+Credit relaxation & $+1.3$ & $+0.6$ & $+3.0$ & $-1.1$ & $-0.1$ & $+3.2$ \\
+Housing supply, $+4.35\%$ & $+1.4$ & $+3.0$ & $+4.3$ & $+2.0$ & $-3.9$ & $0.0$ \\
+Credit for parents & $+5.1$ & $+16.6$ & $+36.1$ & $+4.9$ & $+0.3$ & $+33.5$ \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} \% differences from the no-policy path from the
+same 2023 state. Births: births in the
+four-year period starting in the year shown; long run: the new stationary
+equilibrium, where births per household are at replacement, so births and the
+number of households rise by the same percentage. Completed fertility:
+children ever born to the cohort aged 18--21 in 2023. Without policy, period
+fertility is 1.63 in 2023 and 1.73 in 2063. Housing supply: the supply curve
+shifted out so that births in 2023 rise as much as with the credit relaxation.
+\end{minipage}
+\end{table}
+
+\subsection{Same impact, different long run}
+\label{sec:policy-supply}
+
+Figure~\ref{fig:policy-qt} plots births and the number of households under
+the two changes. To understand the dynamics at play, it's helpful to look at the effects at different time horizons.
+
+On impact, in 2023, the two changes look alike: both raise births by about
+1.4\%. Immediately after that, though, the path of the credit relaxation scenario displays the signs of a `harvesting'
+effect: when the down payment disappears, many households act at once, and
+birth rates rise at every fertile age. But most of these households only bring
+forward children they would have had anyway.
+
+In the medium run, over the four decades to 2063, the two paths separate.
+Under the credit policy, the impact gain is gone within four years, and in the following decade
+births fall below the no-policy path, by 0.6\% at the bottom in 2035: the
+children born early are missing later. Births then recover, to about 1\% above
+the no-policy path by 2055, as households that enter later gain more from
+credit while housing becomes cheaper. Under the supply policy, births keep rising, to
+3.0\% above the no-policy path by 2063. Two forces move births after impact:
+how many children each household has, and how many households are of
+childbearing age. A policy that raises births today raises the second about
+twenty years later, when the additional children reach adulthood, form
+households of their own and have children in turn: a demographic momentum
+\citep{keyfitzMomentum1971}, or an `echo' of the earlier births.
+% Keyfitz (1971): only the abstract has been read so far; full text (JSTOR) to read before main. Under the supply increase, birth
+rates stay higher for decades, since every cohort can buy cheaper housing, and
+from about 2040 the echo adds to them; by 2063 the two contribute about
+equally. Under the LTV policy, the births brought forward and the births missing later
+roughly cancel, so few additional households are born and the echo stays
+small. The cohort aged 18 to 21 in 2023 shows the difference
+(Table~\ref{tab:policy-tempo}): in the supply increase scenario it has 2.0\% more children over
+its life, and in the credit relaxation scenario 1.1\% fewer.\footnote{The 2023 cohort ends with \emph{fewer} children than
+without the policy because of the age composition of the population it
+retires into. After the fall in fertility, each cohort that reaches working
+age is smaller than the one before, so the population ages. The worst mix
+comes around 2071: the large cohorts that entered adulthood before the fall
+are then retired, and the smaller ones that came after make up the whole
+workforce. Retirees per worker rise from 0.35 in 2023 to 0.47 in 2071. After
+that, the population keeps shrinking but grows younger again: fertility
+recovers toward replacement (from 1.63 in 2023 to 1.86 in 2087), each new
+cohort is only a little smaller than the last, and retirees per worker return
+to 0.35 in the long run. With a fixed payroll tax, the pay-as-you-go pension
+follows this age composition: it falls by a quarter by 2071 and then
+recovers. The 2023 cohort retires around 2071, at the lowest point, and with
+the credit relaxation its households enter that period having bought earlier
+and with more debt. With the pension held at its 2023 level, the same
+relaxation raises this cohort's completed fertility by 0.6\%. Later cohorts
+gain because house prices keep falling while they raise children: with the
+price held at its 2023 level, every cohort has fewer children. See
+Appendix~\ref{app:policy-cohorts} for more detail.}
+Credit changes when households have children more than how many they
+have.\footnote{Demographers call these the \emph{tempo} and the
+\emph{quantum} of fertility. When households bring births forward, births rise
+in the years of the shift and fall in the years after, even if the number of
+children each cohort has does not change.
+\citet{bongaartsFeeneyQuantumTempo1998} accordingly split the period
+total fertility rate into a quantum component, ``the TFR that would have been
+observed in the absence of changes in the timing of childbearing,'' and a
+tempo component, ``the distortion that occurs due to timing changes.''
+\citet{kearneyLevineWhyFertilityLow2025} use the same distinction to argue
+that the recent fall in fertility in high-income countries has to be read from
+the completed fertility of cohorts, which is the measure I use here.}
+
+After 2055, births with the credit relaxation fall back a second time, to
+0.25\% above the no-policy path in 2071, before the echo lifts them toward
+the long run. This second fall reflects how the effect of credit depends on
+the price of housing. When homes are expensive, credit mainly lets young
+couples buy earlier and have their first child earlier; when homes are cheap,
+it lets more families buy the large homes that only owners can have; at
+intermediate prices, which the cohorts in their thirties after 2055 face,
+neither channel is strong, and credit mostly turns childless renters into
+owners of mid-sized homes who end up with about as many children
+(Appendix~\ref{app:policy-cohorts}).
+
+In the long run, the supply expansion raises the number of households, and
+births with it, by 4.3\% at an unchanged price. The credit relaxation raises
+them by 3.1\%, with a price 3.2\% higher.\footnote{In the long run births per
+household are at replacement, so births and households move together. The
+long-run effect of credit comes from a small rise in fertility at a given
+price, which is larger at the low long-run price, 45\% below its 2023 level.
+Letting renters rent homes as large as 10 rooms removes about half of it.}
+
+The two paths help us understand an important concern when thinking about fertility policy. Births brought forward are missing later,
+so a policy that mostly moves timing adds few births over time. A policy that
+makes children cheaper at a given price adds births in every cohort, and the
+echo of those births compounds them: by 2063, births are 3.0\% higher with the
+supply expansion and 0.6\% higher with the credit relaxation.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics[width=\linewidth]{\PRF/fig_p6_qt_fi_eta063.pdf}
+\caption{Credit relaxation and housing supply}
+\label{fig:policy-qt}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} \% differences from the no-policy path from the
+same 2023 state, births in each four-year period (panel a) and the number of
+households (panel b), to the new stationary equilibrium. Credit relaxation: LTV
+80 to 100 for all households. Housing supply: the supply curve shifted out by
+4.35\%.
+\end{minipage}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{The cohort aged 18--21 in 2023}
+\label{tab:policy-tempo}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+\toprule
+ & Completed fertility & Share with a first birth & Mean age at first birth \\
+\midrule
+No policy & 1.640 & 0.673 & 27.15 \\
+Credit relaxation & 1.622 ($-1.1\%$) & 0.665 ($-1.3\%$) & 27.07 \\
+Housing supply & 1.673 ($+2.0\%$) & 0.684 ($+1.6\%$) & 27.05 \\
+Credit for parents & 1.720 ($+4.9\%$) & 0.701 ($+4.1\%$) & 26.88 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip
+\begin{minipage}{0.95\linewidth}
+\footnotesize\textit{Notes:} Children ever born and the share with a first
+birth, per household of the cohort, summed over ages 18 to 45. Mean age at
+first birth: first-birth rates weighted by the midpoints of the four-year age
+cells.
+\end{minipage}
+\end{table}
+
+\subsection{Unpacking the credit policy}
+\label{sec:policy-credit}
+
+Why does credit move births earlier rather than raise their number? Intuitively, this policy
+lowers the equity needed to buy a home, $(1-\phi)P_th^O$, but not the per-period
+cost of the space a child needs. Rent equals the user cost of owning
+\eqref{eq:m-rent}, so a family can rent that space at about the per-period
+cost of owning it. By \eqref{eq:m-credit}, credit raises the probability of trying for a child
+only if it is worth more to a household with the additional child than
+without it. To understand this better, I look in more detail at the response to the LTV relaxation policy.
+
+Figure~\ref{fig:policy-tenure} shows where young households live in 2023. The
+credit relaxation turns a fifth of households aged 18 to 29 from renters into
+owners, and almost all of them buy small dwellings: the share owning a home of 2 rooms
+rises from 8\% to 24\%, and of 4 rooms from 13\% to 17\%, while the shares
+owning 6 rooms or more barely move. The supply expansion leaves the housing of
+this age group almost unchanged.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\linewidth]{\PRF/fig_p6_tenure2023_fi_eta063.pdf}
+\caption{What young households live in, 2023}
+\label{fig:policy-tenure}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Households aged 18--29 in 2023, after the tenure
+choice, renting or owning a home of 2 to 10 rooms, \%. Each experiment starts
+from the same 2023 state as the no-policy path.
+\end{minipage}
+\end{figure}
+
+Figure~\ref{fig:policy-cohort} follows the cohort aged 18 to 21 in 2031
+through its life. With the credit relaxation, the share owning a home of 2 or
+4 rooms roughly doubles in its late twenties and stays well above the
+no-policy path into its forties (panel a), while the share owning a home of 6
+rooms or more is about the same (panel b). Births come slightly earlier, and
+the cohort ends with slightly fewer children, 0.4\% (panel c). The supply
+expansion instead raises the share in larger homes and births at every age,
+and the cohort has 1.8\% more children. These results illustrate that the mechanism proposed in Section~\ref{sec:m-analysis} does not seem to hold.  Households do not use the 
+newly found credit abundance to purchase big houses and have kids, but rather switch from rental to ownership of similar sized dwelling and, if anything, this discourages births,\footnote{The PSID offers a descriptive check of
+this: among childless first-time buyers aged 22 to 33, those who bought a home
+of four rooms or fewer were 14 percentage points less likely to have a first
+birth within six years (standard error 6.7; Appendix~\ref{app:psid-small-home}).} as it makes it more likely these families do not want to expand over the limits of their bought house.\footnote{This is in line with what
+\citet{kaplanMitmanViolanteHousing2020} find for the credit relaxation of the
+US housing boom. In their model, renters who become owners when credit is
+relaxed ``buy houses similar in size to the ones they were previously
+renting,'' so that ``the age profile of homeownership shifts to the
+left---households who would have become owners in the future buy houses today
+\ldots---but the life-cycle profile of consumption of housing services remains
+virtually unchanged.''}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{\PRF/fig_p6_cohort2031_fi_eta063.pdf}
+\caption{The cohort aged 18--21 in 2031: housing and births by age}
+\label{fig:policy-cohort}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} Share of the cohort owning a home of 2 or 4
+rooms (panel a) and of 6 rooms or more (panel b) at the start of each
+four-year age group, and births per household in each age group (panel c).
+Each experiment starts from the same 2023 state as the no-policy path.
+\end{minipage}
+\end{figure}
+
+Perhaps surprisingly, the modest effect of the credit relaxation does not seem to be due to
+a general-equilibrium feedback through higher house prices. When I hold
+prices, rents and transfers at their no-policy paths
+(Appendix~\ref{app:policy-cohorts}), the credit relaxation raises births in
+2023 by about as much as in equilibrium, 1.4\%, and the cohort aged 18 to 21
+in 2023 still ends with fewer children.
+
+\subsection{Credit for parents}
+\label{sec:policy-parents}
+The previous sections seem to suggest that a housing policy aimed at increasing fertility should be one that shifts the relative value of parenthood. To see this, I study a very similar credit relaxation, but targeted to parents. I raise the loan-to-value
+ratio to 1 only for households with a child at home. While giving the same monetary benefit, the policy has the important difference of explicitly encouraging births. As a result,  births in 2023 rise by 5.1\%,
+several times as much as relaxing credit for all households, at nearly the same
+price, 0.3\% higher. The completed
+fertility of the 2023 cohort rises by 4.9\%, and the share with a first
+birth by 4.1\% (Table~\ref{tab:policy-tempo}). Births keep rising, by
+17\% by 2063 (Figure~\ref{fig:policy-paths}). As the larger cohorts demand more space, the price rises, by
+3.5\% by 2063 and 33\% in the long run, when there are 36\% more
+households.
+The significantly different results are due to the new
+value of having a child. A birth now unlocks ownership without a down payment,
+so in 2023 childless renters aged 22 to 29 try for a first child 13 to 16\%
+more often. Once they have children, households use the credit:
+renter-parents aged 22 to 25 buy a home with probability 0.63 instead of 0.57.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics[width=\linewidth]{\PRF/fig_p6_parents_fi_eta063.pdf}
+\caption{Credit relaxation, housing supply and credit for parents}
+\label{fig:policy-paths}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} \% differences from the no-policy path from the
+same 2023 state, births in each four-year period (panel a) and the number of
+households (panel b), to the new stationary equilibrium. Credit for parents:
+LTV 100 for households with a child at home.
+\end{minipage}
+\end{figure}
+
+\subsection{Increasing property taxes}
+\label{sec:policy-transfers}
+
+ \citet{coven2026} show that  a higher property
+tax is capitalized into a lower house price, which lowers the down payment and
+makes it easier for young households to buy. This makes an increase in property taxes a natural candidate for a pro-natality policy in our context. To see whether this channel
+matters for fertility, I raise the annual property tax from 1.06\% to 2\% of
+value from 2023 on, and return the revenue to households as an equal transfer
+every period.
+
+The channel is there: the tax lowers the price by 7.0\% in 2023, and
+ownership at ages 18 to 29 rises by 2.9 percentage points. But a lower price
+does not make space cheaper to live in. The price falls because whoever holds
+a home now pays more tax every year, and rental companies pass the tax on to renters:
+per four-year period, the cost of holding a room rises from 18.0\% to 21.8\%
+of its price, so even at the lower price a room costs more per year, and rents
+rise by 14.5\% in 2023 (Appendix~\ref{app:ptax-prices}). Buying gets easier, but the extra room a child needs
+gets more expensive. As with the credit relaxation, easier access to ownership
+is not what keeps families out of the space they need
+(Section~\ref{sec:policy-credit}), so births barely move on impact
+($+0.1\%$). Over the following decades births do rise, and by more than with
+the credit relaxation (2.3\% against 0.6\% in 2063,
+Figure~\ref{fig:policy-transfers}), but the gain remains modest in the long
+run, 2.2\%. The rise seems to be mostly attributable to the rebate.
+Because it is the same for every household, it moves resources from households
+in large homes, mostly high earners, to those in small homes, mostly low and
+middle earners, and the additional births come from the
+latter.\footnote{When the additional revenue is instead returned in proportion
+to the rooms held by households of each age and earnings level, so that it no
+longer redistributes across earnings, the same tax lowers births, by 3.3\% in
+the long run, even though the house price falls more. Without the
+redistribution, what remains is a higher cost of space, the mechanism of
+Section~\ref{sec:results}. Returning the revenue by age alone changes
+little (Appendix~\ref{app:ptax-prices}).}
+
+The comparison with \citet{coven2026} is not one to one, but the model
+confirms the channel they emphasize can have a modest effect on fertility: the tax lowers prices, more young
+households own, and fertility does go up.\footnote{In their model the tax falls only on owner-occupied
+housing: rentals are a separate market with their own supply, so the tax
+lowers the price young buyers pay without raising rents. Here it falls on all
+housing, rented or owned, as an actual property tax does. Their setting also
+differs in other ways. They calibrate to California, where Proposition 13
+keeps effective rates low (0.8\%), and raise them to the Texas rate of 2\%,
+which lowers house prices by 12.6\%. Older owners face a
+payment-to-income limit, capital gains taxes and the step-up of basis at
+death, which keep them in large homes, and residents value the rebated
+revenue at less than its cost.} However, the model suggests that a higher
+property tax raises fertility only if its revenue is returned in a way that
+favors the households about to have children, since the tax itself makes the
+space a child needs more expensive every year.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics[width=\linewidth]{\PRF/fig_p6_ptax_fi_eta063.pdf}
+\caption{Increasing property taxes}
+\label{fig:policy-transfers}
+\par\smallskip
+\begin{minipage}{0.92\linewidth}
+\footnotesize\textit{Notes:} \% differences from the no-policy path from the
+same 2023 state, births in each four-year period (panel a) and the number of
+households (panel b), to the new stationary equilibrium. Property tax: from
+1.06\% to 2\% of value a year from 2023 on, revenue returned equally to all
+households every period. Credit relaxation: LTV 80 to 100 for all households.
+\end{minipage}
+\end{figure}
