@@ -1,21 +1,83 @@
-% ============================================================================
-% October 13, 2026 build (agent draft). Appendix at the 7.9 production point.
-% Additional policy arms: 7p9167_v6/table.md (read Oct 13). Arms marked
-% PROVISIONAL there (stopped at the 30-map cap) are flagged in the table.
-% Transfer arms: driver_policy_v6.py lines 1-5 and 195-210 (INS_KIND
-% contingent / flat; 0.25 x shortfall below the median earnings state at each
-% working age; unfunded, in the household budget only).
-% The Oct 9 appendix on supply arms (14.402 figures) is retired; it is in git.
-% ============================================================================
+% Appendix order follows the main text (cleanup Oct 26, 2026): C model, D-F calibration
+% (identification, algorithms, 2023 economy), G-H policy, I CES variant.
 \input{sections/app_household_conditions}
 \input{sections/app_model_figures}
+
+\input{sections/app_identification}
+
+\section{Solution Algorithms}
+\label{app:algorithms}
+
+\paragraph{Stationary equilibrium.} I solve for the house price $P$ and the
+rebate $T$, given the parameters, the preference for children and the payroll
+tax. In a stationary population the age distribution follows from survival
+and entry, so the pension that balances the payroll tax is known before the
+search. I check the pension budget at the end.
+\begin{enumerate}
+\item Guess $P$ and compute the rent $r$ from \eqref{eq:m-rent}.
+\item Solve the household problem backward over age and compute the choice
+probabilities.
+\item Compute the stationary distribution of households, iterating on the
+rebate until $T$ times the number of households equals property-tax revenue.
+In the calibration, the number of households is one and $\bar H$ is set so that
+supply equals demand at $P$. In the counterfactuals, $\bar H$ is fixed and the
+number of households equals housing supply divided by mean housing per
+household.
+\item Compute the renewal residual: adjusted births divided by 2.1, relative
+to the number of entrants, minus one. It is zero when the population
+reproduces itself.
+\item Update $P$ by bracketing the root of the renewal residual, and stop when
+the renewal and rebate residuals are below $10^{-6}$. Re-solve at the
+selected price, require the same residuals, and check that the pension budget
+balances to the same tolerance.
+\end{enumerate}
+% [CODE] native_phase_b.py 25-26 (RENEWAL_TOL, PAYGO_TOL 1e-6), 97-99
+% (supply rule), 126-127 (population = supply/demand; renewal = births/(2.1
+% entry) - 1), 440-454 (bracket, selected root, exact repeat);
+% equilibrium.py (model) 84-96 (implied H0 under population_one, renewal
+% root); fiscal_closure.py (T N = revenue - grants, FISCAL_TOL 1e-6);
+% e5f_stationary_paygo.py 47-62 (pension from the payroll tax).
+
+\paragraph{Transition.} I solve for the paths of the price, the pension and
+the rebate, $(P_t,m_t,T_t)_{t\geq t_0}$, given the inherited households and
+the path of $\psi_t$, which households foresee.
+\begin{enumerate}
+\item Solve the terminal stationary equilibrium. It gives the terminal value
+function.
+\item Guess the three paths. Compute rents from \eqref{eq:m-rent} and, with a
+slowly adjusting stock, the stock from \eqref{eq:app-slow-stock}.
+\item Solve the household problem backward in calendar time from the terminal
+value.
+\item Move households and the queue of entrants forward from the inherited
+state, and add up housing demand and taxes at each date.
+\item Compute the residuals of the housing market, the pension budget and the
+rebate at every date. The loss is the largest residual across dates.
+\item Update the three paths jointly and repeat until the loss is below
+tolerance. Extend the horizon to check that early responses are stable.
+\end{enumerate}
+With free entry and $\eta=0.63$, the transitions use 100 four-year periods,
+from 2007 (2023 for the policy experiments) to 2403. With $\eta=1.5$ and with
+a slowly adjusting stock, they use 200 periods, to 2803. The tolerances are
+$2\times10^{-4}$ on the housing market, $2\times10^{-5}$ on the pension and
+the rebate, and $10^{-6}$ on the renewal condition of the terminal stationary
+equilibrium.
+% [MODEL, Oct 24] Horizons and residuals read from the result files: free entry eta 0.63
+% 20261022_fi_all_arms/history/FIN063fi_fw.json (100 periods) and data_fi_torch/P063fi_*.json
+% (96 periods from 2023); eta 1.5 FIN15fi200_w.json and P15fi_*.json (200/196); slow stock
+% data_k200_torch/FIN063k200_f_history.json and P063k_*.json (200/196). Converged arms: max
+% market residual <= 2.0e-4, fiscal and rebate <= 1.9e-5.
+
+\input{sections/app_2023}
+
 \input{sections/app_policy_slow_stock}
 
 \section{Additional Policy Results}
 \label{app:policy-more}
 
-This appendix gives the details behind three results of
-Section~\ref{sec:policy}.
+This appendix gives the details behind four results of
+Section~\ref{sec:policy}: the effect of the credit relaxation by cohort, how
+credit for parents works, a check of the small-home mechanism in the PSID,
+and the house price and rent under a higher property tax.
 
 \subsection{The credit relaxation by cohort}
 \label{app:policy-cohorts}
@@ -190,12 +252,12 @@ standard errors clustered by woman in parentheses. Unweighted.
 Figure~\ref{fig:app-ptax-prices} shows the house price and the rent per room
 when the property tax rises from 1.06\% to 2\% of the house value in 2023,
 with the revenue rebated. The tax lowers the price by 7.0\% on impact and
-raises the rent per room by 14.5\%, because rents cover the tax. In the long
-run the price is 4.7\% lower and the rent 16.4\% higher. Returning the revenue
+raises the rent per room by 14.5\%, because rents cover the tax. In the
+steady state the price is 4.7\% lower and the rent 16.4\% higher. Returning the revenue
 in proportion to the rooms held by households of each age leaves both paths
 almost unchanged. Returning it in proportion to the rooms held by households of
-each age and earnings level lowers the long-run price by 10.1\% and raises the
-long-run rent by 9.9\%.
+each age and earnings level lowers the steady-state price by 10.1\% and
+raises the steady-state rent by 9.9\%.
 
 \begin{figure}[H]
 \centering
@@ -213,160 +275,3 @@ its age and earnings group. Rent per room is the rent of one room of rented
 housing.
 \end{minipage}
 \end{figure}
-
-\section{A CES Housing Composite}
-\label{app:ces}
-
-% Source identity retained: previous calibration loss 14.40, matched-state room target.
-\problem{The CES comparison uses a different room-response target and
-parameter vector, so it does not isolate the effect of the housing composite.}
-The baseline combines a Cobb--Douglas composite with the space requirement
-$h_P$. Here I use a CES composite in which children raise the rooms needed
-for given housing services:
-\begin{equation}
- u_t=\frac{1}{1-\sigma}\left(\frac{Q_t}{e(n_t)}\right)^{1-\sigma}+\psi_t n_t^{1-\gamma},\qquad
- Q_t=\Bigl[\alpha_0\,c_t^{\rho}+(1-\alpha_0)\Bigl(\frac{\chi^{\1\{\mathrm{own}\}}\,h_t}{k(n_t)}\Bigr)^{\rho}\Bigr]^{1/\rho},
-\end{equation}
-with $\rho=(\varepsilon-1)/\varepsilon$, $\varepsilon=0.67$, and
-$k(n_t)=\exp\bigl[\eta_1\1\{n_t\ge1\}+\eta_2\max(n_t-1,0)\bigr]$. Housing and
-consumption are complements. A child lowers the housing services each room
-provides, and $\varepsilon$ governs how far consumption can make up for them.
-Without a floor, space is not a fixed entry cost of a child.
-
-I estimate $\eta_1$ and $\eta_2$, the rooms needed by the first and by each
-later child at home, and $\alpha_0$, so twelve parameters match thirteen
-moments. The new moments are the rent share of renters aged 30--55 with no
-child at home (0.360, CE), the probability of moving from renting to owning
-within four years at ages 22--41 (0.281, PSID), and the share of mothers with
-three or more children (0.357, CPS). I re-measure the rooms added at the first
-birth (1.025, PSID), target the room gap between larger and smaller families,
-and use the ownership gap of recent parents as a validation moment.
-
-\input{../JMP_slides/ces_tables/numbers.tex}
-Table~\ref{tab:app-ces-fit} reports the fit. Against its matched
-Cobb--Douglas comparison, the CES variant fits childlessness, family size,
-rooms and the rooms at first birth slightly better, and timing, ownership,
-the rent share, the family room gap, wealth and bequests worse. The responses
-of completed fertility follow the pattern of the matched comparison:
-\cesLTVhundred{} with 100\% financing, \cesLowerRisk{} with lower earnings
-risk, and \cesCapTen{} with a ten-room rental cap.
-
-\begin{table}[H]
-\centering
-\caption{CES variant: targets and fit}
-\label{tab:app-ces-fit}
-\small
-\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
-\input{../JMP_slides/ces_tables/fit.tex}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.3\linewidth}\vspace{0pt}
-\input{../JMP_slides/ces_tables/params.tex}
-\end{minipage}
-\end{table}
-
-In Table~\ref{tab:app-ces-credit}, I vary only $\psi$ to match 19\%
-childlessness under each specification, at fixed prices and with the
-six-room rental cap. In all thirteen specifications that reach 19\%
-childlessness, the credit relaxation moves completed fertility by between $-2\%$
-and $+0.3\%$, and the negative sign comes mostly from the floor. Credit to
-renters raises births on impact by 6\% to 9\% and completed fertility by
-between $-0.6\%$ and $+2.4\%$ in the cases shown.
-
-\begin{table}[H]
-\centering
-\caption{CES variant: credit across specifications}
-\label{tab:app-ces-credit}
-\small\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{@{}Xccc rr rr@{}}
-\toprule
- & & & & \multicolumn{2}{c}{Financed share $80\%\to95\%$} & \multicolumn{2}{c}{Renter credit, 2 years} \\
-\cmidrule(lr){5-6}\cmidrule(l){7-8}
- & $\varepsilon$ & Floor & Need $k$ & Impact & Completed & Impact & Completed \\
-\midrule
-Cobb--Douglas (benchmark) & 1 & yes & 1 & $+0.42\%$ & $-1.35\%$ & $+8.5\%$ & $+0.62\%$ \\
-CES & 0.5 & yes & 1 & $-0.16\%$ & $-1.40\%$ & $+8.0\%$ & $+0.22\%$ \\
-CES & 0.25 & yes & 1 & $-0.06\%$ & $-0.87\%$ & $+7.3\%$ & $-0.25\%$ \\
-CES & 0.5 & yes & 1.5 & $+0.05\%$ & $-1.10\%$ & $+7.0\%$ & $-0.63\%$ \\
-CES, no floor & 0.5 & no & 1 & $+0.44\%$ & $-0.03\%$ & $+6.9\%$ & $+2.25\%$ \\
-CES, no floor & 0.5 & no & 1.5 & $+0.51\%$ & $-0.18\%$ & $+8.3\%$ & $+2.39\%$ \\
-Cobb--Douglas, no floor & 1 & no & 1.5 & $+1.03\%$ & $+0.23\%$ & $+8.3\%$ & $+2.42\%$ \\
-\bottomrule
-\end{tabularx}
-\par\smallskip
-\begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} Each row varies only $\psi$ to match 19\%
-childlessness. House prices are fixed and the rental cap is six rooms.
-\end{minipage}
-\end{table}
-
-Completed fertility moves little with the general credit relaxation in every
-specification, so the timing response does not hinge on the Cobb--Douglas
-composite. These comparisons hold prices fixed and use other parameters and
-targets, so they do not measure the contribution of the floor to the results
-of Section~\ref{sec:policy}.
-
-\section{Solution Algorithms}
-\label{app:algorithms}
-
-\paragraph{Stationary equilibrium.} I solve for the house price $P$ and the
-rebate $T$, given the parameters, the preference for children and the payroll
-tax. In a stationary population the age distribution follows from survival
-and entry, so the pension that balances the payroll tax is known before the
-search. I check the pension budget at the end.
-\begin{enumerate}
-\item Guess $P$ and compute the rent $r$ from the user cost.
-\item Solve the household problem backward over age and compute the choice
-probabilities.
-\item Compute the stationary distribution of households, iterating on the
-rebate until $T$ times the number of households equals property-tax revenue.
-In the calibration, the number of households is one and $H_0$ is set so that
-supply equals demand at $P$. In the counterfactuals, $H_0$ is fixed and the
-number of households equals housing supply divided by mean housing per
-household.
-\item Compute the renewal residual: adjusted births divided by 2.1, relative
-to the number of entrants, minus one. It is zero when the population
-reproduces itself.
-\item Update $P$ by bracketing the root of the renewal residual, and stop when
-the renewal and rebate residuals are below $10^{-6}$. Re-solve at the
-selected price, require the same residuals, and check that the pension budget
-balances to the same tolerance.
-\end{enumerate}
-% [CODE] native_phase_b.py 25-26 (RENEWAL_TOL, PAYGO_TOL 1e-6), 97-99
-% (supply rule), 126-127 (population = supply/demand; renewal = births/(2.1
-% entry) - 1), 440-454 (bracket, selected root, exact repeat);
-% equilibrium.py (model) 84-96 (implied H0 under population_one, renewal
-% root); fiscal_closure.py (T N = revenue - grants, FISCAL_TOL 1e-6);
-% e5f_stationary_paygo.py 47-62 (pension from the payroll tax).
-
-\paragraph{Transition.} I solve for the paths of the price, the pension and
-the rebate, $(P_t,m_t,T_t)_{t\geq t_0}$, given the inherited households and
-the path of $\psi_t$, which households foresee.
-\begin{enumerate}
-\item Solve the terminal stationary equilibrium. It gives the terminal value
-function.
-\item Guess the three paths. Compute rents from \eqref{eq:m-rent} and, with a
-slowly adjusting stock, the stock from \eqref{eq:app-slow-stock}.
-\item Solve the household problem backward in calendar time from the terminal
-value.
-\item Move households and the queue of entrants forward from the inherited
-state, and add up housing demand and taxes at each date.
-\item Compute the residuals of the housing market, the pension budget and the
-rebate at every date. The loss is the largest residual across dates.
-\item Update the three paths jointly and repeat until the loss is below
-tolerance. Extend the horizon to check that early responses are stable.
-\end{enumerate}
-With free entry and $\eta=0.63$, the transitions use 100 four-year periods,
-from 2007 (2023 for the policy experiments) to 2403. With $\eta=1.5$ and with
-a slowly adjusting stock, they use 200 periods, to 2803. The tolerances are
-$2\times10^{-4}$ on the housing market, $2\times10^{-5}$ on the pension and
-the rebate, and $10^{-6}$ on the renewal condition of the terminal stationary
-equilibrium.
-% [MODEL, Oct 24] Horizons and residuals read from the result files: free entry eta 0.63
-% 20261022_fi_all_arms/history/FIN063fi_fw.json (100 periods) and data_fi_torch/P063fi_*.json
-% (96 periods from 2023); eta 1.5 FIN15fi200_w.json and P15fi_*.json (200/196); slow stock
-% data_k200_torch/FIN063k200_f_history.json and P063k_*.json (200/196). Converged arms: max
-% market residual <= 2.0e-4, fiscal and rebate <= 1.9e-5.
-
-\input{sections/app_identification}
-
-\input{sections/app_2023}

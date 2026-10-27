@@ -1,16 +1,16 @@
 \section{Identification}
 \label{app:identification}
 
-The ten calibrated parameters $\theta$ of Section~\ref{sec:quant-identification}
+The ten calibrated parameters $\vartheta$ of Section~\ref{sec:quant-identification}
 minimize
 \begin{equation}
-\sum_{k=1}^{10} w_k\bigl[m_k(\theta)-\hat m_k\bigr]^2,
+\sum_{k=1}^{10} w_k\bigl[m_k(\vartheta)-\hat m_k\bigr]^2,
 \label{eq:q-loss}
 \end{equation}
-where $\hat m_k$ is a data moment, $m_k(\theta)$ its counterpart in the
-stationary equilibrium at parameters $\theta$, and $w_k$ the inverse square
-of a tolerance for the moment. At each $\theta$, the house price makes
-completed fertility equal to replacement, and $H_0$ is the supply scale at
+where $\hat m_k$ is a data moment, $m_k(\vartheta)$ its counterpart in the
+stationary equilibrium at parameters $\vartheta$, and $w_k$ the inverse square
+of a tolerance for the moment. At each $\vartheta$, the house price makes
+completed fertility equal to replacement, and $\bar H$ is the supply scale at
 which that price clears the housing market with one unit of households.
 
 Table~\ref{tab:app-loss} reports, for each target, the tolerance that sets
@@ -24,7 +24,7 @@ by more than 2\%.
 % identification_newacct results.json valley_fit: half_width 0.0886,
 % param_half_pct h_P 5.90, kappa_T 6.31, kappa_C 1.65, others <= 0.81.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Tolerances and loss by moment}
 \label{tab:app-loss}
@@ -56,7 +56,7 @@ to be redone with mothers by 25.}
 \end{minipage}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \caption{Elasticity of each targeted moment to each parameter}
 \label{tab:app-jacobian}
@@ -89,10 +89,10 @@ to be redone with mothers by 25.}
 \end{table}
 
 \paragraph{The response of births to housing costs.}
-The policy experiments change the cost of housing and ask how births
-respond. In the model this response runs through three objects, and the
-moments of Section~\ref{sec:quant-identification} discipline each of them.
-The first is how much space a child requires: a household with children at
+The policy experiments change the cost of housing. The response of births
+runs through three objects, and the moments of
+Section~\ref{sec:quant-identification} discipline each of them. The first
+is how much space a child requires: a household with children at
 home pays for $h_P$ rooms every period, whether it rents or owns, and the
 recent-parent ownership gap and mean rooms pin $h_P$. The second is what
 this space costs: mean rooms and ownership select the 2007 price at which

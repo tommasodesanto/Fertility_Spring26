@@ -120,14 +120,18 @@ Every household also receives a transfer $T_t$, the rebate of property-tax
 revenue.
 
 \subsubsection*{Housing.}
-A household enters period $t$ with the home it owned in the previous period,
-$h^O_{t-1}$, which is zero for a renter. Owner-occupied homes come in a finite
-set of sizes, $h^O_t\in\mathcal H$, and trade at price $P_t$ per unit of
-space. Owners pay the property tax $\tau^p$ on the value of the home they
+There is one housing good, measured in units of space. Units can be
+combined and split at no cost, so all housing trades at one price $P_t$ per
+unit and rents at one rent $r_t$ per unit. Between periods, a fraction
+$\delta_H$ of every unit depreciates.
+A household enters period $t$ with the home it owned at the end of the
+previous period,
+$h^O_{t-1}$, which is zero for a renter or a new household. Owner-occupied homes come in a finite
+set of sizes, $h^O_t\in\mathcal H$. Owners pay the property tax $\tau^p$ on the value of the home they
 choose, $P_th^O_t$, and maintenance $\delta_H$ on the value of the home they
-enter the period with, $P_th^O_{t-1}$. Selling a home costs a fraction $\mu$
+enter the period with, $P_th^O_{t-1}$, which restores it. Selling a home costs a fraction $\mu$
 of its value. Renters choose any size up to a cap, $h^R_t\le\bar h^R$, at rent
-$r_t$ per unit. Since $\bar h^R<\max\mathcal H$, the largest homes are only
+$r_t$ per unit, and choose again each period. Since $\bar h^R<\max\mathcal H$, the largest homes are only
 for sale.
 
 \subsubsection*{Borrowing.}
@@ -318,18 +322,18 @@ housing shocks, the value of the household is
 subject to the budget constraint of the chosen option,
 \begin{equation}
 \begin{aligned}
- &\text{Buy:}  && c_t+b_{t+1}+\tau^pP_th^O_t=R_bb_t+y_t+T_t-P_t\bigl[h^O_t-(1-\delta_H-\mu)h^O_{t-1}\bigr],\\
- &\text{Stay:} && c_t+b_{t+1}+(\delta_H+\tau^p)P_th^O_{t-1}=R_bb_t+y_t+T_t,\\
- &\text{Rent:} && c_t+b_{t+1}+r_th^R_t=R_bb_t+y_t+T_t+(1-\delta_H-\mu)P_th^O_{t-1},
+ &\text{Buy:}  && c_t+b_{t+1}+\tau^pP_th^O_t+\delta_HP_th^O_{t-1}=R_bb_t+y_t+T_t-P_th^O_t+(1-\mu)P_th^O_{t-1},\\
+ &\text{Stay:} && c_t+b_{t+1}+\tau^pP_th^O_{t-1}+\delta_HP_th^O_{t-1}=R_bb_t+y_t+T_t,\\
+ &\text{Rent:} && c_t+b_{t+1}+r_th^R_t+\delta_HP_th^O_{t-1}=R_bb_t+y_t+T_t+(1-\mu)P_th^O_{t-1},
 \end{aligned}
  \label{eq:m-budget}
 \end{equation}
 and the borrowing limit \eqref{eq:m-ltv} for buyers and stayers, or
 $b_{t+1}\ge0$ for renters. A buyer sells the home it owns, if any, and buys a
 new one; a stayer keeps its home, $h^O_t=h^O_{t-1}$; a renter sells the home
-it owns, if any, and rents. The home a household enters the period with has
-depreciated, so a seller receives $(1-\delta_H-\mu)P_t$ per unit and a stayer
-pays maintenance $\delta_HP_t$ per unit to restore it. The expectation $\E_t$ is over next period's efficiency and the
+it owns, if any, and rents. Every owner pays maintenance $\delta_HP_t$ per unit on the
+home it enters the period with, which restores it, and a seller then receives
+$(1-\mu)P_t$ per unit. The expectation $\E_t$ is over next period's efficiency and the
 departure of children. The shocks
 $\varepsilon^H_{t,j}\overset{iid}{\sim}\text{Gumbel}(0,\kappa_T)$ are one per
 option $j$: renting, or owning each $h^O\in\mathcal H$. Let $V^j_t$ denote the
@@ -345,6 +349,19 @@ tenure taste shocks $\varepsilon^H_{t,j}$.]} An option that
 leaves no saving choice within the budget and borrowing constraints cannot be
 chosen. Housing costs, credit and earnings risk shape $V^H_t$, and through it
 the gap $V^F_{t,A}-V^F_{t,0}$ that governs fertility.
+
+\subsubsection*{Staying or selling.}
+Owners are part of the supply of housing when they decide to
+sell. Setting the taste shocks aside, an owner that enters period $t$ with the
+home $h^O_{t-1}>0$ stays if
+\begin{equation*}
+ \underbrace{V^{h^O_{t-1}}_t}_{\text{stay}}\ \ge\
+ \underbrace{\max\Bigl\{V^R_t,\ \max_{h\neq h^O_{t-1}}V^h_t\Bigr\}}_{\text{sell, then rent or buy}},
+\end{equation*}
+and sells otherwise. The owner compares the value of keeping its home with the
+value of selling it and then renting or buying another, taking into account
+the future path of prices.
+
 
 \subsection{Equilibrium}
 \label{sec:m-equilibrium}
@@ -383,7 +400,7 @@ $G$, such that:
 \item \emph{Rent} satisfies the landlords' zero-profit condition at a
 constant price, $r=\bigl(1+\tau^p-(1-\delta_H)/R_b\bigr)P$.
 \item \emph{Housing market} clears,
-$\int\bigl(h^O+h^R\bigr)\,\dd G=H_0P^{\eta}$, and construction $\delta_HH_0P^{\eta}$ replaces depreciation.
+$\int\bigl(h^O+h^R\bigr)\,\dd G=\bar HP^{\eta}$, and construction $\delta_H\bar HP^{\eta}$ replaces depreciation.
 \item \emph{Pensions and rebate} balance, $\tau^wwL=mN^R$ and
 $TN=\tau^pP\int\bigl(h^O+h^R\bigr)\,\dd G$.
 \item \emph{The measure $G$ is invariant}: the policy functions, the shocks,
