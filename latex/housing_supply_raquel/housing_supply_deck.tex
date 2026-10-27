@@ -48,68 +48,20 @@
 
 %---------------------------------------------------------------
 \begin{frame}[label=dev]{Housing Supply: Construction}
-\footnotesize\setbeamerfont{itemize/enumerate subbody}{size=\footnotesize}
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\begin{itemize}\setlength\itemsep{3pt}
-  \item Competitive developers build new housing from goods: $I_t = Z_tX_t \ge 0$
-  \item The stock depreciates at rate $\delta_H$: $H_t = (1-\delta_H)H_{t-1} + I_t$
-  \item Congestion externality: productivity falls with the aggregate stock, so a unit costs
-  \[ c_t = 1/Z_t = (H_t/\bar H)^{1/\eta},\qquad Z_t=(\bar H/H_t)^{1/\eta} \]
-  \vspace{-12pt}
-  \begin{itemize}\setlength\itemsep{1pt}
-    \item Why timing: $H_t$ both sets this period's cost and results from this period's building
-    \item I assume plans come first: the planned stock fixes $c_t$; units are then built at $c_t$
-    \item Each developer takes the plan as given; in equilibrium, plans and output coincide
-  \end{itemize}
-  \item Free entry: $P_t = c_t$ if $I_t > 0$; $P_t \le c_t$ if $I_t = 0$; profit is zero
-  \item The rising cost stands in for land and regulation; I abstract from land rents
-\end{itemize}
-\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025) \hyperlink{app-gpv}{\beamergotobutton{Details}}. $X_t$: goods used in construction. $\eta$: price elasticity of the stock; $\bar H$: its scale.}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{Durable Housing: Supply in a Period}
-\small
-\begin{columns}[c]
-\begin{column}{0.50\textwidth}
-\centering
-\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{\fig/supply_free_entry.pdf}
-\end{column}
-\begin{column}{0.48\textwidth}
-\scriptsize
-\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
-\begin{itemize}\setlength\itemsep{3pt}
-  \item Construction:
-  \[
-  I_t=\max\bigl\{0,\;\bar HP_t^{\eta}-(1-\delta_H)H_{t-1}\bigr\}
-  \]
-  \item Stock:
-  \[
-  \begin{aligned}H_t&=(1-\delta_H)H_{t-1}+I_t\\ &=\max\bigl\{(1-\delta_H)H_{t-1},\,\bar HP_t^{\eta}\bigr\}\end{aligned}
-  \]
-  \item Demand rises ($A$): developers build until the price equals the cost
-  \item Demand falls faster than wear ($B$): nothing is built, the stock shrinks by $\delta_H$, the price falls below cost
-  \item Steady state: building replaces wear, $I=\delta_HH$, and the price equals the cost, $H=\bar HP^{\eta}$
-\end{itemize}
-\end{column}
-\end{columns}
-
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{From the Dynamic Rule to the Static Supply Curve}
 \footnotesize
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\begin{itemize}\setlength\itemsep{6pt}
-  \item Each period, the inherited stock, building and free entry give
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Competitive developers turn goods into housing: $I_t=Z_tX_t\ge0$
+  \item Congestion: productivity falls with the aggregate stock, $Z_t=(\bar H/H_t)^{1/\eta}$, taken as given
+  \item A developer solves $\max_{X_t\ge0}\ P_tZ_tX_t-X_t$: it builds only if $P_t=1/Z_t$, and earns no profit
+  \item The stock wears out, $H_t=(1-\delta_H)H_{t-1}+I_t$, so
   \[
-  H_t=\max\bigl\{(1-\delta_H)H_{t-1},\,\bar HP_t^{\eta}\bigr\}
+  H_t=\max\bigl\{(1-\delta_H)H_{t-1},\;\bar HP_t^{\eta}\bigr\}
   \]
-  \item While developers build, $P_t=c(H_t)$: the stock sits on the curve $H=\bar HP^{\eta}$
-  \item The inherited stock matters only through the floor, which binds if demand falls faster than wear
-  \item Steady state: $I=\delta_HH>0$, so developers always build and $H=\bar HP^{\eta}$
-  \item This is the old model's static supply curve; it holds each period unless the floor binds
+  \item Demand rises: developers build until the price equals the cost
+  \item Demand falls faster than wear: nothing is built, and the price falls below $c\bigl((1-\delta_H)H_{t-1}\bigr)$
 \end{itemize}
+\notation{Close to Greaney, Parkhomenko and Van Nieuwerburgh (2025) \hyperlink{app-gpv}{\beamergotobutton{Details}}. $X_t$: goods used in construction. $c(H)=(H/\bar H)^{1/\eta}$: cost of a unit. $\eta$: price elasticity of the stock; $\bar H$: its scale.}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -173,13 +125,16 @@
 \footnotesize
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
 \begin{itemize}\setlength\itemsep{6pt}
-  \item One price per unit clears owned and rented space against the stock:
+  \item The rental market clears at the rent $r_t$: rental companies hold the units households rent
   \[
-  \int\bigl(h^O_t+h^R_t\bigr)\,dG_t=H_t
+  H^L_t=\int h^R_t(\mathbf s_t)\,dG_t(\mathbf s_t)
   \]
-  \item Rental companies buy the units households rent, at $P_t$
-  \item The rent follows from the price path, by the rental companies' zero profit
-  \item One unknown and one condition per period; since $r_t$ contains $P_{t+1}$, the price path is solved jointly
+  \item The owner market clears at the price $P_t$ (next slide)
+  \item Together, owned and rented housing equal the stock:
+  \[
+  \int\bigl(h^O_t(\mathbf s_t)+h^R_t(\mathbf s_t)\bigr)\,dG_t(\mathbf s_t)=H_t
+  \]
+  \item Since $r_t$ contains $P_{t+1}$, the path of prices is solved jointly
 \end{itemize}
 \end{frame}
 
@@ -220,17 +175,10 @@ The market for owned homes clears at the price $P_t$:
 \end{frame}
 
 %---------------------------------------------------------------
-\begin{frame}{Owner Market: Three Blocks of Supply}
+\begin{frame}{The Owner Market in a Period}
 \centering
-\includegraphics[width=\textwidth]{\mkt/fig_owner_supply_blocks_schematic.pdf}
-\notation{Schematic. Common horizontal scale.}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{Owner Market: Supply and Demand}
-\centering
-\includegraphics[height=0.82\textheight]{\mkt/fig_owner_supply_total_schematic.pdf}
-\notation{Schematic. Shaded: (1) homes of the dead, (2) homes of owners who sell, (3) new construction.}
+\includegraphics[height=0.80\textheight]{../../output/model/experiments/housing_supply/20261027_market_graph/fig_market_graph.pdf}
+\notation{Schematic. Demand falls (lower $\psi$). $A$: initial steady state. $A'$: impact; nothing is built and the price falls below the cost. $B$: new steady state, with a smaller stock.}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -321,3 +269,32 @@ The market for owned homes clears at the price $P_t$:
 \end{frame}
 
 \end{document}
+%---------------------------------------------------------------
+\begin{frame}{Backup: The Stock in a Period}
+\small
+\begin{columns}[c]
+\begin{column}{0.50\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=0.68\textheight,keepaspectratio]{\fig/supply_free_entry.pdf}
+\end{column}
+\begin{column}{0.48\textwidth}
+\scriptsize
+\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
+\begin{itemize}\setlength\itemsep{3pt}
+  \item Construction:
+  \[
+  I_t=\max\bigl\{0,\;\bar HP_t^{\eta}-(1-\delta_H)H_{t-1}\bigr\}
+  \]
+  \item Stock:
+  \[
+  \begin{aligned}H_t&=(1-\delta_H)H_{t-1}+I_t\\ &=\max\bigl\{(1-\delta_H)H_{t-1},\,\bar HP_t^{\eta}\bigr\}\end{aligned}
+  \]
+  \item Demand rises ($A$): developers build until the price equals the cost
+  \item Demand falls faster than wear ($B$): nothing is built, the stock shrinks by $\delta_H$, the price falls below cost
+  \item Steady state: building replaces wear, $I=\delta_HH$, and the price equals the cost, $H=\bar HP^{\eta}$
+\end{itemize}
+\end{column}
+\end{columns}
+
+\end{frame}
+
