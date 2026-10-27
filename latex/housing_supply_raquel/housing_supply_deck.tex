@@ -185,25 +185,38 @@
 
 %---------------------------------------------------------------
 \newcommand{\mkt}{../../output/model/experiments/housing_supply/20261024_market_picture}
-\begin{frame}{Housing Supply in Three Parts}
+\begin{frame}{Owner Market Clearing}
 \footnotesize
-\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-\begin{itemize}\setlength\itemsep{6pt}
-  \item The same condition, written as trades in the market for owned homes in $t$:
-  \[
-  \underbrace{(1-\delta_H)E_{t-1}}_{\text{(1) homes of the dead}}
-  +\underbrace{(1-\delta_H)S_t(P_t)}_{\text{(2) homes of owners who sell}}
-  +\underbrace{I_t(P_t)}_{\text{(3) new construction}}
-  \]
-  \[
-  =\underbrace{B_t(P_t)}_{\text{purchases}}+\underbrace{\delta_HK_t(P_t)}_{\text{maintenance of stayers}}+\underbrace{H^L_t-(1-\delta_H)H^L_{t-1}}_{\text{rental companies' net purchases}}
-  \]
-  \item (1) Homes of the dead: fixed in $t$, set by who died at the end of $t-1$
-  \item (2) Owners who sell: they compare staying with selling, given prices from $t$ on
-  \item (3) Construction: zero below $c\bigl((1-\delta_H)H_{t-1}\bigr)$, rising with $P_t$ above it
-  \item A household that moves from $h$ to $h'$ supplies $(1-\delta_H)h$ and demands $h'$
+\setlength{\abovedisplayskip}{2pt}\setlength{\belowdisplayskip}{2pt}
+The market for owned homes clears at the price $P_t$:
+{\scriptsize
+\[
+\begin{aligned}
+&\underbrace{I_t}_{\text{(3) construction}}
++\underbrace{(1-\delta_H)\sum_{h\in\mathcal H}h\int\mathbf 1\{h^O_{t-1}=h\neq h^O_t(\mathbf s)\}\,dG_t(\mathbf s)}_{\text{(2) homes of owners who sell}}\\[1pt]
+&+\underbrace{(1-\delta_H)\sum_{h\in\mathcal H}h\int(1-s_a)\,\mathbf 1\{h^O_{t-1}(\mathbf s)=h\}\,dG_{t-1}(\mathbf s)}_{\text{(1) homes of households that died in }t-1}\\[1pt]
+=&\underbrace{\sum_{h\in\mathcal H}h\int\mathbf 1\{h^O_t(\mathbf s)=h\neq h^O_{t-1}\}\,dG_t(\mathbf s)}_{\text{homes bought}}
++\underbrace{\delta_H\sum_{h\in\mathcal H}h\int\mathbf 1\{h^O_t(\mathbf s)=h^O_{t-1}=h\}\,dG_t(\mathbf s)}_{\text{maintenance of owners who stay}}\\[1pt]
+&+\underbrace{H^L_t-(1-\delta_H)H^L_{t-1}}_{\text{rental companies' net purchases}}
+\end{aligned}
+\]}
+\notation{$G_t$: measure of households at the start of $t$ over $\mathbf s=(b_t,h^O_{t-1},z_t,a_t,n_t)$. $h^O_t(\mathbf s)$: home owned in $t$, zero for a renter. $s_a$: survival. $H^L_t$: units held by rental companies.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Owner Market Clearing: Term by Term}
+\footnotesize
+\begin{itemize}\setlength\itemsep{3pt}
+  \item Left: units coming to the market in $t$. Right: units leaving it
+  \item \textbf{(3) Construction}: new units from developers, $I_t=\max\{0,\,\bar HP_t^{\eta}-(1-\delta_H)H_{t-1}\}$
+  \item \textbf{(2) Owners who sell}: owners of size $h$ who move to another size or switch to renting
+  \item \textbf{(1) Homes of the dead}: homes of owners who died at the end of $t-1$, sold in $t$
+  \item \textbf{Homes bought}: households that end $t$ in a size they did not own: first-time buyers and movers
+  \item \textbf{Maintenance of owners who stay}: $\delta_Hh$ per stayer, which restores the home
+  \item \textbf{Rental companies' net purchases}: units rented, $H^L_t=\int h^R_t(\mathbf s)\,dG_t(\mathbf s)$, less $(1-\delta_H)H^L_{t-1}$
+  \item Net purchases are negative when renters demand fewer units: the companies then sell
+  \item Sellers and the dead bring the surviving $(1-\delta_H)h$; a mover from $h$ to $h'$ is on both sides
 \end{itemize}
-\notation{$E_{t-1}$: homes owned by households that died at the end of $t-1$. $S_t$: homes of owners who sell. $B_t$: homes bought. $K_t$: homes of owners who stay. $H^L_t$: units held by rental companies.}
 \end{frame}
 
 %---------------------------------------------------------------
