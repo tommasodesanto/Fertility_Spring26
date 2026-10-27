@@ -34,6 +34,43 @@
 \begin{document}
 
 %---------------------------------------------------------------
+\begin{frame}{Households: A Refresher}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{4pt}
+  \item Overlapping generations, ages $a=0,\dots,J$; children until $a_F$, work until $a_R$, survival $p_a$
+  \item Preferences over consumption $c_t$, housing services $\hat h_t$ and children at home $n_t$:
+  \[
+  u(c_t,\hat h_t,n_t)=\frac{1}{1-\sigma}\left[\frac{c_t^{\alpha_0}\bigl(\hat h_t-\chi^{\mathbf 1\{\text{own}\}}\,\bar h(n_t)\bigr)^{1-\alpha_0}}{e(n_t)}\right]^{1-\sigma}+\psi_t\,v(n_t)
+  \]
+  \item Owners get $\hat h_t=\chi h^O_t$, renters $\hat h_t=h^R_t$, with $\chi>1$
+  \item Children need space: $\bar h(n_t)=h_P\mathbf 1\{n_t>0\}$; benefit $v(n_t)=n_t^{1-\gamma}$; first child costs $\xi$
+  \item Earnings $(1-\tau^w)we_az_t$, with $\log z_t$ an AR(1); retirees get the pension $m_t$
+  \item Bonds at $R_b$; warm-glow bequests $B(x_{t+1})$
+\end{itemize}
+\notation{$e(n_t)$: equivalence scale. $\psi_t$: preference for children.}
+\end{frame}
+
+%---------------------------------------------------------------
+\begin{frame}{Households: Timing and Fertility}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{itemize}\setlength\itemsep{4pt}
+  \item State: $\mathbf s_t=(b_t,h^O_{t-1},z_t,a_t,n_t)$. Each period has two stages
+  \item Stage 1, fertile ages: try for a child or not; a try succeeds with probability $\pi_a$
+  \[
+  V^F_{t,A}=\pi_a\bigl[V^H_t(\mathbf s_t;n_t+1)-\xi\,\mathbf 1\{\text{first child}\}\bigr]+(1-\pi_a)\,V^H_t(\mathbf s_t;n_t)
+  \]
+  \item Stage 2, after the birth: choose tenure, home size and saving
+  \[
+  V^H_t=\mathbb E\max_{h^O_t,h^R_t,b_{t+1}}\Bigl\{u(c_t,\hat h_t,n)+\varepsilon^H_{t,j}+\beta\,\mathbb E_t\bigl[p_aV_{t+1}+(1-p_a)B(x_{t+1})\bigr]\Bigr\}
+  \]
+  \item Housing costs, credit and earnings risk enter $V^H_t$, and through it the gain from trying
+\end{itemize}
+\notation{Both stages carry Gumbel taste shocks: on trying, and on each housing option $j$.}
+\end{frame}
+
+%---------------------------------------------------------------
 \begin{frame}{Housing}
 \footnotesize
 \begin{itemize}\setlength\itemsep{6pt}
