@@ -34,19 +34,19 @@
 \begin{document}
 
 %---------------------------------------------------------------
-\begin{frame}{Households}
+\begin{frame}{The Household Problem}
 \footnotesize
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
 \begin{itemize}\setlength\itemsep{5pt}
-  \item Overlapping generations: children until age $a_F$, work until $a_R$, survival $p_a$
-  \item Income: earnings $(1-\tau^w)we_az_t$, with $\log z_t$ an AR(1); a pension $m_t$ in retirement
-  \item Assets: one bond at $R_b$; only owners can borrow
-  \item Preferences over consumption, housing services and children at home:
+  \item Overlapping generations with survival $p_a$; risky earnings, then a pension; one bond at $R_b$
+  \item State: $\mathbf s_t=(b_t,h^O_{t-1},z_t,a_t,n_t)$
+  \item Stage 1, fertile ages: try for a child or not; a try succeeds with probability $\pi_a$
+  \item Stage 2, after the birth: choose tenure, home size and saving $b_{t+1}$ together
   \[
-  u(c_t,\hat h_t,n_t)=\frac{1}{1-\sigma}\left[\frac{c_t^{\alpha_0}\bigl(\hat h_t-\chi^{\mathbf 1\{\text{own}\}}\,h_P\mathbf 1\{n_t>0\}\bigr)^{1-\alpha_0}}{e(n_t)}\right]^{1-\sigma}+\psi_t\,n_t^{1-\gamma}
+  V^H_t=\mathbb E\max_{h^O_t,h^R_t,b_{t+1}}\Bigl\{u(c_t,\hat h_t,n)+\varepsilon^H_{t,j}+\beta\,\mathbb E_t\bigl[p_aV_{t+1}+(1-p_a)B(x_{t+1})\bigr]\Bigr\}
   \]
 \end{itemize}
-\notation{$\hat h_t=\chi h^O_t$ for owners, $h^R_t$ for renters. $h_P$: space needed with children. $e(n_t)$: equivalence scale. $\psi_t$: preference for children. Warm-glow bequests.}
+\notation{$u$: utility from consumption, housing services above the space children need, and children at home. Both stages carry Gumbel taste shocks.}
 \end{frame}
 
 %---------------------------------------------------------------
@@ -60,22 +60,6 @@
   \item Owners can borrow up to $\phi P_th^O_t$; renters cannot borrow
   \item Housing demand comes from the household problem: tenure, size and saving, given the path of prices
 \end{itemize}
-\end{frame}
-
-%---------------------------------------------------------------
-\begin{frame}{The Household Problem}
-\footnotesize
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\begin{itemize}\setlength\itemsep{5pt}
-  \item State: $\mathbf s_t=(b_t,h^O_{t-1},z_t,a_t,n_t)$
-  \item Stage 1: try for a child or not; a try succeeds with probability $\pi_a$
-  \item Stage 2: after the birth, choose tenure, home size and saving $b_{t+1}$:
-  \[
-  V^H_t=\mathbb E\max_{h^O_t,h^R_t,b_{t+1}}\Bigl\{u(c_t,\hat h_t,n)+\varepsilon^H_{t,j}+\beta\,\mathbb E_t\bigl[p_aV_{t+1}+(1-p_a)B(x_{t+1})\bigr]\Bigr\}
-  \]
-  \item Saving and housing are chosen together, in stage 2
-\end{itemize}
-\notation{Both stages carry Gumbel taste shocks.}
 \end{frame}
 
 %---------------------------------------------------------------
