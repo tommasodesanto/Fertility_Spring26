@@ -88,13 +88,12 @@
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 \begin{itemize}\setlength\itemsep{6pt}
   \item Owners are part of the supply of housing: an owner who sells puts its home on the market
-  \item Setting the taste shocks aside, an owner that enters $t$ with the home $h^O_{t-1}>0$ stays if
+  \item An owner that enters $t$ with the home $h^O_{t-1}>0$ stays if
   \[
-  \underbrace{V^{h^O_{t-1}}_t}_{\text{stay}}\ \ge\ \underbrace{\max\Bigl\{V^R_t,\ \max_{h\neq h^O_{t-1}}V^h_t\Bigr\}}_{\text{sell, then rent or buy}}
+  \underbrace{V^{h^O_{t-1}}_t+\varepsilon^H_{t,h^O_{t-1}}}_{\text{stay}}\ \ge\ \underbrace{\max\Bigl\{V^R_t+\varepsilon^H_{t,R},\ \max_{h\neq h^O_{t-1}}\bigl(V^h_t+\varepsilon^H_{t,h}\bigr)\Bigr\}}_{\text{sell, then rent or buy}}
   \]
   and sells otherwise
-  \item The owner compares the value of keeping its home with the value of selling it and then renting or buying another
-  \item It takes into account the future path of prices
+  \item It compares keeping its home with selling and then renting or buying, given the future path of prices
 \end{itemize}
 \end{frame}
 
