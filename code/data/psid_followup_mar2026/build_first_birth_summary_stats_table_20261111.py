@@ -23,13 +23,14 @@ L = [r"\begin{table}[htbp]", r"\centering",
      r" & First-time & Childless & Childless, & First-time & Childless & Childless, \\",
      r" & parents & controls & parents' ages & parents & controls & parents' ages \\", r"\midrule"]
 L += row("Age", "age", 1)
-L += row("Woman", "woman", 2, sd=False)
-L += row("Married or cohabiting", "married", 2, sd=False)
+L += row("Woman", "woman", 2, sd=True)
+L += row("Married or cohabiting", "married", 2, sd=True)
 L += row("Years of education", "edu", 1)
 L += row("Family income (thousands of 2022 dollars)", "inc", 1)
-L.append("Family income, median & " + " & ".join(f(d[(s, g, 'inc')]["p50"], 1) for s, g in cols) + r" \\")
+pass  # median row dropped Nov 11 (every row now has a standard deviation)
+# L.append("Family income, median & " + " & ".join(f(d[(s, g, 'inc')]["p50"], 1) for s, g in cols) + r" \\")
 L += row("Rooms", "rooms", 2)
-L += row("Owner", "own", 2, sd=False)
+L += row("Owner", "own", 2, sd=True)
 L += [r"\addlinespace", r"\multicolumn{7}{@{}l}{\textit{Observations}} \\"]
 L.append("Persons & " + " & ".join(n(d[(s, g, 'age' if g == 'ctrl_age' else 'py_all')]["persons"]) for s, g in cols) + r" \\")
 L.append("Person-years & " + " & ".join(n(d[(s, g, 'py_all')]["n"]) for s, g in cols) + r" \\")
@@ -52,9 +53,9 @@ L += [r"\bottomrule", r"\end{tabular}", r"\par\smallskip", r"\begin{minipage}{0.
  r"it is not reported in the 1994 and 1995 waves. Owner is computed on observations with a reported",
  r"tenure of owning or renting. Persons and person-years cover the full sample period of each group.",
  r"\end{minipage}", r"\end{table}"]
-(out / "first_birth_summary_stats_agematched.tex").write_text("\n".join(L) + "\n")
+(out / "first_birth_summary_stats_sd.tex").write_text("\n".join(L) + "\n")
 doc = ("\\documentclass[11pt]{article}\n\\usepackage[margin=0.8in]{geometry}\n\\usepackage{booktabs}\n"
-       "\\begin{document}\n\\pagestyle{empty}\n\\input{first_birth_summary_stats_agematched.tex}\n\\end{document}\n")
-(out / "first_birth_summary_stats_agematched_standalone.tex").write_text(doc)
-subprocess.run(["latexmk", "-pdf", "-quiet", "first_birth_summary_stats_agematched_standalone.tex"], cwd=out, check=True)
-subprocess.run(["latexmk", "-c", "first_birth_summary_stats_agematched_standalone.tex"], cwd=out, check=True)
+       "\\begin{document}\n\\pagestyle{empty}\n\\input{first_birth_summary_stats_sd.tex}\n\\end{document}\n")
+(out / "first_birth_summary_stats_sd_standalone.tex").write_text(doc)
+subprocess.run(["latexmk", "-pdf", "-quiet", "first_birth_summary_stats_sd_standalone.tex"], cwd=out, check=True)
+subprocess.run(["latexmk", "-c", "first_birth_summary_stats_sd_standalone.tex"], cwd=out, check=True)
