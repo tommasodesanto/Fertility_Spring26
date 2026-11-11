@@ -271,7 +271,8 @@ gen double svy = year
 tempfile base
 save `base'
 
-* 6. Summary statistics on the rooms regression samples (arms A2h and H of sa_rooms_first_birth_v2.do).
+* 6. (Nov 11 add: age-matched controls = controls aged within the 5th-95th pct of parents' reference-window age.)
+* Summary statistics on the rooms regression samples (arms A2h and H of sa_rooms_first_birth_v2.do).
 label list
 tab rel if inrange(age,18,99), m
 tempname P
@@ -332,9 +333,15 @@ foreach S in A2h H {
     gen byte married = inlist(rel,1,2) & FAMMARRIED == 1 if !missing(FAMMARRIED) | !inlist(rel,1,2)
     gen double inc = INCFAMR / 1000 if INCFAMR < 9999999
     gen byte ref = treated & in_reference
-    foreach g in parents controls {
+    _pctile age [aw=iw] if ref, p(5 95)
+    local a5 = r(r1)
+    local a95 = r(r2)
+    di "AGE_RANGE `S': p5=`a5' p95=`a95'"
+    gen byte control_age = control & inrange(age, `a5', `a95')
+    foreach g in parents controls ctrl_age {
         if "`g'" == "parents" local cond "ref"
         if "`g'" == "controls" local cond "control"
+        if "`g'" == "ctrl_age" local cond "control_age"
         foreach v in age woman married edu inc rooms own {
             quietly summarize `v' [aw=iw] if `cond', detail
             local m = r(mean)
@@ -352,7 +359,7 @@ foreach S in A2h H {
         local r = r(N)
         quietly count if pt & `cond'
         local pref = r(N)
-        local grp = cond("`g'" == "parents", "treated", "control")
+        local grp = cond("`g'" == "parents", "treated", cond("`g'" == "ctrl_age", "control_age", "control"))
         quietly count if `grp'
         local rall = r(N)
         quietly count if pt & `grp'
