@@ -1,0 +1,341 @@
+{
+  "analytic_frames_path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_headship_20261112/iv_restrict/analytic_frames.rds",
+  "analytic_frames_size_bytes": 16493305,
+  "analytic_frames_md5": "5d0550e8ba626f37c38752389cb0b0cd",
+  "driver_script": "/scratch/td2248/projects/kleven_acs_pilot_20260917/code_headship_20261112/headship_twins_samesex_iv.R",
+  "driver_md5": "5fad77160e03b447aa9dee3f5364850d",
+  "lib_path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/code_headship_20261112/twins_samesex_iv_lib.R",
+  "lib_md5": "26e8bc5fbefb9463a358092448ff6546",
+  "sample_label": "young",
+  "age_lo": 21,
+  "age_hi": 35,
+  "controls_fml": "i(mat_age_at_event) + i(RACE) + i(survey_year) + i(event_age)",
+  "outcomes": ["ROOMS_out", "OWNERSHP_out", "BEDROOMS_out"],
+  "weight_var": "mother_weight",
+  "cluster_var": "household_key",
+  "ar_grid_rooms": {
+    "min": -3,
+    "max": 3,
+    "by": 0.1
+  },
+  "ar_grid_own": {
+    "min": -0.5,
+    "max": 0.5,
+    "by": 0.02
+  },
+  "partition_dir": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions",
+  "statefip_list": [1, 2, 4, 5, 6, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 50, 51, 53, 54, 55, 56],
+  "source_partitions": [
+    {
+      "statefip": 1,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_01/housing_narrow.rds",
+      "size_bytes": 239746766,
+      "mtime": "2026-09-21T14:11:37Z"
+    },
+    {
+      "statefip": 2,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_02/housing_narrow.rds",
+      "size_bytes": 33345230,
+      "mtime": "2026-09-21T14:11:39Z"
+    },
+    {
+      "statefip": 4,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_04/housing_narrow.rds",
+      "size_bytes": 330508910,
+      "mtime": "2026-09-21T14:11:42Z"
+    },
+    {
+      "statefip": 5,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_05/housing_narrow.rds",
+      "size_bytes": 146874206,
+      "mtime": "2026-09-21T14:11:44Z"
+    },
+    {
+      "statefip": 6,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_06/housing_narrow.rds",
+      "size_bytes": 1829606774,
+      "mtime": "2026-09-21T14:11:53Z"
+    },
+    {
+      "statefip": 8,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_08/housing_narrow.rds",
+      "size_bytes": 264425750,
+      "mtime": "2026-09-21T14:11:55Z"
+    },
+    {
+      "statefip": 9,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_09/housing_narrow.rds",
+      "size_bytes": 178196222,
+      "mtime": "2026-09-21T14:11:58Z"
+    },
+    {
+      "statefip": 10,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_10/housing_narrow.rds",
+      "size_bytes": 44227046,
+      "mtime": "2026-09-21T14:12:00Z"
+    },
+    {
+      "statefip": 11,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_11/housing_narrow.rds",
+      "size_bytes": 31129214,
+      "mtime": "2026-09-21T14:12:04Z"
+    },
+    {
+      "statefip": 12,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_12/housing_narrow.rds",
+      "size_bytes": 961067102,
+      "mtime": "2026-09-21T14:12:09Z"
+    },
+    {
+      "statefip": 13,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_13/housing_narrow.rds",
+      "size_bytes": 481269542,
+      "mtime": "2026-09-21T14:12:12Z"
+    },
+    {
+      "statefip": 15,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_15/housing_narrow.rds",
+      "size_bytes": 70570286,
+      "mtime": "2026-09-21T14:12:17Z"
+    },
+    {
+      "statefip": 16,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_16/housing_narrow.rds",
+      "size_bytes": 81896414,
+      "mtime": "2026-09-21T14:12:19Z"
+    },
+    {
+      "statefip": 17,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_17/housing_narrow.rds",
+      "size_bytes": 632495342,
+      "mtime": "2026-09-21T14:12:23Z"
+    },
+    {
+      "statefip": 18,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_18/housing_narrow.rds",
+      "size_bytes": 331652030,
+      "mtime": "2026-09-21T14:12:28Z"
+    },
+    {
+      "statefip": 19,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_19/housing_narrow.rds",
+      "size_bytes": 159647582,
+      "mtime": "2026-09-21T14:12:30Z"
+    },
+    {
+      "statefip": 20,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_20/housing_narrow.rds",
+      "size_bytes": 145170614,
+      "mtime": "2026-09-21T14:12:36Z"
+    },
+    {
+      "statefip": 21,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_21/housing_narrow.rds",
+      "size_bytes": 222043982,
+      "mtime": "2026-09-21T14:12:38Z"
+    },
+    {
+      "statefip": 22,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_22/housing_narrow.rds",
+      "size_bytes": 216582614,
+      "mtime": "2026-09-21T14:12:40Z"
+    },
+    {
+      "statefip": 23,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_23/housing_narrow.rds",
+      "size_bytes": 65945270,
+      "mtime": "2026-09-21T14:12:42Z"
+    },
+    {
+      "statefip": 24,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_24/housing_narrow.rds",
+      "size_bytes": 292040414,
+      "mtime": "2026-09-21T14:12:44Z"
+    },
+    {
+      "statefip": 25,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_25/housing_narrow.rds",
+      "size_bytes": 339447422,
+      "mtime": "2026-09-21T14:12:49Z"
+    },
+    {
+      "statefip": 26,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_26/housing_narrow.rds",
+      "size_bytes": 500311070,
+      "mtime": "2026-09-21T14:12:52Z"
+    },
+    {
+      "statefip": 27,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_27/housing_narrow.rds",
+      "size_bytes": 274967270,
+      "mtime": "2026-09-21T14:12:54Z"
+    },
+    {
+      "statefip": 28,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_28/housing_narrow.rds",
+      "size_bytes": 144170054,
+      "mtime": "2026-09-21T14:12:56Z"
+    },
+    {
+      "statefip": 29,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_29/housing_narrow.rds",
+      "size_bytes": 307796462,
+      "mtime": "2026-09-21T14:13:01Z"
+    },
+    {
+      "statefip": 30,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_30/housing_narrow.rds",
+      "size_bytes": 50120054,
+      "mtime": "2026-09-21T14:13:02Z"
+    },
+    {
+      "statefip": 31,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_31/housing_narrow.rds",
+      "size_bytes": 94905542,
+      "mtime": "2026-09-21T14:13:04Z"
+    },
+    {
+      "statefip": 32,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_32/housing_narrow.rds",
+      "size_bytes": 135956222,
+      "mtime": "2026-09-21T14:13:08Z"
+    },
+    {
+      "statefip": 33,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_33/housing_narrow.rds",
+      "size_bytes": 67331534,
+      "mtime": "2026-09-21T14:13:10Z"
+    },
+    {
+      "statefip": 34,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_34/housing_narrow.rds",
+      "size_bytes": 438592358,
+      "mtime": "2026-09-21T14:13:12Z"
+    },
+    {
+      "statefip": 35,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_35/housing_narrow.rds",
+      "size_bytes": 95785190,
+      "mtime": "2026-09-21T14:13:14Z"
+    },
+    {
+      "statefip": 36,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_36/housing_narrow.rds",
+      "size_bytes": 967787222,
+      "mtime": "2026-09-21T14:13:20Z"
+    },
+    {
+      "statefip": 37,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_37/housing_narrow.rds",
+      "size_bytes": 486736190,
+      "mtime": "2026-09-21T14:13:23Z"
+    },
+    {
+      "statefip": 38,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_38/housing_narrow.rds",
+      "size_bytes": 37205174,
+      "mtime": "2026-09-21T14:13:27Z"
+    },
+    {
+      "statefip": 39,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_39/housing_narrow.rds",
+      "size_bytes": 588944582,
+      "mtime": "2026-09-21T14:13:30Z"
+    },
+    {
+      "statefip": 40,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_40/housing_narrow.rds",
+      "size_bytes": 186950990,
+      "mtime": "2026-09-21T14:13:33Z"
+    },
+    {
+      "statefip": 41,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_41/housing_narrow.rds",
+      "size_bytes": 197896958,
+      "mtime": "2026-09-21T14:13:35Z"
+    },
+    {
+      "statefip": 42,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_42/housing_narrow.rds",
+      "size_bytes": 641311622,
+      "mtime": "2026-09-21T14:13:38Z"
+    },
+    {
+      "statefip": 44,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_44/housing_narrow.rds",
+      "size_bytes": 52104542,
+      "mtime": "2026-09-21T14:13:40Z"
+    },
+    {
+      "statefip": 45,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_45/housing_narrow.rds",
+      "size_bytes": 238395878,
+      "mtime": "2026-09-21T14:13:44Z"
+    },
+    {
+      "statefip": 46,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_46/housing_narrow.rds",
+      "size_bytes": 43173422,
+      "mtime": "2026-09-21T14:13:46Z"
+    },
+    {
+      "statefip": 47,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_47/housing_narrow.rds",
+      "size_bytes": 325002926,
+      "mtime": "2026-09-21T14:13:48Z"
+    },
+    {
+      "statefip": 48,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_48/housing_narrow.rds",
+      "size_bytes": 1255813070,
+      "mtime": "2026-09-21T14:13:53Z"
+    },
+    {
+      "statefip": 49,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_49/housing_narrow.rds",
+      "size_bytes": 148489358,
+      "mtime": "2026-09-21T14:13:57Z"
+    },
+    {
+      "statefip": 50,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_50/housing_narrow.rds",
+      "size_bytes": 32109974,
+      "mtime": "2026-09-21T14:13:58Z"
+    },
+    {
+      "statefip": 51,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_51/housing_narrow.rds",
+      "size_bytes": 409071878,
+      "mtime": "2026-09-21T14:14:01Z"
+    },
+    {
+      "statefip": 53,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_53/housing_narrow.rds",
+      "size_bytes": 355765526,
+      "mtime": "2026-09-21T14:14:06Z"
+    },
+    {
+      "statefip": 54,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_54/housing_narrow.rds",
+      "size_bytes": 89867630,
+      "mtime": "2026-09-21T14:14:08Z"
+    },
+    {
+      "statefip": 55,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_55/housing_narrow.rds",
+      "size_bytes": 296601806,
+      "mtime": "2026-09-21T14:14:10Z"
+    },
+    {
+      "statefip": 56,
+      "path": "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions/statefip_56/housing_narrow.rds",
+      "size_bytes": 28530134,
+      "mtime": "2026-09-21T14:14:15Z"
+    }
+  ],
+  "n_t1_rows": 735796,
+  "n_ss_rows": 598361,
+  "automatic_resume_implemented": false,
+  "note": "Identity recorded for a future REVIEWED estimator-only loader; no automatic resume is implemented this pass.",
+  "generated": "2026-11-12T23:56:18Z"
+}
